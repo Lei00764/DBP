@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/lei/Desktop/DBP/database_back_web/database_back_web.csproj": {}
+    "/Users/lei/Desktop/DBP/database-back-web/database_back_web.csproj": {}
   },
   "projects": {
-    "/Users/lei/Desktop/DBP/database_back_web/database_back_web.csproj": {
+    "/Users/lei/Desktop/DBP/database-back-web/database_back_web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/lei/Desktop/DBP/database_back_web/database_back_web.csproj",
+        "projectUniqueName": "/Users/lei/Desktop/DBP/database-back-web/database_back_web.csproj",
         "projectName": "database_back_web",
-        "projectPath": "/Users/lei/Desktop/DBP/database_back_web/database_back_web.csproj",
+        "projectPath": "/Users/lei/Desktop/DBP/database-back-web/database_back_web.csproj",
         "packagesPath": "/Users/lei/.nuget/packages/",
-        "outputPath": "/Users/lei/Desktop/DBP/database_back_web/obj/",
+        "outputPath": "/Users/lei/Desktop/DBP/database-back-web/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/lei/.nuget/NuGet/NuGet.Config"

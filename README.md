@@ -2,7 +2,18 @@
 
 ## 前端
 
-技术框架：vue3 + vite
+技术框架：vue3 + vite + Element Plus
+
+版本
+
+```shell
+npm -v
+# 9.5.0
+node -v
+# v18.15.0
+```
+
+
 
 ```shell
 npm install

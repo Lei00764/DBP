@@ -23,17 +23,12 @@
 </template>
 
 <script setup>
-import { ref, reactive, getCurrentInstance, nextTick } from "vue";
-import { useRouter, useRoute } from "vue-router";
-import axios from 'axios'
-
-const { proxy } = getCurrentInstance();  // 
-const router = useRouter();
-const route = useRoute();
+import { ref, getCurrentInstance } from "vue";
 
 const api = {
-    login: '/api/login',
+    login: 'login',
 }
+const { proxy } = getCurrentInstance();
 
 const formData = ref({});
 const formDataRef = ref();
@@ -46,13 +41,15 @@ const doSubmitLogin = () => {
             password: formData.value.password,
         };
         console.log(params);
-        let url = api.login;
-        // 使用axios 对网址为 url，参数为 params 的网页发起请求
-        axios.get(url, { params: params }).then(function (response) {
-            console.log(response);
+
+        proxy.Request({  // 发送请求
+            method: 'GET',
+            url: api.login,
+            params: params
+        }).then(function (response) {
             if (response.data.code == 200) {
                 proxy.Message.success("登录成功");
-                router.push({ path: '/home' });
+                // router.push({ path: '/home' });  // 路由跳转，将页面跳转到路径为 '/home' 的页面
             } else {
                 proxy.Message.error("登录失败");
             }
@@ -60,6 +57,10 @@ const doSubmitLogin = () => {
             console.log(error);
         });
     });
+}
+
+const doSubmitRegister = () => {
+
 }
 </script>
 

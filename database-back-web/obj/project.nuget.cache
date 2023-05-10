@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LMbqpCE72lETiFFMnWTzihsbP6dIgU3O9XaOdqU4AM3+AzYe6Wwsik+O9wFYHWWPMO/3aPQuwcOmrTTdcORUhA==",
+  "dgSpecHash": "XNXdpnC8CMCk+TOAe67q49bu5rF0kKkzQ5m8d2rPr916bUtpoBEYB5pKM0o0KVbcAP0gpY/psjBqBR3iDxgxTA==",
   "success": true,
-  "projectFilePath": "/Users/lei/Desktop/DBP/database_back_web/database_back_web.csproj",
+  "projectFilePath": "/Users/lei/Desktop/DBP/database-back-web/database_back_web.csproj",
   "expectedPackageFiles": [
     "/Users/lei/.nuget/packages/azure.core/1.24.0/azure.core.1.24.0.nupkg.sha512",
     "/Users/lei/.nuget/packages/azure.identity/1.6.0/azure.identity.1.6.0.nupkg.sha512",
