@@ -24,11 +24,12 @@
 
 <script setup>
 import { ref, getCurrentInstance } from "vue";
+import { userLogin } from '@/api/user'
 
 const api = {
     login: 'login',
 }
-const { proxy } = getCurrentInstance();
+const { proxy } = getCurrentInstance();  // 获取当前实例
 
 const formData = ref({});
 const formDataRef = ref();
@@ -42,20 +43,7 @@ const doSubmitLogin = () => {
         };
         console.log(params);
 
-        proxy.Request({  // 发送请求
-            method: 'GET',
-            url: api.login,
-            params: params
-        }).then(function (response) {
-            if (response.data.code == 200) {
-                proxy.Message.success("登录成功");
-                // router.push({ path: '/home' });  // 路由跳转，将页面跳转到路径为 '/home' 的页面
-            } else {
-                proxy.Message.error("登录失败");
-            }
-        }).catch(function (error) {
-            console.log(error);
-        });
+        userLogin(params);  // 请求登录
     });
 }
 
