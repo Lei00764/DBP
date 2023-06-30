@@ -17,10 +17,7 @@ builder.Services.AddSwaggerGen();
 
 // 注册数据库上下文
 builder.Services.AddDbContext<auth.Database.AppDbContext>(options =>
-{
-    options.UseMySql(builder.Configuration.GetConnectionString("mysql"),  // dotnet add package Pomelo.EntityFrameworkCore.Mysql
-        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("mysql")));
-});
+    options.UseOracle(builder.Configuration.GetConnectionString("oracle")));
 
 
 var app = builder.Build();

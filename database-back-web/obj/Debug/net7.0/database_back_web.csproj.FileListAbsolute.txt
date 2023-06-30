@@ -324,11 +324,7 @@
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/database_back_web.pdb
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/Azure.Core.dll
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/Azure.Identity.dll
-/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/Google.Protobuf.dll
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/Humanizer.dll
-/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/K4os.Compression.LZ4.dll
-/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/K4os.Compression.LZ4.Streams.dll
-/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/K4os.Hash.xxHash.dll
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/Microsoft.AspNetCore.OpenApi.dll
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/Microsoft.AspNetCore.Razor.Language.dll
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/Microsoft.Bcl.AsyncInterfaces.dll
@@ -380,8 +376,6 @@
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/Microsoft.Win32.SystemEvents.dll
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/Mono.TextTemplating.dll
-/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/MySql.Data.dll
-/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/MySqlConnector.dll
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/Newtonsoft.Json.dll
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/NuGet.Common.dll
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/NuGet.Configuration.dll
@@ -392,8 +386,6 @@
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/NuGet.ProjectModel.dll
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/NuGet.Protocol.dll
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/NuGet.Versioning.dll
-/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/Pomelo.EntityFrameworkCore.MySql.dll
-/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/BouncyCastle.Crypto.dll
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/SQLitePCLRaw.batteries_v2.dll
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/SQLitePCLRaw.core.dll
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/SQLitePCLRaw.provider.e_sqlite3.dll
@@ -578,11 +570,6 @@
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/runtimes/win-x64/native/Microsoft.Data.SqlClient.SNI.dll
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/runtimes/win-x86/native/Microsoft.Data.SqlClient.SNI.dll
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/runtimes/win/lib/net6.0/Microsoft.Win32.SystemEvents.dll
-/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/runtimes/win-x64/native/comerr64.dll
-/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/runtimes/win-x64/native/gssapi64.dll
-/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/runtimes/win-x64/native/k5sprt64.dll
-/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/runtimes/win-x64/native/krb5_64.dll
-/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/runtimes/win-x64/native/krbcc64.dll
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/runtimes/alpine-arm/native/libe_sqlite3.so
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/runtimes/alpine-arm64/native/libe_sqlite3.so
 /Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/runtimes/alpine-x64/native/libe_sqlite3.so
@@ -632,3 +619,13 @@
 /Users/lei/Desktop/DBP/database-back-web/obj/Debug/net7.0/database_back_web.pdb
 /Users/lei/Desktop/DBP/database-back-web/obj/Debug/net7.0/database_back_web.genruntimeconfig.cache
 /Users/lei/Desktop/DBP/database-back-web/obj/Debug/net7.0/ref/database_back_web.dll
+/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/Oracle.EntityFrameworkCore.dll
+/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/Oracle.ManagedDataAccess.dll
+/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/System.Diagnostics.PerformanceCounter.dll
+/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/System.DirectoryServices.dll
+/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/System.DirectoryServices.Protocols.dll
+/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/runtimes/win/lib/net6.0/System.Diagnostics.PerformanceCounter.dll
+/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/runtimes/win/lib/netcoreapp2.0/System.DirectoryServices.dll
+/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/runtimes/linux/lib/netcoreapp2.0/System.DirectoryServices.Protocols.dll
+/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/runtimes/osx/lib/netcoreapp2.0/System.DirectoryServices.Protocols.dll
+/Users/lei/Desktop/DBP/database-back-web/bin/Debug/net7.0/runtimes/win/lib/netcoreapp2.0/System.DirectoryServices.Protocols.dll
