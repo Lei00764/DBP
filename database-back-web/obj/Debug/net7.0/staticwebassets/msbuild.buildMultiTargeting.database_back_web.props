@@ -1,3 +1,3 @@
 ﻿<Project>
-  <Import Project="../build/database_back_web.props" />
+  <Import Project="..\build\database_back_web.props" />
 </Project>

@@ -15,17 +15,17 @@ public class loginController : ControllerBase  // 命名规范，继承自 Contr
 
     // http://localhost:5045/api/login?id=1&password=xxx
     [HttpGet]
-    public IActionResult CheckUser(int id, string password)  // 对外暴露的接口参数名为 id 和 password
+    public IActionResult CheckUser(string email, string password)  // 对外暴露的接口参数名为 id 和 password
     {
         // await _database.Airelectricitys.ToListAsync();
 
-        var code = 200;
+        var code = 400;
         var msg = "success";
         object data = _database.Users.ToListAsync().Result;
         // 遍历data，找到id和password匹配的用户
         foreach (var user in (System.Collections.Generic.List<auth.Models.User>)data)
         {
-            if (user.UserId == id && user.PassWord == password)
+            if (user.Email == email && user.PassWord == password)
             {
                 code = 200;
                 msg = "登录成功";
