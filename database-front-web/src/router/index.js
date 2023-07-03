@@ -10,8 +10,13 @@ const router = createRouter({
         },
         {
             path: '/login',
-            name: "login",  // 这个名字可以随便起
+            name: 'login',  // 这个名字可以随便起
             component: () => import('@/views/login/index.vue'),
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: () => import('@/views/register/index.vue'),
         }
     ]
 })
