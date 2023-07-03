@@ -14,4 +14,20 @@ public class User
     public string? UserName { get; set; }
     [Column("PASSWORD")]
     public string? PassWord { get; set; }
+    [Column("AVATAR")]
+    public string? Avatar {get;set;}
+    [Column("PROFESSIONAL")]
+    public string? Professional {get;set;}
+    [Column("SIGNATURE")]
+    public string? Signature {get;set;}
+    [Column("EMAIL")]
+    public string? Email {get;set;}
+    [Column("TEL")]
+    public string? Tel {get;set;}
+    [Column("FOLLOWERNUM")]
+    public int FollowerNum {get;set;}
+    [Column("THEMEID")]
+    public int ThemeID {get;set;}
+    
+
 }
