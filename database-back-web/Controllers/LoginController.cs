@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 [Route("api/[controller]")]  // RESTful 风格
 public class loginController : ControllerBase  // 命名规范，继承自 ControllerBase 类的类名必须与 Controller 结尾
 {
+
     private readonly AppDbContext _database;
 
     public loginController(AppDbContext appDbContext)
@@ -18,10 +19,22 @@ public class loginController : ControllerBase  // 命名规范，继承自 Contr
     public IActionResult CheckUser(int id, string password)  // 对外暴露的接口参数名为 id 和 password
     {
         // await _database.Airelectricitys.ToListAsync();
+        System.Console.WriteLine("loginController");
 
         var code = 200;
         var msg = "success";
         object data = _database.Users.ToListAsync().Result;
+        // 如果数据库中没有数据，返回错误信息
+        if (data == null)
+        {
+            code = 400;
+            msg = "数据库中没有数据";
+            return Ok(new
+            {
+                code = code,
+                msg = msg,
+            });
+        }
         // 遍历data，找到id和password匹配的用户
         foreach (var user in (System.Collections.Generic.List<auth.Models.User>)data)
         {
@@ -36,6 +49,8 @@ public class loginController : ControllerBase  // 命名规范，继承自 Contr
                 code = 400;
                 msg = "用户名或密码错误";
             }
+            // 打印
+            System.Console.WriteLine(user.UserId);
         }
         return Ok(new
         {
