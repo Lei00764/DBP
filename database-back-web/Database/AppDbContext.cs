@@ -13,4 +13,5 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
     public DbSet<User> Users { get; set; }  // 对应 Models/User.cs
+    public DbSet<Administrator> Administrators { get; set; }  // 对应 Models/Administrator.cs
 }
