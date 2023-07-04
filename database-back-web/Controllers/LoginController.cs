@@ -18,8 +18,9 @@ public class loginController : ControllerBase  // 命名规范，继承自 Contr
     [HttpGet]
     public IActionResult CheckUser(string email, string password)  // 对外暴露的接口参数名为 id 和 password
     {
-        // await _database.Airelectricitys.ToListAsync();
-        System.Console.WriteLine("loginController");
+        var type = -1;  // 区分登陆的是管理员还是用户
+        // type=1 用户
+        // type=0 管理员
 
         var code = 400;
         var msg = "success";
@@ -44,10 +45,11 @@ public class loginController : ControllerBase  // 命名规范，继承自 Contr
             {
                 code = 200;
                 msg = "普通用户登录成功";
+                type = 1;
                 temp = true;
                 break;
             }
-        
+
         }
         if (temp == false)//用户表里未找到
         {
@@ -57,6 +59,7 @@ public class loginController : ControllerBase  // 命名规范，继承自 Contr
                 {
                     code = 200;
                     msg = "管理员登录成功";
+                    type = 0;
                     temp = true;
                     break;
                 }
@@ -73,6 +76,7 @@ public class loginController : ControllerBase  // 命名规范，继承自 Contr
         {
             code = code,
             msg = msg,
+            type = type,
         });
     }
 }
