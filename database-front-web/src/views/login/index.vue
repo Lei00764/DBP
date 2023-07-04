@@ -28,6 +28,7 @@
 import { ref, reactive } from 'vue';
 import { userLogin } from '@/api/user';
 import Message from "@/utils/Message.js"
+import router from "@/router/index.js"
 
 const formData = reactive({
     email: '',
@@ -53,7 +54,9 @@ const doSubmitLogin = () => {
 };
 
 // 注册
-const doSubmitRegister = () => { };
+const doSubmitRegister = () => {
+    router.push({ path: '/register' });
+};
 
 </script>
   
