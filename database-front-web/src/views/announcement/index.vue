@@ -16,17 +16,17 @@
                 </el-form>
             </div>
             <el-form :inline=true>
-                    <el-form-item>
-                        <el-button type="primary" class="announ-corner-button1" @click="doSubmitSearch">
-                            <span>首页</span>
-                        </el-button>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" class="announ-corner-button2" @click="doSubmitSearch">
-                            <span>个人主页</span>
-                        </el-button>
-                    </el-form-item>
-                </el-form>
+                <el-form-item>
+                    <el-button type="primary" class="announ-corner-button1" @click="doSubmitSearch">
+                        <span>首页</span>
+                    </el-button>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" class="announ-corner-button2" @click="doSubmitSearch">
+                        <span>个人主页</span>
+                    </el-button>
+                </el-form-item>
+            </el-form>
         </div>
     </div>
 </template>
@@ -34,13 +34,13 @@
 <script setup>
 import { ref, reactive } from 'vue';
 const formData = reactive({
-    keywords:'',
+    keywords: '',
 });
 </script>
 
 <style scoped>
 .announcement-page {
-    background-image: url('@/assets/announcement-bkg.png');
+    background-image: url('@/assets/announcement_bkg.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -56,6 +56,7 @@ const formData = reactive({
     height: 10%;
     width: 50%;
 }
+
 .announ-head-search {
     position: absolute;
     top: 0px;
@@ -63,6 +64,7 @@ const formData = reactive({
     /* height: 32px; */
     width: 600px;
 }
+
 .announ-head-searchbutton {
     position: absolute;
     top: 0px;
@@ -87,6 +89,7 @@ const formData = reactive({
     border-radius: 12px;
     box-shadow: 0px 4px 4px 0px gray;
 }
+
 .announ-corner-button2 {
     position: absolute;
     top: 30px;
@@ -98,14 +101,16 @@ const formData = reactive({
     border-radius: 12px;
     box-shadow: 0px 4px 4px 0px gray;
 }
+
 :deep(.el-input__wrapper) {
-     background: #08664B;
-     border-radius: 12px;
-     box-shadow: 0px 4px 4px 0px gray;
-     color:rgb(225, 223, 223);
+    background: #08664B;
+    border-radius: 12px;
+    box-shadow: 0px 4px 4px 0px gray;
+    color: rgb(225, 223, 223);
 }
+
 :deep(.el-input__inner) {
-    color:rgb(225, 223, 223);
+    color: rgb(225, 223, 223);
 
 }
 </style>
