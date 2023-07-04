@@ -23,9 +23,10 @@ public class loginController : ControllerBase  // 命名规范，继承自 Contr
 
         var code = 400;
         var msg = "success";
-        object data = _database.Users.ToListAsync().Result;
+        object user_data = _database.Users.ToListAsync().Result;
+        object admin_data = _database.Administrators.ToListAsync().Result;
         // 如果数据库中没有数据，返回错误信息
-        if (data == null)
+        if (user_data == null && admin_data == null)
         {
             code = 400;
             msg = "数据库中没有数据";
@@ -35,22 +36,38 @@ public class loginController : ControllerBase  // 命名规范，继承自 Contr
                 msg = msg,
             });
         }
-        // 遍历data，找到id和password匹配的用户
-        foreach (var user in (System.Collections.Generic.List<auth.Models.User>)data)
+        // 遍历data，找到id和password匹配的用户或管理员
+        bool temp = false;
+        foreach (var user in (System.Collections.Generic.List<auth.Models.User>)user_data)
         {
             if (user.Email == email && user.PassWord == password)
             {
                 code = 200;
-                msg = "登录成功";
+                msg = "普通用户登录成功";
+                temp = true;
                 break;
             }
-            else
+        
+        }
+        if (temp == false)//用户表里未找到
+        {
+            foreach (var admin in (System.Collections.Generic.List<auth.Models.Administrator>)admin_data)
             {
-                code = 400;
-                msg = "用户名或密码错误";
+                if (admin.Email == email && admin.PassWord == password)
+                {
+                    code = 200;
+                    msg = "管理员登录成功";
+                    temp = true;
+                    break;
+                }
+                else
+                {
+                    code = 400;
+                    msg = "用户名或密码错误";
+                }
+                // 打印
+                //System.Console.WriteLine(admin.UserId);
             }
-            // 打印
-            System.Console.WriteLine(user.UserId);
         }
         return Ok(new
         {
