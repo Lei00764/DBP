@@ -7,7 +7,8 @@
                         <el-input placeholder="请输入邮箱" v-model="formData.email"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-input placeholder="请输入密码" v-model="formData.password" type="password"></el-input>
+                        <el-input placeholder="请输入密码" v-model="formData.password" :type="showPassword ? 'text' : 'password'"
+                            show-password></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" class="op-btn" @click="doSubmitLogin">
@@ -22,28 +23,40 @@
         </div>
     </div>
 </template>
-
+  
 <script setup>
 import { ref, reactive } from 'vue';
-
+import { userLogin } from '@/api/user';
+import Message from "@/utils/Message.js"
 
 const formData = reactive({
     email: '',
-    password: ''
+    password: '',
 });
 
-// 登陆
+const showPassword = ref(false);
+
+// 登录
 const doSubmitLogin = () => {
-    console.log(formData)
-}
+    if (!formData.email || !formData.password) {
+        Message.error("账号或密码不能为空");
+        return;
+    }
+
+    console.log(formData);
+    let params = {
+        email: formData.email,
+        password: formData.password,
+    };
+
+    userLogin(params); // 请求登录
+};
 
 // 注册
-const doSubmitRegister = () => {
-
-}
+const doSubmitRegister = () => { };
 
 </script>
-
+  
 <style scoped>
 .login-page {
     background-image: url('@/assets/log_in.png');
@@ -63,3 +76,4 @@ const doSubmitRegister = () => {
     width: 20%;
 }
 </style>
+  

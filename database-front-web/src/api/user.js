@@ -11,7 +11,7 @@ export function userLogin(params) {
         if (response.data.code == 200) {
             Message.success("登录成功");
 
-            // router.push({ path: '/home' });  // 路由跳转，将页面跳转到路径为 '/home' 的页面
+            router.push({ path: '/home' });  // 路由跳转，将页面跳转到路径为 '/home' 的页面
         } else {
             Message.error("登录失败");
         }

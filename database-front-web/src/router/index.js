@@ -17,7 +17,38 @@ const router = createRouter({
             path: '/register',
             name: 'register',
             component: () => import('@/views/register/index.vue'),
+        },
+        {
+            path: '/homeUser',  // 用户首页
+            name: 'homeUser',
+            component: () => import('@/views/homeUser/index.vue'),
+        },
+        {
+            path: '/homeAdmin',  // 管理员首页
+            name: 'homeAdmin',
+            component: () => import('@/views/homeAdmin/index.vue'),
+        },
+        {
+            path: '/announcement',  // 公告
+            name: 'announcement',
+            component: () => import('@/views/announcement/index.vue'),
+        },
+        {
+            path: '/forum',  // 论坛
+            name: 'forum',
+            component: () => import('@/views/forum/index.vue'),
+        },
+        {
+            path: '/userHomePage',  // 个人主页 
+            name: 'userHomePage',
+            component: () => import('@/views/userHomePage/index.vue'),
+        },
+        {
+            path: '/adminHomePage',  // 管理员主页
+            name: 'adminHomePage',
+            component: () => import('@/views/adminHomePage/index.vue'),
         }
+
     ]
 })
 
