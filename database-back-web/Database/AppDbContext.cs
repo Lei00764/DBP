@@ -14,5 +14,5 @@ public class AppDbContext : DbContext
 
     public DbSet<User> Users { get; set; }  // 对应 Models/User.cs
     public DbSet<Administrator> Administrators { get; set; }  // 对应 Models/Administrator.cs
-    public DbSet<Post> Posts { get; set; }  // 对应 Models/Post.cs
+    public DbSet<Article> Articles { get; set; }  // 对应 Models/Article.cs
 }

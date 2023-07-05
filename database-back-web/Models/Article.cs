@@ -3,12 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;  // for Column
 
 namespace auth.Models;
 
-[Table("POST")]
-public class Post
+[Table("ARTICLE")]
+public class Article
 {
     // 请与数据库中表字段保持一致
     [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // 告知 Entity Framework Core UserId 是由数据库生成的  --- 自增
     [Column("POSTID")]
     public int? PostId { get; set; }
     [Column("TAG")]
@@ -17,7 +16,6 @@ public class Post
     public string? Title { get; set; }
     [Column("CONTENT")]
     public string? Cotent { get; set; }
-    [ForeignKey]
     [Column("AUTHORID")]
     public int? AuthorId { get; set; }
     [Column("PICTURE")]
@@ -32,8 +30,8 @@ public class Post
     public int? IsBanned { get; set; }
     [Column("SHARELINK")]
     public string? ShareLink { get; set; }
-    
-    public Post()
+
+    public Article()
     {//设置默认值（初始值）
         Views = 0;
         FavouriteNum=0;
