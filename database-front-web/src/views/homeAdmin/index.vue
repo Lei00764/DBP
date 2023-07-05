@@ -169,7 +169,7 @@ let AdminID =2151133;
   position: absolute;
 }
 .check-btn{
-    background: url('@/assets/check-btn.png');
+    background: url('@/assets/check_btn.png');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -178,7 +178,7 @@ let AdminID =2151133;
     border-radius: 20px;
 }
 .announce-btn{
-    background: url('@/assets/announce-btn.png');
+    background: url('@/assets/announce_btn.png');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -187,7 +187,7 @@ let AdminID =2151133;
     border-radius: 20px;
 }
 .post-btn{
-    background: url('@/assets/post-btn.png');
+    background: url('@/assets/post_btn.png');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -196,7 +196,7 @@ let AdminID =2151133;
     border-radius: 20px;
 }
 .into-forum-btn{
-    background: url('@/assets/into-forum-btn.png');
+    background: url('@/assets/into_forum_btn.png');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100% 100%;

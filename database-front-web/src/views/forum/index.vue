@@ -9,7 +9,7 @@
                         <el-input placeholder="请输入关键词" class="forum-search" v-model="formData.keywords">
                             <template #prefix>
                                 <el-icon>
-                                    <Search/>
+                                    <Search />
                                 </el-icon>
                             </template>
                         </el-input>
@@ -66,7 +66,7 @@
 <script setup>
 import { ref, reactive } from 'vue';
 
-const doSearch = () => {};
+const doSearch = () => { };
 
 const formData = reactive({
     keywords: '',
@@ -86,7 +86,7 @@ const formData = reactive({
 }
 
 .forum-form {
-/*搜索输入框相关设置 */
+    /*搜索输入框相关设置 */
     position: absolute;
     top: 8%;
     left: 33%;
@@ -103,7 +103,7 @@ const formData = reactive({
 }
 
 .forum-searchbutton {
-/*搜索按钮相关设置 */
+    /*搜索按钮相关设置 */
     position: absolute;
     top: 0px;
     left: 490px;
@@ -116,7 +116,7 @@ const formData = reactive({
 }
 
 .forum-home-button {
-/*首页按钮相关设置 */
+    /*首页按钮相关设置 */
     position: absolute;
     top: 66px;
     left: 1220px;
@@ -129,7 +129,7 @@ const formData = reactive({
 }
 
 .forum-userhome-button {
-/*个人首页按钮相关设置 */
+    /*个人首页按钮相关设置 */
     position: absolute;
     top: 66px;
     left: 1280px;
@@ -141,7 +141,7 @@ const formData = reactive({
 }
 
 .forum-button1 {
-/*菜品种类第一个按钮相关设置 */
+    /*菜品种类第一个按钮相关设置 */
     position: absolute;
     top: 200px;
     left: 80px;
@@ -153,7 +153,7 @@ const formData = reactive({
 }
 
 .forum-button2 {
-/*菜品种类第二个按钮相关设置 */
+    /*菜品种类第二个按钮相关设置 */
     position: absolute;
     top: 200px;
     left: 400px;
@@ -165,7 +165,7 @@ const formData = reactive({
 }
 
 .forum-button3 {
-/*菜品种类第三个按钮相关设置 */
+    /*菜品种类第三个按钮相关设置 */
     position: absolute;
     top: 200px;
     left: 720px;
@@ -177,7 +177,7 @@ const formData = reactive({
 }
 
 .forum-button4 {
-/*菜品种类第四个按钮相关设置 */
+    /*菜品种类第四个按钮相关设置 */
     position: absolute;
     top: 200px;
     left: 1040px;
@@ -189,7 +189,7 @@ const formData = reactive({
 }
 
 :deep(.el-input__wrapper) {
-/* 搜索输入框背景、圆角、字体颜色设置 */
+    /* 搜索输入框背景、圆角、字体颜色设置 */
     background: #08664B;
     border-radius: 12px;
     box-shadow: 0px 4px 4px 0px gray;
@@ -199,5 +199,4 @@ const formData = reactive({
 :deep(.el-input__inner) {
     color: rgb(235, 235, 235);
 }
-
 </style>

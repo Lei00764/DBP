@@ -21,8 +21,12 @@
             </div>
 
             <div class="header">
-                <el-icon class="homeIcon" @click="goHome"><HomeFilled /></el-icon>
-                <el-icon class="userIcon" @click="goUser"><UserFilled /></el-icon>
+                <el-icon class="homeIcon" @click="goHome">
+                    <HomeFilled />
+                </el-icon>
+                <el-icon class="userIcon" @click="goUser">
+                    <UserFilled />
+                </el-icon>
                 <el-button class="loginButton" type="primary" @click="doLogin">
                     <span>登录</span>
                 </el-button>
@@ -108,13 +112,15 @@ const others = () => {
     height: 107vh;
     width: 100vw;
 }
+
 .searchBox {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
-.inputBox{
+
+.inputBox {
     width: 450px;
     height: 40px;
 }
@@ -125,16 +131,19 @@ const others = () => {
     box-shadow: 0px 4px 4px 0px gray;
     color: rgb(235, 235, 235);
 }
+
 :deep(.el-input__inner) {
     color: rgb(235, 235, 235);
 }
-.searchButton{
+
+.searchButton {
     border-radius: 20px;
     background-color: white;
     color: black;
     border-color: black;
     box-shadow: 0px 4px 4px 0px gray;
 }
+
 .searchButton:hover {
     border-radius: 20px;
     background-color: white;
@@ -142,31 +151,37 @@ const others = () => {
     border-color: grey;
     box-shadow: 0px 4px 4px 0px gray;
 }
+
 .header {
     position: absolute;
     width: 100%;
 }
-.homeIcon{
+
+.homeIcon {
     position: absolute;
-    left: 77%; 
+    left: 77%;
     top: 18px;
     font-size: 25px;
 }
-.homeIcon:hover{
-    color:rgb(74, 74, 74)
+
+.homeIcon:hover {
+    color: rgb(74, 74, 74)
 }
-.userIcon{
+
+.userIcon {
     position: absolute;
-    left: 81%; 
+    left: 81%;
     top: 18px;
     font-size: 25px;
 }
-.userIcon:hover{
-    color:rgb(74, 74, 74)
+
+.userIcon:hover {
+    color: rgb(74, 74, 74)
 }
-.loginButton{
+
+.loginButton {
     position: absolute;
-    left: 86%; 
+    left: 86%;
     top: 13px;
     border-radius: 10px;
     background-color: white;
@@ -174,16 +189,18 @@ const others = () => {
     border-color: black;
     box-shadow: 0px 4px 4px 0px gray;
 }
-.loginButton:hover{
+
+.loginButton:hover {
     border-radius: 10px;
     background-color: white;
     color: black;
     border-color: grey;
     box-shadow: 0px 4px 4px 0px gray;
 }
-.registerButton{
+
+.registerButton {
     position: absolute;
-    left: 91%; 
+    left: 91%;
     top: 13px;
     border-radius: 10px;
     background-color: #08664B;
@@ -191,65 +208,73 @@ const others = () => {
     border-color: black;
     box-shadow: 0px 4px 4px 0px gray;
 }
-.registerButton:hover{
+
+.registerButton:hover {
     border-radius: 10px;
     background-color: #0f916c;
     color: white;
     border-color: grey;
     box-shadow: 0px 4px 4px 0px gray;
 }
+
 .bottom {
     position: absolute;
     top: 69%;
-    left:14%;
+    left: 14%;
 }
+
 .button1 {
     width: 200px;
     height: 130px;
     border: none;
-    background: url('@/assets/ChineseFood.png');
+    background: url('@/assets/chinese_food.png');
     background-position: center;
-    background-repeat: no-repeat;			
+    background-repeat: no-repeat;
     background-size: cover;
 }
+
 .button1:hover {
     opacity: 0.8;
 }
+
 .button2 {
     width: 200px;
     height: 130px;
     border: none;
-    background: url('@/assets/WesternFood.png');
+    background: url('@/assets/western_food.png');
     background-position: center;
-    background-repeat: no-repeat;			
+    background-repeat: no-repeat;
     background-size: cover;
 }
+
 .button2:hover {
     opacity: 0.8;
 }
+
 .button3 {
     width: 200px;
     height: 130px;
     border: none;
     background: url('@/assets/dessert.png');
     background-position: center;
-    background-repeat: no-repeat;			
+    background-repeat: no-repeat;
     background-size: cover;
 }
+
 .button3:hover {
     opacity: 0.8;
 }
+
 .button4 {
     width: 200px;
     height: 130px;
     border: none;
     background: url('@/assets/others.png');
     background-position: center;
-    background-repeat: no-repeat;			
+    background-repeat: no-repeat;
     background-size: cover;
 }
+
 .button4:hover {
     opacity: 0.8;
-}
-
-</style>
+}</style>
