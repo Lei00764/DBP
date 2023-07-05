@@ -1,34 +1,52 @@
 <template>
     <div>
         <div class="announcement-page">
-            <!-- 表单 -->
-            <div class="announ-head-form">
+            <div class="announ-head-form" :class="navBarFixed == true ? 'navBarWrap' :''">
                 <el-form :inline=true>
-                    <!-- 搜索栏及按钮设置 -->
+                       <!-- 表单 -->
+                    <!-- 搜索栏及按钮控件设置 -->
                     <el-form-item>
-                        <el-input placeholder="请输入关键词" class="announ-head-search" v-model="formData.keywords"></el-input>
+                        <el-input placeholder="请输入关键词" class="announ-head-search" v-model="formData.keywords">
+                            <template #prefix>
+                                <el-icon>
+                                    <Search />
+                                </el-icon>
+                            </template>
+                        </el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" class="announ-head-searchbutton" @click="doSubmitSearch">
+                        <el-button type="primary" class="announ-head-searchbutton" @click="doSearch">
                             <span>搜索</span>
                         </el-button>
                     </el-form-item>
                 </el-form>
+                <el-form :inline=true>
+                 <!-- 表单 -->
+                    <el-form-item>
+                    <!-- 返回管理员主页 -->
+                        <el-button type="primary" class="announ-corner-button1" @click="doReturnHome">
+                            <span>首页</span>
+                        </el-button>
+                    </el-form-item>
+                    <el-form-item>
+                    <!-- 返回管理员个人主页 -->
+                        <el-button type="primary" class="announ-corner-button2" @click="doReturnadminHomepage">
+                            <span>个人主页</span>
+                        </el-button>
+                    </el-form-item>
+                </el-form>
             </div>
-            <el-form :inline=true>
-                <el-form-item>
-                    <el-button type="primary" class="announ-corner-button1" @click="doSubmitSearch">
-                        <span>首页</span>
-                    </el-button>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" class="announ-corner-button2" @click="doSubmitSearch">
-                        <span>个人主页</span>
-                    </el-button>
-                </el-form-item>
-            </el-form>
-        </div>
+            <el-affix position="top" class="anoun-add-new-button">
+                <el-button
+                    :icon="Search"
+                    type="primary"
+                    :disabled="currentPath"
+                    @click="addNewAccoun"
+                >
+            </el-button>
+        </el-affix>
     </div>
+</div>
 </template>
 
 <script setup>
@@ -36,6 +54,26 @@ import { ref, reactive } from 'vue';
 const formData = reactive({
     keywords: '',
 });
+
+const doSearch = () => {
+    //这里进行搜索关键词操作
+};
+
+
+const doReturnHome = () => {
+    //这里进行返回管理员主页（个人信息页）操作
+};
+
+
+const doReturnadminHomepage = () => {
+    //这里进行返回管理员首页操作
+};
+
+
+const addNewAccoun = () => {
+    //这里进行添加公告操作
+};
+
 </script>
 
 <style scoped>
@@ -59,7 +97,7 @@ const formData = reactive({
 
 .announ-head-search {
     position: absolute;
-    top: 0px;
+    top: 5px;
     left: -100px;
     /* height: 32px; */
     width: 600px;
@@ -67,9 +105,8 @@ const formData = reactive({
 
 .announ-head-searchbutton {
     position: absolute;
-    top: 0px;
+    top: 5px;
     left: 490px;
-    /* height: 32px; */
     width: 70px;
     /* color: green; */
     background-color: white;
@@ -78,11 +115,10 @@ const formData = reactive({
     box-shadow: 0px 4px 4px 0px gray;
 }
 
+/* 顶部导航按钮1-首页 */
 .announ-corner-button1 {
     position: absolute;
-    top: 30px;
-    left: 1180px;
-    /* height: 32px; */
+    left: 680px;
     width: 70px;
     /* color: green; */
     background-color: #08664B;
@@ -90,10 +126,11 @@ const formData = reactive({
     box-shadow: 0px 4px 4px 0px gray;
 }
 
+
+/* 顶部导航按钮2-个人主页 */
 .announ-corner-button2 {
     position: absolute;
-    top: 30px;
-    left: 1230px;
+    left: 730px;
     /* height: 32px; */
     width: 70px;
     /* color: green; */
@@ -102,6 +139,13 @@ const formData = reactive({
     box-shadow: 0px 4px 4px 0px gray;
 }
 
+
+.anoun-add-new-button{
+    
+    position: absolute;
+    left: 1280px;
+    top: 700px;
+}
 :deep(.el-input__wrapper) {
     background: #08664B;
     border-radius: 12px;
