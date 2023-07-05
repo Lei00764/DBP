@@ -11,14 +11,14 @@ public class Administrator
     [Column("ADMINID")]
     public int AdminId { get; set; }
     [Column("ADMINNAME")]
-    public string? AdminName { get; set; }
+    public string AdminName { get; set; }
     [Column("TEL")]
     public string? Tel {get;set;}
     [Column("EMAIL")]
-    public string? Email {get;set;}
+    public string Email {get;set;}
     [Column("PASSWORD")]
-    public string? PassWord { get; set; }
+    public string PassWord { get; set; }
     [Column("AVATAR")]
-    public string? Avatar {get;set;}
+    public string Avatar {get;set;}
     
 }
