@@ -13,12 +13,17 @@ public class Administrator
     [Column("ADMINNAME")]
     public string? AdminName { get; set; }
     [Column("TEL")]
-    public string? Tel {get;set;}
+    public string? Tel { get; set; }
     [Column("EMAIL")]
-    public string? Email {get;set;}
+    public string? Email { get; set; }
     [Column("PASSWORD")]
     public string? PassWord { get; set; }
     [Column("AVATAR")]
-    public string? Avatar {get;set;}
-    
+    public string? Avatar { get; set; }
+
+
+    public Administrator()
+    {
+        Avatar = "https://img-qn.51miz.com/Element/00/88/59/99/8de317d3_E885999_245f75fb.png!/quality/90/unsharp/true/compress/true/format/png/fw/720";
+    }
 }

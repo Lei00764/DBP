@@ -31,8 +31,8 @@ export function userLogin(params) {
 export function userRegister(params) {
     Request({
         method: 'POST',
-        // url: 'register',
-        url: 'http://127.0.0.1:4523/m1/2699367-0-febb5d0d/api/register',
+        url: 'register',
+        // url: 'http://127.0.0.1:4523/m1/2699367-0-febb5d0d/api/register',
         params: params
     }).then(function (response) {
         if (response.data.code === 200) {
