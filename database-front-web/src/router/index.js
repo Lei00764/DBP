@@ -41,13 +41,13 @@ const router = createRouter({
             // component: () => import('@/views/forum/index.vue'),  // 不能要
             children: [  // children里面的path 不要加 / ，加了就表示是根目录下的路由
                 {
-                    path: 'chinese_food',
-                    name: 'chinese_food',
+                    path: 'chineseFood',
+                    name: 'chineseFood',
                     component: () => import('@/views/forum/chineseFood/index.vue'),
                 },
                 {
-                    path: 'western_food',
-                    name: 'western_food',
+                    path: 'westernFood',
+                    name: 'westernFood',
                     component: () => import('@/views/forum/westernFood/index.vue'),
                 },
                 {
