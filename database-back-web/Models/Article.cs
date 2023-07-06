@@ -15,7 +15,7 @@ public class Article
     [Column("TITLE")]
     public string? Title { get; set; }
     [Column("CONTENT")]
-    public string? Cotent { get; set; }
+    public string? Content { get; set; }
     [Column("AUTHORID")]
     public int? AuthorId { get; set; }
     [Column("PICTURE")]
@@ -34,8 +34,8 @@ public class Article
     public Article()
     {//设置默认值（初始值）
         Views = 0;
-        FavouriteNum=0;
-        LikeNum=0;
-        IsBanned=0;
+        FavouriteNum = 0;
+        LikeNum = 0;
+        IsBanned = 0;
     }
 }
