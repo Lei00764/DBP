@@ -31,7 +31,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 msg = msg,
             });
         }
-
+        
         code = 200;
         var article_data = await _database.Articles
             .Where(a => a.Tag == tag)
@@ -63,7 +63,6 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
     [HttpGet("viewArticle/{article_id}")]
     public async Task<IActionResult> GetArticleDetailsAsync(int article_id)
     {
-<<<<<<< HEAD
         var code = 200;
         var msg = "success";
         var temp=await _database.Articles.ToListAsync();
@@ -109,20 +108,25 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 msg=msg
             });
         }
-=======
-        var code = 400;
-        var msg = "success";
-
-
->>>>>>> main
-        return Ok(new
+        async void UpdateData()
+        {
+            //需要先查询
+            var a = _database.Articles.Where(x => x.PostId == article_id);
+            //再对查询到的数据进行修改
+            foreach (var item in a)
+            {
+                item.Views+=1;
+            }
+            //再save更改
+            await _database.SaveChangesAsync();
+ 
+        }
+        UpdateData();
+            return Ok(new
         {
             code = code,
             msg = msg,
-<<<<<<< HEAD
             data=article_data
-
-
         });
         }
         else
@@ -136,9 +140,6 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             });
         }
         //!!!!!!TODO：更新Views!!!!!!!!!
-=======
-        });
->>>>>>> main
     }
 
 }
