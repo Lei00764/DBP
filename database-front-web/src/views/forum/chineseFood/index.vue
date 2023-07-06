@@ -123,7 +123,6 @@ const formData = reactive({
 });
 </script>
 
-
 <style scoped>
 /*背景图相关设置 */
 .forum-page {
@@ -396,4 +395,5 @@ const formData = reactive({
 :deep(.el-input__inner) {
     color: rgb(235, 235, 235);
 }
+
 </style>
