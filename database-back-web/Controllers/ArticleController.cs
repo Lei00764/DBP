@@ -40,6 +40,7 @@ public class LoadArticleController : ControllerBase  // 命名规范，继承自
                 user => user.UserId,
                 (article, user) => new
                 {
+                    ID=article.PostId,//文章ID
                     TAG = article.Tag,  // 文章标签
                     Title = article.Title,  // 文章标题
                     Views = article.Views,  // 文章浏览量
