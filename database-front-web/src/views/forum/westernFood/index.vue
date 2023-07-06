@@ -1,8 +1,6 @@
 <template>
     <div>
-        <!-- 忽略该文件 -->
-
-        forum
+        西餐
     </div>
 </template>
 

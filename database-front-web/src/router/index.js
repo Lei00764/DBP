@@ -1,8 +1,9 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
+import Others from '@/views/forum/others/index.vue'
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes: [
         {
             path: '/',
@@ -36,7 +37,30 @@ const router = createRouter({
         {
             path: '/forum',  // 论坛
             name: 'forum',
-            component: () => import('@/views/forum/index.vue'),
+            // redirect: '/forum/chinese_food',  // 重定向
+            // component: () => import('@/views/forum/index.vue'),  // 不能要
+            children: [  // children里面的path 不要加 / ，加了就表示是根目录下的路由
+                {
+                    path: 'chinese_food',
+                    name: 'chinese_food',
+                    component: () => import('@/views/forum/chineseFood/index.vue'),
+                },
+                {
+                    path: 'western_food',
+                    name: 'western_food',
+                    component: () => import('@/views/forum/westernFood/index.vue'),
+                },
+                {
+                    path: 'dessert',
+                    name: 'dessert',
+                    component: () => import('@/views/forum/dessert/index.vue'),
+                },
+                {
+                    path: 'others',
+                    name: 'others',
+                    component: Others
+                }
+            ]
         },
         {
             path: '/userHomePage',  // 个人主页 

@@ -38,11 +38,11 @@
             <div class="bottom">
                 <el-form :inline="true">
                     <el-form-item>
-                        <el-button class="button1" type="primary" @click="ChineseFood">
+                        <el-button class="button1" type="primary" @click="chineseFood">
                         </el-button>
                     </el-form-item>
                     <el-form-item>
-                        <el-button class="button2" type="primary" @click="WesternFood">
+                        <el-button class="button2" type="primary" @click="westernFood">
                         </el-button>
                     </el-form-item>
                     <el-form-item>
@@ -61,6 +61,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
+import router from "@/router/index.js"
 
 const FormData = reactive({
     keyword: '',
@@ -86,20 +87,20 @@ const goUser = () => {
 
 };
 
-const ChineseFood = () => {
-
+const chineseFood = () => {
+    router.push({ name: 'chinese_food' })
 };
 
-const WesternFood = () => {
-
+const westernFood = () => {
+    router.push({ name: 'western_food' })
 };
 
 const dessert = () => {
-
+    router.push({ name: 'dessert' })
 };
 
 const others = () => {
-
+    router.push({ name: 'others' })
 };
 </script>
 
@@ -277,4 +278,5 @@ const others = () => {
 
 .button4:hover {
     opacity: 0.8;
-}</style>
+}
+</style>

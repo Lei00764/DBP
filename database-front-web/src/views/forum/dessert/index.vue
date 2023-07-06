@@ -1,8 +1,6 @@
 <template>
     <div>
-        <!-- 忽略该文件 -->
-
-        forum
+        这里是甜点区
     </div>
 </template>
 
