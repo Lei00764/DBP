@@ -4,17 +4,17 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 [ApiController]
-[Route("api/forum/[controller]")]  // RESTful 风格
-public class LoadArticleController : ControllerBase  // 命名规范，继承自 ControllerBase 类的类名必须与 Controller 结尾
+[Route("api/[controller]")]  // RESTful 风格
+public class ArticleController : ControllerBase  // 命名规范，继承自 ControllerBase 类的类名必须与 Controller 结尾
 {
     private readonly AppDbContext _database;
 
-    public LoadArticleController(AppDbContext appDbContext)
+    public ArticleController(AppDbContext appDbContext)
     {
-        _database = appDbContext;  // 依赖注入，在整个类中使用它来进行数据库操作。
+        _database = appDbContext;  // 依赖注入，在整个类中使用它来进行数据库操作
     }
 
-    [HttpGet]
+    [HttpGet("loadArticle")]
     public async Task<IActionResult> GetArticleByTagAsync(string tag)
     {
         var code = 400;
@@ -58,4 +58,19 @@ public class LoadArticleController : ControllerBase  // 命名规范，继承自
             data = article_data
         });
     }
+
+    [HttpGet("viewArticle/{article_id}")]
+    public async Task<IActionResult> GetArticleDetailsAsync(int article_id)
+    {
+        var code = 400;
+        var msg = "success";
+
+
+        return Ok(new
+        {
+            code = code,
+            msg = msg,
+        });
+    }
+
 }
