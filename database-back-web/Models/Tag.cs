@@ -12,5 +12,5 @@ public class Tag
     public int? TagId { get; set; }
     [Column("TAGNAME")]
     public int? TagName { get; set; }
-    
+
 }
