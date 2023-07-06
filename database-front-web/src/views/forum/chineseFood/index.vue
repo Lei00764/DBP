@@ -2,11 +2,11 @@
     <div>
         <div class="forum-page">
             <!-- 表单 -->
-            <div class="forum-form">
+            <div class="forum-search">
                 <el-form :inline=true>
                     <!-- 搜索栏及按钮设置 -->
                     <el-form-item>
-                        <el-input placeholder="请输入关键词" class="forum-search" v-model="formData.keywords">
+                        <el-input placeholder="请输入关键词" class="forum-searchbox" v-model="formData.keywords">
                             <template #prefix>
                                 <el-icon>
                                     <Search />
@@ -16,49 +16,75 @@
                     </el-form-item>
 
                     <el-form-item>
-                        <el-button type="primary" class="forum-searchbutton" @click="doSubmitSearch">
+                        <el-button type="primary" class="forum-searchbutton" @click="doSearch">
                             <span>搜索</span>
                         </el-button>
                     </el-form-item>
                 </el-form>
             </div>
-            <el-form :inline=true>
-                <el-form-item>
-                    <el-button type="primary" class="forum-home-button" @click="doSubmitSearch">
-                        <span>首页</span>
-                    </el-button>
-                </el-form-item>
+            <div class = "button">
+                <el-form :inline=true>
 
-                <el-form-item>
-                    <el-button type="primary" class="forum-userhome-button" @click="doSubmitSearch">
-                        <span>个人主页</span>
-                    </el-button>
-                </el-form-item>
+                    <el-icon class="homepageIcon" @click="doHome">
+                        <HomeFilled />
+                    </el-icon>
+                    <el-icon class="userpageIcon" @click="doUser">
+                        <UserFilled />
+                    </el-icon>
 
-                <el-form-item>
-                    <el-button type="primary" class="forum-button1" @click="doSubmitSearch">
-                        <span>中餐</span>
-                    </el-button>
-                </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" class="forum-login-button" @click="doLogin">
+                            <span>登陆</span>
+                        </el-button>
+                    </el-form-item>
 
-                <el-form-item>
-                    <el-button type="primary" class="forum-button2" @click="doSubmitSearch">
-                        <span>西餐</span>
-                    </el-button>
-                </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" class="forum-register-button" @click="doRegister">
+                            <span>注册</span>
+                        </el-button>
+                    </el-form-item>
 
-                <el-form-item>
-                    <el-button type="primary" class="forum-button3" @click="doSubmitSearch">
-                        <span>甜点</span>
-                    </el-button>
-                </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" class="forum-button1" @click="doChineseFood">
+                            <span>中餐</span>
+                        </el-button>
+                    </el-form-item>
 
-                <el-form-item>
-                    <el-button type="primary" class="forum-button4" @click="doSubmitSearch">
-                        <span>其他</span>
-                    </el-button>
-                </el-form-item>
-            </el-form>
+                    <el-form-item>
+                        <el-button type="primary" class="forum-button2" @click="doWesternFood">
+                            <span>西餐</span>
+                        </el-button>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-button type="primary" class="forum-button3" @click="doDessert">
+                            <span>甜点</span>
+                        </el-button>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-button type="primary" class="forum-button4" @click="doOthers">
+                            <span>其他</span>
+                        </el-button>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-button type="primary" class="forum-article1" @click="doArticle"></el-button>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-button type="primary" class="forum-article2" @click="doArticle"></el-button>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-button type="primary" class="forum-article3" @click="doArticle"></el-button>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-button type="primary" class="forum-article4" @click="doArticle"></el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
         </div>
     </div>
 </template>
@@ -67,6 +93,24 @@
 import { ref, reactive } from 'vue';
 
 const doSearch = () => { };
+
+const doHome = () => { };
+
+const doUser = () => { };
+
+const doLogin = () => { };
+
+const doRegister = () => { };
+
+const doChineseFood = () => { };
+
+const doWesternFood = () => { };
+
+const doDessert = () => { };
+
+const doOthers = () => { };
+
+const doArticle = () => { };
 
 const formData = reactive({
     keywords: '',
@@ -85,7 +129,7 @@ const formData = reactive({
     width: 100vw;
 }
 
-.forum-form {
+.forum-search {
     /*搜索输入框相关设置 */
     position: absolute;
     top: 8%;
@@ -94,7 +138,7 @@ const formData = reactive({
     width: 50%;
 }
 
-.forum-search {
+.forum-searchbox {
     position: absolute;
     top: 0px;
     left: -100px;
@@ -111,81 +155,209 @@ const formData = reactive({
     width: 70px;
     border-radius: 14px;
     background-color: white;
+    border-color: black;
     color: black;
     box-shadow: 0px 4px 4px 0px gray;
 }
 
-.forum-home-button {
-    /*首页按钮相关设置 */
+.forum-searchbutton:hover {
+    border-radius: 14px;
+    background-color: #ebebeb;
+    color: rgb(0, 0, 0);
+    border-color: rgb(78, 78, 78);
+    box-shadow: 0px 4px 4px 0px gray;
+}
+
+.homepageIcon {
+    position: absolute;
+    left: 76%;
+    top: 77px;
+    font-size: 33px;
+    color: rgb(55, 192, 255)
+}
+
+.homepageIcon:hover {
+    opacity: 0.8;
+}
+
+.userpageIcon {
+    position: absolute;
+    left: 80%;
+    top: 77px;
+    font-size: 33px;
+    color: rgb(55, 192, 255)
+}
+
+.userpageIcon:hover {
+    opacity: 0.8;
+}
+
+.forum-login-button {
+    /*登陆按钮相关设置 */
     position: absolute;
     top: 66px;
-    left: 1220px;
+    left: 1400px;
     height: 33px;
     width: 70px;
-    background-color: white;
-    color: black;
+    background: #08664B;
+    border-color: black;
     border-radius: 14px;
     box-shadow: 0px 4px 4px 0px gray;
 }
 
-.forum-userhome-button {
-    /*个人首页按钮相关设置 */
+.forum-login-button:hover {
+    opacity: 0.8;
+}
+
+.forum-register-button {
+    /*注册按钮相关设置 */
     position: absolute;
     top: 66px;
-    left: 1280px;
+    left: 1470px;
     height: 33px;
-    width: 100px;
+    width: 70px;
     background: #08664B;
+    border-color: black;
     border-radius: 14px;
     box-shadow: 0px 4px 4px 0px gray;
+}
+
+.forum-register-button:hover {
+    opacity: 0.8;
 }
 
 .forum-button1 {
     /*菜品种类第一个按钮相关设置 */
     position: absolute;
     top: 200px;
-    left: 80px;
+    left: 100px;
     height: 50px;
     width: 250px;
     background: #08664B;
-    border-color: black;
+    border-color: rgb(255, 255, 255);
     border-radius: 30px;
+}
+
+.forum-button1:hover {
+    border-radius: 30px;
+    background-color: #f8b720;
+    color: #08664B;
+    border-color: rgb(255, 255, 255);
 }
 
 .forum-button2 {
     /*菜品种类第二个按钮相关设置 */
     position: absolute;
     top: 200px;
-    left: 400px;
+    left: 420px;
     height: 50px;
     width: 250px;
     background: #08664B;
-    border-color: black;
+    border-color: rgb(255, 255, 255);
     border-radius: 30px;
 }
 
+.forum-button2:hover {
+    border-radius: 30px;
+    background-color: #f8b720;
+    color: #08664B;
+    border-color: rgb(255, 255, 255);
+}
 .forum-button3 {
     /*菜品种类第三个按钮相关设置 */
     position: absolute;
     top: 200px;
-    left: 720px;
+    left: 740px;
     height: 50px;
     width: 250px;
     background: #08664B;
-    border-color: black;
+    border-color: rgb(255, 255, 255);
     border-radius: 30px;
+}
+
+.forum-button3:hover {
+    border-radius: 30px;
+    background-color: #f8b720;
+    color: #08664B;
+    border-color: rgb(255, 255, 255);
 }
 
 .forum-button4 {
     /*菜品种类第四个按钮相关设置 */
     position: absolute;
     top: 200px;
-    left: 1040px;
+    left: 1060px;
     height: 50px;
     width: 250px;
     background: #08664B;
-    border-color: black;
+    border-color: rgb(255, 255, 255);
     border-radius: 30px;
+}
+
+.forum-button4:hover {
+    border-radius: 30px;
+    background-color: #f8b720;
+    color: #08664B;
+    border-color: rgb(255, 255, 255);
+}
+
+.forum-article1 {
+    /*菜品种类第四个按钮相关设置 */
+    position: absolute;
+    top: 360px;
+    left: -60px;
+    height: 180px;
+    width: 640px;
+    background: #e5e5e5;
+    border-color: rgb(255, 255, 255);
+    border-radius: 12px;
+}
+.forum-article1:hover {
+    opacity: 0.7;
+}
+
+.forum-article2 {
+    /*菜品种类第四个按钮相关设置 */
+    position: absolute;
+    top: 360px;
+    left: 635px;
+    height: 180px;
+    width: 640px;
+    background: #e5e5e5;
+    border-color: rgb(255, 255, 255);
+    border-radius: 12px;
+}
+.forum-article2:hover {
+    opacity: 0.7;
+}
+
+.forum-article3 {
+    /*菜品种类第四个按钮相关设置 */
+    position: absolute;
+    top: 600px;
+    left: -125px;
+    height: 180px;
+    width: 640px;
+    background: #e5e5e5;
+    border-color: rgb(255, 255, 255);
+    border-radius: 12px;
+}
+.forum-article3:hover {
+    opacity: 0.7;
+}
+.forum-article4 {
+    /*菜品种类第四个按钮相关设置 */
+    position: absolute;
+    top: 600px;
+    left: 573px;
+    height: 180px;
+    width: 640px;
+    background: #e5e5e5;
+    border-color: rgb(255, 255, 255);
+    border-radius: 12px;
+}
+.forum-article4:hover {
+    opacity: 0.7;
 }
 
 :deep(.el-input__wrapper) {
