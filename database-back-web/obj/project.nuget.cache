@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wYgzbkAbd89fHPIKG9FSsotxDOzU8i0eh8aTLlJ69sw5dg9+la0c6eMMQ49pJuR+vuTqh81eBMHolIhK/cxL7A==",
+  "dgSpecHash": "IyQTtZwG5SOSRFElT29+8BMqO0X0TG1fKLa3lu2ojKR9stYgHUaQ3G5Ulh4cgRJGFa8jQ3T22gfeORvLkEQArQ==",
   "success": true,
-  "projectFilePath": "D:\\VSCodeProjects\\dbp\\database-back-web\\database_back_web.csproj",
+  "projectFilePath": "D:\\VSCodeProjects\\DBP\\database-back-web\\database_back_web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\13092\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\13092\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
