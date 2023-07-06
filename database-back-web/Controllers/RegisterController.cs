@@ -37,29 +37,41 @@ public class RegisterController : ControllerBase
             {
                 var newUser = new User
                 {
-                    UserId = 3,
+                    // UserId = 5,
                     UserName = username,
                     Email = email,
                     PassWord = password,
-                    Avatar = "123",
-                    Professional = "123",
-                    Signature = "123",
-                    Tel = "12345678912",
-                    FollowerNum = 123,
-                    ThemeID = 123
                 };
 
                 await _database.Users.AddAsync(newUser);
                 msg = "用户成功注册";
             }
-
-
         }
         else if (type == 0)
         {
+            var emailExists = await _database.Administrators.AnyAsync(u => u.Email == email);
+            if (emailExists)
+            {
+                return BadRequest(new
+                {
+                    code = 400,
+                    msg = "电子邮件已经被使用",
+                });
+            }
+            else
+            {
+                var newAdmin = new Administrator
+                {
+                    AdminName = username,
+                    Email = email,
+                    PassWord = password,
+                };
 
+                await _database.Administrators.AddAsync(newAdmin);
+                msg = "管理员成功注册";
+            }
         }
-        else
+        else  // 通过网页注册不会出现这种情况，仅用于 swagger 调试
         {
             return BadRequest(new
             {
@@ -76,5 +88,4 @@ public class RegisterController : ControllerBase
             msg = msg,
         });
     }
-
 }
