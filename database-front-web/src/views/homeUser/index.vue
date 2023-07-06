@@ -68,23 +68,23 @@ const FormData = reactive({
 });
 
 const doSearch = () => {
-
+    
 };
 
 const doLogin = () => {
-
+    router.push({ name: 'login' })
 };
 
 const doRegister = () => {
-
+    router.push({ name: 'register' })
 };
 
 const goHome = () => {
-
+    
 };
 
 const goUser = () => {
-
+    router.push({ name: 'userHomePage' })
 };
 
 const chineseFood = () => {
