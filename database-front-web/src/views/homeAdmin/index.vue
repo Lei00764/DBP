@@ -28,7 +28,7 @@
                 <el-form :inline=true class="homeAdmin-avatar-ID">
                     <el-form-item>
                         <!-- 头像 -->
-                        <el-avatar :size="80" :src="avatarURL" ></el-avatar>
+                        <el-avatar :size="80" :src="avatarURL"></el-avatar>
                     </el-form-item>
                     <el-form-item>
                         <el-form>
@@ -36,12 +36,12 @@
                             <h2>{{ AdminName }}</h2>
                             <div style="color:grey">ID：{{ AdminID }}</div>
                         </el-form>
-                    </el-form-item> 
+                    </el-form-item>
                     <div class="line"></div><!-- 这是一条分割线 -->
                 </el-form>
                 <!-- 退出登录的按钮 -->
                 <el-button class="homeAdmin-logout-btn" style="position:absolute;bottom:5%;left:40%" @click="logout">
-                            <span>退出登录</span>
+                    <span>退出登录</span>
                 </el-button>
             </el-card>
             <el-form style="position: absolute;top:65%;left:5%" :inline=true>
@@ -84,31 +84,39 @@ const formData = reactive({
 });
 //下面访问管理员信息
 let avatarURL = " ";
-let AdminName ="管理员一号";
-let AdminID =2151133;
+let AdminName = "管理员一号";
+let AdminID = 2151133;
 </script>
 
 <style scoped>
 /*背景图相关设置 */
 .homeAdmin-page {
-    background-image: url('@/assets/home_administrator.png');/* 背景图片地址 */
-    background-position: center center;/* 背景图片位置 */
-    background-repeat: no-repeat;/* 背景图片是否重复 */
-    background-size: 100% 100%;/* 背景图片大小 */
-    height: 98vh;/* 背景图片宽高 */
+    background-image: url('@/assets/home_administrator.png');
+    /* 背景图片地址 */
+    background-position: center center;
+    /* 背景图片位置 */
+    background-repeat: no-repeat;
+    /* 背景图片是否重复 */
+    background-size: 100% 100%;
+    /* 背景图片大小 */
+    height: 98vh;
+    /* 背景图片宽高 */
     width: 99vw;
 }
+
 .homeAdmin-SearchPosition {
     /* 搜索栏的页面位置 */
     position: absolute;
     top: 45%;
     left: 4%;
 }
+
 .homeAdmin-searchbox {
     /* 搜索栏的大小格式*/
     width: 800px;
     height: 50px;
 }
+
 :deep(.el-input__wrapper) {
     /* 修改搜索栏的背景、圆角、字体颜色 */
     background: #08664B;
@@ -116,10 +124,12 @@ let AdminID =2151133;
     box-shadow: 0px 4px 4px 0px gray;
     color: rgb(235, 235, 235);
 }
+
 :deep(.el-input__inner) {
     /* 修改搜索栏的背景和圆角 */
     color: rgb(235, 235, 235);
 }
+
 .homeAdmin-Search-btn {
     /* 设置搜索按钮风格 */
     width: 80px;
@@ -130,11 +140,12 @@ let AdminID =2151133;
     border-color: black;
     box-shadow: 0px 4px 4px 0px gray;
 }
-.homeAdmin-logout-btn{
+
+.homeAdmin-logout-btn {
     /* 设置退出登录按钮风格 */
-    position:absolute;
-    bottom:5%;
-    left:40%;
+    position: absolute;
+    bottom: 5%;
+    left: 40%;
     width: 80px;
     height: 35px;
     border-radius: 30px;
@@ -143,32 +154,36 @@ let AdminID =2151133;
     color: white;
     box-shadow: 0px 4px 4px 0px gray;
 }
-.homeAdmin-card{
+
+.homeAdmin-card {
     /* 管理员资料卡片的设置 */
     position: absolute;
     top: 5%;
     left: 73%;
     background-color: rgb(255, 255, 255);
     width: 370px;
-    height:750px;
+    height: 750px;
     box-shadow: 0px 4px 4px 0px gray;
     border-radius: 5px;
 }
-.homeAdmin-avatar-ID{
+
+.homeAdmin-avatar-ID {
     /* 头像、昵称和ID在卡片上的排布 */
     position: absolute;
     top: 5%;
     left: 10%;
 }
-.line{
+
+.line {
     /* 横线 */
-  float:right;
-  width: 300px;
-  height: 2px;
-  background:#888888;
-  position: absolute;
+    float: right;
+    width: 300px;
+    height: 2px;
+    background: #888888;
+    position: absolute;
 }
-.check-btn{
+
+.check-btn {
     background: url('@/assets/check_btn.png');
     background-position: center center;
     background-repeat: no-repeat;
@@ -177,7 +192,8 @@ let AdminID =2151133;
     height: 150px;
     border-radius: 20px;
 }
-.announce-btn{
+
+.announce-btn {
     background: url('@/assets/announce_btn.png');
     background-position: center center;
     background-repeat: no-repeat;
@@ -186,7 +202,8 @@ let AdminID =2151133;
     height: 150px;
     border-radius: 20px;
 }
-.post-btn{
+
+.post-btn {
     background: url('@/assets/post_btn.png');
     background-position: center center;
     background-repeat: no-repeat;
@@ -195,7 +212,8 @@ let AdminID =2151133;
     height: 150px;
     border-radius: 20px;
 }
-.into-forum-btn{
+
+.into-forum-btn {
     background: url('@/assets/into_forum_btn.png');
     background-position: center center;
     background-repeat: no-repeat;
@@ -203,5 +221,4 @@ let AdminID =2151133;
     width: 195px;
     height: 150px;
     border-radius: 20px;
-}
-</style>
+}</style>

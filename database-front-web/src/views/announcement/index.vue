@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="announcement-page">
-            <div class="announ-head-form" :class="navBarFixed == true ? 'navBarWrap' :''">
+            <div class="announ-head-form" :class="navBarFixed == true ? 'navBarWrap' : ''">
                 <el-form :inline=true>
-                       <!-- 表单 -->
+                    <!-- 表单 -->
                     <!-- 搜索栏及按钮控件设置 -->
                     <el-form-item>
                         <el-input placeholder="请输入关键词" class="announ-head-search" v-model="formData.keywords">
@@ -21,15 +21,15 @@
                     </el-form-item>
                 </el-form>
                 <el-form :inline=true>
-                 <!-- 表单 -->
+                    <!-- 表单 -->
                     <el-form-item>
-                    <!-- 返回管理员主页 -->
+                        <!-- 返回管理员主页 -->
                         <el-button type="primary" class="announ-corner-button1" @click="doReturnHome">
                             <span>首页</span>
                         </el-button>
                     </el-form-item>
                     <el-form-item>
-                    <!-- 返回管理员个人主页 -->
+                        <!-- 返回管理员个人主页 -->
                         <el-button type="primary" class="announ-corner-button2" @click="doReturnadminHomepage">
                             <span>个人主页</span>
                         </el-button>
@@ -37,16 +37,11 @@
                 </el-form>
             </div>
             <el-affix position="top" class="anoun-add-new-button">
-                <el-button
-                    :icon="Search"
-                    type="primary"
-                    :disabled="currentPath"
-                    @click="addNewAccoun"
-                >
-            </el-button>
-        </el-affix>
+                <el-button :icon="Search" type="primary" :disabled="currentPath" @click="addNewAccoun">
+                </el-button>
+            </el-affix>
+        </div>
     </div>
-</div>
 </template>
 
 <script setup>
@@ -140,12 +135,13 @@ const addNewAccoun = () => {
 }
 
 
-.anoun-add-new-button{
-    
+.anoun-add-new-button {
+
     position: absolute;
     left: 1280px;
     top: 700px;
 }
+
 :deep(.el-input__wrapper) {
     background: #08664B;
     border-radius: 12px;

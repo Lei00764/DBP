@@ -27,7 +27,6 @@ export function userLogin(params) {
 
 
 // 用户/管理员注册
-
 export function userRegister(params) {
     Request({
         method: 'POST',

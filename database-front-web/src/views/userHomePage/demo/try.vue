@@ -1,12 +1,11 @@
 <template>
     <div>
-        这里是用户主页
-        <Demo></Demo>
+        测试
+
     </div>
 </template>
 
 <script setup>
-import { Demo } from '.'
 </script>
 
 <style lang="scss"></style>

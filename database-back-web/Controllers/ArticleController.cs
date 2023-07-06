@@ -63,6 +63,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
     [HttpGet("viewArticle/{article_id}")]
     public async Task<IActionResult> GetArticleDetailsAsync(int article_id)
     {
+<<<<<<< HEAD
         var code = 200;
         var msg = "success";
         var temp=await _database.Articles.ToListAsync();
@@ -108,10 +109,17 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 msg=msg
             });
         }
+=======
+        var code = 400;
+        var msg = "success";
+
+
+>>>>>>> main
         return Ok(new
         {
             code = code,
             msg = msg,
+<<<<<<< HEAD
             data=article_data
 
 
@@ -128,6 +136,9 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             });
         }
         //!!!!!!TODO：更新Views!!!!!!!!!
+=======
+        });
+>>>>>>> main
     }
 
 }
