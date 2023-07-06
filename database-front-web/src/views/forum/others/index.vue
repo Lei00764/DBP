@@ -1,9 +1,5 @@
 <template>
-    <div>
-        <!-- 忽略该文件 -->
-
-        forum
-    </div>
+    <div>其他</div>
 </template>
 
 <script setup>
