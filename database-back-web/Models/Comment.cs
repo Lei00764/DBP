@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;  // for Column
 
 namespace auth.Models;
 
-[Table("COMMENTS")]
+[Table("T_COMMENT")]
 public class Comment
 {
     [Key]
