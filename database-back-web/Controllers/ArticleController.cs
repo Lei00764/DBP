@@ -3,6 +3,7 @@ using auth.Database;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
+
 [ApiController]
 [Route("api/[controller]")]  // RESTful 风格
 public class ArticleController : ControllerBase  // 命名规范，继承自 ControllerBase 类的类名必须与 Controller 结尾
@@ -25,10 +26,10 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             code = 400;
             msg = "不存在该板块";
-            return Ok(new
+            return BadRequest(new
             {
                 code = code,
-                msg = msg,
+                msg = msg
             });
         }
         
@@ -108,7 +109,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 msg=msg
             });
         }
-        async void UpdateData()
+        async void UpdateData()//更新数据库数据的规范写法
         {
             //需要先查询
             var a = _database.Articles.Where(x => x.PostId == article_id);
