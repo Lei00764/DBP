@@ -65,7 +65,17 @@ const router = createRouter({
         {
             path: '/userHomePage',  // 个人主页 
             name: 'userHomePage',
-            component: () => import('@/views/userHomePage/index.vue'),
+            children: [
+                {
+                  path:'',
+                  component: () => import('@/views/userHomePage/home/index.vue'),
+                },
+                {
+                    path:'',
+                    component: () => import('@/views/userHomePage/user/change.vue'),
+                }
+                    
+            ]
         },
         {
             path: '/adminHomePage',  // 管理员主页
