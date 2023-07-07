@@ -30,7 +30,8 @@ public class Article
     public int? IsBanned { get; set; }
     [Column("SHARELINK")]
     public string? ShareLink { get; set; }
-
+    [Column("RELEASETIME")]
+    public DateTime? ReleaseTime { get; set; }
     public Article()
     {//设置默认值（初始值）
         Views = 0;

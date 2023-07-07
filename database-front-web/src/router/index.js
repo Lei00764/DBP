@@ -30,6 +30,11 @@ const router = createRouter({
             component: () => import('@/views/homeAdmin/index.vue'),
         },
         {
+            path: '/checkProfession',  // 审核专业认证
+            name: 'checkProfession',
+            component: () => import('@/views/checkProfession/index.vue'),
+        },
+        {
             path: '/announcement',  // 公告
             name: 'announcement',
             component: () => import('@/views/announcement/index.vue'),
@@ -43,6 +48,12 @@ const router = createRouter({
             path: '/addAnnouncement',  // 添加公告页
             name: 'addAnnouncement',
             component: () => import('@/views/addAnnouncement/addAnnouncement.vue'),
+        },
+        {
+            path: '/checkArticle',  // 公告
+            name: 'checkArticle',
+            component: () => import('@/views/checkArticle/index.vue'),
+
         },
         {
             path: '/forum',  // 论坛
@@ -82,14 +93,14 @@ const router = createRouter({
             name: 'userHomePage',
             children: [
                 {
-                  path:'',
-                  component: () => import('@/views/userHomePage/home/index.vue'),
+                    path: '',
+                    component: () => import('@/views/userHomePage/home/index.vue'),
                 },
                 {
-                    path:'',
+                    path: '',
                     component: () => import('@/views/userHomePage/user/change.vue'),
                 }
-                    
+
             ]
         },
         {
