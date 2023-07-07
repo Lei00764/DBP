@@ -30,6 +30,11 @@ const router = createRouter({
             component: () => import('@/views/homeAdmin/index.vue'),
         },
         {
+            path: '/checkProfession',  // 审核专业认证
+            name: 'checkProfession',
+            component: () => import('@/views/checkProfession/index.vue'),
+        },
+        {
             path: '/announcement',  // 公告
             name: 'announcement',
             component: () => import('@/views/announcement/index.vue'),
@@ -65,7 +70,17 @@ const router = createRouter({
         {
             path: '/userHomePage',  // 个人主页 
             name: 'userHomePage',
-            component: () => import('@/views/userHomePage/index.vue'),
+            children: [
+                {
+                  path:'',
+                  component: () => import('@/views/userHomePage/home/index.vue'),
+                },
+                {
+                    path:'',
+                    component: () => import('@/views/userHomePage/user/change.vue'),
+                }
+                    
+            ]
         },
         {
             path: '/adminHomePage',  // 管理员主页
