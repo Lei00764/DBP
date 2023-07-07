@@ -35,6 +35,11 @@ const router = createRouter({
             component: () => import('@/views/announcement/index.vue'),
         },
         {
+            path: '/checkArticle',  // 公告
+            name: 'checkArticle',
+            component: () => import('@/views/checkArticle/index.vue'),
+        },
+        {
             path: '/forum',  // 论坛
             name: 'forum',
             // redirect: '/forum/chinese_food',  // 重定向
