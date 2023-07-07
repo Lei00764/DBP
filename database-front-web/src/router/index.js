@@ -52,40 +52,12 @@ const router = createRouter({
             path: '/checkArticle',  // 公告
             name: 'checkArticle',
             component: () => import('@/views/checkArticle/index.vue'),
-
         },
         {
-            path: '/forum',  // 论坛
+            // 动态路由
+            path: '/forum/:tag',  // 论坛
             name: 'forum',
-            // redirect: '/forum/chinese_food',  // 重定向
-            // component: () => import('@/views/forum/index.vue'),  // 不能要
-            children: [  // children里面的path 不要加 / ，加了就表示是根目录下的路由
-                {
-                    path: 'allFood',
-                    name: 'allFood',
-                    component: () => import('@/views/forum/allFood/index.vue'),
-                },
-                {
-                    path: 'chineseFood',
-                    name: 'chineseFood',
-                    component: () => import('@/views/forum/chineseFood/index.vue'),
-                },
-                {
-                    path: 'westernFood',
-                    name: 'westernFood',
-                    component: () => import('@/views/forum/westernFood/index.vue'),
-                },
-                {
-                    path: 'dessert',
-                    name: 'dessert',
-                    component: () => import('@/views/forum/dessert/index.vue'),
-                },
-                {
-                    path: 'others',
-                    name: 'others',
-                    component: () => import('@/views/forum/others/index.vue'),
-                }
-            ]
+            component: () => import("@/views/forum/index.vue"),
         },
         {
             path: '/forumArticleDetail',  // 论坛帖子详情页
@@ -104,7 +76,6 @@ const router = createRouter({
                     path: 'user',
                     component: () => import('@/views/userHomePage/user/change.vue'),
                 }
-
             ]
         },
         {
@@ -112,7 +83,6 @@ const router = createRouter({
             name: 'adminHomePage',
             component: () => import('@/views/adminHomePage/index.vue'),
         }
-
     ]
 })
 

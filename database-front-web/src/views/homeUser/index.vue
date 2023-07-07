@@ -85,23 +85,23 @@ const goUser = () => {
 };
 
 const allFood = () => {
-    router.push({ name: 'allFood' })
+    router.push({ name: 'forum', params: { tag: 'all' } })
 };
 
 const chineseFood = () => {
-    router.push({ name: 'chineseFood' })
+    router.push({ name: 'forum', params: { tag: 'chinese' } })
 };
 
 const westernFood = () => {
-    router.push({ name: 'westernFood' })
+    router.push({ name: 'forum', params: { tag: 'western' } })
 };
 
 const dessert = () => {
-    router.push({ name: 'dessert' })
+    router.push({ name: 'forum', params: { tag: 'dessert' } })
 };
 
 const others = () => {
-    router.push({ name: 'others' })
+    router.push({ name: 'forum', params: { tag: 'others' } })
 };
 </script>
 
