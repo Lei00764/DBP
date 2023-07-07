@@ -34,7 +34,7 @@
 
                     <el-form-item>
                         <el-button type="primary" class="forum-login-button" @click="doLogin">
-                            <span>登陆</span>
+                            <span>登录</span>
                         </el-button>
                     </el-form-item>
 
@@ -198,7 +198,7 @@ const formData = reactive({
 }
 
 .forum-login-button {
-    /*登陆按钮相关设置 */
+    /*登录按钮相关设置 */
     position: absolute;
     top: 66px;
     left: 1400px;

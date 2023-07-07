@@ -1,0 +1,69 @@
+@font-face {
+  font-family: "iconfont"; /* Project id  */
+  src: url('iconfont.ttf?t=1688634034329') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 36px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-baseline-add_circle_outline-px:before {
+  content: "\e677";
+}
+
+.icon-Back:before {
+  content: "\e67b";
+}
+
+.icon-comment:before {
+  content: "\e67c";
+}
+
+.icon-Favorite2:before {
+  content: "\e67d";
+}
+
+.icon-Fire:before {
+  content: "\e67e";
+}
+
+.icon-Home:before {
+  content: "\e67f";
+}
+
+.icon-Favorite:before {
+  content: "\e680";
+}
+
+.icon-next:before {
+  content: "\e681";
+}
+
+.icon-loading:before {
+  content: "\e682";
+}
+
+.icon-Share:before {
+  content: "\e683";
+}
+
+.icon-Search:before {
+  content: "\e684";
+}
+
+.icon-Settings:before {
+  content: "\e685";
+}
+
+.icon-a-Thumbup2:before {
+  content: "\e686";
+}
+
+.icon-a-Thumbup:before {
+  content: "\e687";
+}
+

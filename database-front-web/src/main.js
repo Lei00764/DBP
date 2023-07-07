@@ -8,6 +8,7 @@ import router from './router'
 
 import * as ELIcons from '@element-plus/icons-vue'//引入图标
 
+import "./assets/icon/iconfont.css"//图标
 // 全局方法 
 // import Message from '@/utils/Message'
 // import Request from '@/utils/Request'
