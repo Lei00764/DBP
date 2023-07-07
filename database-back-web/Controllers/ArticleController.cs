@@ -2,10 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
-<<<<<<< HEAD
 using auth.Database;
-=======
->>>>>>> main
 
 [ApiController]
 [Route("api/[controller]")]  // RESTful 风格
@@ -108,7 +105,6 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
 
             if (article_data[0].IsBanned != 0)
             {
-<<<<<<< HEAD
                 code = 400;
                 msg = "该文章已被封禁";
                 return BadRequest(new
@@ -118,18 +114,6 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 });
             }
             async void UpdateData()
-=======
-                code=code,
-                msg=msg
-            });
-        }
-        async void UpdateData()//更新数据库数据的规范写法
-        {
-            //需要先查询
-            var a = _database.Articles.Where(x => x.PostId == article_id);
-            //再对查询到的数据进行修改
-            foreach (var item in a)
->>>>>>> main
             {
                 //需要先查询
                 var a = _database.Articles.Where(x => x.PostId == article_id);
@@ -160,7 +144,5 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 msg = msg
             });
         }
-        //!!!!!!TODO：更新Views!!!!!!!!!
     }
-
 }
