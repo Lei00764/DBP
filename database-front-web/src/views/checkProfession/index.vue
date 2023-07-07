@@ -56,16 +56,24 @@
                     </el-icon>
                 </el-button>
             </card>
+            <el-icon size="30px" style="position:absolute;top: 8%;left:3%" @click="backToHome">
+                <Back />
+            </el-icon>
         </div>
     </div>
 </template>
   
 <script setup>
+import { ref, reactive } from 'vue';
+import router from "@/router/index.js"
 const intoCard = () =>{
     //进入卡片
 }
-const pass =() =>{
+const pass = () =>{
     //审核通过
+}
+const backToHome = () =>{
+    router.push({ name: 'homeAdmin' })
 }
 let list=[{
         UserID:2151133,
