@@ -16,5 +16,7 @@ public class AppDbContext : DbContext
     public DbSet<Administrator> Administrators { get; set; }  // 对应 Models/Administrator.cs
     public DbSet<Article> Articles { get; set; }  // 对应 Models/Article.cs
     public DbSet<Article> Tags { get; set; }  // 对应 Models/Tag.cs
-    public DbSet<Like> Like { get; set; }  // 对应 Models/Like.cs
+    public DbSet<Like> Likes { get; set; }  // 对应 Models/Like.cs
+    public DbSet<Follow> Follows { get; set; }  // 对应 Models/Follow.cs
 }
+
