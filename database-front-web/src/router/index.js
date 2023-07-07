@@ -93,11 +93,11 @@ const router = createRouter({
             name: 'userHomePage',
             children: [
                 {
-                    path: '',
+                    path: 'home',
                     component: () => import('@/views/userHomePage/home/index.vue'),
                 },
                 {
-                    path: '',
+                    path: 'user',
                     component: () => import('@/views/userHomePage/user/change.vue'),
                 }
 
