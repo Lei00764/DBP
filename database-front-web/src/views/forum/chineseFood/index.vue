@@ -96,32 +96,8 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
-
-const doSearch = () => { };
-
-const doHome = () => { };
-
-const doUser = () => { };
-
-const doLogin = () => { };
-
-const doRegister = () => { };
-
-const doChineseFood = () => { };
-
-const doWesternFood = () => { };
-
-const doDessert = () => { };
-
-const doOthers = () => { };
-
-const doArticle = () => { };
-
-const formData = reactive({
-    keywords: '',
-});
 </script>
+
 
 <style scoped>
 /*背景图相关设置 */
