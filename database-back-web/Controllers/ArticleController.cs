@@ -26,10 +26,10 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             code = 400;
             msg = "不存在该板块";
-            return Ok(new
+            return BadRequest(new
             {
                 code = code,
-                msg = msg,
+                msg = msg
             });
         }
 
@@ -144,7 +144,5 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 msg = msg
             });
         }
-        //!!!!!!TODO：更新Views!!!!!!!!!
     }
-
 }

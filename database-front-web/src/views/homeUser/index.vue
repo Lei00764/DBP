@@ -28,15 +28,16 @@
                     <UserFilled />
                 </el-icon>
                 <el-button class="loginButton" type="primary" @click="doLogin">
-                    <span>登录</span>
-                </el-button>
-                <el-button class="registerButton" type="primary" @click="doRegister">
-                    <span>注册</span>
+                    <span>退出登录</span>
                 </el-button>
             </div>
 
             <div class="bottom">
                 <el-form :inline="true">
+                    <el-form-item>
+                        <el-button class="button0" type="primary" @click="all">
+                        </el-button>
+                    </el-form-item>
                     <el-form-item>
                         <el-button class="button1" type="primary" @click="chineseFood">
                         </el-button>
@@ -75,10 +76,6 @@ const doLogin = () => {
     router.push({ name: 'login' })
 };
 
-const doRegister = () => {
-    router.push({ name: 'register' })
-};
-
 const goHome = () => {
     
 };
@@ -87,12 +84,16 @@ const goUser = () => {
     router.push({ name: 'userHomePage' })
 };
 
+const all = () => {
+
+};
+
 const chineseFood = () => {
-    router.push({ name: 'chinese_food' })
+    router.push({ name: 'chineseFood' })
 };
 
 const westernFood = () => {
-    router.push({ name: 'western_food' })
+    router.push({ name: 'westernFood' })
 };
 
 const dessert = () => {
@@ -160,7 +161,7 @@ const others = () => {
 
 .homeIcon {
     position: absolute;
-    left: 77%;
+    left: 81%;
     top: 18px;
     font-size: 25px;
 }
@@ -171,7 +172,7 @@ const others = () => {
 
 .userIcon {
     position: absolute;
-    left: 81%;
+    left: 85%;
     top: 18px;
     font-size: 25px;
 }
@@ -182,26 +183,7 @@ const others = () => {
 
 .loginButton {
     position: absolute;
-    left: 86%;
-    top: 13px;
-    border-radius: 10px;
-    background-color: white;
-    color: black;
-    border-color: black;
-    box-shadow: 0px 4px 4px 0px gray;
-}
-
-.loginButton:hover {
-    border-radius: 10px;
-    background-color: white;
-    color: black;
-    border-color: grey;
-    box-shadow: 0px 4px 4px 0px gray;
-}
-
-.registerButton {
-    position: absolute;
-    left: 91%;
+    left: 90%;
     top: 13px;
     border-radius: 10px;
     background-color: #08664B;
@@ -210,7 +192,7 @@ const others = () => {
     box-shadow: 0px 4px 4px 0px gray;
 }
 
-.registerButton:hover {
+.loginButton:hover {
     border-radius: 10px;
     background-color: #0f916c;
     color: white;
@@ -221,12 +203,26 @@ const others = () => {
 .bottom {
     position: absolute;
     top: 69%;
-    left: 14%;
+    left: 8%;
+}
+
+.button0 {
+    width: 180px;
+    height: 110px;
+    border: none;
+    background: url('@/assets/all.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.button0:hover {
+    opacity: 0.8;
 }
 
 .button1 {
-    width: 200px;
-    height: 130px;
+    width: 180px;
+    height: 110px;
     border: none;
     background: url('@/assets/chinese_food.png');
     background-position: center;
@@ -239,8 +235,8 @@ const others = () => {
 }
 
 .button2 {
-    width: 200px;
-    height: 130px;
+    width: 180px;
+    height: 110px;
     border: none;
     background: url('@/assets/western_food.png');
     background-position: center;
@@ -253,8 +249,8 @@ const others = () => {
 }
 
 .button3 {
-    width: 200px;
-    height: 130px;
+    width: 180px;
+    height: 110px;
     border: none;
     background: url('@/assets/dessert.png');
     background-position: center;
@@ -267,8 +263,8 @@ const others = () => {
 }
 
 .button4 {
-    width: 200px;
-    height: 130px;
+    width: 180px;
+    height: 110px;
     border: none;
     background: url('@/assets/others.png');
     background-position: center;

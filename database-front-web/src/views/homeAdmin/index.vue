@@ -48,23 +48,19 @@
                 <!-- 功能选择分区 -->
                 <el-form-item>
                     <!-- 审核专业认证-->
-                    <el-button class="check-btn">
-                    </el-button>
+                    <el-button class="check-btn" @click="intoCheckProfession"></el-button>
                 </el-form-item>
                 <el-form-item>
                     <!-- 公告-->
-                    <el-button class="announce-btn">
-                    </el-button>
+                    <el-button class="announce-btn" @click="intoAnnounce"></el-button>
                 </el-form-item>
                 <el-form-item>
                     <!-- 审核帖子-->
-                    <el-button class="post-btn">
-                    </el-button>
+                    <el-button class="post-btn" @click="intoCheckArticle"></el-button>
                 </el-form-item>
                 <el-form-item>
                     <!-- 进入论坛-->
-                    <el-button class="into-forum-btn">
-                    </el-button>
+                    <el-button class="into-forum-btn" @click="intoForum"></el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -73,12 +69,26 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
+import router from "@/router/index.js"
 const doSearch = () => {
     //进行关键词搜索
 };
 const logout = () => {
     //退出登录
+    router.push({ name: 'login' })
 };
+const intoCheckProfession = () =>{
+    router.push({ name: 'checkProfession' })
+}
+const intoAnnounce = () =>{
+    router.push({ name: 'announcement' })
+}
+const intoCheckArticle = () =>{
+    router.push({ name: 'checkArticle' })
+}
+const intoForum = () =>{
+    router.push({ name: 'forum' })
+}
 const formData = reactive({
     keyword: '',
 });

@@ -30,9 +30,30 @@ const router = createRouter({
             component: () => import('@/views/homeAdmin/index.vue'),
         },
         {
+            path: '/checkProfession',  // 审核专业认证
+            name: 'checkProfession',
+            component: () => import('@/views/checkProfession/index.vue'),
+        },
+        {
             path: '/announcement',  // 公告
             name: 'announcement',
             component: () => import('@/views/announcement/index.vue'),
+        },
+        {
+            path: '/announcementDetail',  // 公告详情页
+            name: 'announcementDetail',
+            component: () => import('@/views/announcementDetail/announcementDetail.vue'),
+        },
+        {
+            path: '/addAnnouncement',  // 添加公告页
+            name: 'addAnnouncement',
+            component: () => import('@/views/addAnnouncement/addAnnouncement.vue'),
+        },
+        {
+            path: '/checkArticle',  // 公告
+            name: 'checkArticle',
+            component: () => import('@/views/checkArticle/index.vue'),
+
         },
         {
             path: '/forum',  // 论坛
@@ -68,18 +89,23 @@ const router = createRouter({
             ]
         },
         {
+            path: '/forumArticleDetail',  // 论坛帖子详情页
+            name: 'forumArticleDetail',
+            component: () => import('@/views/forumArticleDetail/forumArticleDetail.vue'),
+        },
+        {
             path: '/userHomePage',  // 个人主页 
             name: 'userHomePage',
             children: [
                 {
-                  path:'',
-                  component: () => import('@/views/userHomePage/home/index.vue'),
+                    path: 'home',
+                    component: () => import('@/views/userHomePage/home/index.vue'),
                 },
                 {
-                    path:'',
+                    path: 'user',
                     component: () => import('@/views/userHomePage/user/change.vue'),
                 }
-                    
+
             ]
         },
         {
