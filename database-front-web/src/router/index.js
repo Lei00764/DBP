@@ -1,6 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
-import Others from '@/views/forum/others/index.vue'
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -62,9 +61,9 @@ const router = createRouter({
             // component: () => import('@/views/forum/index.vue'),  // 不能要
             children: [  // children里面的path 不要加 / ，加了就表示是根目录下的路由
                 {
-                    path: '',
+                    path: 'allFood',
                     name: 'allFood',
-                    component: () => import('@/views/forum/index.vue'),
+                    component: () => import('@/views/forum/allFood/index.vue'),
                 },
                 {
                     path: 'chineseFood',
@@ -84,7 +83,7 @@ const router = createRouter({
                 {
                     path: 'others',
                     name: 'others',
-                    component: Others
+                    component: () => import('@/views/forum/others/index.vue'),
                 }
             ]
         },

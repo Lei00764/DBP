@@ -35,7 +35,7 @@
             <div class="bottom">
                 <el-form :inline="true">
                     <el-form-item>
-                        <el-button class="button0" type="primary" @click="all">
+                        <el-button class="button0" type="primary" @click="allFood">
                         </el-button>
                     </el-form-item>
                     <el-form-item>
@@ -69,7 +69,7 @@ const FormData = reactive({
 });
 
 const doSearch = () => {
-    
+
 };
 
 const doLogin = () => {
@@ -77,15 +77,15 @@ const doLogin = () => {
 };
 
 const goHome = () => {
-    
+
 };
 
 const goUser = () => {
     router.push({ name: 'userHomePage' })
 };
 
-const all = () => {
-
+const allFood = () => {
+    router.push({ name: 'allFood' })
 };
 
 const chineseFood = () => {

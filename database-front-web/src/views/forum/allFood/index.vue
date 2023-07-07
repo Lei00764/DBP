@@ -6,8 +6,7 @@
                 <el-form :inline=true>
                     <!-- 搜索栏及按钮设置 -->
                     <el-form-item>
-                        <!-- <el-input placeholder="请输入关键词" class="forum-searchbox" v-model="formData.keywords"> -->
-                        <el-input placeholder="请输入关键词" class="forum-searchbox">
+                        <el-input placeholder="请输入关键词" class="forum-searchbox" v-model="formData.keywords">
                             <template #prefix>
                                 <el-icon>
                                     <Search />
@@ -34,14 +33,8 @@
                     </el-icon>
 
                     <el-form-item>
-                        <el-button type="primary" class="forum-login-button" @click="doLogin">
-                            <span>登录</span>
-                        </el-button>
-                    </el-form-item>
-
-                    <el-form-item>
-                        <el-button type="primary" class="forum-register-button" @click="doRegister">
-                            <span>注册</span>
+                        <el-button type="primary" class="forum-login-button" @click="doLogoff">
+                            <span>退出登录</span>
                         </el-button>
                     </el-form-item>
 
@@ -90,6 +83,29 @@
                     <el-form-item>
                         <el-button type="primary" class="forum-article4" @click="doArticle"></el-button>
                     </el-form-item>
+
+                    <el-form-item>
+                        <el-button type="primary" class="forum-article5" @click="doArticle"></el-button>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-button type="primary" class="forum-article6" @click="doArticle"></el-button>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-button type="primary" class="forum-article7" @click="doArticle"></el-button>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-button type="primary" class="forum-article8" @click="doArticle"></el-button>
+                    </el-form-item>
+
+                    <!-- 导航栏设置，暂时先这样，后续会改成element plus -->
+                    <div class="elui">
+                        <el-pagination background page-size="8" layout="prev, pager, next, jumper" :total="1000">
+                        </el-pagination>
+                    </div>
+
                 </el-form>
             </div>
         </div>
@@ -97,8 +113,46 @@
 </template>
 
 <script setup>
-</script>
+import { ref, reactive } from 'vue';
+import router from "@/router/index.js"
 
+const formData = reactive({
+    keywords: '',
+});
+
+const doSearch = () => { };
+
+const doHome = () => {
+    router.push({ name: 'homeUser' })
+};
+
+const doUser = () => {
+    router.push({ name: 'userHomePage' })
+};
+
+const doLogoff = () => {
+    router.push({ name: 'login' })
+};
+
+const doChineseFood = () => {
+    router.push({ name: 'chineseFood' })
+};
+
+const doWesternFood = () => {
+    router.push({ name: 'westernFood' })
+};
+
+const doDessert = () => {
+    router.push({ name: 'dessert' })
+};
+
+const doOthers = () => {
+    router.push({ name: 'others' })
+};
+
+const doArticle = () => { };
+
+</script>
 
 <style scoped>
 /*背景图相关设置 */
@@ -175,12 +229,12 @@
 }
 
 .forum-login-button {
-    /*登录按钮相关设置 */
+    /*退出登录按钮相关设置 */
     position: absolute;
     top: 66px;
     left: 1400px;
     height: 33px;
-    width: 70px;
+    width: 80px;
     background: #08664B;
     border-color: black;
     border-radius: 14px;
@@ -188,23 +242,6 @@
 }
 
 .forum-login-button:hover {
-    opacity: 0.8;
-}
-
-.forum-register-button {
-    /*注册按钮相关设置 */
-    position: absolute;
-    top: 66px;
-    left: 1470px;
-    height: 33px;
-    width: 70px;
-    background: #08664B;
-    border-color: black;
-    border-radius: 14px;
-    box-shadow: 0px 4px 4px 0px gray;
-}
-
-.forum-register-button:hover {
     opacity: 0.8;
 }
 
@@ -304,7 +341,7 @@
 }
 
 .forum-article1 {
-    /*菜品种类第四个按钮相关设置 */
+    /*文章栏相关设置 */
     position: absolute;
     top: 360px;
     left: -60px;
@@ -320,7 +357,7 @@
 }
 
 .forum-article2 {
-    /*菜品种类第四个按钮相关设置 */
+    /*文章栏相关设置 */
     position: absolute;
     top: 360px;
     left: 635px;
@@ -336,10 +373,10 @@
 }
 
 .forum-article3 {
-    /*菜品种类第四个按钮相关设置 */
+    /*文章栏相关设置 */
     position: absolute;
     top: 600px;
-    left: -125px;
+    left: -124px;
     height: 180px;
     width: 640px;
     background: #e5e5e5;
@@ -352,10 +389,10 @@
 }
 
 .forum-article4 {
-    /*菜品种类第四个按钮相关设置 */
+    /*文章栏相关设置 */
     position: absolute;
     top: 600px;
-    left: 573px;
+    left: 572px;
     height: 180px;
     width: 640px;
     background: #e5e5e5;
@@ -365,6 +402,76 @@
 
 .forum-article4:hover {
     opacity: 0.7;
+}
+
+.forum-article5 {
+    /*文章栏相关设置 */
+    position: absolute;
+    top: 840px;
+    left: -188px;
+    height: 180px;
+    width: 640px;
+    background: #e5e5e5;
+    border-color: rgb(255, 255, 255);
+    border-radius: 12px;
+}
+
+.forum-article5:hover {
+    opacity: 0.7;
+}
+
+.forum-article6 {
+    /*文章栏相关设置 */
+    position: absolute;
+    top: 840px;
+    left: 509px;
+    height: 180px;
+    width: 640px;
+    background: #e5e5e5;
+    border-color: rgb(255, 255, 255);
+    border-radius: 12px;
+}
+
+.forum-article6:hover {
+    opacity: 0.7;
+}
+
+.forum-article7 {
+    /*文章栏相关设置 */
+    position: absolute;
+    top: 1080px;
+    left: -252px;
+    height: 180px;
+    width: 640px;
+    background: #e5e5e5;
+    border-color: rgb(255, 255, 255);
+    border-radius: 12px;
+}
+
+.forum-article7:hover {
+    opacity: 0.7;
+}
+
+.forum-article8 {
+    /*文章栏相关设置 */
+    position: absolute;
+    top: 1080px;
+    left: 446px;
+    height: 180px;
+    width: 640px;
+    background: #e5e5e5;
+    border-color: rgb(255, 255, 255);
+    border-radius: 12px;
+}
+
+.forum-article8:hover {
+    opacity: 0.7;
+}
+
+.elui {
+    position: absolute;
+    top: 1300px;
+    left: 580px;
 }
 
 :deep(.el-input__wrapper) {
@@ -377,4 +484,5 @@
 
 :deep(.el-input__inner) {
     color: rgb(235, 235, 235);
-}</style>
+}
+</style>
