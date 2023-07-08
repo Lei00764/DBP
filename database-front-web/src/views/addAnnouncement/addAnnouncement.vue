@@ -12,24 +12,38 @@
                         </el-button>
                     </el-form-item>
                     <el-form-item>
-                    <!-- 返回管理员个人主页 -->
+                    <!-- 退出登录 -->
                         <el-button type="primary" class="announ-corner-button2" @click="doLogOut">
-                            <span>个人主页</span>
+                            <span>退出登录</span>
                         </el-button>
                     </el-form-item>
                 </el-form>
             </div>
-            <!-- 返回按钮 -->
-            <div class="announ-back" :class="navBarFixed == true ? 'navBarWrap' :''">
+            <!-- 按钮 -->
+            <div class="announ-button" :class="navBarFixed == true ? 'navBarWrap' :''">
+                <!-- 返回按钮 -->
                 <el-form-item>
                     <el-button type="primary" class="announ-back-button" @click="ReturnAnnoun">
                         <span class="iconfont icon-Back"></span>
                         <span>返回</span>
                     </el-button>
                 </el-form-item>
+                <!-- 发布按钮 -->
+                <el-form-item>
+                    <el-button type="primary" class="announ-publish-button" @click="Publish">
+                        <span class="iconfont icon-publish"></span>
+                        <span>发布</span>
+                    </el-button>
+                </el-form-item>
             </div>
-            <!-- 展示公告 -->
+            <!-- 展示公告板，添加内容 -->
             <div class="announ-announcement-form">
+                <span class="announ-announcement-title-word">标题</span>
+                <div class="announ-announcement-title">
+                </div>
+                <span class="announ-announcement-content-word">内容</span>
+                <div class="announ-announcement-content">
+                </div>
             </div>
         </div>
     </div>
@@ -70,7 +84,7 @@ const doLogOut = () => {
 
 
 .announcement-page {
-    background-image: url('@/assets/announcement-detail-bkg.png');
+    background-image: url('@/assets/addNewAnnouncement.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -101,7 +115,7 @@ const doLogOut = () => {
 }
 
 
-/* 顶部导航按钮2-个人主页 */
+/* 顶部导航按钮2-退出登录 */
 .announ-corner-button2 {
     position: absolute;
     left: 730px;
@@ -113,9 +127,9 @@ const doLogOut = () => {
     box-shadow: 0px 4px 4px 0px gray;
 }
 
-.announ-back{
+.announ-button{
     position: sticky;
-    top: 90%;
+    top: 2100px;
     left: 90%;
     width: 30%;
 }
@@ -123,10 +137,18 @@ const doLogOut = () => {
 /* 返回按钮 */
 .announ-back-button{
     position: sticky;
-    top: 2000px;
-    left: 85%;
+    top: 70px;
+    left: 91%;
     height: 69%;
-    width: 30%;
+    background: #08664B;
+}
+
+/* 发布按钮 */
+.announ-publish-button{
+    position: sticky;
+    top: 70px;
+    left: 91%;
+    height: 69%;
     background: #08664B;
 }
 
@@ -142,6 +164,35 @@ const doLogOut = () => {
     background-color: #ccd1cf;
 }
 
+.announ-announcement-title{
+    position:absolute;
+    top: 28px;
+    left: 80px;
+    height: 55px;
+    width: 1040px;
+    border-radius: 12px;
+    background-color: white;
+}
+.announ-announcement-title-word{
+    position:absolute;
+    top: 40px;
+    left: 40px;
+}
+
+.announ-announcement-content{
+    position:absolute;
+    top: 120px;
+    left: 80px;
+    height: 245px;
+    width: 1040px;
+    border-radius: 12px;
+    background-color: white;
+}
+.announ-announcement-content-word{
+    position:absolute;
+    top: 130px;
+    left: 40px;
+}
 
 
 

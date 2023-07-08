@@ -1,11 +1,11 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1688634034329') format('truetype');
+  src: url('iconfont.ttf?t=1688818144953') format('truetype');
 }
 
 .iconfont {
   font-family: "iconfont" !important;
-  font-size: 36px;
+  font-size: 26px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -13,6 +13,10 @@
 
 .icon-baseline-add_circle_outline-px:before {
   content: "\e677";
+}
+
+.icon-publish:before {
+  content: "\e578";
 }
 
 .icon-Back:before {
@@ -47,23 +51,27 @@
   content: "\e682";
 }
 
-.icon-Share:before {
+.icon-a-Morehoriz:before {
   content: "\e683";
 }
 
-.icon-Search:before {
+.icon-Share:before {
   content: "\e684";
 }
 
-.icon-Settings:before {
+.icon-Search:before {
   content: "\e685";
 }
 
-.icon-a-Thumbup2:before {
+.icon-Settings:before {
   content: "\e686";
 }
 
-.icon-a-Thumbup:before {
+.icon-a-Thumbup2:before {
   content: "\e687";
+}
+
+.icon-a-Thumbup:before {
+  content: "\e688";
 }
 

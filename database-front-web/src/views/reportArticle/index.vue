@@ -1,3 +1,4 @@
+<!-- 此处为举报帖子的举报界面 -->
 <template>
     <div>
         <div class="announcement-page">
@@ -19,17 +20,31 @@
                     </el-form-item>
                 </el-form>
             </div>
-            <!-- 返回按钮 -->
-            <div class="announ-back" :class="navBarFixed == true ? 'navBarWrap' :''">
+            <!-- 按钮 -->
+            <div class="announ-button" :class="navBarFixed == true ? 'navBarWrap' :''">
+                <!-- 返回按钮 -->
                 <el-form-item>
                     <el-button type="primary" class="announ-back-button" @click="ReturnAnnoun">
                         <span class="iconfont icon-Back"></span>
                         <span>返回</span>
                     </el-button>
                 </el-form-item>
+                <!-- 发布按钮 -->
+                <el-form-item>
+                    <el-button type="primary" class="announ-publish-button" @click="Publish">
+                        <span class="iconfont icon-publish"></span>
+                        <span>提交</span>
+                    </el-button>
+                </el-form-item>
             </div>
-            <!-- 展示公告 -->
+            <!-- 展示举报页 -->
             <div class="announ-announcement-form">
+                <span class="announ-announcement-title-word">举报原因</span>
+                <div class="announ-announcement-title">
+                </div>
+                <span class="announ-announcement-content-word">详细说明</span>
+                <div class="announ-announcement-content">
+                </div>
             </div>
         </div>
     </div>
@@ -47,14 +62,20 @@ const formData = reactive({
 
 
 const doReturnHome = () => {
-    //这里进行返回管理员主页（个人信息页）操作
+    //这里进行返回用户首页操作
     router.push({ name: 'homeAdmin' });
+};
+
+const doReturnUserHome = () => {
+    //这里进行返回用户个人信息页面操作
+    router.push({ name: 'userHomePage' });
 };
 
 
 const ReturnAnnoun = () => {
-    //这里进行返回公告栏操作
-    router.push({ name: 'announcement' })
+    //这里进行返回帖子详情操作
+    //这里还不确定，因为每个帖子举报的回退要退回对应帖子
+    router.push({ name: 'announcementDetail' })
 };
 
 
@@ -70,7 +91,7 @@ const doLogOut = () => {
 
 
 .announcement-page {
-    background-image: url('@/assets/announcement-detail-bkg.png');
+    background-image: url('@/assets/forum_bkg.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -113,9 +134,9 @@ const doLogOut = () => {
     box-shadow: 0px 4px 4px 0px gray;
 }
 
-.announ-back{
+.announ-button{
     position: sticky;
-    top: 90%;
+    top: 2100px;
     left: 90%;
     width: 30%;
 }
@@ -123,10 +144,18 @@ const doLogOut = () => {
 /* 返回按钮 */
 .announ-back-button{
     position: sticky;
-    top: 2000px;
-    left: 85%;
+    top: 70px;
+    left: 91%;
     height: 69%;
-    width: 30%;
+    background: #08664B;
+}
+
+/* 发布按钮 */
+.announ-publish-button{
+    position: sticky;
+    top: 70px;
+    left: 91%;
+    height: 69%;
     background: #08664B;
 }
 
@@ -142,6 +171,35 @@ const doLogOut = () => {
     background-color: #ccd1cf;
 }
 
+.announ-announcement-title{
+    position:absolute;
+    top: 28px;
+    left: 80px;
+    height: 55px;
+    width: 1040px;
+    border-radius: 12px;
+    background-color: white;
+}
+.announ-announcement-title-word{
+    position:absolute;
+    top: 40px;
+    left: 10px;
+}
+
+.announ-announcement-content{
+    position:absolute;
+    top: 120px;
+    left: 80px;
+    height: 245px;
+    width: 1040px;
+    border-radius: 12px;
+    background-color: white;
+}
+.announ-announcement-content-word{
+    position:absolute;
+    top: 130px;
+    left: 10px;
+}
 
 
 

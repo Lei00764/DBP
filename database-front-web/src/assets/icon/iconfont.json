@@ -13,6 +13,13 @@
       "unicode_decimal": 58999
     },
     {
+      "icon_id": "29720983",
+      "name": "publish",
+      "font_class": "publish",
+      "unicode": "e578",
+      "unicode_decimal": 58744
+    },
+    {
       "icon_id": "36204165",
       "name": "Back",
       "font_class": "Back",
@@ -69,39 +76,46 @@
       "unicode_decimal": 59010
     },
     {
+      "icon_id": "36204197",
+      "name": "More horiz",
+      "font_class": "a-Morehoriz",
+      "unicode": "e683",
+      "unicode_decimal": 59011
+    },
+    {
       "icon_id": "36204208",
       "name": "Share",
       "font_class": "Share",
-      "unicode": "e683",
-      "unicode_decimal": 59011
+      "unicode": "e684",
+      "unicode_decimal": 59012
     },
     {
       "icon_id": "36204210",
       "name": "Search",
       "font_class": "Search",
-      "unicode": "e684",
-      "unicode_decimal": 59012
+      "unicode": "e685",
+      "unicode_decimal": 59013
     },
     {
       "icon_id": "36204212",
       "name": "Settings",
       "font_class": "Settings",
-      "unicode": "e685",
-      "unicode_decimal": 59013
+      "unicode": "e686",
+      "unicode_decimal": 59014
     },
     {
       "icon_id": "36204216",
       "name": "Thumb up2",
       "font_class": "a-Thumbup2",
-      "unicode": "e686",
-      "unicode_decimal": 59014
+      "unicode": "e687",
+      "unicode_decimal": 59015
     },
     {
       "icon_id": "36204219",
       "name": "Thumb up",
       "font_class": "a-Thumbup",
-      "unicode": "e687",
-      "unicode_decimal": 59015
+      "unicode": "e688",
+      "unicode_decimal": 59016
     }
   ]
 }

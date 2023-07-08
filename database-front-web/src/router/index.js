@@ -65,6 +65,11 @@ const router = createRouter({
             component: () => import('@/views/forumArticleDetail/forumArticleDetail.vue'),
         },
         {
+            path: '/reportArticle',  // 论坛帖子举报页
+            name: 'reportArticle',
+            component: () => import('@/views/reportArticle/index.vue'),
+        },
+        {
             path: '/userHomePage',  // 个人主页 
             name: 'userHomePage',
             children: [

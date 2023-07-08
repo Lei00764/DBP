@@ -14,7 +14,6 @@
                             </template>
                         </el-input>
                     </el-form-item>
-
                     <el-form-item>
                         <el-button type="primary" class="forum-searchbutton" @click="doSearch">
                             <span>搜索</span>
@@ -41,18 +40,53 @@
             </div>
             <!-- 展示帖子详情 -->
             <div class="announ-announcement-form">
-                <!-- <span>{{ articleInfo.title }}</span> -->
+                <!-- 计划做个弹窗举报按钮，还未实现 -->
                 <el-icon  class="userReportIcon"  @click="Report">
                         <MoreFilled />
                 </el-icon>
+                <!-- 文章详情展示未完成 -->
+                <div class="title">
+                    Title:{{ props.title }}       
+                </div>
+                <div class="content">
+                    Content:{{ props.content }}       
+                </div>
+                <div class="author">
+                    Author:{{ props.author_name }}      
+                </div>
+                <div class="publish_time">
+                    Publish_Time:{{ props.publish_time }}      
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, reactive, proxyRefs } from 'vue';
-import router from "@/router/index.js"
+import { ref, reactive,toRefs,onMounted } from 'vue';
+import { userLogin } from '@/api/user';
+import Message from "@/utils/Message.js"
+import { House,Star,User} from '@element-plus/icons-vue'
+import { ElPagination } from 'element-plus' 
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const props = defineProps({
+    title: {
+        type:String, // 可以设置传来值的类型
+        default:""
+    },
+    content:{
+        type:String,
+        default:""
+    },
+    publish_time:{
+        
+    },
+    author_name:{
+        type:String,
+        default:""
+    },
+})
 
 const doSearch = () => { 
     //进行搜索操作
@@ -192,24 +226,55 @@ const formData = reactive({
     opacity: 0.8;
 }
 
-.user-report-button{
+.userReportIcon{
     position: absolute;
-    top: 230px;
-    left: 1180px;
+    top: 20px;
+    left: 960px;
     
 }
 
 /* 该版式为帖子详情页版式 */
 .announ-announcement-form{
     position: absolute;
-    top: 230px;
+    top: 200px;
     left: 180px;
     height: 1000px; 
     width: 1000px;
     border-radius: 12px;
     background-color: #ccd1cf;
 }
-
+/* 帖子标题 */
+.title{
+    position: absolute;
+    top: 20px;
+    left: 18px;
+    height: 100px; 
+    width: 1000px;
+}
+/* 帖子内容展示 */
+.content{
+    position: absolute;
+    top: 150px;
+    left: 18px;
+    height: 900px; 
+    width: 1000px;
+}
+/* 帖子作者 */
+.author{
+    position: absolute;
+    top: 20px;
+    left: 700px;
+    height: 900px; 
+    width: 1000px;
+}
+/* 帖子发布时间 */
+.publish_time{
+    position: absolute;
+    top: 120px;
+    left: 18px;
+    height: 900px; 
+    width: 1000px;
+}
 
 
 
