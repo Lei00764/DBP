@@ -145,4 +145,141 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             });
         }
     }
+
+     //删除文章
+    [HttpDelete("deleteArticle/post_id")]
+    public async Task<IActionResult> DeleteArticleAsync(int post_id)
+    {
+        var code = 200;
+        var msg = "success";
+        var temp = await _database.Articles.ToListAsync();
+        bool exist = false;
+        if (temp != null)//判断表内是否有该文章
+        {
+            foreach (var article in temp)
+            {
+                if (article.PostId == post_id)
+                {
+                    exist = true;
+                    break;
+                }
+            }
+        }
+        if (exist){
+            var article_data = await _database.Articles.Where(a => a.PostId == post_id).ToListAsync();
+            _database.Articles.RemoveRange(article_data); //删除操作
+            await _database.SaveChangesAsync();
+            return Ok(new
+            {
+                code = code,
+                msg = msg,
+            });
+        }
+        else
+        {
+            code = 400;
+            msg = "不存在该文章";
+            return BadRequest(new
+            {
+                code = code,
+                msg = msg
+            });
+        }
+    }
+
+    //修改文章
+    [HttpPost("updateArticle/post_id")]
+    public async Task<IActionResult> UpdateArticleAsync(int post_id,string title,string content)
+    {
+        var code = 200;
+        var msg = "success";
+        var temp = await _database.Articles.ToListAsync();
+        bool exist = false;
+        if (temp != null)//判断表内是否有该文章
+        {
+            foreach (var article in temp)
+            {
+                if (article.PostId == post_id)
+                {
+                    exist = true;
+                    break;
+                }
+            }
+        }
+        if(exist){
+            var article_data = _database.Articles.Where(a => a.PostId == post_id);
+            foreach (var item in article_data){
+                item.Title = title;
+                item.Content = content;
+            }
+            await _database.SaveChangesAsync();
+            return Ok(new
+            {
+                code = code,
+                msg = msg,
+            });
+        }
+        else
+        {
+            code = 400;
+            msg = "不存在该文章";
+            return BadRequest(new
+            {
+                code = code,
+                msg = msg
+            });
+        }
+    }
+
+    //发布文章  传参：用户id
+    [HttpPost("postArticle")]
+    public async Task<IActionResult> postArticleAsync(int post_id)
+    {
+         return Ok(new
+            {
+                code = 200
+            });
+        //TODO:
+    }
+
+    //查找文章信息
+    [HttpGet("Article/search")]
+    public async Task<IActionResult> searchArticleAsync(int user_id)
+    {
+        var code = 200;
+        var msg = "success";
+        var temp = await _database.Articles.ToListAsync();
+        bool exist = false;
+        if (temp != null)//判断表内是否有该文章
+        {
+            foreach (var article in temp)
+            {
+                if (article.AuthorId == user_id)
+                {
+                    exist = true;
+                    break;
+                }
+            }
+        }
+        if(exist){
+            //查找用户写的所有文章并返回
+            var article_data = _database.Articles.Where(a => a.AuthorId == user_id);
+            return Ok(new
+            {
+                code = code,
+                msg = msg,
+                data = article_data
+            });
+        }
+        else{
+            code = 400;
+            msg = "该用户无发布的文章";
+            return BadRequest(new
+            {
+                code = code,
+                msg = msg
+            });
+        }
+    }
+
 }
