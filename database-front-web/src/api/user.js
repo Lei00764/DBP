@@ -50,7 +50,7 @@ export function userRegister(params) {
 export function getArticleDetail(params) {
     Request({
         method: 'GET',
-        url: 'http://127.0.0.1:4523/m1/2699367-0-febb5d0d/api/show',
+        url: 'http://127.0.0.1:4523/m1/2699367-0-febb5d0d/api/forum/getArticleDetail',
         params: params
     }).then(function (response) {
         if (response.data.code === 200) {//返回帖子信息

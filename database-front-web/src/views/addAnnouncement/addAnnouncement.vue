@@ -51,12 +51,13 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
-import router from "@/router/index.js"
+import router from "@/router/index.js";
+import { adminPublishAnnouncement } from '@/api/user';
 
 
 
 const formData = reactive({
-    keywords: '',
+    content: '',
 });
 
 

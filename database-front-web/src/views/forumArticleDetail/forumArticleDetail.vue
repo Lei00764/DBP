@@ -21,7 +21,7 @@
                     </el-form-item>
                 </el-form>
             </div>
-            <div class = "button">
+            <div>
                 <el-form :inline=true>
                     <el-icon class="homepageIcon" @click="doHome">
                         <HomeFilled />
@@ -64,10 +64,8 @@
 
 <script setup>
 import { ref, reactive,toRefs,onMounted } from 'vue';
-import { userLogin } from '@/api/user';
+import { getArticleDetail } from '@/api/user';
 import Message from "@/utils/Message.js"
-import { House,Star,User} from '@element-plus/icons-vue'
-import { ElPagination } from 'element-plus' 
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const props = defineProps({
@@ -108,30 +106,18 @@ const doLogOut = () => {
 };
 
 const Report = () => {
+    //举报页
+    router.push({name:'reportArticle'})
+};
 
-}
 
-const api = {
-    getArticleDetail:"/forum/getArticleDetail",
-}
 
 //文章详情
 const articleInfo =ref({});
-const getArticleDetail = async (PostId)=>{
-    let result = await proxy.Request({
-        url: api.getArticleDetail,
-        params:{
-            PostId:PostId,
-        }
-    });
-    if(!result){
-        return;
-    }
-    articleInfo.value = result.data;
-}
+
 
 const formData = reactive({
-    
+    articleId:"",
 });
 </script>
 
