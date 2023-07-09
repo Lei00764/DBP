@@ -78,6 +78,7 @@ public class LikeController : ControllerBase
         {
             if (r_exist == false)//未点赞
             {
+                msg="点赞成功";
                 item.LikeNum += 1;
                 await _database.SaveChangesAsync();
                 var newRecord = new Like()
@@ -90,6 +91,7 @@ public class LikeController : ControllerBase
             }
             else//已点赞
             {
+                msg="取消点赞成功";
                 item.LikeNum -= 1;
                 await _database.SaveChangesAsync();
                 _database.Likes.RemoveRange(record);//删除记录
