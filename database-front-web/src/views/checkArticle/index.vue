@@ -48,6 +48,10 @@
                     </el-icon>
                 </el-button>
             </card>
+
+            <el-icon class="icon" @click="back">
+                <Back />
+            </el-icon>
         </div>
     </div>
 </template>
@@ -62,6 +66,10 @@ const goArticle = () =>{
 
 const pass =() =>{
     
+}
+
+const back =() =>{
+    router.push({ name: 'homeAdmin'})
 }
 
 let list=[{
@@ -140,6 +148,17 @@ let list=[{
     height:500px;
     box-shadow: 4px 4px 4px 2px gray;
     border-radius: 10px;
+}
+
+.icon{
+    font-size: 25px;
+    position:absolute;
+    top: 7%;
+    left:3%
+}
+
+.icon:hover{
+    color: grey;
 }
 
 </style>
