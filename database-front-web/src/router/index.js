@@ -60,6 +60,11 @@ const router = createRouter({
             component: () => import("@/views/forum/index.vue"),
         },
         {
+            path: '/addArticle',  // 发布文章
+            name: 'addArticle',
+            component: () => import('@/views/addArticle/index.vue'),
+        },
+        {
             path: '/forumArticleDetail',  // 论坛帖子详情页
             name: 'forumArticleDetail',
             component: () => import('@/views/forumArticleDetail/forumArticleDetail.vue'),
