@@ -8,7 +8,6 @@ namespace auth.Models;
 public class Profession 
 {
     // 请与数据库中表字段保持一致
-    [Key]
     [Column("USERID")]
     public int? UserId { get; set; }
     [Column("APPLYTIME")]
@@ -19,4 +18,8 @@ public class Profession
     public string? Evidence { get; set; }
     [Column("ISACCEPTED")]
     public int? IsAccepted { get; set; }
+    [Key]
+    [Column("REQUESTID")]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int? RequestId { get; set; }
 }
