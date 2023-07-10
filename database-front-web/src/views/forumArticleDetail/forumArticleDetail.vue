@@ -21,11 +21,7 @@
                     </el-form-item>
                 </el-form>
             </div>
-<<<<<<< HEAD
             <div>
-=======
-            <div class="button">
->>>>>>> main
                 <el-form :inline=true>
                     <el-icon class="homepageIcon" @click="doHome">
                         <HomeFilled />
@@ -67,17 +63,9 @@
 </template>
 
 <script setup>
-<<<<<<< HEAD
 import { ref, reactive,toRefs,onMounted } from 'vue';
 import { getArticleDetail } from '@/api/user';
 import Message from "@/utils/Message.js"
-=======
-import { ref, reactive, toRefs, onMounted } from 'vue';
-import { userLogin } from '@/api/user';
-import Message from "@/utils/Message.js"
-import { House, Star, User } from '@element-plus/icons-vue'
-import { ElPagination } from 'element-plus'
->>>>>>> main
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const props = defineProps({
@@ -123,7 +111,6 @@ const Report = () => {
 };
 
 
-<<<<<<< HEAD
 
 //文章详情
 const articleInfo =ref({});
@@ -131,29 +118,6 @@ const articleInfo =ref({});
 
 const formData = reactive({
     articleId:"",
-=======
-const api = {
-    getArticleDetail: "/forum/getArticleDetail",
-}
-
-//文章详情
-const articleInfo = ref({});
-const getArticleDetail = async (PostId) => {
-    let result = await proxy.Request({
-        url: api.getArticleDetail,
-        params: {
-            PostId: PostId,
-        }
-    });
-    if (!result) {
-        return;
-    }
-    articleInfo.value = result.data;
-}
-
-const formData = reactive({
-
->>>>>>> main
 });
 </script>
 

@@ -3,7 +3,6 @@
     <div>
         <div class="announcement-page">
             <!-- 顶部导航栏 -->
-<<<<<<< HEAD
             <div>
                 <el-form :inline=true>
                     <el-icon class="homepageIcon" @click="doHome">
@@ -15,20 +14,6 @@
 
                     <el-form-item>
                         <el-button type="primary" class="forum-logout-button" @click="doLogOut">
-=======
-            <div class="announ-head-form" :class="navBarFixed == true ? 'navBarWrap' : ''">
-                <el-form :inline=true>
-                    <!-- 表单 -->
-                    <el-form-item>
-                        <!-- 返回管理员主页 -->
-                        <el-button type="primary" class="announ-corner-button1" @click="doReturnHome">
-                            <span>首页</span>
-                        </el-button>
-                    </el-form-item>
-                    <el-form-item>
-                        <!-- 退出登录 -->
-                        <el-button type="primary" class="announ-corner-button2" @click="doLogOut">
->>>>>>> main
                             <span>退出登录</span>
                         </el-button>
                     </el-form-item>
