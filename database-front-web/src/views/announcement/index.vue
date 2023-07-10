@@ -2,9 +2,9 @@
     <div>
         <div class="announcement-page">
             <!-- 顶部导航栏 -->
-            <div class="announ-head-form" :class="navBarFixed == true ? 'navBarWrap' :''">
+            <div class="announ-head-form" :class="navBarFixed == true ? 'navBarWrap' : ''">
                 <el-form :inline=true>
-                       <!-- 表单 -->
+                    <!-- 表单 -->
                     <!-- 搜索栏及按钮控件设置 -->
                     <el-form-item>
                         <el-input placeholder="请输入关键词" class="announ-head-search" v-model="formData.keywords">
@@ -22,15 +22,15 @@
                     </el-form-item>
                 </el-form>
                 <el-form :inline=true>
-                 <!-- 表单 -->
+                    <!-- 表单 -->
                     <el-form-item>
-                    <!-- 返回管理员主页 -->
+                        <!-- 返回管理员主页 -->
                         <el-button type="primary" class="announ-corner-button1" @click="doReturnHome">
                             <span>首页</span>
                         </el-button>
                     </el-form-item>
                     <el-form-item>
-                    <!-- 登出 -->
+                        <!-- 登出 -->
                         <el-button type="primary" class="announ-corner-button2" @click="doLogOut">
                             <span>退出登录</span>
                         </el-button>
@@ -38,7 +38,7 @@
                 </el-form>
             </div>
             <!-- 发布新公告按钮 -->
-            <div class="announ-add-new" :class="navBarFixed == true ? 'navBarWrap' :''">
+            <div class="announ-add-new" :class="navBarFixed == true ? 'navBarWrap' : ''">
                 <el-form-item>
                     <el-button type="primary" class="announ-add-new-button" @click="addNewAccoun">
                         <span class="iconfont icon-baseline-add_circle_outline-px"></span>
@@ -48,7 +48,7 @@
             </div>
             <!-- 展示公告,版式已经设置好 -->
             <div>
-              
+
             </div>
         </div>
     </div>
@@ -90,12 +90,10 @@ const addNewAccoun = () => {
 </script>
 
 <style scoped>
-
-
 /* 该版式为公告版式 */
-.announ-announcement-form{
+.announ-announcement-form {
     position: absolute;
-    height: 130px; 
+    height: 130px;
     width: 450px;
     border-radius: 12px;
     background-color: #c4c7c6;
@@ -165,7 +163,7 @@ const addNewAccoun = () => {
     box-shadow: 0px 4px 4px 0px gray;
 }
 
-.announ-add-new{
+.announ-add-new {
     position: sticky;
     top: 90%;
     left: 90%;
@@ -173,7 +171,7 @@ const addNewAccoun = () => {
 }
 
 
-.announ-add-new-button{
+.announ-add-new-button {
     position: sticky;
     top: 2000px;
     left: 90%;

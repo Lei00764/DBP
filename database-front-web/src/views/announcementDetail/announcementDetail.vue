@@ -2,17 +2,17 @@
     <div>
         <div class="announcement-page">
             <!-- 顶部导航栏 -->
-            <div class="announ-head-form" :class="navBarFixed == true ? 'navBarWrap' :''">
+            <div class="announ-head-form" :class="navBarFixed == true ? 'navBarWrap' : ''">
                 <el-form :inline=true>
-                 <!-- 表单 -->
+                    <!-- 表单 -->
                     <el-form-item>
-                    <!-- 返回管理员主页 -->
+                        <!-- 返回管理员主页 -->
                         <el-button type="primary" class="announ-corner-button1" @click="doReturnHome">
                             <span>首页</span>
                         </el-button>
                     </el-form-item>
                     <el-form-item>
-                    <!-- 退出登录 -->
+                        <!-- 退出登录 -->
                         <el-button type="primary" class="announ-corner-button2" @click="doLogOut">
                             <span>退出登录</span>
                         </el-button>
@@ -20,7 +20,7 @@
                 </el-form>
             </div>
             <!-- 返回按钮 -->
-            <div class="announ-back" :class="navBarFixed == true ? 'navBarWrap' :''">
+            <div class="announ-back" :class="navBarFixed == true ? 'navBarWrap' : ''">
                 <el-form-item>
                     <el-button type="primary" class="announ-back-button" @click="ReturnAnnoun">
                         <span class="iconfont icon-Back"></span>
@@ -68,8 +68,6 @@ const doLogOut = () => {
 </script>
 
 <style scoped>
-
-
 .announcement-page {
     background-image: url('@/assets/announcement-detail-bkg.png');
     background-position: center;
@@ -114,7 +112,7 @@ const doLogOut = () => {
     box-shadow: 0px 4px 4px 0px gray;
 }
 
-.announ-back{
+.announ-back {
     position: sticky;
     top: 90%;
     left: 90%;
@@ -122,7 +120,7 @@ const doLogOut = () => {
 }
 
 /* 返回按钮 */
-.announ-back-button{
+.announ-back-button {
     position: sticky;
     top: 2000px;
     left: 85%;
@@ -133,17 +131,13 @@ const doLogOut = () => {
 
 
 /* 该版式为公告版式 */
-.announ-announcement-form{
+.announ-announcement-form {
     position: absolute;
     top: 230px;
     left: 50px;
-    height: 400px; 
+    height: 400px;
     width: 1200px;
     border-radius: 12px;
     background-color: #ccd1cf;
 }
-
-
-
-
 </style>

@@ -69,7 +69,14 @@ const doSubmitRegister = () => {
         type: formData.type,
     };
 
-    userRegister(params); // 请求注册
+    userRegister(params) // 请求注册
+        .then(function (result) {  // result 是 api /user/register 的返回值，在后端 api 定义
+            console.log("注册成功");
+            console.log(result);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 };
 
 const doSubmitLogin = () => {

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace auth.Models;
 
 [Table("FOLLOW")]
-[PrimaryKey(nameof(UserId),nameof(FollowerUserId))]
+[PrimaryKey(nameof(UserId), nameof(FollowerUserId))]
 public class Follow
 {
     // 请与数据库中表字段保持一致

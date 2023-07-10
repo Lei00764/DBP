@@ -21,7 +21,11 @@
                     </el-form-item>
                 </el-form>
             </div>
+<<<<<<< HEAD
             <div>
+=======
+            <div class="button">
+>>>>>>> main
                 <el-form :inline=true>
                     <el-icon class="homepageIcon" @click="doHome">
                         <HomeFilled />
@@ -41,21 +45,21 @@
             <!-- 展示帖子详情 -->
             <div class="announ-announcement-form">
                 <!-- 计划做个弹窗举报按钮，还未实现 -->
-                <el-icon  class="userReportIcon"  @click="Report">
-                        <MoreFilled />
+                <el-icon class="userReportIcon" @click="Report">
+                    <MoreFilled />
                 </el-icon>
                 <!-- 文章详情展示未完成 -->
                 <div class="title">
-                    Title:{{ props.title }}       
+                    Title:{{ props.title }}
                 </div>
                 <div class="content">
-                    Content:{{ props.content }}       
+                    Content:{{ props.content }}
                 </div>
                 <div class="author">
-                    Author:{{ props.author_name }}      
+                    Author:{{ props.author_name }}
                 </div>
                 <div class="publish_time">
-                    Publish_Time:{{ props.publish_time }}      
+                    Publish_Time:{{ props.publish_time }}
                 </div>
             </div>
         </div>
@@ -63,34 +67,42 @@
 </template>
 
 <script setup>
+<<<<<<< HEAD
 import { ref, reactive,toRefs,onMounted } from 'vue';
 import { getArticleDetail } from '@/api/user';
 import Message from "@/utils/Message.js"
+=======
+import { ref, reactive, toRefs, onMounted } from 'vue';
+import { userLogin } from '@/api/user';
+import Message from "@/utils/Message.js"
+import { House, Star, User } from '@element-plus/icons-vue'
+import { ElPagination } from 'element-plus'
+>>>>>>> main
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const props = defineProps({
     title: {
-        type:String, // 可以设置传来值的类型
-        default:""
+        type: String, // 可以设置传来值的类型
+        default: ""
     },
-    content:{
-        type:String,
-        default:""
+    content: {
+        type: String,
+        default: ""
     },
-    publish_time:{
-        
+    publish_time: {
+
     },
-    author_name:{
-        type:String,
-        default:""
+    author_name: {
+        type: String,
+        default: ""
     },
 })
 
-const doSearch = () => { 
+const doSearch = () => {
     //进行搜索操作
 };
 
-const doHome = () => { 
+const doHome = () => {
     //返回用户主页
     router.push({ name: 'homeUser' })
 };
@@ -98,9 +110,9 @@ const doHome = () => {
 const doUser = () => {
     //返回用户个人信息页
     router.push({ name: 'userHomePage' })
- };
+};
 
-const doLogOut = () => { 
+const doLogOut = () => {
     //登出
     router.push({ name: 'login' })
 };
@@ -111,6 +123,7 @@ const Report = () => {
 };
 
 
+<<<<<<< HEAD
 
 //文章详情
 const articleInfo =ref({});
@@ -118,6 +131,29 @@ const articleInfo =ref({});
 
 const formData = reactive({
     articleId:"",
+=======
+const api = {
+    getArticleDetail: "/forum/getArticleDetail",
+}
+
+//文章详情
+const articleInfo = ref({});
+const getArticleDetail = async (PostId) => {
+    let result = await proxy.Request({
+        url: api.getArticleDetail,
+        params: {
+            PostId: PostId,
+        }
+    });
+    if (!result) {
+        return;
+    }
+    articleInfo.value = result.data;
+}
+
+const formData = reactive({
+
+>>>>>>> main
 });
 </script>
 
@@ -208,57 +244,61 @@ const formData = reactive({
     box-shadow: 0px 4px 4px 0px gray;
 }
 
-.userReportIcon:hover{
+.userReportIcon:hover {
     opacity: 0.8;
 }
 
-.userReportIcon{
+.userReportIcon {
     position: absolute;
     top: 20px;
     left: 960px;
-    
+
 }
 
 /* 该版式为帖子详情页版式 */
-.announ-announcement-form{
+.announ-announcement-form {
     position: absolute;
     top: 200px;
     left: 180px;
-    height: 1000px; 
+    height: 1000px;
     width: 1000px;
     border-radius: 12px;
     background-color: #ccd1cf;
 }
+
 /* 帖子标题 */
-.title{
+.title {
     position: absolute;
     top: 20px;
     left: 18px;
-    height: 100px; 
+    height: 100px;
     width: 1000px;
 }
+
 /* 帖子内容展示 */
-.content{
+.content {
     position: absolute;
     top: 150px;
     left: 18px;
-    height: 900px; 
+    height: 900px;
     width: 1000px;
 }
+
 /* 帖子作者 */
-.author{
+.author {
     position: absolute;
     top: 20px;
     left: 700px;
-    height: 900px; 
+    height: 900px;
     width: 1000px;
 }
+
 /* 帖子发布时间 */
-.publish_time{
+.publish_time {
     position: absolute;
     top: 120px;
     left: 18px;
-    height: 900px; 
+    height: 900px;
     width: 1000px;
 }
 
@@ -274,6 +314,4 @@ const formData = reactive({
 
 :deep(.el-input__inner) {
     color: rgb(235, 235, 235);
-}
-
-</style>
+}</style>

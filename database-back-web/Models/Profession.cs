@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace auth.Models;
 
 [Table("PROFESSION")]
-public class Profession 
+public class Profession
 {
     // 请与数据库中表字段保持一致
     [Column("USERID")]

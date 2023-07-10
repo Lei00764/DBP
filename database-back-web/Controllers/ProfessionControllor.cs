@@ -16,7 +16,7 @@ public class ProfessionController : ControllerBase
         _database = appDbContext;  // 依赖注入，在整个类中使用它来进行数据库操作
     }
 
-    [HttpPost("ApplyForProffesion")]//提交专业认证申请（用户）
+    [HttpPost("ApplyForProfession")]//提交专业认证申请（用户）
     public async Task<IActionResult> ApplyForAsync(int user_id, int year, int month, int day, string illustrate, string evidence)//提交专业认证申请（用户）
     {
         var code = 200;
@@ -98,7 +98,7 @@ public class ProfessionController : ControllerBase
         });
     }
 
-    [HttpPost("DealRequest")]
+    [HttpPut("DealRequest")]
     public async Task<IActionResult> DealRequestAync(int request_id, int response)//处理认证申请（管理员）response=1为通过2为不通过
     {
         var code = 200;
@@ -148,13 +148,13 @@ public class ProfessionController : ControllerBase
             {
                 u.Professional = illustrate;
                 await _database.SaveChangesAsync();
-                msg="申请已通过";
+                msg = "申请已通过";
             }
         }
-        else 
+        else
         {
-            code=400;
-            msg="response参数错误";
+            code = 400;
+            msg = "response参数错误";
             return BadRequest(new
             {
                 code = code,

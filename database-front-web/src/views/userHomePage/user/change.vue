@@ -1,14 +1,12 @@
 <template>
-    <div>
+  <div>
     测试
-    </div>
-  </template>
+  </div>
+</template>
   
-  <script>
-  
-  </script>
-  
-  <style scoped>
+<script>
 
-  </style>
+</script>
+  
+<style scoped></style>
   

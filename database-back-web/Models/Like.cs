@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace auth.Models;
 
 [Table("T_LIKE")]
-[PrimaryKey(nameof(UserId),nameof(PostId))]
+[PrimaryKey(nameof(UserId), nameof(PostId))]
 public class Like
 {
     // 请与数据库中表字段保持一致

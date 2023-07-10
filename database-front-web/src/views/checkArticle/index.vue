@@ -48,6 +48,10 @@
                     </el-icon>
                 </el-button>
             </card>
+
+            <el-icon class="icon" @click="back">
+                <Back />
+            </el-icon>
         </div>
     </div>
 </template>
@@ -56,42 +60,46 @@
 import { ref, reactive } from 'vue';
 import router from "@/router/index.js"
 
-const goArticle = () =>{
-    
+const goArticle = () => {
+
 }
 
-const pass =() =>{
-    
+const pass = () => {
+
 }
 
-let list=[{
-        postID:25001,
-        name:"如何做好宫保鸡丁"
-    },
-    {
-        postID:25002,
-        name:"如何做好宫保鸡丁"
-    },
-    {
-        postID:25003,
-        name:"如何做好宫保鸡丁"
-    },
-    {
-        postID:25004,
-        name:"如何做好宫保鸡丁"
-    },
-    {
-        postID:25005,
-        name:"如何做好宫保鸡丁"
-    },
-    {
-        postID:25006,
-        name:"如何做好宫保鸡丁"
-    },
-    {
-        postID:25007,
-        name:"如何做好宫保鸡丁"
-    },
+const back = () => {
+    router.push({ name: 'homeAdmin' })
+}
+
+let list = [{
+    postID: 25001,
+    name: "如何做好宫保鸡丁"
+},
+{
+    postID: 25002,
+    name: "如何做好宫保鸡丁"
+},
+{
+    postID: 25003,
+    name: "如何做好宫保鸡丁"
+},
+{
+    postID: 25004,
+    name: "如何做好宫保鸡丁"
+},
+{
+    postID: 25005,
+    name: "如何做好宫保鸡丁"
+},
+{
+    postID: 25006,
+    name: "如何做好宫保鸡丁"
+},
+{
+    postID: 25007,
+    name: "如何做好宫保鸡丁"
+},
 ]
 
 </script>
@@ -106,14 +114,15 @@ let list=[{
     width: 100vw;
 }
 
-.article-list{
-    background-color:  #ace5d8;
+.article-list {
+    background-color: #ace5d8;
     width: 450px;
-    height:100px;
+    height: 100px;
     box-shadow: 0px 4px 4px 0px gray;
     border-radius: 30px;
 }
-.pass_btn{
+
+.pass_btn {
     width: 35px;
     height: 35px;
     border-radius: 50px;
@@ -122,7 +131,8 @@ let list=[{
     border-color: transparent;
     box-shadow: 0px 4px 4px 0px gray;
 }
-.close_btn{
+
+.close_btn {
     width: 35px;
     height: 35px;
     border-radius: 50px;
@@ -131,15 +141,26 @@ let list=[{
     border-color: transparent;
     box-shadow: 0px 4px 4px 0px gray;
 }
-.card{
-    position:fixed;
-    top:13%;
-    left:48%;
-    background-color:  #ffffff;
+
+.card {
+    position: fixed;
+    top: 13%;
+    left: 48%;
+    background-color: #ffffff;
     width: 600px;
-    height:500px;
+    height: 500px;
     box-shadow: 4px 4px 4px 2px gray;
     border-radius: 10px;
 }
 
+.icon {
+    font-size: 25px;
+    position: absolute;
+    top: 7%;
+    left: 3%
+}
+
+.icon:hover {
+    color: grey;
+}
 </style>

@@ -33,7 +33,13 @@
                     </el-icon>
 
                     <el-form-item>
-                        <el-button type="primary" class="forum-login-button" @click="doLogoff">
+                        <el-button type="primary" class="addArticle-button" @click="doAddArticle">
+                            <span>发布文章</span>
+                        </el-button>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-button type="primary" class="forum-logoff-button" @click="doLogoff">
                             <span>退出登录</span>
                         </el-button>
                     </el-form-item>
@@ -43,11 +49,6 @@
                     <!-- 文章显示区 -->
                     <showArticle></showArticle>
 
-                    <!-- 导航栏设置，暂时先这样，后续会改成element plus -->
-                    <div class="elui">
-                        <el-pagination background page-size="8" layout="prev, pager, next, jumper" :total="1000">
-                        </el-pagination>
-                    </div>
                 </el-form>
             </div>
         </div>
@@ -67,14 +68,23 @@ const formData = reactive({
 const doSearch = () => { };
 
 const doHome = () => {
+    //返回主页
     router.push({ name: 'homeUser' })
 };
 
 const doUser = () => {
-    router.push({ name: 'userHomePage' })
+    //返回用户主页
+    router.push({ path: '../userHomePage' });
+};
+
+
+const doAddArticle = () => {
+    //发布新文章
+    router.push({ name: 'addArticle' })
 };
 
 const doLogoff = () => {
+    //退出登录
     router.push({ name: 'login' })
 };
 
@@ -134,7 +144,7 @@ const doLogoff = () => {
 
 .homepageIcon {
     position: absolute;
-    left: 76%;
+    left: 1230px;
     top: 77px;
     font-size: 33px;
     color: rgb(55, 192, 255)
@@ -146,7 +156,7 @@ const doLogoff = () => {
 
 .userpageIcon {
     position: absolute;
-    left: 80%;
+    left: 1290px;
     top: 77px;
     font-size: 33px;
     color: rgb(55, 192, 255)
@@ -156,11 +166,11 @@ const doLogoff = () => {
     opacity: 0.8;
 }
 
-.forum-login-button {
-    /*退出登录按钮相关设置 */
+.addArticle-button {
+    /*发布文章按钮相关设置 */
     position: absolute;
     top: 66px;
-    left: 1400px;
+    left: 1360px;
     height: 33px;
     width: 80px;
     background: #08664B;
@@ -169,7 +179,36 @@ const doLogoff = () => {
     box-shadow: 0px 4px 4px 0px gray;
 }
 
-.forum-login-button:hover {
+.addArticle-button:hover {
     opacity: 0.8;
+}
+
+.forum-logoff-button {
+    /*退出登录按钮相关设置 */
+    position: absolute;
+    top: 66px;
+    left: 1440px;
+    height: 33px;
+    width: 80px;
+    background: #08664B;
+    border-color: black;
+    border-radius: 14px;
+    box-shadow: 0px 4px 4px 0px gray;
+}
+
+.forum-logoff-button:hover {
+    opacity: 0.8;
+}
+
+:deep(.el-input__wrapper) {
+    /* 搜索输入框背景、圆角、字体颜色设置 */
+    background: #08664B;
+    border-radius: 12px;
+    box-shadow: 0px 4px 4px 0px gray;
+    color: rgb(235, 235, 235);
+}
+
+:deep(.el-input__inner) {
+    color: rgb(235, 235, 235);
 }
 </style>

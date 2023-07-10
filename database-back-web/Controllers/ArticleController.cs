@@ -34,7 +34,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         }
 
         code = 200;
-        var page_size = 10;  // 每一页所容纳的数据量
+        // var page_size = 10;  // 每一页所容纳的数据量
 
         var article_data = await (
             from article in _database.Articles
@@ -146,7 +146,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         }
     }
 
-     //删除文章
+    //删除文章
     [HttpDelete("deleteArticle/post_id")]
     public async Task<IActionResult> DeleteArticleAsync(int post_id)
     {
@@ -165,7 +165,8 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 }
             }
         }
-        if (exist){
+        if (exist)
+        {
             var article_data = await _database.Articles.Where(a => a.PostId == post_id).ToListAsync();
             _database.Articles.RemoveRange(article_data); //删除操作
             await _database.SaveChangesAsync();
@@ -189,7 +190,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
 
     //修改文章
     [HttpPost("updateArticle/post_id")]
-    public async Task<IActionResult> UpdateArticleAsync(int post_id,string title,string content)
+    public async Task<IActionResult> UpdateArticleAsync(int post_id, string title, string content)
     {
         var code = 200;
         var msg = "success";
@@ -206,9 +207,11 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 }
             }
         }
-        if(exist){
+        if (exist)
+        {
             var article_data = _database.Articles.Where(a => a.PostId == post_id);
-            foreach (var item in article_data){
+            foreach (var item in article_data)
+            {
                 item.Title = title;
                 item.Content = content;
             }
@@ -235,10 +238,10 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
     [HttpPost("postArticle")]
     public async Task<IActionResult> postArticleAsync(int post_id)
     {
-         return Ok(new
-            {
-                code = 200
-            });
+        return Ok(new
+        {
+            code = 200
+        });
         //TODO:
     }
 
@@ -261,7 +264,8 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 }
             }
         }
-        if(exist){
+        if (exist)
+        {
             //查找用户写的所有文章并返回
             var article_data = _database.Articles.Where(a => a.AuthorId == user_id);
             return Ok(new
@@ -271,7 +275,8 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 data = article_data
             });
         }
-        else{
+        else
+        {
             code = 400;
             msg = "该用户无发布的文章";
             return BadRequest(new
