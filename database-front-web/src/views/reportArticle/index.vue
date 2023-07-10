@@ -3,6 +3,19 @@
     <div>
         <div class="announcement-page">
             <!-- 顶部导航栏 -->
+<<<<<<< HEAD
+            <div>
+                <el-form :inline=true>
+                    <el-icon class="homepageIcon" @click="doHome">
+                        <HomeFilled />
+                    </el-icon>
+                    <el-icon class="userpageIcon" @click="doUser">
+                        <UserFilled />
+                    </el-icon>
+
+                    <el-form-item>
+                        <el-button type="primary" class="forum-logout-button" @click="doLogOut">
+=======
             <div class="announ-head-form" :class="navBarFixed == true ? 'navBarWrap' : ''">
                 <el-form :inline=true>
                     <!-- 表单 -->
@@ -15,9 +28,11 @@
                     <el-form-item>
                         <!-- 退出登录 -->
                         <el-button type="primary" class="announ-corner-button2" @click="doLogOut">
+>>>>>>> main
                             <span>退出登录</span>
                         </el-button>
                     </el-form-item>
+
                 </el-form>
             </div>
             <!-- 按钮 -->
@@ -61,14 +76,19 @@ const formData = reactive({
 });
 
 
-const doReturnHome = () => {
-    //这里进行返回用户首页操作
-    router.push({ name: 'homeAdmin' });
+const doHome = () => { 
+    //返回用户主页
+    router.push({ name: 'homeUser' })
 };
 
-const doReturnUserHome = () => {
-    //这里进行返回用户个人信息页面操作
-    router.push({ name: 'userHomePage' });
+const doUser = () => {
+    //返回用户个人信息页
+    router.push({ name: 'userHomePage' })
+ };
+
+const doLogOut = () => { 
+    //登出
+    router.push({ name: 'login' })
 };
 
 
@@ -79,17 +99,14 @@ const ReturnAnnoun = () => {
 };
 
 
-const doLogOut = () => {
-    //这里进行登出操作
-    router.push({ name: 'login' })
-};
+
 
 
 </script>
 
 <style scoped>
 .announcement-page {
-    background-image: url('@/assets/forum_bkg.png');
+    background-image: url('@/assets/report.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -108,33 +125,49 @@ const doLogOut = () => {
 
 
 
-/* 顶部导航按钮1-首页 */
-.announ-corner-button1 {
+
+.homepageIcon {
     position: absolute;
-    left: 680px;
-    width: 70px;
-    /* color: green; */
-    background-color: #08664B;
-    border-radius: 12px;
-    box-shadow: 0px 4px 4px 0px gray;
+    left: 73%;
+    top: 70px;
+    font-size: 33px;
+    color: rgb(55, 192, 255)
+}
+
+.homepageIcon:hover {
+    opacity: 0.8;
+}
+
+.userpageIcon {
+    position: absolute;
+    left: 78%;
+    top: 70px;
+    font-size: 33px;
+    color: rgb(55, 192, 255)
+}
+
+.userpageIcon:hover {
+    opacity: 0.8;
 }
 
 
-/* 顶部导航按钮2-退出登录 */
-.announ-corner-button2 {
+/* 顶部导航按钮-退出登录 */
+.forum-logout-button {
+    /*登出按钮相关设置 */
     position: absolute;
-    left: 730px;
-    /* height: 32px; */
+    top: 59px;
+    left: 1230px;
+    height: 33px;
     width: 70px;
-    /* color: green; */
-    background-color: #08664B;
-    border-radius: 12px;
+    background: #08664B;
+    border-color: black;
+    border-radius: 14px;
     box-shadow: 0px 4px 4px 0px gray;
 }
 
 .announ-button {
     position: sticky;
-    top: 2100px;
+    top: 800px;
     left: 90%;
     width: 30%;
 }
