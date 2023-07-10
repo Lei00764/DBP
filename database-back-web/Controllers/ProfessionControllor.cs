@@ -148,13 +148,13 @@ public class ProfessionController : ControllerBase
             {
                 u.Professional = illustrate;
                 await _database.SaveChangesAsync();
-                msg="申请已通过";
+                msg = "申请已通过";
             }
         }
-        else 
+        else
         {
-            code=400;
-            msg="response参数错误";
+            code = 400;
+            msg = "response参数错误";
             return BadRequest(new
             {
                 code = code,

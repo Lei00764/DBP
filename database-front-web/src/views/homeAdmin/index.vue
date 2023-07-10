@@ -77,16 +77,16 @@ const logout = () => {
     //退出登录
     router.push({ name: 'login' })
 };
-const intoCheckProfession = () =>{
+const intoCheckProfession = () => {
     router.push({ name: 'checkProfession' })
 }
-const intoAnnounce = () =>{
+const intoAnnounce = () => {
     router.push({ name: 'announcement' })
 }
-const intoCheckArticle = () =>{
+const intoCheckArticle = () => {
     router.push({ name: 'checkArticle' })
 }
-const intoForum = () =>{
+const intoForum = () => {
     router.push({ name: 'forum' })
 }
 const formData = reactive({
@@ -231,4 +231,5 @@ let AdminID = 2151133;
     width: 195px;
     height: 150px;
     border-radius: 20px;
-}</style>
+}
+</style>

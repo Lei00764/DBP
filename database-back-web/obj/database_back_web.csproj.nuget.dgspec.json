@@ -1,26 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "D:\\VSCodeProjects\\DBP\\database-back-web\\database_back_web.csproj": {}
+    "/Users/lei/Desktop/DBP/database-back-web/database_back_web.csproj": {}
   },
   "projects": {
-    "D:\\VSCodeProjects\\DBP\\database-back-web\\database_back_web.csproj": {
+    "/Users/lei/Desktop/DBP/database-back-web/database_back_web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\VSCodeProjects\\DBP\\database-back-web\\database_back_web.csproj",
+        "projectUniqueName": "/Users/lei/Desktop/DBP/database-back-web/database_back_web.csproj",
         "projectName": "database_back_web",
-        "projectPath": "D:\\VSCodeProjects\\DBP\\database-back-web\\database_back_web.csproj",
-        "packagesPath": "C:\\Users\\13092\\.nuget\\packages\\",
-        "outputPath": "D:\\VSCodeProjects\\DBP\\database-back-web\\obj\\",
+        "projectPath": "/Users/lei/Desktop/DBP/database-back-web/database_back_web.csproj",
+        "packagesPath": "/Users/lei/.nuget/packages/",
+        "outputPath": "/Users/lei/Desktop/DBP/database-back-web/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\13092\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/lei/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files\\dotnet\\sdk\\7.0.305\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -93,7 +92,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.305\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -66,43 +66,43 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import router from "@/router/index.js"
-const intoCard = () =>{
+const intoCard = () => {
     //进入卡片
 }
-const pass = () =>{
+const pass = () => {
     //审核通过
 }
-const backToHome = () =>{
+const backToHome = () => {
     router.push({ name: 'homeAdmin' })
 }
-let list=[{
-        UserID:2151133,
-        name:"Q"
-    },
-    {
-        UserID:2151134,
-        name:"K"
-    },
-    {
-        UserID:2151135,
-        name:"K"
-    },
-    {
-        UserID:2151136,
-        name:"K"
-    },
-    {
-        UserID:2151137,
-        name:"K"
-    },
-    {
-        UserID:2151136,
-        name:"K"
-    },
-    {
-        UserID:2151136,
-        name:"K"
-    },
+let list = [{
+    UserID: 2151133,
+    name: "Q"
+},
+{
+    UserID: 2151134,
+    name: "K"
+},
+{
+    UserID: 2151135,
+    name: "K"
+},
+{
+    UserID: 2151136,
+    name: "K"
+},
+{
+    UserID: 2151137,
+    name: "K"
+},
+{
+    UserID: 2151136,
+    name: "K"
+},
+{
+    UserID: 2151136,
+    name: "K"
+},
 ]
 let avatarURL = " ";
 </script>
@@ -116,14 +116,16 @@ let avatarURL = " ";
     height: 98vh;
     width: 99vw;
 }
-.profession-list{
-    background-color:  #ace5d8;
+
+.profession-list {
+    background-color: #ace5d8;
     width: 500px;
-    height:100px;
+    height: 100px;
     box-shadow: 0px 4px 4px 0px gray;
     border-radius: 30px;
 }
-.pass_btn{
+
+.pass_btn {
     /* 设置按钮风格 */
     width: 35px;
     height: 35px;
@@ -133,7 +135,8 @@ let avatarURL = " ";
     border-color: transparent;
     box-shadow: 0px 4px 4px 0px gray;
 }
-.close_btn{
+
+.close_btn {
     width: 35px;
     height: 35px;
     border-radius: 50px;
@@ -142,15 +145,15 @@ let avatarURL = " ";
     border-color: transparent;
     box-shadow: 0px 4px 4px 0px gray;
 }
-.card{
-    position:fixed;
-    top:13%;
-    left:48%;
-    background-color:  #ffffff;
+
+.card {
+    position: fixed;
+    top: 13%;
+    left: 48%;
+    background-color: #ffffff;
     width: 700px;
-    height:650px;
+    height: 650px;
     box-shadow: 4px 4px 4px 2px gray;
     border-radius: 10px;
-}
-</style>
+}</style>
   

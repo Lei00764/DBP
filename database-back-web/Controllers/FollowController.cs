@@ -75,7 +75,7 @@ public class FollowController : ControllerBase
         {
             if (r_exist == false)//未关注
             {
-                msg="关注成功";
+                msg = "关注成功";
                 item.FollowerNum += 1;
                 await _database.SaveChangesAsync();
                 var newRecord = new Follow()
@@ -88,7 +88,7 @@ public class FollowController : ControllerBase
             }
             else//已关注
             {
-                msg="取消关注成功";
+                msg = "取消关注成功";
                 item.FollowerNum -= 1;
                 await _database.SaveChangesAsync();
                 _database.Follows.RemoveRange(record);//删除记录

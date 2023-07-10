@@ -66,7 +66,7 @@ const formData = reactive({
 
 const doHome = () => {
     //返回主页
-    router.push({ name: 'homeUser'});
+    router.push({ name: 'homeUser' });
 }
 
 const doUser = () => {
@@ -90,8 +90,6 @@ const doLogoff = () => {
 </script>
 
 <style scoped>
-
-
 .addArticle {
     background-image: url('@/assets/addArticle_bkg.png');
     background-position: center;
@@ -144,7 +142,7 @@ const doLogoff = () => {
     opacity: 0.8;
 }
 
-.addArticle-button{
+.addArticle-button {
     position: sticky;
     top: 2100px;
     left: 90%;
@@ -152,7 +150,7 @@ const doLogoff = () => {
 }
 
 /* 返回按钮 */
-.back-button{
+.back-button {
     position: sticky;
     top: 70px;
     left: 91%;
@@ -161,7 +159,7 @@ const doLogoff = () => {
 }
 
 /* 发布按钮 */
-.publish-button{
+.publish-button {
     position: sticky;
     top: 70px;
     left: 91%;
@@ -171,18 +169,18 @@ const doLogoff = () => {
 
 
 /* 发布文章界面 */
-.editArticle-form{
+.editArticle-form {
     position: absolute;
     top: 150px;
     left: 300px;
-    height: 750px; 
+    height: 750px;
     width: 1150px;
     border-radius: 12px;
     background-color: #ccd1cf;
 }
 
-.editArticle-title{
-    position:absolute;
+.editArticle-title {
+    position: absolute;
     top: 60px;
     left: 53px;
     height: 55px;
@@ -190,14 +188,15 @@ const doLogoff = () => {
     border-radius: 12px;
     background-color: white;
 }
-.editArticle-title-word{
-    position:absolute;
+
+.editArticle-title-word {
+    position: absolute;
     top: 20px;
     left: 545px;
 }
 
-.editArticle-tag{
-    position:absolute;
+.editArticle-tag {
+    position: absolute;
     top: 167px;
     left: 53px;
     height: 55px;
@@ -205,14 +204,15 @@ const doLogoff = () => {
     border-radius: 12px;
     background-color: white;
 }
-.editArticle-tag-word{
-    position:absolute;
+
+.editArticle-tag-word {
+    position: absolute;
     top: 130px;
     left: 545px;
 }
 
-.editArticle-content{
-    position:absolute;
+.editArticle-content {
+    position: absolute;
     top: 272px;
     left: 53px;
     height: 430px;
@@ -220,10 +220,10 @@ const doLogoff = () => {
     border-radius: 12px;
     background-color: white;
 }
-.editArticle-content-word{
-    position:absolute;
+
+.editArticle-content-word {
+    position: absolute;
     top: 235px;
     left: 545px;
 }
-
 </style>

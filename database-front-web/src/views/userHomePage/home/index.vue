@@ -65,20 +65,20 @@ const state = reactive({
     url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
 })
 const { fits, url } = toRefs(state)
-function handleSignIn(){
+function handleSignIn() {
     formData.isSigned = true;
     formData.buttonLabel = '签到成功，积分+2';
     point.value += 2
     // 执行积分+2的逻辑
 }
-const point=ref(0)
+const point = ref(0)
 const formData = reactive({
     isSigned: false,
     buttonLabel: '签到'
 
 });
-const{isSigned,buttonLabel}=toRefs(formData)
-onMounted(()=>{
+const { isSigned, buttonLabel } = toRefs(formData)
+onMounted(() => {
     console.log(`计数器初始值为 ${point.value}。`)
 })
 
@@ -154,7 +154,7 @@ const CheckImgExists = (imgurl) => {
     width: 219px;
     height: 50px;
     left: 0px;
-    top:500px;
+    top: 500px;
     border-radius: 15px;
 }
 
@@ -163,6 +163,7 @@ const CheckImgExists = (imgurl) => {
     color: #ffffff;
     cursor: not-allowed;
 }
+
 .button12 {
     position: absolute;
     left: 800px;
@@ -184,6 +185,7 @@ const CheckImgExists = (imgurl) => {
     bottom: 120px;
 
 }
+
 /* 积分 */
 .rectangle_point {
     position: absolute;
