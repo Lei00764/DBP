@@ -21,11 +21,7 @@
                     </el-form-item>
                 </el-form>
             </div>
-<<<<<<< HEAD
-            <div>
-=======
             <div class="button">
->>>>>>> main
                 <el-form :inline=true>
                     <el-icon class="homepageIcon" @click="doHome">
                         <HomeFilled />
@@ -67,17 +63,11 @@
 </template>
 
 <script setup>
-<<<<<<< HEAD
-import { ref, reactive,toRefs,onMounted } from 'vue';
-import { getArticleDetail } from '@/api/user';
-import Message from "@/utils/Message.js"
-=======
 import { ref, reactive, toRefs, onMounted } from 'vue';
 import { userLogin } from '@/api/user';
 import Message from "@/utils/Message.js"
 import { House, Star, User } from '@element-plus/icons-vue'
 import { ElPagination } from 'element-plus'
->>>>>>> main
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const props = defineProps({
@@ -119,19 +109,10 @@ const doLogOut = () => {
 
 const Report = () => {
     //举报页
-    router.push({name:'reportArticle'})
+    router.push({ name: 'reportArticle' })
 };
 
 
-<<<<<<< HEAD
-
-//文章详情
-const articleInfo =ref({});
-
-
-const formData = reactive({
-    articleId:"",
-=======
 const api = {
     getArticleDetail: "/forum/getArticleDetail",
 }
@@ -153,7 +134,6 @@ const getArticleDetail = async (PostId) => {
 
 const formData = reactive({
 
->>>>>>> main
 });
 </script>
 
@@ -314,4 +294,5 @@ const formData = reactive({
 
 :deep(.el-input__inner) {
     color: rgb(235, 235, 235);
-}</style>
+}
+</style>

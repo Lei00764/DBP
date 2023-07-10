@@ -49,29 +49,29 @@ export function userRegister(params) {
 }
 
 
-<<<<<<< HEAD
-//查看帖子详情
-export function getArticleDetail(params) {
-    Request({
-        method: 'GET',
-        url: 'http://127.0.0.1:4523/m1/2699367-0-febb5d0d/api/forum/getArticleDetail',
-        params: params
-    }).then(function (response) {
-        if (response.data.code === 200) {//返回帖子信息
-            //Message.success("成功");
-            router.push({ path: '/forum-article-detail' });
-        } else if (response.data.code == 404) {
-            Message.error("帖子不存在");
-        } else if (response.data.code == 400) {
-            Message.error("参数无效");
-        }
-    }).catch(function (error) {
-        console.log(error);
-    });
-}
-=======
-// 请删除/重新修改下面部分代码
->>>>>>> main
+// <<<<<<< HEAD
+// //查看帖子详情
+// export function getArticleDetail(params) {
+//     Request({
+//         method: 'GET',
+//         url: 'http://127.0.0.1:4523/m1/2699367-0-febb5d0d/api/forum/getArticleDetail',
+//         params: params
+//     }).then(function (response) {
+//         if (response.data.code === 200) {//返回帖子信息
+//             //Message.success("成功");
+//             router.push({ path: '/forum-article-detail' });
+//         } else if (response.data.code == 404) {
+//             Message.error("帖子不存在");
+//         } else if (response.data.code == 400) {
+//             Message.error("参数无效");
+//         }
+//     }).catch(function (error) {
+//         console.log(error);
+//     });
+// }
+// =======
+// // 请删除/重新修改下面部分代码
+// >>>>>>> main
 
 // //查看帖子详情
 // export function getArticleDetail(params) {

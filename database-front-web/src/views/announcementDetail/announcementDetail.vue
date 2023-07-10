@@ -38,8 +38,6 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import router from "@/router/index.js";
-import { adminShowAnnouncement } from '@/api/user';
-
 
 
 const formData = reactive({

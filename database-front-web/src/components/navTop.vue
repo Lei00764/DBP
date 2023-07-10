@@ -38,30 +38,30 @@
 <script setup>
 import { ref } from 'vue';
 import router from "@/router/index.js"
-const selecttag=ref('')
+const selecttag = ref('')
 
 const doAllFood = () => {
-    selecttag.value="全部";
+    selecttag.value = "全部";
     router.push({ name: 'forum', params: { tag: 'all' } })
 };
 
 const doChineseFood = () => {
-    selecttag.value="中餐";
+    selecttag.value = "中餐";
     router.push({ name: 'forum', params: { tag: 'chinese' } })
 };
 
 const doWesternFood = () => {
-    selecttag.value="西餐";
+    selecttag.value = "西餐";
     router.push({ name: 'forum', params: { tag: 'western' } })
 };
 
 const doDessert = () => {
-    selecttag.value="甜点";
+    selecttag.value = "甜点";
     router.push({ name: 'forum', params: { tag: 'dessert' } })
 };
 
 const doOthers = () => {
-    selecttag.value="其他"
+    selecttag.value = "其他"
     router.push({ name: 'forum', params: { tag: 'others' } })
 };
 

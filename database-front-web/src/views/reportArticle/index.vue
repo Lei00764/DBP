@@ -3,19 +3,6 @@
     <div>
         <div class="announcement-page">
             <!-- 顶部导航栏 -->
-<<<<<<< HEAD
-            <div>
-                <el-form :inline=true>
-                    <el-icon class="homepageIcon" @click="doHome">
-                        <HomeFilled />
-                    </el-icon>
-                    <el-icon class="userpageIcon" @click="doUser">
-                        <UserFilled />
-                    </el-icon>
-
-                    <el-form-item>
-                        <el-button type="primary" class="forum-logout-button" @click="doLogOut">
-=======
             <div class="announ-head-form" :class="navBarFixed == true ? 'navBarWrap' : ''">
                 <el-form :inline=true>
                     <!-- 表单 -->
@@ -28,7 +15,6 @@
                     <el-form-item>
                         <!-- 退出登录 -->
                         <el-button type="primary" class="announ-corner-button2" @click="doLogOut">
->>>>>>> main
                             <span>退出登录</span>
                         </el-button>
                     </el-form-item>
@@ -76,7 +62,7 @@ const formData = reactive({
 });
 
 
-const doHome = () => { 
+const doHome = () => {
     //返回用户主页
     router.push({ name: 'homeUser' })
 };
@@ -84,9 +70,9 @@ const doHome = () => {
 const doUser = () => {
     //返回用户个人信息页
     router.push({ name: 'userHomePage' })
- };
+};
 
-const doLogOut = () => { 
+const doLogOut = () => {
     //登出
     router.push({ name: 'login' })
 };
