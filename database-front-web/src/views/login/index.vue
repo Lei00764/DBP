@@ -26,7 +26,7 @@
   
 <script setup>
 import { ref, reactive } from 'vue';
-import { userLogin } from '@/api/user';
+import { userLogin } from '@/api/user';  // 引入 api 请求函数 userLogin
 import Message from "@/utils/Message.js"
 import router from "@/router/index.js"
 
@@ -44,14 +44,33 @@ const doSubmitLogin = () => {
         return;
     }
 
-    console.log(formData);
     let params = {
         email: formData.email,
         password: formData.password,
     };
 
-    userLogin(params); // 请求登录
+    userLogin(params)
+        .then(function (result) {  // result 是 api /user/login 的返回值，在后端 api 定义
+            // 接收返回值，放在 person_info 变量中
+            let person_info = result
+            // 在这里可以使用 person_info 变量  
+            // eg. 登录完成后，调用其他函数
+            afterLogin(person_info);
+
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+
+    // 这里不能访问 person_info，因为异步操作可能还没有完成
 };
+
+
+const afterLogin = (person_info) => {
+    // 在这里可以使用 person_info 变量
+    console.log(person_info);
+};
+
 
 // 注册
 const doSubmitRegister = () => {
