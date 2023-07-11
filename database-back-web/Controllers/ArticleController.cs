@@ -234,16 +234,61 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         }
     }
 
-    //发布文章  传参：用户id
+    //发布文章  
     [HttpPost("postArticle")]
-    public async Task<IActionResult> postArticleAsync(int post_id)
+    public async Task<IActionResult> postArticleAsync(int post_id,int user_id,string tag,string title,string content,string picture,string Sharelink)
     {
-        return Ok(new
+        var code = 200;
+        var msg = "success";
+        //!!!!!TODO: 文章ID、分享链接应该怎么赋值？还要避免与表中已有文章数据重复
+        //user_id 要满足完整性约束
+        var temp = await _database.Users.ToListAsync();
+        bool exist = false;
+        if (temp != null)//判断表内是否有信息
         {
-            code = 200
-        });
-        //TODO:
+            foreach (var user in temp)
+            {
+                if (user.UserId == user_id)
+                {
+                    exist = true;
+                    break;
+                }
+            }
+        }
+        if(exist){
+            Article newRecord = new Article{
+            Tag = tag,
+            Title = title,
+            Content = content,
+            AuthorId= user_id,
+            PostId=post_id,
+            ShareLink=Sharelink,
+            Views = 0,
+            FavouriteNum = 0,
+            LikeNum = 0,
+            IsBanned = 0
+            };
+        
+            _database.Articles.AddRange(newRecord);
+            await _database.SaveChangesAsync();//注意：该语句与数据库更改语句一一匹配
+
+            return Ok(new
+            {
+                code =code,
+                msg =msg
+            });
+        }
+        else{
+            code = 400;
+            msg = "不存在该用户信息";
+            return BadRequest(new
+            {
+                code = code,
+                msg = msg
+            });
+        }
     }
+
 
     //查找文章信息
     [HttpGet("Article/search")]
