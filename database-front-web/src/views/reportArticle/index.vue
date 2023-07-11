@@ -3,17 +3,18 @@
     <div>
         <div class="announcement-page">
             <!-- 顶部导航栏 -->
-            <div>
+            <div class="announ-head-form" :class="navBarFixed == true ? 'navBarWrap' : ''">
                 <el-form :inline=true>
-                    <el-icon class="homepageIcon" @click="doHome">
-                        <HomeFilled />
-                    </el-icon>
-                    <el-icon class="userpageIcon" @click="doUser">
-                        <UserFilled />
-                    </el-icon>
-
+                    <!-- 表单 -->
                     <el-form-item>
-                        <el-button type="primary" class="forum-logout-button" @click="doLogOut">
+                        <!-- 返回管理员主页 -->
+                        <el-button type="primary" class="announ-corner-button1" @click="doReturnHome">
+                            <span>首页</span>
+                        </el-button>
+                    </el-form-item>
+                    <el-form-item>
+                        <!-- 退出登录 -->
+                        <el-button type="primary" class="announ-corner-button2" @click="doLogOut">
                             <span>退出登录</span>
                         </el-button>
                     </el-form-item>
@@ -61,7 +62,7 @@ const formData = reactive({
 });
 
 
-const doHome = () => { 
+const doHome = () => {
     //返回用户主页
     router.push({ name: 'homeUser' })
 };
@@ -69,9 +70,9 @@ const doHome = () => {
 const doUser = () => {
     //返回用户个人信息页
     router.push({ name: 'userHomePage' })
- };
+};
 
-const doLogOut = () => { 
+const doLogOut = () => {
     //登出
     router.push({ name: 'login' })
 };
@@ -82,9 +83,6 @@ const ReturnAnnoun = () => {
     //这里还不确定，因为每个帖子举报的回退要退回对应帖子
     router.push({ name: 'announcementDetail' })
 };
-
-
-
 
 
 </script>

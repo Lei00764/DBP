@@ -56,7 +56,6 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
-import { adminShowAnnouncement } from '@/api/user';
 import router from "@/router/index.js"
 import Message from "@/utils/Message.js"
 

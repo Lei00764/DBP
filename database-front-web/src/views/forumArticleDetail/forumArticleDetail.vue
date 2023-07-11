@@ -21,7 +21,7 @@
                     </el-form-item>
                 </el-form>
             </div>
-            <div>
+            <div class="button">
                 <el-form :inline=true>
                     <el-icon class="homepageIcon" @click="doHome">
                         <HomeFilled />
@@ -63,9 +63,11 @@
 </template>
 
 <script setup>
-import { ref, reactive,toRefs,onMounted } from 'vue';
-import { getArticleDetail } from '@/api/user';
+import { ref, reactive, toRefs, onMounted } from 'vue';
+import { userLogin } from '@/api/user';
 import Message from "@/utils/Message.js"
+import { House, Star, User } from '@element-plus/icons-vue'
+import { ElPagination } from 'element-plus'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 const props = defineProps({
@@ -107,29 +109,42 @@ const doLogOut = () => {
 
 const Report = () => {
     //举报页
-    router.push({name:'reportArticle'})
+    router.push({ name: 'reportArticle' })
 };
 
 
 
 //文章详情
-const articleInfo =ref({});
+const articleInfo = ref({});
 
+
+const getArticleDetail = async (PostId) => {
+    let result = await proxy.Request({
+        url: api.getArticleDetail,
+        params: {
+            PostId: PostId,
+        }
+    });
+    if (!result) {
+        return;
+    }
+    articleInfo.value = result.data;
+}
 
 const formData = reactive({
-    articleId:"",
+
+>>>>>>> main
 });
 </script>
 
 <style scoped>
 /*背景图相关设置 */
-.forum-article-detail-page {
-    background-image: url('@/assets/forum_bkg.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
-    width: 100vw;
+background-image: url('@/assets/forum_bkg.png');
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+height: 100vh;
+width: 100vw;
 }
 
 .forum-search {
@@ -278,4 +293,5 @@ const formData = reactive({
 
 :deep(.el-input__inner) {
     color: rgb(235, 235, 235);
-}</style>
+}
+</style>

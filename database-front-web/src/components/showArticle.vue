@@ -17,7 +17,6 @@
 </template>
   
 <script setup>
-import { loadArticle } from '@/api/user';
 import { ref, onMounted } from 'vue';
 import selecttag from './navTop.vue';
 const articleList = ref([]);
