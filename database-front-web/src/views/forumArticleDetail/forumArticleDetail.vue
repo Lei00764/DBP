@@ -133,12 +133,12 @@ const getArticleDetail = async (PostId) => {
 
 const formData = reactive({
 
->>>>>>> main
 });
 </script>
 
 <style scoped>
 /*背景图相关设置 */
+.forum-article-detail-page{
 background-image: url('@/assets/forum_bkg.png');
 background-position: center;
 background-repeat: no-repeat;
