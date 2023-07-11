@@ -25,7 +25,6 @@ public class AdminController : ControllerBase  // 命名规范，继承自 Contr
         var code = 200;
         var msg = "success";
         var admin_data = await _database.Administrators.ToListAsync();
-
         // 如果数据库中没有数据，返回错误信息
         if (admin_data == null)
         {
@@ -38,7 +37,10 @@ public class AdminController : ControllerBase  // 命名规范，继承自 Contr
             });
         }
         // 遍历data，找到id匹配的管理员
+        var name ="";
         var avatar ="";
+        var tel ="";
+        var email ="";
         if (admin_data != null)
         {
             foreach (var admin in admin_data)
@@ -47,7 +49,10 @@ public class AdminController : ControllerBase  // 命名规范，继承自 Contr
                 {
                     code = 200;
                     msg = "查询到管理员信息";
+                    name = admin.AdminName;
                     avatar = admin.Avatar;
+                    tel = admin.Tel;
+                    email = admin.Email;
                     break;
                 }
 
@@ -59,6 +64,8 @@ public class AdminController : ControllerBase  // 命名规范，继承自 Contr
             code = code,
             msg = msg,
             avatar = avatar,
+            tel = tel,
+            email = email,
         });
     }
 }
