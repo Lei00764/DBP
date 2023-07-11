@@ -113,12 +113,11 @@ const Report = () => {
 };
 
 
-const api = {
-    getArticleDetail: "/forum/getArticleDetail",
-}
 
 //文章详情
 const articleInfo = ref({});
+
+
 const getArticleDetail = async (PostId) => {
     let result = await proxy.Request({
         url: api.getArticleDetail,
@@ -134,18 +133,18 @@ const getArticleDetail = async (PostId) => {
 
 const formData = reactive({
 
+>>>>>>> main
 });
 </script>
 
 <style scoped>
 /*背景图相关设置 */
-.forum-article-detail-page {
-    background-image: url('@/assets/forum_bkg.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
-    width: 100vw;
+background-image: url('@/assets/forum_bkg.png');
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+height: 100vh;
+width: 100vw;
 }
 
 .forum-search {
