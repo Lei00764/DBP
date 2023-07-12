@@ -79,21 +79,21 @@ const router = createRouter({
             name: 'userHomePage',
             children: [
                 {
-                  path:'',
-                  name:'homo',
-                  component: () => import('@/views/userHomePage/home/index.vue'),
-                  children:[{
-                    path:'',
-                    name:'article',
-                    component: () => import('@/views/userHomePage/home/ArticleList.vue'),
+                    path: '',
+                    name: 'homo',
+                    component: () => import('@/views/userHomePage/home/index.vue'),
+                    children: [{
+                        path: '',
+                        name: 'article',
+                        component: () => import('@/views/userHomePage/home/ArticleList.vue'),
 
-                  }]
+                    }]
                 },
                 {
-                    path:'user',
-                    name:'user',
+                    path: 'user',
+                    name: 'user',
                     component: () => import('@/views/userHomePage/user/change.vue'),
-                },                    
+                },
             ]
         },
         {

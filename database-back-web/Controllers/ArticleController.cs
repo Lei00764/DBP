@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 using auth.Database;
+using auth.Models;
 
 [ApiController]
 [Route("api/[controller]")]  // RESTful 风格
@@ -236,7 +237,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
 
     //发布文章  
     [HttpPost("postArticle")]
-    public async Task<IActionResult> postArticleAsync(int post_id,int user_id,string tag,string title,string content,string picture,string Sharelink)
+    public async Task<IActionResult> postArticleAsync(int post_id, int user_id, string tag, string title, string content, string picture, string Sharelink)
     {
         var code = 200;
         var msg = "success";
@@ -255,30 +256,33 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 }
             }
         }
-        if(exist){
-            Article newRecord = new Article{
-            Tag = tag,
-            Title = title,
-            Content = content,
-            AuthorId= user_id,
-            PostId=post_id,
-            ShareLink=Sharelink,
-            Views = 0,
-            FavouriteNum = 0,
-            LikeNum = 0,
-            IsBanned = 0
+        if (exist)
+        {
+            Article newRecord = new Article
+            {
+                Tag = tag,
+                Title = title,
+                Content = content,
+                AuthorId = user_id,
+                PostId = post_id,
+                ShareLink = Sharelink,
+                Views = 0,
+                FavouriteNum = 0,
+                LikeNum = 0,
+                IsBanned = 0
             };
-        
+
             _database.Articles.AddRange(newRecord);
             await _database.SaveChangesAsync();//注意：该语句与数据库更改语句一一匹配
 
             return Ok(new
             {
-                code =code,
-                msg =msg
+                code = code,
+                msg = msg
             });
         }
-        else{
+        else
+        {
             code = 400;
             msg = "不存在该用户信息";
             return BadRequest(new
