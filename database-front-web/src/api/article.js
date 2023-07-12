@@ -2,25 +2,27 @@ import Request from "@/utils/Request.js";  // 在每个 api 文件里都要引�
 import Message from "@/utils/Message.js"  // 在每个 api 文件里都要引入这两个文件
 import router from "@/router/index.js"
 
-//查看帖子详情(修改后)
-export function getArticleDetail(params) {
-    Request({
+// 获取用户的文章列表
+export function searchArticle(params) {
+    return Request({
         method: 'GET',
-        params: params,
-        url: 'viewArticle/{article_id}'
+        url: 'Article/Article/search',
+        params: params
     }).then(function (response) {
-        if (response.data.code === 200) {//返回帖子信息
-            //Message.success("成功");
-            router.push({ path: '/forum-article-detail' });
-        } else if (response.data.code == 404) {
-            Message.error("帖子不存在");
-        } else if (response.data.code == 400) {
+        if (response.data.code === 200) {
+            return response.data.data;
+        } else if (response.data.code === 404) {
+            Message.error("没有发布的文章");
+            return null;
+        } else if (response.data.code === 400) {
             Message.error("参数无效");
+            return null;
         }
     }).catch(function (error) {
         console.log(error);
     });
 }
+
 
 // 获取文章列表
 export function getArticle(params) {
@@ -40,3 +42,4 @@ export function getArticle(params) {
         //     return null;
         // });
 }
+
