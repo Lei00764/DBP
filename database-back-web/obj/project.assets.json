@@ -11640,25 +11640,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\pc\\.nuget\\packages\\": {}
+    "/Users/lei/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\1.Tongji\\Sophomore\\Sophomore-2\\DBS_数据库原理与应用\\1-美食论坛系统\\SYSTEM\\DBP\\database-back-web\\database_back_web.csproj",
+      "projectUniqueName": "/Users/lei/Desktop/DBP/database-back-web/database_back_web.csproj",
       "projectName": "database_back_web",
-      "projectPath": "G:\\1.Tongji\\Sophomore\\Sophomore-2\\DBS_数据库原理与应用\\1-美食论坛系统\\SYSTEM\\DBP\\database-back-web\\database_back_web.csproj",
-      "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
-      "outputPath": "G:\\1.Tongji\\Sophomore\\Sophomore-2\\DBS_数据库原理与应用\\1-美食论坛系统\\SYSTEM\\DBP\\database-back-web\\obj\\",
+      "projectPath": "/Users/lei/Desktop/DBP/database-back-web/database_back_web.csproj",
+      "packagesPath": "/Users/lei/.nuget/packages/",
+      "outputPath": "/Users/lei/Desktop/DBP/database-back-web/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/Users/lei/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
-        "C:\\Program Files\\dotnet\\sdk\\7.0.305\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -11731,7 +11730,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.305\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -37,15 +37,15 @@ public class AdminController : ControllerBase  // 命名规范，继承自 Contr
             });
         }
         // 遍历data，找到id匹配的管理员
-        var name ="";
-        var avatar ="";
-        var tel ="";
-        var email ="";
+        var name = "";
+        var avatar = "";
+        var tel = "";
+        var email = "";
         if (admin_data != null)
         {
             foreach (var admin in admin_data)
             {
-                if (admin.AdminId == adminId )
+                if (admin.AdminId == adminId)
                 {
                     code = 200;
                     msg = "查询到管理员信息";
@@ -63,6 +63,7 @@ public class AdminController : ControllerBase  // 命名规范，继承自 Contr
         {
             code = code,
             msg = msg,
+            name = name,  // 2023.7.12 lx
             avatar = avatar,
             tel = tel,
             email = email,
