@@ -6,7 +6,13 @@
 </template>
 
 <script setup>
-
+// import request from "./utils/request"
+// request ({
+//   method:"GET",
+//   url:"/user/getAdlist"
+// }) .then ((res)=>{
+//   console.log(res)
+// })
 </script>
 
 <style></style>

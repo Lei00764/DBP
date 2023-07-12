@@ -22,3 +22,24 @@ export function searchArticle(params) {
         console.log(error);
     });
 }
+
+
+// 获取文章列表
+export function getArticle(params) {
+        // return Request({
+        //     method: 'GET',
+        //     url: 'forum/loadArticle',
+        //     params: params
+        // }).then(function (response) {
+        //     if (response.data.code === 200) {
+        //         return response.data.data;
+        //     } else {
+        //         Message.error("获取文章列表失败");
+        //         return null;
+        //     }
+        // }).catch(function (error) {
+        //     console.log(error);
+        //     return null;
+        // });
+}
+

@@ -84,7 +84,7 @@ const router = createRouter({
                     component: () => import('@/views/userHomePage/home/index.vue'),
                     children: [{
                         path: '',
-                        name: 'article',
+                        name: 'article',//帖子展示详情s
                         component: () => import('@/views/userHomePage/home/ArticleList.vue'),
 
                     }]

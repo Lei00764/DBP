@@ -1,137 +1,63 @@
 <template>
-  <!-- <article-item v-for="a in allData" :key="a.id" v-bind="a"/>
-                    <el-empty
-                    v-if="allData.length == 0"
-                    :image-size="250"
-                    description="暂未发表任何帖子"
-                ></el-empty> -->
-  <el-button class="back1">
-    <el-form-item>
-      <div class="pic1">
-      </div>
-      <div class="topic1">
-        ??????
-      </div>
-      <div class="article1">
-        好吃的
-      </div>
-    </el-form-item>
-
-  </el-button>
-  <el-button class="back2">
-    <el-form-item>
-      <div class="pic2">
-
-      </div>
-      <div class="topic2">
-        ??????
-      </div>
-      <div class="article2">
-        很好吃的
-      </div>
-    </el-form-item>
-  </el-button>
+  <el-row>
+    <el-col
+      v-for="(o, index) in 2"
+      :key="o"
+      :span="8"
+      :offset="index > 0 ? 2 : 0"
+    >
+      <el-card :body-style="{ padding: '0px' }">
+        <img
+          src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+          class="image"
+        />
+        <div style="padding: 14px">
+          <span>Yummy hamburger</span>
+          <div class="bottom">
+            <time class="time">{{ currentDate }}</time>
+            <el-button type="primary" round class editButton size="small">编辑</el-button>
+            <el-button type="danger" round class deleteButton size="small">删除</el-button>
+          </div>
+        </div>
+      </el-card>
+    </el-col>
+  </el-row>
 </template>
 
 
-<script setup>
+<script lang="ts" setup>
+import { ref } from 'vue'
+const currentDate = ref(new Date())//
+import  {getArticle} from "@/api/article"
 
+// 存储返回的数据
+// const allMenus = ref()
+//获取数据的完整逻辑
+// const getAllArticle = asyncu =>{
+//   const res =  getAl1()
+//   console.log(res)
+// }
+// getAllArtical()
 </script>
+
 <style>
-.back1 {
-  position: absolute;
-  color: transparent;
-  width: 700px;
-  height: 150px;
-  left: 0px;
-  top: 80px;
-  background: rgba(246, 246, 246, 0.5);
-  border-radius:
-    13px;
+.time {
+  font-size: 12px;
+  color: #999;
 }
 
-.back2 {
-  position: absolute;
-  color: transparent;
-  width: 700px;
-  height: 150px;
-  left: -12px;
-  top: 280px;
-  background: rgba(246, 246, 246, 0.5);
-  border-radius:
-    13px;
+.bottom {
+  margin-top: 13px;
+  line-height: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.pic1 {
-  position: absolute;
-  width: 170px;
-  height: 100px;
-  left: -300px;
-  background: url('@/assets/hamburger.png');
-  background-size: cover;
-  background-position: center;
-  border-radius: 10px;
-}
 
-.pic2 {
-  position: absolute;
-  width: 170px;
-  height: 100px;
-  left: -300px;
-  background: url('@/assets/hamburger.png');
-  background-size: cover;
-  background-position: center;
-  border-radius: 10px;
-}
 
-.topic1 {
-  /* Elaine-GIFT */
-  position: absolute;
-  width: 252px;
-  height: 47px;
-  left: 10px;
-  top: -40px;
-  color: rgb(57, 57, 57);
-  font-family: Cabin;
-  font-size: 20px;
-  text-align: left;
+.image {
+  width: 100%;
+  display: block;
 }
-
-.topic2 {
-  /* Elaine-GIFT */
-  position: absolute;
-  width: 252px;
-  height: 47px;
-  left: 10px;
-  top: -40px;
-  color: rgb(57, 57, 57);
-  font-family: Cabin;
-  font-size: 20px;
-  text-align: left;
-}
-
-.article1 {
-  /* Elaine-GIFT */
-  position: absolute;
-  width: 252px;
-  height: 47px;
-  left: 10px;
-  top: 0px;
-  color: rgb(57, 57, 57);
-  font-family: Cabin;
-  font-size: 18px;
-  text-align: left;
-}
-
-.article2 {
-  /* Elaine-GIFT */
-  position: absolute;
-  width: 252px;
-  height: 47px;
-  left: 10px;
-  top: 0px;
-  color: rgb(57, 57, 57);
-  font-family: Cabin;
-  font-size: 18px;
-  text-align: left;
-}</style>
+</style>
