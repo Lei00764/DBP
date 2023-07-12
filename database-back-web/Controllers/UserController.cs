@@ -164,4 +164,93 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
         });
     }
 
+    //获取用户/管理员资料信息
+    [HttpGet("Info")]
+    public async Task<IActionResult> GetInfo(int Id ,bool type)//参数type:0为管理员，1为普通用户
+    {
+        // 根据业务逻辑获取信息对象
+        var code = 200;
+        var msg = "success";
+        var user_data = _database.Users.Where(x => x.UserId == Id);
+        var admin_data = _database.Administrators.Where(x => x.AdminId == Id);
+        bool exist = false;
+
+        if(type){
+            foreach (var item in user_data)
+            {
+                if (item.UserId == Id)
+                {
+                    exist = true;
+                    break;
+                }
+            }
+        }
+        else{
+            foreach (var item in admin_data)
+            {
+                if (item.AdminId == Id)
+                {
+                    exist = true;
+                    break;
+                }
+            }
+        }
+        if (exist == false)
+        {// 如果数据库中没有数据，返回错误信息
+            code = 400;
+            msg = "用户不存在";
+            return BadRequest(new
+            {
+                code = code,
+                msg = msg,
+            });
+        }
+        // 遍历data，找到id匹配的用户
+        var name = "";
+        var avatar = "";
+        var tel = "";
+        var email = "";
+        if (type)
+        {
+            foreach (var user in user_data)
+            {
+                if (user.UserId == Id)
+                {
+                    code = 200;
+                    msg = "查询到用户信息";
+                    name = user.UserName;
+                    avatar = user.Avatar;
+                    tel = user.Tel;
+                    email = user.Email;
+                    break;
+                }
+            }
+        }       
+        else
+        {
+            foreach (var admin in admin_data)
+            {
+                if (admin.AdminId == Id)
+                {
+                    code = 200;
+                    msg = "查询到管理员信息";
+                    name = admin.AdminName;
+                    avatar = admin.Avatar;
+                    tel = admin.Tel;
+                    email = admin.Email;
+                    break;
+                }
+            }
+        }
+        // 将信息对象作为响应的数据发送回前端
+        return Ok(new
+        {
+            code = code,
+            msg = msg,
+            name = name,  // 2023.7.12 lx
+            avatar = avatar,
+            tel = tel,
+            email = email,
+        });
+    }
 }
