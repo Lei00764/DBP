@@ -12,6 +12,7 @@ import "./assets/icon/iconfont.css"//图标
 // 全局方法 
 // import Message from '@/utils/Message'
 // import Request from '@/utils/Request'
+import store from './store'
 
 const app = createApp(App)
 
@@ -20,7 +21,8 @@ for (let iconName in ELIcons) {
 }
 
 app.use(ElementPlus);
-app.use(router)
+app.use(router);
+app.use(store)
 
 // 全局方法
 // app.config.globalProperties.Message = Message; 

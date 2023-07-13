@@ -27,14 +27,15 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import { userLogin } from '@/api/user';  // 引入 api 请求函数 userLogin
-import Message from "@/utils/Message.js"
-import router from "@/router/index.js"
+import Message from "@/utils/Message.js";
+import router from "@/router/index.js";
+import { useStore } from "vuex";  //引入store
 
 const formData = reactive({
     email: '',
     password: '',
 });
-
+const store = useStore()  // 该方法用于返回store 实例
 const showPassword = ref(false);
 
 // 登录
@@ -43,12 +44,10 @@ const doSubmitLogin = () => {
         Message.error("账号或密码不能为空");
         return;
     }
-
     let params = {
         email: formData.email,
         password: formData.password,
     };
-
     userLogin(params)
         .then(function (result) {  // result 是 api /user/login 的返回值，在后端 api 定义
             // 接收返回值，放在 person_info 变量中
@@ -56,7 +55,6 @@ const doSubmitLogin = () => {
             // 在这里可以使用 person_info 变量  
             // eg. 登录完成后，调用其他函数
             afterLogin(person_info);
-
         })
         .catch(function (error) {
             console.log(error);
@@ -69,6 +67,8 @@ const doSubmitLogin = () => {
 const afterLogin = (person_info) => {
     // 在这里可以使用 person_info 变量
     console.log(person_info);
+    //console.log(store.state);
+    //store.mutations.UpdateInfo()
 };
 
 

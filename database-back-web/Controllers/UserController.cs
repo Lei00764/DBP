@@ -166,7 +166,7 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
 
     //获取用户/管理员资料信息
     [HttpGet("Info")]
-    public async Task<IActionResult> GetInfo(int Id ,bool type)//参数type:0为管理员，1为普通用户
+    public IActionResult GetInfo(int Id, bool type)//参数type:0为管理员，1为普通用户
     {
         // 根据业务逻辑获取信息对象
         var code = 200;
@@ -175,7 +175,8 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
         var admin_data = _database.Administrators.Where(x => x.AdminId == Id);
         bool exist = false;
 
-        if(type){
+        if (type)
+        {
             foreach (var item in user_data)
             {
                 if (item.UserId == Id)
@@ -185,7 +186,8 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
                 }
             }
         }
-        else{
+        else
+        {
             foreach (var item in admin_data)
             {
                 if (item.AdminId == Id)
@@ -225,7 +227,7 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
                     break;
                 }
             }
-        }       
+        }
         else
         {
             foreach (var admin in admin_data)
