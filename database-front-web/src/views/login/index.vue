@@ -1,24 +1,34 @@
 <template>
     <div>
         <div class="login-page">
-            <div class="login-form">
+            <div class="login-form-1">
                 <el-form>
                     <el-form-item>
                         <el-input placeholder="请输入邮箱" v-model="formData.email"></el-input>
                     </el-form-item>
+                </el-form>
+            </div>
+            <div class="login-form-2">
+                <el-form>  
                     <el-form-item>
                         <el-input placeholder="请输入密码" v-model="formData.password" :type="showPassword ? 'text' : 'password'"
                             show-password></el-input>
-                    </el-form-item>
+                    </el-form-item>                   
+                </el-form>
+            </div>
+            <div class="login-form-button">
+                <elform>
                     <el-form-item>
-                        <el-button type="primary" class="op-btn" @click="doSubmitLogin">
+                        <el-button class="button" @click="doSubmitLogin">
                             <span>登录</span>
                         </el-button>
-                        <el-button type="primary" class="op-btn" @click="doSubmitRegister">
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button class="button" @click="doSubmitRegister">
                             <span>注册</span>
                         </el-button>
                     </el-form-item>
-                </el-form>
+                </elform>
             </div>
         </div>
     </div>
@@ -89,13 +99,47 @@ const doSubmitRegister = () => {
     width: 100vw;
 }
 
-.login-form {
+.login-form-1 {
     position: absolute;
-    top: 50%;
-    left: 70%;
+    top: 48%;
+    left: 86%;
+    transform: translate(-50%, -50%);
+    height: 10%;
+    width: 20%;
+
+}
+.login-form-2 {
+    position: absolute;
+    top: 58%;
+    left: 86%;
     transform: translate(-50%, -50%);
     height: 10%;
     width: 20%;
 }
+
+.login-form-button{
+    position: absolute;
+    top: 70%;
+    left: 91%;
+    transform: translate(-50%, -50%);
+    height: 10%;
+    width: 20%;
+}
+
+.button{
+    height:120%;
+    width:50%;
+    background-color: black;
+    color:#ffffff;
+}
+
+
+
+:deep(.el-input__wrapper) {
+    background: #ffffff;
+    border-radius: 12px;
+
+}
+
 </style>
   
