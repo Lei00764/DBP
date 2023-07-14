@@ -30,6 +30,10 @@ import { userLogin } from '@/api/user';  // 引入 api 请求函数 userLogin
 import Message from "@/utils/Message.js"
 import router from "@/router/index.js"
 
+// 修改当前页面的 element-plus 主题色
+import { changeTheme } from '../../utils/changeTheme';
+changeTheme("#FF0000");  // 目前为红色，可以修改
+
 const formData = reactive({
     email: '',
     password: '',

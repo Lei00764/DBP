@@ -5,13 +5,20 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 // 引入 router
 import router from './router'
-
 import * as ELIcons from '@element-plus/icons-vue'//引入图标
 
 import "./assets/icon/iconfont.css"//图标
-// 全局方法 
-// import Message from '@/utils/Message'
-// import Request from '@/utils/Request'
+
+/* import the fontawesome core */
+import { library } from '@fortawesome/fontawesome-svg-core'
+/* import font awesome icon component */
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+/* import specific icons */
+import { fas } from '@fortawesome/free-solid-svg-icons'
+/* add icons to the library */
+library.add(fas)
+
+
 
 const app = createApp(App)
 
@@ -19,11 +26,10 @@ for (let iconName in ELIcons) {
     app.component(iconName, ELIcons[iconName])
 }
 
+app.component('font-awesome-icon', FontAwesomeIcon)
+
 app.use(ElementPlus);
 app.use(router)
 
-// 全局方法
-// app.config.globalProperties.Message = Message; 
-// app.config.globalProperties.Request = Request;
 
 app.mount('#app') 
