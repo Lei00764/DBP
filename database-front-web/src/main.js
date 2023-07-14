@@ -7,8 +7,10 @@ import 'element-plus/dist/index.css'
 import router from './router'
 
 import * as ELIcons from '@element-plus/icons-vue'//引入图标
+import store from './store'  //引入store
 
-import "./assets/icon/iconfont.css"//图标
+import "./assets/icon/iconfont.css"  //图标
+
 // 全局方法 
 // import Message from '@/utils/Message'
 // import Request from '@/utils/Request'
@@ -20,7 +22,9 @@ for (let iconName in ELIcons) {
 }
 
 app.use(ElementPlus);
-app.use(router)
+app.use(router);
+app.use(store)
+
 
 // 全局方法
 // app.config.globalProperties.Message = Message; 

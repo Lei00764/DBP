@@ -35,10 +35,11 @@
 </template>
   
 <script setup>
-import { ref, reactive } from 'vue';
-import { userLogin } from '@/api/user';  // 引入 api 请求函数 userLogin
+import { ref, reactive, computed} from 'vue';
+import { userLogin, GetInfo} from '@/api/user';  // 引入 api 请求函数 userLogin,GetInfo
 import Message from "@/utils/Message.js"
 import router from "@/router/index.js"
+import { useStore } from 'vuex'//引入store
 
 const formData = reactive({
     email: '',
@@ -46,6 +47,7 @@ const formData = reactive({
 });
 
 const showPassword = ref(false);
+const store = useStore();
 
 // 登录
 const doSubmitLogin = () => {
@@ -62,11 +64,11 @@ const doSubmitLogin = () => {
     userLogin(params)
         .then(function (result) {  // result 是 api /user/login 的返回值，在后端 api 定义
             // 接收返回值，放在 person_info 变量中
-            let person_info = result
+            let type = result.type
+            console.log(type);
             // 在这里可以使用 person_info 变量  
             // eg. 登录完成后，调用其他函数
-            afterLogin(person_info);
-
+            afterLogin(type);
         })
         .catch(function (error) {
             console.log(error);
@@ -76,9 +78,30 @@ const doSubmitLogin = () => {
 };
 
 
-const afterLogin = (person_info) => {
+const afterLogin = (type) => {
     // 在这里可以使用 person_info 变量
-    console.log(person_info);
+    store.commit("doLogin");
+    let params = {
+        Email: formData.email,
+        Type: type,
+    };
+    GetInfo(params)
+        .then(function (result) {
+        let person_info = {
+            avatar: result.avatar,
+            id: result.id,
+            name: result.name,
+            tel: result.tel,
+            password: formData.password,
+            email: result.email,
+        }
+        //进行store存储
+        store.commit('SaveInfo',person_info);
+        console.log(store.state.name)
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 };
 
 
@@ -142,4 +165,3 @@ const doSubmitRegister = () => {
 }
 
 </style>
-  
