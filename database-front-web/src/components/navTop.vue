@@ -2,7 +2,7 @@
     <div>
         <div class="header-content">
             <!-- 左侧 logo -->
-            <router-link to="/" class="logo">
+            <router-link to="/layout" class="logo">
                 <span>
                     Foodieland
                 </span>

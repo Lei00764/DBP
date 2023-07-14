@@ -17,6 +17,11 @@ const router = createRouter({
                     path: '',  // 默认显示的子路由页面
                     name: '所有文章',
                     component: () => import('@/views/forum/articleList.vue'),
+                },
+                {
+                    path: '/forum/:pBoardId',  // pBoardId 从 0 开始 （动态路由）
+                    name: "一级板块",
+                    component: () => import('@/views/forum/articleList.vue'),
                 }
             ]
         },
