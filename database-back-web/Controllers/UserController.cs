@@ -166,29 +166,31 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
 
     //获取用户/管理员资料信息
     [HttpGet("Info")]
-    public async Task<IActionResult> GetInfo(int Id ,bool type)//参数type:0为管理员，1为普通用户
+    public IActionResult GetInfo(string Email, int type)//参数type:0为管理员，1为普通用户
     {
         // 根据业务逻辑获取信息对象
         var code = 200;
         var msg = "success";
-        var user_data = _database.Users.Where(x => x.UserId == Id);
-        var admin_data = _database.Administrators.Where(x => x.AdminId == Id);
+        var user_data = _database.Users.Where(x => x.Email == Email);
+        var admin_data = _database.Administrators.Where(x => x.Email == Email);
         bool exist = false;
 
-        if(type){
+        if (type==1)
+        {
             foreach (var item in user_data)
             {
-                if (item.UserId == Id)
+                if (item.Email == Email)
                 {
                     exist = true;
                     break;
                 }
             }
         }
-        else{
+        else
+        {
             foreach (var item in admin_data)
             {
-                if (item.AdminId == Id)
+                if (item.Email == Email)
                 {
                     exist = true;
                     break;
@@ -209,35 +211,35 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
         var name = "";
         var avatar = "";
         var tel = "";
-        var email = "";
-        if (type)
+        int? id = 0;
+        if (type == 1)
         {
             foreach (var user in user_data)
             {
-                if (user.UserId == Id)
+                if (user.Email == Email)
                 {
                     code = 200;
                     msg = "查询到用户信息";
                     name = user.UserName;
                     avatar = user.Avatar;
                     tel = user.Tel;
-                    email = user.Email;
+                    id = user.UserId;
                     break;
                 }
             }
-        }       
+        }
         else
         {
             foreach (var admin in admin_data)
             {
-                if (admin.AdminId == Id)
+                if (admin.Email == Email)
                 {
                     code = 200;
                     msg = "查询到管理员信息";
                     name = admin.AdminName;
                     avatar = admin.Avatar;
                     tel = admin.Tel;
-                    email = admin.Email;
+                    id = admin.AdminId;
                     break;
                 }
             }
@@ -250,7 +252,8 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
             name = name,  // 2023.7.12 lx
             avatar = avatar,
             tel = tel,
-            email = email,
+            id = id,
+            email = Email
         });
     }
 }
