@@ -255,7 +255,7 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
     }
 
     //编辑个人信息
-    //返回用户认证令牌(Token)及无效参数401未实现
+    //返回用户认证令牌(Token)未实现
     [HttpPost("edit")]
     public async Task<IActionResult> EditAsync(int Id, int type, string name, string password, string email, string signature, string avatar, int themeID)
     {
@@ -289,6 +289,17 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
         {// 如果数据库中没有数据，返回错误信息
             code = 400;
             msg = "用户不存在";
+            return BadRequest(new
+            {
+                code = code,
+                msg = msg,
+            });
+        }
+
+        //参数无效，返回401
+        if(name==null||password==null||email==null||signature==null||avatar==null){
+            code = 401;
+            msg = "参数无效";
             return BadRequest(new
             {
                 code = code,
