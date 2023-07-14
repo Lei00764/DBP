@@ -27,7 +27,9 @@ const store = createStore({
             state.login = false;
         },
         SaveInfo(state, person_info){
-            state.Info=person_info
+            state.Info = {
+                ...person_info
+            };
         }
     },
     //调用mmutations的操作，异步执行
