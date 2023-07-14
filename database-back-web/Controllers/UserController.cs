@@ -256,4 +256,85 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
             email = Email
         });
     }
+
+    //编辑个人信息
+    //返回用户认证令牌(Token)及无效参数401未实现
+    [HttpPost("edit")]
+    public async Task<IActionResult> EditAsync(int Id, int type, string name, string password, string email, string signature, string avatar, int themeID)
+    {
+        var code = 200;
+        var msg = "success";
+        var user_data = _database.Users.Where(x => x.UserId == Id);
+        var admin_data = _database.Administrators.Where(x => x.AdminId == Id);
+        bool exist = false;
+
+        if(type){
+            foreach (var item in user_data)
+            {
+                if (item.UserId == Id)
+                {
+                    exist = true;
+                    break;
+                }
+            }
+        }
+        else{
+            foreach (var item in admin_data)
+            {
+                if (item.AdminId == Id)
+                {
+                    exist = true;
+                    break;
+                }
+            }
+        }
+        if (exist == false)
+        {// 如果数据库中没有数据，返回错误信息
+            code = 400;
+            msg = "用户不存在";
+            return BadRequest(new
+            {
+                code = code,
+                msg = msg,
+            });
+        }
+        
+        if (type)
+        {
+            foreach (var item in user_data)
+            {
+                item.UserName = name;
+                item.PassWord = passWord;
+                item.Email = email;
+                item.Signature = signature;
+                item.Avatar = avatar;
+                item.ThemeID = themeID;
+            }
+            await _database.SaveChangesAsync();
+            return Ok(new
+            {
+                code = code,
+                msg = msg,
+            });
+        }       
+        else
+        {
+            foreach (var item in admin_data)
+            {
+                item.AdminName = name;
+                item.PassWord = passWord;
+                item.Email = email;
+                item.Signature = signature;
+                item.Avatar = avatar;
+                item.ThemeID = themeID;
+            }
+            await _database.SaveChangesAsync();
+            return Ok(new
+            {
+                code = code,
+                msg = msg,
+            });
+        }
+        
+    }
 }
