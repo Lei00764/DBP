@@ -19,5 +19,6 @@ public class AppDbContext : DbContext
     public DbSet<Like> Likes { get; set; }  // 对应 Models/Like.cs
     public DbSet<Follow> Follows { get; set; }  // 对应 Models/Follow.cs
     public DbSet<Profession> Professions { get; set; }  // 对应 Models/Profession.cs
+    public DbSet<Favourite> Favourites { get; set; }  // 对应 Models/Favourite.cs
 }
 

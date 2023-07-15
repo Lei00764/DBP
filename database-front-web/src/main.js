@@ -6,7 +6,11 @@ import 'element-plus/dist/index.css'
 // 引入 router
 import router from './router'
 import * as ELIcons from '@element-plus/icons-vue'//引入图标
+import store from './store'  //引入store
 
+import "./assets/icon/iconfont.css"  //图标
+
+<<<<<<< HEAD
 import "./assets/icon/iconfont.css"//图标
 
 /* import the fontawesome core */
@@ -19,6 +23,11 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 library.add(fas)
 
 
+=======
+// 全局方法 
+// import Message from '@/utils/Message'
+// import Request from '@/utils/Request'
+>>>>>>> main
 
 const app = createApp(App)
 
@@ -29,7 +38,9 @@ for (let iconName in ELIcons) {
 app.component('font-awesome-icon', FontAwesomeIcon)
 
 app.use(ElementPlus);
-app.use(router)
+app.use(router);
+app.use(store)
+
 
 
 app.mount('#app') 

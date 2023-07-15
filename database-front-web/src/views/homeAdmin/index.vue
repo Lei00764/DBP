@@ -28,13 +28,13 @@
                 <el-form :inline=true class="homeAdmin-avatar-ID">
                     <el-form-item>
                         <!-- 头像 -->
-                        <el-avatar :size="80" :src="avatarURL"></el-avatar>
+                        <el-avatar :size="80" :src="store.state.Info.avatar"></el-avatar>
                     </el-form-item>
                     <el-form-item>
                         <el-form>
                             <!-- 用户名与ID -->
-                            <h2>{{ AdminName }}</h2>
-                            <div style="color:grey">ID：{{ AdminID }}</div>
+                            <h2>{{ store.state.Info.name }}</h2>
+                            <div style="color:grey">ID：{{ store.state.Info.id }}</div>
                         </el-form>
                     </el-form-item>
                     <div class="line"></div><!-- 这是一条分割线 -->
@@ -70,6 +70,9 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import router from "@/router/index.js"
+import { useStore } from 'vuex'//引入store
+
+const store = useStore();//使用store必须加上
 const doSearch = () => {
     //进行关键词搜索
 };
@@ -92,10 +95,6 @@ const intoForum = () => {
 const formData = reactive({
     keyword: '',
 });
-//下面访问管理员信息
-let avatarURL = " ";
-let AdminName = "管理员一号";
-let AdminID = 2151133;
 </script>
 
 <style scoped>

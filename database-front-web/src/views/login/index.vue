@@ -1,34 +1,47 @@
 <template>
     <div>
         <div class="login-page">
-            <div class="login-form">
+            <div class="login-form-1">
                 <el-form>
                     <el-form-item>
                         <el-input placeholder="请输入邮箱" v-model="formData.email"></el-input>
                     </el-form-item>
+                </el-form>
+            </div>
+            <div class="login-form-2">
+                <el-form>  
                     <el-form-item>
                         <el-input placeholder="请输入密码" v-model="formData.password" :type="showPassword ? 'text' : 'password'"
                             show-password></el-input>
-                    </el-form-item>
+                    </el-form-item>                   
+                </el-form>
+            </div>
+            <div class="login-form-button">
+                <elform>
                     <el-form-item>
-                        <el-button type="primary" class="op-btn" @click="doSubmitLogin">
+                        <el-button class="button" @click="doSubmitLogin">
                             <span>登录</span>
                         </el-button>
-                        <el-button type="primary" class="op-btn" @click="doSubmitRegister">
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button class="button" @click="doSubmitRegister">
                             <span>注册</span>
                         </el-button>
                     </el-form-item>
-                </el-form>
+                </elform>
             </div>
         </div>
     </div>
 </template>
   
 <script setup>
-import { ref, reactive } from 'vue';
-import { userLogin } from '@/api/user';  // 引入 api 请求函数 userLogin
+import { ref, reactive, computed} from 'vue';
+import { userLogin, GetInfo} from '@/api/user';  // 引入 api 请求函数 userLogin,GetInfo
 import Message from "@/utils/Message.js"
 import router from "@/router/index.js"
+import { useStore } from 'vuex'//引入store
+
+const store = useStore();//使用store必须加上
 
 // 修改当前页面的 element-plus 主题色
 import { changeTheme } from '../../utils/changeTheme';
@@ -55,12 +68,10 @@ const doSubmitLogin = () => {
 
     userLogin(params)
         .then(function (result) {  // result 是 api /user/login 的返回值，在后端 api 定义
-            // 接收返回值，放在 person_info 变量中
-            let person_info = result
-            // 在这里可以使用 person_info 变量  
+            // 接收返回值，将type存入变量中
+            let type = result.type
             // eg. 登录完成后，调用其他函数
-            afterLogin(person_info);
-
+            afterLogin(type);
         })
         .catch(function (error) {
             console.log(error);
@@ -70,9 +81,31 @@ const doSubmitLogin = () => {
 };
 
 
-const afterLogin = (person_info) => {
-    // 在这里可以使用 person_info 变量
-    console.log(person_info);
+const afterLogin = (type) => {
+    store.commit("doLogin");//修改登录状态
+    //console.log(store.state.login); //获取state值
+    let params = {
+        Email: formData.email,
+        Type: type,
+    };
+    GetInfo(params)//获取信息
+        .then(function (result) {
+            let person_info = {
+                avatar: result.avatar,
+                id: result.id,
+                name: result.name,
+                tel: result.tel,
+                password: formData.password,
+                email: result.email,
+            }
+            //进行store存储
+            store.commit('SaveInfo',person_info);//调用mutations，将信息传入store
+            //console.log(store.state.Info)
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    //到现在为止，保存登录信息已经实现，可通过store.state.Info获取相应的值
 };
 
 
@@ -93,13 +126,46 @@ const doSubmitRegister = () => {
     width: 100vw;
 }
 
-.login-form {
+.login-form-1 {
     position: absolute;
-    top: 50%;
-    left: 70%;
+    top: 48%;
+    left: 86%;
+    transform: translate(-50%, -50%);
+    height: 10%;
+    width: 20%;
+
+}
+.login-form-2 {
+    position: absolute;
+    top: 58%;
+    left: 86%;
     transform: translate(-50%, -50%);
     height: 10%;
     width: 20%;
 }
+
+.login-form-button{
+    position: absolute;
+    top: 70%;
+    left: 91%;
+    transform: translate(-50%, -50%);
+    height: 10%;
+    width: 20%;
+}
+
+.button{
+    height:120%;
+    width:50%;
+    background-color: black;
+    color:#ffffff;
+}
+
+
+
+:deep(.el-input__wrapper) {
+    background: #ffffff;
+    border-radius: 12px;
+
+}
+
 </style>
-  
