@@ -43,6 +43,10 @@ import { useStore } from 'vuex'//引入store
 
 const store = useStore();//使用store必须加上
 
+// 修改当前页面的 element-plus 主题色
+import { changeTheme } from '../../utils/changeTheme';
+changeTheme("#FF0000");  // 目前为红色，可以修改
+
 const formData = reactive({
     email: '',
     password: '',

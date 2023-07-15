@@ -1,168 +1,100 @@
 <template>
     <div>
-        <!-- 用户主页顶部导航栏 -->
-        <el-form-item>
-            <el-button type="primary" class="forum-button1" @click="doAllFood">
-                <span>全部</span>
-            </el-button>
-        </el-form-item>
+        <div class="header-content">
+            <!-- 左侧 logo -->
+            <router-link to="/layout" class="logo">
+                <span>
+                    Foodieland
+                </span>
+            </router-link>
 
-        <el-form-item>
-            <el-button type="primary" class="forum-button2" @click="doChineseFood">
-                <span>中餐</span>
-            </el-button>
-        </el-form-item>
+            <!-- 中间 搜索栏 -->
+            <div class="search-panel">
+                <el-input placeholder="Search Key Words" class="custom-input">
+                    <!-- prefix 前置插入槽 -->
+                    <template #prefix>
+                        <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
+                    </template>
+                </el-input>
+            </div>
 
-        <el-form-item>
-            <el-button type="primary" class="forum-button3" @click="doWesternFood">
-                <span>西餐</span>
-            </el-button>
-        </el-form-item>
-
-        <el-form-item>
-            <el-button type="primary" class="forum-button4" @click="doDessert">
-                <span>甜点</span>
-            </el-button>
-        </el-form-item>
-
-        <el-form-item>
-            <el-button type="primary" class="forum-button5" @click="doOthers">
-                <span>其他</span>
-            </el-button>
-        </el-form-item>
+            <!-- 右侧 个人信息 -->
+            <div class="user-info-panel">
+                <el-button class="icon-button">
+                    <font-awesome-icon :icon="['fas', 'house']" />
+                    <span class="button-text">首页</span>
+                </el-button>
+                <el-button class="icon-button">
+                    <font-awesome-icon :icon="['fas', 'circle-user']" />
+                    <span class="button-text">我的主页</span>
+                </el-button>
+                <el-button class="icon-button">
+                    <font-awesome-icon :icon="['fas', 'right-to-bracket']" />
+                    <span class="button-text">退出登录</span>
+                </el-button>
+                <el-button class="icon-button">
+                    <font-awesome-icon :icon="['fas', 'comments']" />
+                    <span class="button-text">消息</span>
+                </el-button>
+            </div>
+        </div>
     </div>
 </template>
 
-
-
 <script setup>
-import { ref } from 'vue';
-import router from "@/router/index.js"
-const selecttag = ref('')
-
-const doAllFood = () => {
-    selecttag.value = "全部";
-    router.push({ name: 'forum', params: { tag: 'all' } })
-};
-
-const doChineseFood = () => {
-    selecttag.value = "中餐";
-    router.push({ name: 'forum', params: { tag: 'chinese' } })
-};
-
-const doWesternFood = () => {
-    selecttag.value = "西餐";
-    router.push({ name: 'forum', params: { tag: 'western' } })
-};
-
-const doDessert = () => {
-    selecttag.value = "甜点";
-    router.push({ name: 'forum', params: { tag: 'dessert' } })
-};
-
-const doOthers = () => {
-    selecttag.value = "其他"
-    router.push({ name: 'forum', params: { tag: 'others' } })
-};
-
-
-
+// 修改当前页面的 element-plus 主题色
+import { changeTheme } from '@/utils/changeTheme';
+changeTheme("#FFD700");  // 目前为红色，可以修改
 </script>
 
-
 <style>
-.forum-button1 {
-    /*菜品种类第一个按钮相关设置 */
-    position: absolute;
-    top: 200px;
-    left: 100px;
-    height: 50px;
-    width: 210px;
-    background: #08664B;
-    border-color: rgb(255, 255, 255);
-    border-radius: 30px;
+.header-content {
+    margin: 0 auto;
+    align-items: center;
+    /* 通过将高度设置成外层容器一致，达到居中效果 */
+    height: 10vh;
+    width: 80vw;
+    display: flex;
 }
 
-.forum-button1:hover {
-    border-radius: 30px;
-    background-color: #f8b720;
-    color: #08664B;
-    border-color: rgb(255, 255, 255);
+.logo {
+    /* 取消下划线样式 */
+    text-decoration: none;
+    font-size: 24px;
+    color: rgb(96, 98, 102);
 }
 
-.forum-button2 {
-    /*菜品种类第二个按钮相关设置 */
-    position: absolute;
-    top: 200px;
-    left: 360px;
-    height: 50px;
-    width: 210px;
-    background: #08664B;
-    border-color: rgb(255, 255, 255);
-    border-radius: 30px;
+.search-panel {
+    flex: 1;
+    margin-left: 10vw;
+    margin-right: 10vw;
 }
 
-.forum-button2:hover {
-    border-radius: 30px;
-    background-color: #f8b720;
-    color: #08664B;
-    border-color: rgb(255, 255, 255);
+.custom-input>.el-input__wrapper {
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid rgb(96, 98, 102);
+    box-shadow: none;
 }
 
-.forum-button3 {
-    /*菜品种类第三个按钮相关设置 */
-    position: absolute;
-    top: 200px;
-    left: 620px;
-    height: 50px;
-    width: 210px;
-    background: #08664B;
-    border-color: rgb(255, 255, 255);
-    border-radius: 30px;
+.user-info-panel {
+    display: flex;
 }
 
-.forum-button3:hover {
-    border-radius: 30px;
-    background-color: #f8b720;
-    color: #08664B;
-    border-color: rgb(255, 255, 255);
+.user-info-panel .el-button {
+    border: none;
+    /* 去掉按钮的背景颜色 */
+    background-color: transparent;
+    padding: 0;
+    /* margin: 0; */
+    margin-right: 1vw;
 }
 
-.forum-button4 {
-    /*菜品种类第四个按钮相关设置 */
-    position: absolute;
-    top: 200px;
-    left: 880px;
-    height: 50px;
-    width: 210px;
-    background: #08664B;
-    border-color: rgb(255, 255, 255);
-    border-radius: 30px;
+.user-info-panel .el-button:hover {
+    background-color: transparent;
 }
 
-.forum-button4:hover {
-    border-radius: 30px;
-    background-color: #f8b720;
-    color: #08664B;
-    border-color: rgb(255, 255, 255);
-}
-
-.forum-button5 {
-    /*菜品种类第五个按钮相关设置 */
-    position: absolute;
-    top: 200px;
-    left: 1140px;
-    height: 50px;
-    width: 210px;
-    background: #08664B;
-    border-color: rgb(255, 255, 255);
-    border-radius: 30px;
-}
-
-.forum-button5:hover {
-    border-radius: 30px;
-    background-color: #f8b720;
-    color: #08664B;
-    border-color: rgb(255, 255, 255);
+.button-text {
+    margin-left: 5px;
 }
 </style>
