@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "D:\\VSCodeProjects\\DBP\\database-back-web\\database_back_web.csproj": {}
   },
   "projects": {
@@ -15,12 +16,32 @@
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\13092\\AppData\\Roaming\\NuGet\\NuGet.Config"
+=======
+    "G:\\1.Tongji\\Sophomore\\Sophomore-2\\DBS_数据库原理与应用\\1-美食论坛系统\\SYSTEM\\DBP\\database-back-web\\database_back_web.csproj": {}
+  },
+  "projects": {
+    "G:\\1.Tongji\\Sophomore\\Sophomore-2\\DBS_数据库原理与应用\\1-美食论坛系统\\SYSTEM\\DBP\\database-back-web\\database_back_web.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "G:\\1.Tongji\\Sophomore\\Sophomore-2\\DBS_数据库原理与应用\\1-美食论坛系统\\SYSTEM\\DBP\\database-back-web\\database_back_web.csproj",
+        "projectName": "database_back_web",
+        "projectPath": "G:\\1.Tongji\\Sophomore\\Sophomore-2\\DBS_数据库原理与应用\\1-美食论坛系统\\SYSTEM\\DBP\\database-back-web\\database_back_web.csproj",
+        "packagesPath": "C:\\Users\\pc\\.nuget\\packages\\",
+        "outputPath": "G:\\1.Tongji\\Sophomore\\Sophomore-2\\DBS_数据库原理与应用\\1-美食论坛系统\\SYSTEM\\DBP\\database-back-web\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\pc\\AppData\\Roaming\\NuGet\\NuGet.Config"
+>>>>>>> main
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+<<<<<<< HEAD
           "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
+=======
+          "C:\\Program Files\\dotnet\\sdk\\7.0.305\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
+>>>>>>> main
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -93,7 +114,11 @@
               "privateAssets": "all"
             }
           },
+<<<<<<< HEAD
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+=======
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.305\\RuntimeIdentifierGraph.json"
+>>>>>>> main
         }
       }
     }

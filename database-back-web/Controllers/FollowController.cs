@@ -15,8 +15,10 @@ public class FollowController : ControllerBase
     {
         _database = appDbContext;  // 依赖注入，在整个类中使用它来进行数据库操作
     }
+
+    //关注或取消关注
     [HttpPost("Follow")]
-    public async Task<IActionResult> FollowUserAsync(int user_id, int author_id)//关注或取消关注
+    public async Task<IActionResult> FollowUserAsync(int user_id, int author_id)
     {
         var code = 200;
         var msg = "success";
@@ -100,6 +102,46 @@ public class FollowController : ControllerBase
             code = code,
             msg = msg
         });
+    }
+
+    //获取粉丝数量
+    [HttpGet("FollowNumber")]
+    public async Task<IActionResult> FollowNumberAsync(int user_id)
+    {
+        var code = 200;
+        var msg = "success";
+        var temp = await _database.Users.ToListAsync();
+        bool exist = false;
+        if (temp != null)//判断表内是否有信息
+        {
+            foreach (var user in temp)
+            {
+                if (user.UserId == user_id)
+                {
+                    exist = true;
+                    break;
+                }
+            }
+        }
+        if(exist){
+            //查找用户的粉丝数量并返回
+            var fans_data = _database.Users.Where(a => a.UserId == user_id).Select(a => a.FollowerNum);
+            return Ok(new
+            {
+                code = code,
+                msg = msg,
+                data = fans_data
+            });
+        }
+        else{
+            code = 400;
+            msg = "不存在该用户信息";
+            return BadRequest(new
+            {
+                code = code,
+                msg = msg
+            });
+        }
     }
 
 }

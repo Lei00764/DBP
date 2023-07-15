@@ -98,7 +98,7 @@ const doSubmitLogin = () => {
 .register-form {
     position: absolute;
     top: 50%;
-    left: 70%;
+    left: 17%;
     transform: translate(-50%, -50%);
     height: 10%;
     width: 20%;
