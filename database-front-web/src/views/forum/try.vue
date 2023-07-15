@@ -1,3 +1,4 @@
+<!-- 本文件没用，可以删除 -->
 <template>
     <div>
         <div class="forum-page">

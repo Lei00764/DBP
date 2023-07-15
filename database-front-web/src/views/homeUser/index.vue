@@ -35,23 +35,23 @@
             <div class="bottom">
                 <el-form :inline="true">
                     <el-form-item>
-                        <el-button class="button0" type="primary" @click="allFood">
+                        <el-button class="button0" type="primary" @click="toAllFood">
                         </el-button>
                     </el-form-item>
                     <el-form-item>
-                        <el-button class="button1" type="primary" @click="chineseFood">
+                        <el-button class="button1" type="primary" @click="toChineseFood">
                         </el-button>
                     </el-form-item>
                     <el-form-item>
-                        <el-button class="button2" type="primary" @click="westernFood">
+                        <el-button class="button2" type="primary" @click="toWesternFood">
                         </el-button>
                     </el-form-item>
                     <el-form-item>
-                        <el-button class="button3" type="primary" @click="dessert">
+                        <el-button class="button3" type="primary" @click="toDessert">
                         </el-button>
                     </el-form-item>
                     <el-form-item>
-                        <el-button class="button4" type="primary" @click="others">
+                        <el-button class="button4" type="primary" @click="toOthers">
                         </el-button>
                     </el-form-item>
                 </el-form>
@@ -84,25 +84,26 @@ const goUser = () => {
     router.push({ name: 'userHomePage' })
 };
 
-const allFood = () => {
-    router.push({ name: 'forum', params: { tag: 'all' } })
+const toAllFood = () => {
+    router.push({ path: '/layout' })
 };
 
-const chineseFood = () => {
-    router.push({ name: 'forum', params: { tag: 'chinese' } })
+const toChineseFood = () => {
+    router.push({ path: '/forum/1' });
 };
 
-const westernFood = () => {
-    router.push({ name: 'forum', params: { tag: 'western' } })
+const toWesternFood = () => {
+    router.push({ path: '/forum/2' });
 };
 
-const dessert = () => {
-    router.push({ name: 'forum', params: { tag: 'dessert' } })
+const toDessert = () => {
+    router.push({ path: '/forum/3' });
 };
 
-const others = () => {
-    router.push({ name: 'forum', params: { tag: 'others' } })
+const toOthers = () => {
+    router.push({ path: '/forum/4' });
 };
+
 </script>
 
 <style scoped>

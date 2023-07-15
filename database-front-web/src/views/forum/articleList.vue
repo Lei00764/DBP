@@ -11,9 +11,18 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
+// import { useRouter } from 'vue-router';
+
 import articleListItem from "@/components/articleListItem.vue"
 import { loadArticle } from "@/api/article.js"
+import router from "@/router/index.js"
+
+// 子组件接收父组件的传值 和 子路由接收父路由的传值不同
+// 前者：defineProps()
+// 后者：router.currentRoute.value.params.pBoardId
+
+const pBoardId = ref(router.currentRoute.value.params.pBoardId);
 
 // 存储获取的文章数据
 const articleListInfo = ref([]);
@@ -21,10 +30,10 @@ const articleListInfo = ref([]);
 // 获取文章数据
 const fetchData = async () => {
     const params = {
-        tag: "中餐",
+        p_board_id: pBoardId.value,
         page_num: 1
     };
-
+    // console.log(pBoardId);
     const result = await loadArticle(params);
     if (!result)
         return;
@@ -32,7 +41,18 @@ const fetchData = async () => {
     articleListInfo.value = result.data;
     // console.log(articleListInfo.value);
 };
-fetchData();  // 执行
+
+// 在组件挂载时获取初始文章数据
+onMounted(() => {
+    fetchData();
+});
+
+// 使用 watch 监听父级路由参数的变化
+watch(() => router.currentRoute.value.params.pBoardId, (newValue) => {
+    console.log(newValue);
+    pBoardId.value = newValue;
+    fetchData();
+});
 </script>
 
 <style>

@@ -26,6 +26,7 @@ import { ref, reactive } from 'vue';
 import navTop from "@/components/navTop.vue"
 import router from "@/router/index.js"
 
+const pBoardId = ref(0);  // 默认为 0，即全部板块
 
 const buttonStyle = [
     // 将图片换成修改之后的图片，注意：这里不能使用 @ 代替 src
@@ -36,8 +37,10 @@ const buttonStyle = [
     { background: "src/assets/others.png", hoverOpacity: 0.8 }
 ];
 
-const handleButtonClick = (pBoardId) => {
-    router.push(`/forum/${pBoardId}`); // 根据 pBoardId 跳转到对应的子板块页面
+// 点击本页面上的按钮，跳转到相应的板块
+const handleButtonClick = (p_board_id) => {
+    router.push(`/forum/${p_board_id}`); // 根据 pBoardId 跳转到对应的子板块页面
+    pBoardId.value = p_board_id;  // 更新 pBoardId
 };
 </script>
 

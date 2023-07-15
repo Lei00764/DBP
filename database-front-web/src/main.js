@@ -10,7 +10,6 @@ import store from './store'  //引入store
 
 import "./assets/icon/iconfont.css"  //图标
 
-<<<<<<< HEAD
 import "./assets/icon/iconfont.css"//图标
 
 /* import the fontawesome core */
@@ -23,11 +22,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 library.add(fas)
 
 
-=======
-// 全局方法 
-// import Message from '@/utils/Message'
-// import Request from '@/utils/Request'
->>>>>>> main
 
 const app = createApp(App)
 

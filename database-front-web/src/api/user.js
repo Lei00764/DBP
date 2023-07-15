@@ -13,7 +13,7 @@ export function userLogin(params) {  // 在 src/views/login/index.vue 里调用�
     }).then(function (response) {  // then 表示成功接收到响应后的操作
         if (response.data.code === 200) {
             Message.success("登录成功");
-            if (response.data.type === true) {
+            if (response.data.type === 1) {
                 router.push({ path: '/homeUser' });  // 路由跳转，将页面跳转到路径为 '/homeUser' 的页面
             } else {
                 router.push({ path: '/homeAdmin' });

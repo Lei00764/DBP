@@ -11,6 +11,7 @@
                         <!-- <div class="content"> {{ data.content }}</div> -->
                     </div>
                     <div class="title">{{ data.title }}</div>
+                    <div class="tag">{{ data.tag }}</div>
                     <div>
                         <span>喜欢：{{ data.likeNum }}</span>
                         <span>收藏：{{ data.favouriteNum }}</span>
