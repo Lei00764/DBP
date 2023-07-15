@@ -9,6 +9,23 @@ const router = createRouter({
             redirect: '/login'  // 重定向
         },
         {
+            path: '/layout',
+            name: 'layout',
+            component: () => import('@/views/layout.vue'),
+            children: [
+                {
+                    path: '',  // 默认显示的子路由页面
+                    name: '所有文章',
+                    component: () => import('@/views/forum/articleList.vue'),
+                },
+                {
+                    path: '/forum/:pBoardId',  // pBoardId 从 0 开始 （动态路由）
+                    name: "一级板块",
+                    component: () => import('@/views/forum/articleList.vue'),
+                }
+            ]
+        },
+        {
             path: '/login',
             name: 'login',  // 这个名字可以随便起
             component: () => import('@/views/login/index.vue'),
@@ -53,12 +70,12 @@ const router = createRouter({
             name: 'checkArticle',
             component: () => import('@/views/checkArticle/index.vue'),
         },
-        {
-            // 动态路由
-            path: '/forum/:tag',  // 论坛
-            name: 'forum',
-            component: () => import("@/views/forum/index.vue"),
-        },
+        // {
+        //     // 动态路由
+        //     path: '/forum',  // 论坛
+        //     name: 'forum',
+        //     component: () => import("@/views/forum/index.vue"),
+        // },
         {
             path: '/addArticle',  // 发布文章
             name: 'addArticle',

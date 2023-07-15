@@ -1890,6 +1890,8 @@ C:/Users/liuxiao/Desktop/DBP/database-back-web/obj/Debug/net7.0/database_back_we
 C:/Users/liuxiao/Desktop/DBP/database-back-web/obj/Debug/net7.0/database_back_web.genruntimeconfig.cache
 C:/Users/liuxiao/Desktop/DBP/database-back-web/obj/Debug/net7.0/ref/database_back_web.dll
 >>>>>>> main
+<<<<<<< HEAD
+=======
 G:\1.Tongji\Sophomore\Sophomore-2\DBS_数据库原理与应用\1-美食论坛系统\SYSTEM\DBP\database-back-web\bin\Debug\net7.0\appsettings.Development.json
 G:\1.Tongji\Sophomore\Sophomore-2\DBS_数据库原理与应用\1-美食论坛系统\SYSTEM\DBP\database-back-web\bin\Debug\net7.0\appsettings.json
 G:\1.Tongji\Sophomore\Sophomore-2\DBS_数据库原理与应用\1-美食论坛系统\SYSTEM\DBP\database-back-web\bin\Debug\net7.0\database_back_web.exe
@@ -2204,4 +2206,5 @@ G:\1.Tongji\Sophomore\Sophomore-2\DBS_数据库原理与应用\1-美食论坛系
 G:\1.Tongji\Sophomore\Sophomore-2\DBS_数据库原理与应用\1-美食论坛系统\SYSTEM\DBP\database-back-web\obj\Debug\net7.0\database_back_web.pdb
 G:\1.Tongji\Sophomore\Sophomore-2\DBS_数据库原理与应用\1-美食论坛系统\SYSTEM\DBP\database-back-web\obj\Debug\net7.0\database_back_web.genruntimeconfig.cache
 G:\1.Tongji\Sophomore\Sophomore-2\DBS_数据库原理与应用\1-美食论坛系统\SYSTEM\DBP\database-back-web\obj\Debug\net7.0\ref\database_back_web.dll
+>>>>>>> main
 >>>>>>> main

@@ -47,9 +47,14 @@
                     <!-- 导航栏 -->
                     <navTop></navTop>
                     <!-- 文章显示区 -->
-                    <showArticle></showArticle>
+                    <!-- <showArticle></showArticle> -->
+
 
                 </el-form>
+
+            </div>
+            <div>
+                <!-- <imageArticle></imageArticle> -->
             </div>
         </div>
     </div>
@@ -60,6 +65,7 @@ import { ref, reactive } from 'vue';
 import router from "@/router/index.js"
 import navTop from "@/components/navTop.vue"
 import showArticle from "@/components/showArticle.vue"
+import imageArticle from "@/components/imageArticle.vue"
 
 const formData = reactive({
     keywords: '',
@@ -87,8 +93,6 @@ const doLogoff = () => {
     //退出登录
     router.push({ name: 'login' })
 };
-
-
 
 </script>
 
