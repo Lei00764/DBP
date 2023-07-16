@@ -36,7 +36,7 @@
   
 <script setup>
 import { ref, reactive, computed} from 'vue';
-import { userLogin, GetInfo} from '@/api/user';  // 引入 api 请求函数 userLogin,GetInfo
+import { userLogin, GetInfoByEmail} from '@/api/user';  // 引入 api 请求函数 userLogin,GetInfo
 import Message from "@/utils/Message.js"
 import router from "@/router/index.js"
 import { useStore } from 'vuex'//引入store
@@ -88,7 +88,7 @@ const afterLogin = (type) => {
         Email: formData.email,
         Type: type,
     };
-    GetInfo(params)//获取信息
+    GetInfoByEmail(params)//获取信息
         .then(function (result) {
             let person_info = {
                 avatar: result.avatar,

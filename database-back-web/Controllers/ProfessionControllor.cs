@@ -98,6 +98,43 @@ public class ProfessionController : ControllerBase
         });
     }
 
+    [HttpGet("ProfessionToDeal")]
+    public async Task<IActionResult> ProfessionToDeal()//列出未被处理的认证申请（管理员）
+    {
+        var code = 200;
+        var msg = "success";
+        var profession_data = await (
+            from request in _database.Professions
+            where request.IsAccepted == 0 
+            select new
+            {
+                id = request.UserId,//申请者ID
+                time = request.ApplyTime,  // 申请时间
+                illustrate = request.Illustrate,  //原因
+                evidence = request.Evidence,  // 证明材料
+                result = request.IsAccepted,  // 处理结果
+                requestId = request.RequestId  //申请信息ID
+            }
+            ).ToListAsync();
+        if (profession_data != null)
+        {
+            return Ok(new
+            {
+                code = code,
+                msg = msg,
+                data = profession_data
+            });
+        }
+        else
+        {
+            return BadRequest(new
+            {
+                code = 400,
+                msg = "当前没有新的专业申请",
+            });
+        }
+    }
+
     [HttpPut("DealRequest")]
     public async Task<IActionResult> DealRequestAync(int request_id, int response)//处理认证申请（管理员）response=1为通过2为不通过
     {

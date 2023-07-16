@@ -6,7 +6,7 @@ const store = createStore({
         Info:{//用户信息
             avatar:"",
             id:"",
-            name:"1",
+            name:"",
             tel:"",
             password:"",
             email:"",
@@ -15,9 +15,7 @@ const store = createStore({
     },
     //计算属性，获取state里的数据内容
     //只可读取不可修改
-    getters:{
-
-    },
+    getters:{},
     //定义对state的各种操作，只能同步不能异步
     mutations: {
         doLogin(state) {//登录
@@ -39,8 +37,15 @@ const store = createStore({
          // }
     },
     //state信息过长时，用以进行分割
-    modules: {
-    }
+    modules: {}
 })
+
+// 保存store状态到sessionStorage
+function saveStateToSessionStorage() {
+    sessionStorage.setItem('store', JSON.stringify(store.state))
+  }
+  
+  // 在页面刷新前执行保存state到sessionStorage的操作
+  window.addEventListener('beforeunload', saveStateToSessionStorage)
 
 export default store
