@@ -7,11 +7,29 @@
                         <el-input placeholder="请输入用户名" v-model="formData.username"></el-input>
                     </el-form-item>
                     <el-form-item>
+                        <!-- 空一行 -->
+                    </el-form-item>
+                    <el-form-item>
+                        <!-- 空一行 -->
+                    </el-form-item>
+                    <el-form-item>
                         <el-input placeholder="请输入邮箱" v-model="formData.email"></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <!-- 空一行 -->
+                    </el-form-item>
+                    <el-form-item>
+                        <!-- 空一行 -->
                     </el-form-item>
                     <el-form-item>
                         <el-input placeholder="请输入密码" v-model="formData.password" :type="showPassword ? 'text' : 'password'"
                             show-password></el-input>
+                    </el-form-item>
+                    <el-form-item>
+                        <!-- 空一行 -->
+                    </el-form-item>
+                    <el-form-item>
+                        <!-- 空一行 -->
                     </el-form-item>
                     <el-form-item>
                         <el-input placeholder="请确认密码" v-model="formData.confirmPassword"
@@ -21,15 +39,19 @@
                         <el-radio :label="0">管理员</el-radio>
                         <el-radio :label="1">用户</el-radio>
                     </el-radio-group>
-                    <el-form-item>
-                        <el-button type="primary" class="op-btn" @click="doSubmitRegister">
+                </el-form>
+            </div>
+            <div class="register-form-button">
+                <el-form-item>
+                        <el-button class="button" @click="doSubmitRegister">
                             <span>注册</span>
+                            <span class="iconfont icon-ic_play_black"></span>
                         </el-button>
-                        <el-button type="primary" class="op-btn" @click="doSubmitLogin">
+                        <el-button class="button" @click="doSubmitLogin">
                             <span>登录</span>
+                            <span class="iconfont icon-ic_play_black"></span>
                         </el-button>
                     </el-form-item>
-                </el-form>
             </div>
         </div>
     </div>
@@ -88,20 +110,50 @@ const doSubmitLogin = () => {
 <style scoped>
 .register-page {
     background-image: url('@/assets/sign_up.png');
-    background-position: center;
+    /* 背景图片地址 */
+    background-position: center center;
+    /* 背景图片位置 */
     background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
-    width: 100vw;
+    /* 背景图片是否重复 */
+    background-size: 100% 100%;
+    /* 背景图片大小 */
+    height: 98vh;
+    /* 背景图片宽高 */
+    width: 99vw;
 }
 
 .register-form {
     position: absolute;
-    top: 50%;
+    top: 41%;
     left: 17%;
     transform: translate(-50%, -50%);
     height: 10%;
     width: 20%;
+}
+
+
+.register-form-button{
+    position: absolute;
+    top: 90%;
+    left: 17%;
+    transform: translate(-50%, -50%);
+    height: 10%;
+    width: 20%;
+}
+
+.button{
+    height:100%;
+    width:42%;
+    background-color: black;
+    color:#ffffff;
+}
+
+
+
+:deep(.el-input__wrapper) {
+    background: #ffffff;
+    border-radius: 12px;
+
 }
 </style>
   

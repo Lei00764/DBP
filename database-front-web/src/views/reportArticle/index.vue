@@ -1,25 +1,10 @@
 <!-- 此处为举报帖子的举报界面 -->
+<!-- 我在想举报部分做个弹窗不做界面了 -->
 <template>
     <div>
         <div class="announcement-page">
-            <!-- 顶部导航栏 -->
-            <div class="announ-head-form" :class="navBarFixed == true ? 'navBarWrap' : ''">
-                <el-form :inline=true>
-                    <!-- 表单 -->
-                    <el-form-item>
-                        <!-- 返回管理员主页 -->
-                        <el-button type="primary" class="announ-corner-button1" @click="doReturnHome">
-                            <span>首页</span>
-                        </el-button>
-                    </el-form-item>
-                    <el-form-item>
-                        <!-- 退出登录 -->
-                        <el-button type="primary" class="announ-corner-button2" @click="doLogOut">
-                            <span>退出登录</span>
-                        </el-button>
-                    </el-form-item>
-
-                </el-form>
+            <div id="header">
+                <navTop></navTop>
             </div>
             <!-- 按钮 -->
             <div class="announ-button" :class="navBarFixed == true ? 'navBarWrap' : ''">
@@ -54,7 +39,7 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import router from "@/router/index.js"
-
+import navTop from "@/components/navTop.vue"
 
 
 const formData = reactive({
@@ -88,6 +73,13 @@ const ReturnAnnoun = () => {
 </script>
 
 <style scoped>
+
+#header {
+    /* 如果调整height，记得去 @/components/navTop.vue 中调整 header-content 样式 */
+    height: 10vh;
+    width: 100vw;
+    box-shadow: 0 2px 6px 0 #ddd;
+}
 .announcement-page {
     background-image: url('@/assets/report.png');
     background-position: center;

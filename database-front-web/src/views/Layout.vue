@@ -8,7 +8,7 @@
                 <el-form :inline="true" class="form-container">
                     <template v-for="(button, index) in buttonStyle" :key="index">
                         <el-form-item>
-                            <el-button class="button" type="primary" @click="handleButtonClick(index)"
+                            <el-button class="button" @click="handleButtonClick(index)"
                                 :style="`background-image: url(${button.background})`"></el-button>
                         </el-form-item>
                     </template>
@@ -30,11 +30,11 @@ const pBoardId = ref(0);  // 默认为 0，即全部板块
 
 const buttonStyle = [
     // 将图片换成修改之后的图片，注意：这里不能使用 @ 代替 src
-    { background: "src/assets/all.png", hoverOpacity: 0.8 },
-    { background: "src/assets/chinese_food.png", hoverOpacity: 0.8 },
-    { background: "src/assets/western_food.png", hoverOpacity: 0.8 },
-    { background: "src/assets/dessert.png", hoverOpacity: 0.8 },
-    { background: "src/assets/others.png", hoverOpacity: 0.8 }
+    { background: "src/assets/forum-classify/all.png", hoverOpacity: 0.8 },
+    { background: "src/assets/forum-classify/chinesefood.png", hoverOpacity: 0.8 },
+    { background: "src/assets/forum-classify/westernfood.png", hoverOpacity: 0.8 },
+    { background: "src/assets/forum-classify/dessert.png", hoverOpacity: 0.8 },
+    { background: "src/assets/forum-classify/others.png", hoverOpacity: 0.8 }
 ];
 
 // 点击本页面上的按钮，跳转到相应的板块
@@ -71,10 +71,10 @@ const handleButtonClick = (p_board_id) => {
 }
 
 .button {
-    width: 180px;
-    height: 110px;
+    width: 240px;
+    height: 70px;
     border: none;
-    background-position: center;
+    background-position:20%;
     background-repeat: no-repeat;
     background-size: cover;
 }
