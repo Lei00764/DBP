@@ -8,22 +8,22 @@
             <div class="classify">
                 <el-form>
                     <el-form-item>
-                        <el-button class="button1" @click="chineseFood">
+                        <el-button class="button1" @click="toChineseFood">
                             <span>中餐</span>
                         </el-button>
                     </el-form-item>
                     <el-form-item>
-                        <el-button class="button2" @click="westernFood">
+                        <el-button class="button2" @click="toWesternFood">
                             <span>西餐</span>
                         </el-button>
                     </el-form-item>
                     <el-form-item>
-                        <el-button class="button3" @click="dessert">
+                        <el-button class="button3" @click="toDessert">
                             <span>甜点</span>
                         </el-button>
                     </el-form-item>
                     <el-form-item>
-                        <el-button class="button4" @click="others">
+                        <el-button class="button4" @click="toOthers">
                             <span>其他</span>
                         </el-button>
                     </el-form-item>
@@ -31,11 +31,11 @@
             </div>
             <div class="enter-forum">
                 <el-form-item>
-                        <el-button class="button0" @click="allFood">
-                            <span>进入论坛</span>
-                            <span class="iconfont icon-ic_play_black"></span>
-                        </el-button>
-                    </el-form-item>
+                    <el-button class="button0" @click="toAllFood">
+                        <span>进入论坛</span>
+                        <span class="iconfont icon-ic_play_black"></span>
+                    </el-button>
+                </el-form-item>
             </div>
         </div>
     </div>
@@ -51,32 +51,34 @@ const FormData = reactive({
 });
 
 
-const allFood = () => {
-    router.push({ name: 'forum', params: { tag: 'all' } })
+const toAllFood = () => {
+    router.push(`/forum/0`);
 };
 
-const chineseFood = () => {
-    router.push({ name: 'forum', params: { tag: 'chinese' } })
+const toChineseFood = () => {
+    router.push(`/forum/1`);
 };
 
-const westernFood = () => {
-    router.push({ name: 'forum', params: { tag: 'western' } })
+const toWesternFood = () => {
+    router.push(`/forum/2`);
 };
 
-const dessert = () => {
-    router.push({ name: 'forum', params: { tag: 'dessert' } })
+const toDessert = () => {
+    router.push(`/forum/3`);
 };
 
-const others = () => {
-    router.push({ name: 'forum', params: { tag: 'others' } })
+const toOthers = () => {
+    router.push(`/forum/4`);
+
 };
 </script>
 
 <style scoped>
-span{
-    font-family:AlimamaShuHeiTi-Bold;
+span {
+    font-family: AlimamaShuHeiTi-Bold;
     font-weight: 2000;
 }
+
 .homeUser-page {
     background-image: url('@/assets/background.png');
     background-position: center center;
@@ -97,18 +99,18 @@ span{
 }
 
 
-.enter-forum{
-    position:absolute;
-    top:75%;
-    left:10%;
+.enter-forum {
+    position: absolute;
+    top: 75%;
+    left: 10%;
 }
 
 
 .button0 {
-    height:100%;
-    width:190%;
+    height: 100%;
+    width: 190%;
     background-color: black;
-    color:#ffffff;
+    color: #ffffff;
 }
 
 .button0:hover {
