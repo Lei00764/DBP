@@ -9,11 +9,11 @@
                 </el-form>
             </div>
             <div class="login-form-2">
-                <el-form>  
+                <el-form>
                     <el-form-item>
                         <el-input placeholder="请输入密码" v-model="formData.password" :type="showPassword ? 'text' : 'password'"
                             show-password></el-input>
-                    </el-form-item>                   
+                    </el-form-item>
                 </el-form>
             </div>
             <div class="login-form-button">
@@ -37,8 +37,8 @@
 </template>
   
 <script setup>
-import { ref, reactive } from 'vue';
-import { userLogin } from '@/api/user';  // 引入 api 请求函数 userLogin
+import { ref, reactive, computed } from 'vue';
+import { userLogin, GetInfoByEmail } from '@/api/user';  // 引入 api 请求函数 userLogin,GetInfo
 import Message from "@/utils/Message.js"
 import router from "@/router/index.js"
 
@@ -78,9 +78,31 @@ const doSubmitLogin = () => {
 };
 
 
-const afterLogin = (person_info) => {
-    // 在这里可以使用 person_info 变量
-    console.log(person_info);
+const afterLogin = (type) => {
+    store.commit("doLogin");//修改登录状态
+    //console.log(store.state.login); //获取state值
+    let params = {
+        Email: formData.email,
+        Type: type,
+    };
+    GetInfoByEmail(params)//获取信息
+        .then(function (result) {
+            let person_info = {
+                avatar: result.avatar,
+                id: result.id,
+                name: result.name,
+                tel: result.tel,
+                password: formData.password,
+                email: result.email,
+            }
+            //进行store存储
+            store.commit('SaveInfo', person_info);//调用mutations，将信息传入store
+            //console.log(store.state.Info)
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    //到现在为止，保存登录信息已经实现，可通过store.state.Info获取相应的值
 };
 
 
@@ -114,6 +136,7 @@ const doSubmitRegister = () => {
     width: 20%;
 
 }
+
 .login-form-2 {
     position: absolute;
     top: 58%;
@@ -123,7 +146,7 @@ const doSubmitRegister = () => {
     width: 20%;
 }
 
-.login-form-button{
+.login-form-button {
     position: absolute;
     top: 70%;
     left: 91%;
@@ -132,11 +155,11 @@ const doSubmitRegister = () => {
     width: 20%;
 }
 
-.button{
-    height:100%;
-    width:50%;
+.button {
+    height: 100%;
+    width: 50%;
     background-color: black;
-    color:#ffffff;
+    color: #ffffff;
 }
 
 
@@ -146,6 +169,5 @@ const doSubmitRegister = () => {
     border-radius: 12px;
 
 }
-
 </style>
   

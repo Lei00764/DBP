@@ -5,15 +5,15 @@
                 <el-column v-for="item in list">
                     <el-form-item>
                         <!-- 每条申请对应一条卡片 -->
-                        <el-card class="profession-list" @click="intoCard">
+                        <el-card class="profession-list" :requestId="item.requestId" @click="intoCard"> 
                             <el-avatar :size="70" :src="avatarURL" style="position: absolute;top:15%;left:5%"></el-avatar>
                             <b style="position: absolute;top:20%;left:25%;font-size: 18px;color:rgb(61, 61, 61)">
                                 用户名：{{ item.name }}
                             </b>
                             <b style="position: absolute;top:55%;left:25%;font-size: 14px;color:rgb(120, 120, 120)">
-                                ID：{{ item.UserID }}
+                                ID：{{ item.id }}
                             </b>
-                            <el-button class="pass_btn" style="position:absolute;top:35%;left:78%;" @click="pass">
+                            <el-button class="pass_btn" style="position:absolute;top:35%;left:78%;" @click="pass(item.requestId)">
                                 <el-icon>
                                     <Check />
                                 </el-icon>
@@ -66,45 +66,40 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import router from "@/router/index.js"
+import { ProfessionToDeal, DealProfession } from '@/api/profession';  // 引入 api 请求函数
+import { GetInfoByID } from '@/api/user'; 
+
 const intoCard = () => {
     //进入卡片
 }
-const pass = () => {
+
+const pass = (requestId) => {
     //审核通过
+    let params = {
+        id: 7,//requestId,
+        response: 1
+    }
+    DealProfession(params)
+        .then(function (result) { 
+            /*通过之后的操作 */
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
 const backToHome = () => {
     router.push({ name: 'homeAdmin' })
 }
-let list = [{
-    UserID: 2151133,
-    name: "Q"
-},
-{
-    UserID: 2151134,
-    name: "K"
-},
-{
-    UserID: 2151135,
-    name: "K"
-},
-{
-    UserID: 2151136,
-    name: "K"
-},
-{
-    UserID: 2151137,
-    name: "K"
-},
-{
-    UserID: 2151136,
-    name: "K"
-},
-{
-    UserID: 2151136,
-    name: "K"
-},
-]
-let avatarURL = " ";
+
+const list = ref([]); // 在函数外定义并初始化 list 变量
+ProfessionToDeal()
+    .then(function (result) { 
+        // 接收返回值，将type存入变量中
+        list.value = result.data
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
 </script>
   
 <style scoped>

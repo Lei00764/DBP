@@ -22,11 +22,16 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 library.add(fas)
 
 
-
 const app = createApp(App)
 
 for (let iconName in ELIcons) {
     app.component(iconName, ELIcons[iconName])
+}
+
+// 从sessionStorage中恢复store状态
+const savedState = JSON.parse(sessionStorage.getItem('store'))
+if (savedState) {
+  store.replaceState(savedState)
 }
 
 app.component('font-awesome-icon', FontAwesomeIcon)

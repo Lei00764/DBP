@@ -47,11 +47,29 @@ export function userRegister(params) {
         console.log(error);
     });
 }
-//获取用户/管理员信息
-export function GetInfo(params) {
+
+//通过Email获取用户/管理员信息
+export function GetInfoByEmail(params) {
     return Request({
         method: 'GET',
-        url: 'user/Info',
+        url: 'user/InfoByEmail',
+        params: params
+    }).then(function (response) {
+        if (response.data.code === 200) {
+            return response.data;  // 正确响应，返回数据
+        } else {
+            Message.error("信息获取失败");
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
+
+//通过ID获取用户/管理员信息
+export function GetInfoByID(params) {
+    return Request({
+        method: 'GET',
+        url: 'user/InfoByID',
         params: params
     }).then(function (response) {
         if (response.data.code === 200) {
