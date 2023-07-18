@@ -41,6 +41,9 @@ import { ref, reactive, computed } from 'vue';
 import { userLogin, GetInfoByEmail } from '@/api/user';  // 引入 api 请求函数 userLogin,GetInfo
 import Message from "@/utils/Message.js"
 import router from "@/router/index.js"
+import { useStore } from 'vuex'//引入store
+const store = useStore();//使用store必须加上
+
 
 const formData = reactive({
     email: '',
