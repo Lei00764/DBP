@@ -1,27 +1,8 @@
 <template slot="color">
     <div>
         <div class="homeAdmin-page">
-            <div class="homeAdmin-SearchPosition">
-                <!-- 搜索栏 -->
-                <el-form :inline=true>
-                    <!-- 表单，让所有空间尽量显示到一行 -->
-                    <el-form-item>
-                        <!-- 控件1：搜索栏 -->
-                        <el-input placeholder="请输入关键词" class="homeAdmin-searchbox" v-model="formData.keyword">
-                            <template #prefix><!--设置前缀小图标-->
-                                <el-icon>
-                                    <Search />
-                                </el-icon>
-                            </template>
-                        </el-input>
-                    </el-form-item>
-                    <el-form-item>
-                        <!-- 控件2：搜索按钮 -->
-                        <el-button type="primary" class="homeAdmin-Search-btn" @click="doSearch">
-                            <span>搜索</span>
-                        </el-button>
-                    </el-form-item>
-                </el-form>
+            <div class="header">
+                <navTop></navTop>
             </div>
             <el-card class="homeAdmin-card">
                 <!-- 管理员信息卡片 -->
@@ -44,7 +25,7 @@
                     <span>退出登录</span>
                 </el-button>
             </el-card>
-            <el-form style="position: absolute;top:65%;left:5%" :inline=true>
+            <el-form style="position: absolute" class="classify-position" :inline=true>
                 <!-- 功能选择分区 -->
                 <el-form-item>
                     <!-- 审核专业认证-->
@@ -70,6 +51,7 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import router from "@/router/index.js"
+import navTop from "@/components/navTop.vue"
 import { useStore } from 'vuex'//引入store
 
 const store = useStore();//使用store必须加上
@@ -113,42 +95,12 @@ const formData = reactive({
     width: 99vw;
 }
 
-.homeAdmin-SearchPosition {
-    /* 搜索栏的页面位置 */
+.header {
     position: absolute;
-    top: 45%;
-    left: 4%;
+    width: 100%;
 }
 
-.homeAdmin-searchbox {
-    /* 搜索栏的大小格式*/
-    width: 800px;
-    height: 50px;
-}
 
-:deep(.el-input__wrapper) {
-    /* 修改搜索栏的背景、圆角、字体颜色 */
-    background: #08664B;
-    border-radius: 12px;
-    box-shadow: 0px 4px 4px 0px gray;
-    color: rgb(235, 235, 235);
-}
-
-:deep(.el-input__inner) {
-    /* 修改搜索栏的背景和圆角 */
-    color: rgb(235, 235, 235);
-}
-
-.homeAdmin-Search-btn {
-    /* 设置搜索按钮风格 */
-    width: 80px;
-    height: 35px;
-    border-radius: 30px;
-    background-color: white;
-    color: black;
-    border-color: black;
-    box-shadow: 0px 4px 4px 0px gray;
-}
 
 .homeAdmin-logout-btn {
     /* 设置退出登录按钮风格 */
@@ -158,7 +110,7 @@ const formData = reactive({
     width: 80px;
     height: 35px;
     border-radius: 30px;
-    background-color: #08664B;
+    background-color: #5eaedf;
     border-color: transparent;
     color: white;
     box-shadow: 0px 4px 4px 0px gray;
@@ -167,13 +119,11 @@ const formData = reactive({
 .homeAdmin-card {
     /* 管理员资料卡片的设置 */
     position: absolute;
-    top: 5%;
-    left: 73%;
-    background-color: rgb(255, 255, 255);
-    width: 370px;
-    height: 750px;
-    box-shadow: 0px 4px 4px 0px gray;
-    border-radius: 5px;
+    top: 11%;
+    left: 0.6%;
+    background-color: #E7FAFE;
+    width: 342px;
+    height: 500px;
 }
 
 .homeAdmin-avatar-ID {
@@ -192,12 +142,18 @@ const formData = reactive({
     position: absolute;
 }
 
+.classify-position{
+    position: absolute;
+    top: 30%;
+    left: 40%;
+}
+
 .check-btn {
     background: url('@/assets/check_btn.png');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    width: 195px;
+    width: 300px;
     height: 150px;
     border-radius: 20px;
 }
@@ -207,7 +163,7 @@ const formData = reactive({
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    width: 195px;
+    width: 300px;
     height: 150px;
     border-radius: 20px;
 }
@@ -217,7 +173,7 @@ const formData = reactive({
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    width: 195px;
+    width: 300px;
     height: 150px;
     border-radius: 20px;
 }
@@ -227,7 +183,7 @@ const formData = reactive({
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
-    width: 195px;
+    width: 300px;
     height: 150px;
     border-radius: 20px;
 }

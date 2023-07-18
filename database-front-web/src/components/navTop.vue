@@ -2,7 +2,7 @@
     <div>
         <div class="header-content">
             <!-- 左侧 logo -->
-            <router-link to="/layout" class="logo">
+            <router-link to="/layout" class="logo" @click="ToHome">
                 <span>
                     Foodieland
                 </span>
@@ -10,7 +10,7 @@
 
             <!-- 中间 搜索栏 -->
             <div class="search-panel">
-                <el-input placeholder="Search Key Words" class="custom-input">
+                <el-input placeholder="Search Key Words" class="custom-input" v-model="formData.keywords">
                     <!-- prefix 前置插入槽 -->
                     <template #prefix>
                         <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
@@ -20,19 +20,19 @@
 
             <!-- 右侧 个人信息 -->
             <div class="user-info-panel">
-                <el-button class="icon-button">
+                <el-button class="icon-button" @click="ToHome">
                     <font-awesome-icon :icon="['fas', 'house']" />
                     <span class="button-text">首页</span>
                 </el-button>
-                <el-button class="icon-button">
+                <el-button class="icon-button" @click="ToMy">
                     <font-awesome-icon :icon="['fas', 'circle-user']" />
                     <span class="button-text">我的主页</span>
                 </el-button>
-                <el-button class="icon-button">
+                <el-button class="icon-button" @click="ToLogOut">
                     <font-awesome-icon :icon="['fas', 'right-to-bracket']" />
                     <span class="button-text">退出登录</span>
                 </el-button>
-                <el-button class="icon-button">
+                <el-button class="icon-button" @click="ToCheckMessage">
                     <font-awesome-icon :icon="['fas', 'comments']" />
                     <span class="button-text">消息</span>
                 </el-button>
@@ -44,7 +44,25 @@
 <script setup>
 // 修改当前页面的 element-plus 主题色
 import { changeTheme } from '@/utils/changeTheme';
+import { ref, reactive } from 'vue';
+import router from "@/router/index.js"
 changeTheme("#FFD700");  // 目前为红色，可以修改
+
+const formData = reactive({
+    keywords: '',
+});
+const ToHome=()=>{
+    router.push({ name: 'homeUser' });
+}
+const ToMy=()=>{
+    router.push({ name: 'userHomePage' });
+}
+const ToLogOut=()=>{
+    router.push({ name: 'login' });
+}
+const ToCheckMessage=()=>{
+    //跳转到消息界面（管理员可以给用户发送消息）
+}
 </script>
 
 <style>

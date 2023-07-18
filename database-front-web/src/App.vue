@@ -16,4 +16,6 @@
 
 </script>
 
-<style></style>
+<style>
+@import './assets/font/font.css';
+</style>

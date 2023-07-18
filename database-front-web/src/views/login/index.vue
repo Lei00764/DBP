@@ -9,11 +9,11 @@
                 </el-form>
             </div>
             <div class="login-form-2">
-                <el-form>  
+                <el-form>
                     <el-form-item>
                         <el-input placeholder="请输入密码" v-model="formData.password" :type="showPassword ? 'text' : 'password'"
                             show-password></el-input>
-                    </el-form-item>                   
+                    </el-form-item>
                 </el-form>
             </div>
             <div class="login-form-button">
@@ -21,11 +21,13 @@
                     <el-form-item>
                         <el-button class="button" @click="doSubmitLogin">
                             <span>登录</span>
+                            <span class="iconfont icon-ic_play_black"></span>
                         </el-button>
                     </el-form-item>
                     <el-form-item>
                         <el-button class="button" @click="doSubmitRegister">
                             <span>注册</span>
+                            <span class="iconfont icon-ic_play_black"></span>
                         </el-button>
                     </el-form-item>
                 </elform>
@@ -35,17 +37,10 @@
 </template>
   
 <script setup>
-import { ref, reactive, computed} from 'vue';
-import { userLogin, GetInfoByEmail} from '@/api/user';  // 引入 api 请求函数 userLogin,GetInfo
+import { ref, reactive, computed } from 'vue';
+import { userLogin, GetInfoByEmail } from '@/api/user';  // 引入 api 请求函数 userLogin,GetInfo
 import Message from "@/utils/Message.js"
 import router from "@/router/index.js"
-import { useStore } from 'vuex'//引入store
-
-const store = useStore();//使用store必须加上
-
-// 修改当前页面的 element-plus 主题色
-import { changeTheme } from '../../utils/changeTheme';
-changeTheme("#FF0000");  // 目前为红色，可以修改
 
 const formData = reactive({
     email: '',
@@ -68,10 +63,12 @@ const doSubmitLogin = () => {
 
     userLogin(params)
         .then(function (result) {  // result 是 api /user/login 的返回值，在后端 api 定义
-            // 接收返回值，将type存入变量中
-            let type = result.type
+            // 接收返回值，放在 person_info 变量中
+            let person_info = result
+            // 在这里可以使用 person_info 变量  
             // eg. 登录完成后，调用其他函数
-            afterLogin(type);
+            afterLogin(person_info);
+
         })
         .catch(function (error) {
             console.log(error);
@@ -99,7 +96,7 @@ const afterLogin = (type) => {
                 email: result.email,
             }
             //进行store存储
-            store.commit('SaveInfo',person_info);//调用mutations，将信息传入store
+            store.commit('SaveInfo', person_info);//调用mutations，将信息传入store
             //console.log(store.state.Info)
         })
         .catch(function (error) {
@@ -119,11 +116,15 @@ const doSubmitRegister = () => {
 <style scoped>
 .login-page {
     background-image: url('@/assets/log_in.png');
-    background-position: center;
+    background-position: center center;
+    /* 背景图片位置 */
     background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
-    width: 100vw;
+    /* 背景图片是否重复 */
+    background-size: 100% 100%;
+    /* 背景图片大小 */
+    height: 98vh;
+    /* 背景图片宽高 */
+    width: 99vw;
 }
 
 .login-form-1 {
@@ -135,6 +136,7 @@ const doSubmitRegister = () => {
     width: 20%;
 
 }
+
 .login-form-2 {
     position: absolute;
     top: 58%;
@@ -144,7 +146,7 @@ const doSubmitRegister = () => {
     width: 20%;
 }
 
-.login-form-button{
+.login-form-button {
     position: absolute;
     top: 70%;
     left: 91%;
@@ -153,11 +155,11 @@ const doSubmitRegister = () => {
     width: 20%;
 }
 
-.button{
-    height:120%;
-    width:50%;
+.button {
+    height: 100%;
+    width: 50%;
     background-color: black;
-    color:#ffffff;
+    color: #ffffff;
 }
 
 
@@ -167,5 +169,5 @@ const doSubmitRegister = () => {
     border-radius: 12px;
 
 }
-
 </style>
+  
