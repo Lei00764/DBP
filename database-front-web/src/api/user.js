@@ -41,7 +41,6 @@ export function userRegister(params) {
             return response.data;  // 正确响应，返回数据
         } else {
             Message.error("注册失败");
-
         }
     }).catch(function (error) {
         console.log(error);
