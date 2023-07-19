@@ -166,20 +166,20 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
 
     //通过Email获取用户/管理员资料信息
     [HttpGet("InfoByEmail")]
-    public IActionResult GetInfoByEmail(string Email, int type)//参数type:0为管理员，1为普通用户
+    public IActionResult GetInfoByEmail(string email, int type)//参数type:0为管理员，1为普通用户
     {
         // 根据业务逻辑获取信息对象
         var code = 200;
         var msg = "success";
-        var user_data = _database.Users.Where(x => x.Email == Email);
-        var admin_data = _database.Administrators.Where(x => x.Email == Email);
+        var user_data = _database.Users.Where(x => x.Email == email);
+        var admin_data = _database.Administrators.Where(x => x.Email == email);
         bool exist = false;
 
         if (type == 1)
         {
             foreach (var item in user_data)
             {
-                if (item.Email == Email)
+                if (item.Email == email)
                 {
                     exist = true;
                     break;
@@ -190,7 +190,7 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
         {
             foreach (var item in admin_data)
             {
-                if (item.Email == Email)
+                if (item.Email == email)
                 {
                     exist = true;
                     break;
@@ -216,7 +216,7 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
         {
             foreach (var user in user_data)
             {
-                if (user.Email == Email)
+                if (user.Email == email)
                 {
                     code = 200;
                     msg = "查询到用户信息";
@@ -232,7 +232,7 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
         {
             foreach (var admin in admin_data)
             {
-                if (admin.Email == Email)
+                if (admin.Email == email)
                 {
                     code = 200;
                     msg = "查询到管理员信息";
@@ -253,7 +253,7 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
             avatar = avatar,
             tel = tel,
             id = id,
-            email = Email
+            email = email
         });
     }
 
