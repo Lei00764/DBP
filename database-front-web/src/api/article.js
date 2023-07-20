@@ -60,25 +60,23 @@ export function forum_searchArticle(params) {
     });
 }
 
-
-
-
-// 获取文章列表
-export function getArticle(params) {
-    // return Request({
-    //     method: 'GET',
-    //     url: 'forum/loadArticle',
-    //     params: params
-    // }).then(function (response) {
-    //     if (response.data.code === 200) {
-    //         return response.data.data;
-    //     } else {
-    //         Message.error("获取文章列表失败");
-    //         return null;
-    //     }
-    // }).catch(function (error) {
-    //     console.log(error);
-    //     return null;
-    // });
+//删除文章（未完成
+export function deleteArticle(params) {
+    return Request({
+        method: 'DELETE',
+        url: 'Article/deleteArticle',
+        params: params
+    }).then(function (response) {
+        if (response.data.code === 200) {
+            Message.error("文章删成功");
+            return deleteArticle;  // 返回 code + msg + data???
+        } else {
+            Message.error("文章删除失败");
+            return null;
+        }
+    }).catch(function (error) {
+        console.log(error);
+    })
 }
+
 
