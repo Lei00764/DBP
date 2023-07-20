@@ -60,7 +60,7 @@ public class ProfessionController : ControllerBase
     }
 
     [HttpGet("ViewRequest/{request_id}")]
-    public async Task<IActionResult> ViewRequest(int request_id)//查看认证申请（管理员）
+    public IActionResult ViewRequest(int request_id)//查看认证申请（管理员）
     {
         var code = 200;
         var msg = "success";

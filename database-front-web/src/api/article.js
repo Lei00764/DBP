@@ -48,19 +48,36 @@ export function forum_searchArticle(params) {
       url: 'Article/forum_searchArticle',
       params: params
     }).then(function (response) {
-      if (response.data.code === 200) {
-        return response.data.data;
-      } else {
-        Message.error("未搜索到结果");
-        return null;
-      }
+        if (response.data.code === 200) {
+            return response.data.data;
+        } else {
+            Message.error("未搜索到结果");
+            return null;
+        }
     }).catch(function (error) {
       console.log(error);
       return null;
     });
 }
 
-
+//获取文章详情
+export function GetArticleDetailsAsync(params) {
+    return Request({
+      method: 'GET',
+      url: 'Article/viewArticle',
+      params: params
+    }).then(function (response) {
+        if (response.data.code === 200) {
+            return response.data;
+        } else {
+            Message.error("未搜索到结果");
+            return null;
+        }
+    }).catch(function (error) {
+      console.log(error);
+      return null;
+    });
+}
 
 
 // 获取文章列表
