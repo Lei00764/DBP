@@ -26,7 +26,7 @@
             </el-form>
 
             <el-card class="card" v-show="card_show" v-if="Info[currentCard]">
-                <el-avatar :size="70" style="position: absolute;top:8%;left:7%"></el-avatar>
+                <el-avatar :size="70" :src="Info[currentCard].authorAvatar" style="position: absolute;top:8%;left:7%"></el-avatar>
                 <b style="position: absolute;top:9%;left:25%;font-size: 20px;color:rgb(61, 61, 61)">
                     作者名：{{ Info[currentCard].authorName }}
                 </b>
@@ -34,6 +34,9 @@
                     作者ID：{{ Info[currentCard].authorId}}
                 </b>
                 <b style="position: absolute;top:28%;left:9%;font-size: 20px;color:rgb(61, 61, 61)">
+                    举报原因：{{ list[currentCard].reason }}
+                </b>
+                <b style="position: absolute;top:40%;left:9%;font-size: 20px;color:rgb(61, 61, 61)">
                     帖子内容：{{ Info[currentCard].content }}
                 </b>
                 <el-button class="pass_btn" style="position: absolute;bottom:5%;left:45%;" @click="pass">

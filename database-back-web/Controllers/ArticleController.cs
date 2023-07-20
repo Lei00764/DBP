@@ -132,6 +132,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                         LikeNum = article.LikeNum,  // 文章点赞量
                         AuthorName = user.UserName, // 包含作者的名字
                         AuthorId = user.UserId, // 包含作者的ID
+                        AuthorAvatar = user.Avatar, // 包含作者的ID
                         Content = article.Content,  // 文章内容
                         IsBanned = article.IsBanned
                     })
