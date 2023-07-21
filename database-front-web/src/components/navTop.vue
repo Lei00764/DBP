@@ -51,16 +51,16 @@ changeTheme("#FFD700");  // 目前为红色，可以修改
 const formData = reactive({
     keywords: '',
 });
-const ToHome=()=>{
-    router.push({ name: 'homeUser' });
+const ToHome = () => {
+    router.push(`/homeUser`);
 }
-const ToMy=()=>{
-    router.push({ name: 'userHomePage' });
+const ToMy = () => {
+    router.push(`/userHomePage`);
 }
-const ToLogOut=()=>{
-    router.push({ name: 'login' });
+const ToLogOut = () => {
+    router.push(`/login`);
 }
-const ToCheckMessage=()=>{
+const ToCheckMessage = () => {
     //跳转到消息界面（管理员可以给用户发送消息）
 }
 </script>
