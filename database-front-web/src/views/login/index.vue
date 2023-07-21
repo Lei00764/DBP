@@ -101,7 +101,7 @@ const afterLogin = (type) => {
                 email: result.email,
             }
             // 进行store存储
-            console.log(person_info);
+            // console.log(person_info);
             store.commit('SaveInfo', person_info); // 调用mutations，将信息传入store
             // console.log(store.state.Info)
         })

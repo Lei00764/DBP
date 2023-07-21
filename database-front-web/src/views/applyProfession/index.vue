@@ -16,9 +16,11 @@
 <script setup>
 import { ref } from 'vue';
 import { ApplyProfession } from "@/api/profession.js"
-import { useStore } from 'vuex' //引入store
+import { useStore } from 'vuex' // 引入store
+import Message from "@/utils/Message.js"
 
-const store = useStore(); //使用store必须加上
+
+const store = useStore(); // 使用store必须加上
 
 const form = ref({
     illustrate: '',
@@ -28,8 +30,14 @@ const form = ref({
 const submitApplication = () => {
     // 提交申请的逻辑，这里暂时只做 console.log 输出
     // console.log(form.value);
-    console.log("123xxx");
-    console.log(store.state.Info.id);
+    let params = {
+        user_id: store.state.Info.id,
+        illustrate: form.value.illustrate,
+        evidence: form.value.evidence
+    }
+    console.log(params);
+    ApplyProfession(params);
+
 
 };
 </script>

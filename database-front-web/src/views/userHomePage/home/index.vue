@@ -7,6 +7,7 @@
             <div class="point">
                 积分：{{ point }}
             </div>
+            <el-button @click="applyForProfession">申请专业厨师认证</el-button>
         </div>
         <!-- 签到积分 -->
         <el-form-item>
@@ -20,6 +21,8 @@
                 {{ formData.buttonLabel }}
             </el-button>
         </el-form-item>
+
+
 
         <!-- 简直傻逼 如果你不小心看到了我的注释请无视它 它并没有什么真实意思 -->
         <el-button class=button12 round color=transparent @click="stars"
@@ -148,7 +151,11 @@ const CheckImgExists = (imgurl) => {
     }
 }
 
-</script>
+
+const applyForProfession = () => {
+    router.push(`/applyProfession`);
+}
+</script> 
   
 <style scoped>
 /* 初始化 */
