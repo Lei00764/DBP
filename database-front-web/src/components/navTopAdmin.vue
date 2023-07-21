@@ -44,6 +44,10 @@ const formData = reactive({
     keywords: '',
 });
 
+const ToHome = () => {
+    router.push(`/homeUser`);
+}
+
 const ToLogOut = () => {
     router.push({ name: 'login' });
 }

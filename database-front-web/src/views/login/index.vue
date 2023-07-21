@@ -41,8 +41,8 @@ import { ref, reactive, computed } from 'vue';
 import { userLogin, GetInfoByEmail } from '@/api/user';  // 引入 api 请求函数 userLogin,GetInfo
 import Message from "@/utils/Message.js"
 import router from "@/router/index.js"
-import { useStore } from 'vuex'//引入store
-const store = useStore();//使用store必须加上
+import { useStore } from 'vuex' // 引入store
+const store = useStore(); // 使用store必须加上
 
 
 const formData = reactive({
@@ -70,8 +70,8 @@ const doSubmitLogin = () => {
             let person_info = result
             // 在这里可以使用 person_info 变量  
             // eg. 登录完成后，调用其他函数
-            afterLogin(person_info);
-
+            // console.log(person_info);  // {code: 200, msg: '普通用户登录成功', type: 1}
+            afterLogin();
         })
         .catch(function (error) {
             console.log(error);
@@ -82,14 +82,16 @@ const doSubmitLogin = () => {
 
 
 const afterLogin = (type) => {
-    store.commit("doLogin");//修改登录状态
-    //console.log(store.state.login); //获取state值
+    store.commit("doLogin"); // 修改登录状态
+    // console.log(store.state.login); / 获取state值
     let params = {
         Email: formData.email,
-        Type: type,
     };
-    GetInfoByEmail(params)//获取信息
+    GetInfoByEmail(params)// 获取信息
         .then(function (result) {
+            // result 包括 code、msg和data三部分，只需要其中的 data 部分
+            result = result.data;
+            console.log(result);
             let person_info = {
                 avatar: result.avatar,
                 id: result.id,
@@ -98,14 +100,15 @@ const afterLogin = (type) => {
                 password: formData.password,
                 email: result.email,
             }
-            //进行store存储
-            store.commit('SaveInfo', person_info);//调用mutations，将信息传入store
-            console.log(store.state.Info)
+            // 进行store存储
+            console.log(person_info);
+            store.commit('SaveInfo', person_info); // 调用mutations，将信息传入store
+            // console.log(store.state.Info)
         })
         .catch(function (error) {
             console.log(error);
         });
-    //到现在为止，保存登录信息已经实现，可通过store.state.Info获取相应的值
+    // 到现在为止，保存登录信息已经实现，可通过store.state.Info获取相应的值
 };
 
 

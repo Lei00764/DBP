@@ -160,95 +160,56 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
     }
 
     //通过Email获取用户/管理员资料信息
-    [HttpGet("InfoByEmail")]
-    public IActionResult GetInfoByEmail(string email, int type)//参数type:0为管理员，1为普通用户
+    [HttpGet("getInfoByEmail")]
+    public IActionResult GetInfoByEmail(string email) // email 可以用来判断是管理员还是用户
     {
-        // 根据业务逻辑获取信息对象
-        var code = 200;
-        var msg = "success";
-        var user_data = _database.Users.Where(x => x.Email == email);
-        var admin_data = _database.Administrators.Where(x => x.Email == email);
-        bool exist = false;
-
-        if (type == 1)
+        // 在用户表中找到匹配的邮箱
+        var user = _database.Users.Where(x => x.Email == email).ToList();
+        if (user.Any())
         {
-            foreach (var item in user_data)
+            var firstUser = user.First();
+            return Ok(new
             {
-                if (item.Email == email)
+                code = 200,
+                msg = "success",
+                data = new
                 {
-                    exist = true;
-                    break;
+                    id = firstUser.UserId,
+                    email = firstUser.Email,
+                    password = firstUser.PassWord,
+                    avatar = firstUser.Avatar,
+                    tel = firstUser.Tel,
+                    name = firstUser.UserName
                 }
-            }
-        }
-        else
-        {
-            foreach (var item in admin_data)
-            {
-                if (item.Email == email)
-                {
-                    exist = true;
-                    break;
-                }
-            }
-        }
-        if (exist == false)
-        {// 如果数据库中没有数据，返回错误信息
-            code = 400;
-            msg = "用户不存在";
-            return BadRequest(new
-            {
-                code = code,
-                msg = msg,
             });
         }
-        // 遍历data，找到id匹配的用户
-        var name = "";
-        var avatar = "";
-        var tel = "";
-        int? id = 0;
-        if (type == 1)
+
+        // 在管理员表中找到匹配的邮箱
+        var admin = _database.Administrators.Where(x => x.Email == email).ToList();
+        if (admin.Any())
         {
-            foreach (var user in user_data)
+            var firstAdmin = admin.First();
+            return Ok(new
             {
-                if (user.Email == email)
+                code = 200,
+                msg = "success",
+                data = new
                 {
-                    code = 200;
-                    msg = "查询到用户信息";
-                    name = user.UserName;
-                    avatar = user.Avatar;
-                    tel = user.Tel;
-                    id = user.UserId;
-                    break;
+                    id = firstAdmin.AdminId,
+                    email = firstAdmin.Email,
+                    password = firstAdmin.PassWord,
+                    avatar = firstAdmin.Avatar,
+                    tel = firstAdmin.Tel,
+                    name = firstAdmin.AdminName
                 }
-            }
+            });
         }
-        else
+
+        // 如果在用户表和管理员表都找不到，返回错误信息
+        return BadRequest(new
         {
-            foreach (var admin in admin_data)
-            {
-                if (admin.Email == email)
-                {
-                    code = 200;
-                    msg = "查询到管理员信息";
-                    name = admin.AdminName;
-                    avatar = admin.Avatar;
-                    tel = admin.Tel;
-                    id = admin.AdminId;
-                    break;
-                }
-            }
-        }
-        // 将信息对象作为响应的数据发送回前端
-        return Ok(new
-        {
-            code = code,
-            msg = msg,
-            name = name,  // 2023.7.12 lx
-            avatar = avatar,
-            tel = tel,
-            id = id,
-            email = email
+            code = 400,
+            msg = "在用户表和管理员表都找不到",
         });
     }
 

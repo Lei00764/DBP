@@ -77,6 +77,8 @@ const intoForum = () => {
 const formData = reactive({
     keyword: '',
 });
+
+console.log(store.state);
 </script>
 
 <style scoped>

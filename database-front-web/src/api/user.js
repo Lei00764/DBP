@@ -51,7 +51,7 @@ export function userRegister(params) {
 export function GetInfoByEmail(params) {
     return Request({
         method: 'GET',
-        url: 'user/InfoByEmail',
+        url: 'user/getInfoByEmail',
         params: params
     }).then(function (response) {
         if (response.data.code === 200) {

@@ -28,11 +28,11 @@
                 <Star />
             </el-icon>
         </el-button>
-
         <!-- 论坛展示 -->
         <!-- 在这一部分我学会了把某些样式和定义放在一起 -->
         <div class="ShowPart">
-            <p v-if="posting === 0" class="Post" style="color:rgb(63, 66, 85);font-family: Poppins;font-size: 25px">
+            <p v-if="formData.posting === 0" class="Post"
+                style="color:rgb(63, 66, 85);font-family: Poppins;font-size: 25px">
                 Post:
             </p>
             <p v-else class="Post" style="color:rgb(63, 66, 85);font-family: Poppins;font-size: 25px">
@@ -48,14 +48,12 @@
                     <!-- @current-change="handelCurrentChange"
                     v-model:current-page="changePage.currentPage" -->
                 </div>
-
-                <el-button @click="toApplyForProfession">申请专业厨师认证</el-button>
             </div>
         </div>
 
     </div>
 </template>
-
+  
 <script setup="props">
 import { ref, reactive, toRefs, onMounted } from 'vue';
 import component1 from '../component1/component1.vue';
@@ -74,19 +72,25 @@ function handleSignIn() {
     point.value += 2
     // 执行积分+2的逻辑
 }
+function stars() {
+    if (formData.posting == 0) {
+        formData.posting = 1;
+    }
+    else {
+        formData.posting = 0;
+    }
+};
 const point = ref(0)
 const formData = reactive({
     isSigned: false,
-    buttonLabel: '签到'
+    buttonLabel: '签到',
+    posting: 0
 
 });
 const { isSigned, buttonLabel } = toRefs(formData)
 onMounted(() => {
     console.log(`计数器初始值为 ${point.value}。`)
 })
-
-
-
 
 // const changePage = reactive({
 //   currentPage: 1,
@@ -126,17 +130,6 @@ onMounted(() => {
 //     }
 //   }
 
-const stars = () => {
-    if (posting === 0) {
-        posting = 1
-    }
-
-    else {
-        posting = 0
-    }
-}
-
-    ;
 
 const input = reactive({
     code: {
@@ -144,30 +137,20 @@ const input = reactive({
     }
 
 });
-
 const CheckImgExists = (imgurl) => {
     var ImgObj = new Image() // 判断图片是否存在
-    ImgObj.src = imgurl // 存在图片
-
+    ImgObj.src = imgurl
+    // 存在图片
     if (ImgObj.fileSize > 0 || (ImgObj.width > 0 && ImgObj.height > 0)) {
         return true
-    }
-
-    else {
+    } else {
         return false
     }
 }
 
-// 点击按钮，跳转到“申请成为专业厨师”页面
-const toApplyForProfession = () => {
-    router.push({
-        path: '/applyProfession',
-    })
-}
-
-
 </script>
-<style lang="scss" scoped>
+  
+<style scoped>
 /* 初始化 */
 .sign-button {
     position: absolute;
@@ -231,3 +214,4 @@ const toApplyForProfession = () => {
     display: flex;
 }
 </style>
+  
