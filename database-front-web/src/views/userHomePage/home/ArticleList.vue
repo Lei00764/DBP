@@ -28,7 +28,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 const currentDate = ref(new Date())//
-import  {getArticle} from "@/api/article"
 
 // 存储返回的数据
 // const allMenus = ref()

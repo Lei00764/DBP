@@ -31,7 +31,7 @@
         <!-- 论坛展示 -->
         <!-- 在这一部分我学会了把某些样式和定义放在一起 -->
         <div class="ShowPart">
-            <p v-if="posting === 0" class="Post" style="color:rgb(63, 66, 85);font-family: Poppins;font-size: 25px">
+            <p v-if="formData.posting === 0" class="Post" style="color:rgb(63, 66, 85);font-family: Poppins;font-size: 25px">
                 Post:
             </p>
             <p v-else class="Post" style="color:rgb(63, 66, 85);font-family: Poppins;font-size: 25px">
@@ -71,10 +71,19 @@ function handleSignIn() {
     point.value += 2
     // 执行积分+2的逻辑
 }
+function stars (){
+    if (formData.posting == 0) {
+        formData.posting = 1;
+    }
+    else {
+        formData.posting = 0;
+    }
+};
 const point = ref(0)
 const formData = reactive({
     isSigned: false,
-    buttonLabel: '签到'
+    buttonLabel: '签到',
+    posting: 0
 
 });
 const { isSigned, buttonLabel } = toRefs(formData)
@@ -120,14 +129,7 @@ onMounted(() => {
 //     }
 //   }
 
-const stars = () => {
-    if (posting === 0) {
-        posting = 1
-    }
-    else {
-        posting = 0
-    }
-};
+
 const input = reactive({
     code: {
         input: '',
