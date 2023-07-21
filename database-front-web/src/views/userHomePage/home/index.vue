@@ -28,6 +28,7 @@
                 <Star />
             </el-icon>
         </el-button>
+
         <!-- 论坛展示 -->
         <!-- 在这一部分我学会了把某些样式和定义放在一起 -->
         <div class="ShowPart">
@@ -52,7 +53,7 @@
 
     </div>
 </template>
-  
+
 <script setup="props">
 import { ref, reactive, toRefs, onMounted } from 'vue';
 import component1 from '../component1/component1.vue';
@@ -135,82 +136,96 @@ const input = reactive({
         input: '',
     }
 
-});
-const CheckImgExists = (imgurl) => {
-    var ImgObj = new Image() // 判断图片是否存在
-    ImgObj.src = imgurl
-    // 存在图片
-    if (ImgObj.fileSize > 0 || (ImgObj.width > 0 && ImgObj.height > 0)) {
-        return true
-    } else {
-        return false
+        ;
+
+    const input = reactive({
+        code: {
+            input: '',
+        }
+
+    });
+
+    const CheckImgExists = (imgurl) => {
+        var ImgObj = new Image() // 判断图片是否存在
+        ImgObj.src = imgurl // 存在图片
+
+        if (ImgObj.fileSize > 0 || (ImgObj.width > 0 && ImgObj.height > 0)) {
+            return true
+        }
+
+        else {
+            return false
+        }
     }
-}
+
+
 
 </script>
+<style lang="scss" scoped>
+    /* 初始化 */
+    .sign-button {
+        position: absolute;
+        width: 219px;
+        height: 50px;
+        left: 0px;
+        top: 500px;
+        border-radius: 15px;
+    }
+
+    .disabled {
+        background-color: #888888;
+        color: #ffffff;
+        cursor: not-allowed;
+    }
+
+    .button12 {
+        position: absolute;
+        left: 800px;
+        top: 26px;
+
+    }
+
+    .ShowPart {
+        position: absolute;
+        width: 750px;
+        height: 620px;
+        left: 350px;
+        top: 100px;
+    }
+
+    .example-pagination-block {
+        position: absolute;
+        left: 100px;
+        bottom: 120px;
+
+    }
+
+    /* 积分 */
+    .rectangle_point {
+        position: absolute;
+        width: 220px;
+        height: 111px;
+        left: 8px;
+        top: 380px;
+        background: rgba(224, 248, 242, 0.9);
+        border-radius:
+            27px;
+    }
+
+    /* 积分 */
+    .point {
+        /* 积分：769 */
+        position: absolute;
+        left: 30px;
+        top: 45px;
+        color: rgb(8, 102, 75);
+        font-family: Noto Sans SC;
+        font-size: 20px;
+        letter-spacing: 0px;
+        display: flex;
+    }
+
   
-<style scoped>
-/* 初始化 */
-.sign-button {
-    position: absolute;
-    width: 219px;
-    height: 50px;
-    left: 0px;
-    top: 500px;
-    border-radius: 15px;
-}
 
-.disabled {
-    background-color: #888888;
-    color: #ffffff;
-    cursor: not-allowed;
-}
-
-.button12 {
-    position: absolute;
-    left: 800px;
-    top: 26px;
-
-}
-
-.ShowPart {
-    position: absolute;
-    width: 750px;
-    height: 620px;
-    left: 350px;
-    top: 100px;
-}
-
-.example-pagination-block {
-    position: absolute;
-    left: 100px;
-    bottom: 120px;
-
-}
-
-/* 积分 */
-.rectangle_point {
-    position: absolute;
-    width: 220px;
-    height: 111px;
-    left: 8px;
-    top: 380px;
-    background: rgba(224, 248, 242, 0.9);
-    border-radius:
-        27px;
-}
-
-/* 积分 */
-.point {
-    /* 积分：769 */
-    position: absolute;
-    left: 30px;
-    top: 45px;
-    color: rgb(8, 102, 75);
-    font-family: Noto Sans SC;
-    font-size: 20px;
-    letter-spacing: 0px;
-    display: flex;
-}
+  
 </style>
-  
