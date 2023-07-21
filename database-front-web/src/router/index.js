@@ -70,12 +70,6 @@ const router = createRouter({
             name: 'checkArticle',
             component: () => import('@/views/checkArticle/index.vue'),
         },
-        // {
-        //     // 动态路由
-        //     path: '/forum',  // 论坛
-        //     name: 'forum',
-        //     component: () => import("@/views/forum/index.vue"),
-        // },
         {
             path: '/addArticle',  // 发布文章
             name: 'addArticle',

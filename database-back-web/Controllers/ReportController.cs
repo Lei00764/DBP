@@ -34,7 +34,7 @@ public class ReportController : ControllerBase
                 reportId = report.PostReportId  //举报信息ID
             }
             ).ToListAsync();
-        if (report_post != null)
+        if (report_post.Count > 0)
         {
             return Ok(new
             {
