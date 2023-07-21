@@ -6,17 +6,17 @@
                     <el-card class="article-list" @click.native="goArticle(index)">
                         <!-- 下面组件的v-if都不能省略，否则刷新页面会出错 -->
                         <b v-if="Info[index]" style="position: absolute;top:20%;left:5%;font-size: 18px;color:rgb(61, 61, 61)">
-                            帖子标题：{{ Info[index].title}}
+                            标题：{{ Info[index].title}}
                         </b>
                         <b style="position: absolute;top:55%;left:5%;font-size: 14px;color:rgb(120, 120, 120)">
                             帖子ID：{{ item.postId }}
                         </b>
-                        <el-button class="pass_btn" style="position:absolute;top:35%;left:78%;" @click="pass">
+                        <el-button class="pass_btn" style="position:absolute;top:35%;left:78%;" @click="pass(item.reportId)">
                             <el-icon>
                                 <Check />
                             </el-icon>
                         </el-button>
-                        <el-button class="close_btn" style="position: absolute;top:35%;left:85%;">
+                        <el-button class="close_btn" style="position: absolute;top:35%;left:85%;" @click="decline(item.reportId)">
                             <el-icon>
                                 <Close />
                             </el-icon>
@@ -37,14 +37,17 @@
                     举报原因：{{ list[currentCard].reason }}
                 </b>
                 <b style="position: absolute;top:40%;left:9%;font-size: 20px;color:rgb(61, 61, 61)">
+                    帖子标题：{{ Info[currentCard].title }}
+                </b>
+                <b style="position: absolute;top:52%;left:9%;font-size: 20px;color:rgb(61, 61, 61)">
                     帖子内容：{{ Info[currentCard].content }}
                 </b>
-                <el-button class="pass_btn" style="position: absolute;bottom:5%;left:45%;" @click="pass">
+                <el-button class="pass_btn" style="position: absolute;bottom:5%;left:45%;" @click="pass(list[currentCard].reportId)">
                     <el-icon>
                         <Check />
                     </el-icon>
                 </el-button>
-                <el-button class="close_btn" style="position: absolute;bottom:5%;left:55%;">
+                <el-button class="close_btn" style="position: absolute;bottom:5%;left:55%;" @click="decline(list[currentCard].reportId)">
                     <el-icon>
                         <Close />
                     </el-icon>
@@ -61,8 +64,10 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import router from "@/router/index.js"
-import { ReportPostToDeal } from '@/api/report';  // 引入 api 请求函数
+import { ReportPostToDeal, DealReportAync } from '@/api/report';  // 引入 api 请求函数
 import { GetArticleDetailsAsync } from '@/api/article';
+import { useStore } from 'vuex'//引入store
+const store = useStore();//使用store必须加上
 
 const card_show = ref(false);//用以点击进入申请信息的详情界面
 const currentCard = ref();//用来记录当前显示的资料卡片（index）
@@ -110,8 +115,43 @@ const goArticle = (index) => {
     currentCard.value = index;
 }
 
-const pass = () => {
-    
+const pass = (reportId) => {
+    //审核通过
+    let params = {
+        report_id: reportId,
+        adminId: store.state.Info.id,
+        is_true: 1,
+        result:"情况属实，已做处理"
+    }
+    DealReportAync(params)
+        .then(function (result) { 
+            /*通过之后的操作 */
+            GetList();
+            currentCard.value = -1;
+            card_show.value = false;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+const decline = (reportId) => {
+    //审核不通过
+    let params = {
+        report_id: reportId,
+        adminId: store.state.Info.id,
+        is_true: 2,
+        result:"抱歉，原帖没有问题"
+    }
+    DealReportAync(params)
+        .then(function (result) { 
+            /*不通过之后的操作 */
+            GetList();
+            currentCard.value = -1;
+            card_show.value = false;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
 
 const back = () => {

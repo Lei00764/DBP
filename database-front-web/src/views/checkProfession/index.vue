@@ -129,7 +129,7 @@ const pass = (requestId) => {
             /*通过之后的操作 */
             GetList();
             currentCard.value = -1;
-            card.show.value = false;
+            card_show.value = false;
         })
         .catch(function (error) {
             console.log(error);

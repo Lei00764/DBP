@@ -19,3 +19,20 @@ export function ReportPostToDeal() {
         console.log(error);
     });
 }
+
+//处理举报信息（管理员）
+export function DealReportAync(params){
+    return Request({
+        method: 'PUT',
+        url: 'Report/DealReport',
+        params: params,
+    }).then(function (response) {
+        if (response.data.code === 200) {
+            return response.data;  // 正确响应，返回数据
+        } else {
+            Message.error("操作失败");
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
