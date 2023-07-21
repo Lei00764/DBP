@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 namespace auth.Models;
 
 [Table("REPORTPOST")]
-[PrimaryKey(nameof(PostReportId), nameof(UserId), nameof(PostId), nameof(AdminId))]
+[PrimaryKey(nameof(PostReportId), nameof(UserId), nameof(PostId))]
 public class ReportPost
 {
     // 请与数据库中表字段保持一致
@@ -23,4 +23,6 @@ public class ReportPost
     public string? Time { get; set; }
     [Column("RESULT")]
     public string? Result { get; set; }
+    [Column("ISTRUE")]
+    public int? IsTrue { get; set; }
 }

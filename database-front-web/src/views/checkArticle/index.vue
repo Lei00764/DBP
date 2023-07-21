@@ -2,52 +2,57 @@
     <div>
         <div class="checkArticle-page">
             <el-form style="position: absolute;top:20%;left:7%">
-                <el-column v-for="item in list">
-                    <el-form-item>
-                        <el-card class="article-list" @click="goArticle">
-                            <b style="position: absolute;top:20%;left:5%;font-size: 18px;color:rgb(61, 61, 61)">
-                                帖子标题：{{ item.name }}
-                            </b>
-                            <b style="position: absolute;top:55%;left:5%;font-size: 14px;color:rgb(120, 120, 120)">
-                                ID：{{ item.postID }}
-                            </b>
-                            <el-button class="pass_btn" style="position:absolute;top:35%;left:78%;" @click="pass">
-                                <el-icon>
-                                    <Check />
-                                </el-icon>
-                            </el-button>
-                            <el-button class="close_btn" style="position: absolute;top:35%;left:85%;">
-                                <el-icon>
-                                    <Close />
-                                </el-icon>
-                            </el-button>
-                        </el-card>
-                    </el-form-item>
-                </el-column>
+                <el-form-item v-for="(item,index) in list" :key="index">
+                    <el-card class="article-list" @click.native="goArticle(index)">
+                        <!-- 下面组件的v-if都不能省略，否则刷新页面会出错 -->
+                        <b v-if="Info[index]" style="position: absolute;top:20%;left:5%;font-size: 18px;color:rgb(61, 61, 61)">
+                            标题：{{ Info[index].title}}
+                        </b>
+                        <b style="position: absolute;top:55%;left:5%;font-size: 14px;color:rgb(120, 120, 120)">
+                            帖子ID：{{ item.postId }}
+                        </b>
+                        <el-button class="pass_btn" style="position:absolute;top:35%;left:78%;" @click="pass(item.reportId)">
+                            <el-icon>
+                                <Check />
+                            </el-icon>
+                        </el-button>
+                        <el-button class="close_btn" style="position: absolute;top:35%;left:85%;" @click="decline(item.reportId)">
+                            <el-icon>
+                                <Close />
+                            </el-icon>
+                        </el-button>
+                    </el-card>
+                </el-form-item>
             </el-form>
 
-            <card class="card">
-                <el-avatar :size="70" style="position: absolute;top:8%;left:7%"></el-avatar>
+            <el-card class="card" v-show="card_show" v-if="Info[currentCard]">
+                <el-avatar :size="70" :src="Info[currentCard].authorAvatar" style="position: absolute;top:8%;left:7%"></el-avatar>
                 <b style="position: absolute;top:9%;left:25%;font-size: 20px;color:rgb(61, 61, 61)">
-                    作者名：
+                    作者名：{{ Info[currentCard].authorName }}
                 </b>
                 <b style="position: absolute;top:16%;left:25%;font-size: 16px;color:rgb(120, 120, 120)">
-                    作者ID：
+                    作者ID：{{ Info[currentCard].authorId}}
                 </b>
                 <b style="position: absolute;top:28%;left:9%;font-size: 20px;color:rgb(61, 61, 61)">
-                    帖子内容：
+                    举报原因：{{ list[currentCard].reason }}
                 </b>
-                <el-button class="pass_btn" style="position: absolute;bottom:5%;left:45%;" @click="pass">
+                <b style="position: absolute;top:40%;left:9%;font-size: 20px;color:rgb(61, 61, 61)">
+                    帖子标题：{{ Info[currentCard].title }}
+                </b>
+                <b style="position: absolute;top:52%;left:9%;font-size: 20px;color:rgb(61, 61, 61)">
+                    帖子内容：{{ Info[currentCard].content }}
+                </b>
+                <el-button class="pass_btn" style="position: absolute;bottom:5%;left:45%;" @click="pass(list[currentCard].reportId)">
                     <el-icon>
                         <Check />
                     </el-icon>
                 </el-button>
-                <el-button class="close_btn" style="position: absolute;bottom:5%;left:55%;">
+                <el-button class="close_btn" style="position: absolute;bottom:5%;left:55%;" @click="decline(list[currentCard].reportId)">
                     <el-icon>
                         <Close />
                     </el-icon>
                 </el-button>
-            </card>
+            </el-card>
 
             <el-icon class="icon" @click="back">
                 <Back />
@@ -59,48 +64,99 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import router from "@/router/index.js"
+import { ReportPostToDeal, DealReportAync } from '@/api/report';  // 引入 api 请求函数
+import { GetArticleDetailsAsync } from '@/api/article';
+import { useStore } from 'vuex'//引入store
+const store = useStore();//使用store必须加上
 
-const goArticle = () => {
+const card_show = ref(false);//用以点击进入申请信息的详情界面
+const currentCard = ref();//用来记录当前显示的资料卡片（index）
+const list = ref([]); // 定义并初始化 list 变量
+const Info = reactive([]); // 定义并初始化 Info 变量
 
+const GetList = () => {
+    //将获取列表信息的接口封装在函数中
+    ReportPostToDeal()
+        .then(function (result) { 
+            afterGet(result);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
 
-const pass = () => {
+const afterGet = async(request) => {
+    list.value = request.data;//申请信息放入list中
+    for(let i = 0; i < list.value.length; i++ ){
+        (function (index) {
+            let params = {
+                article_id: list.value[index].postId,
+            }
+            GetArticleDetailsAsync(params)//获取对应举报的帖子信息
+                .then(function(result){
+                    Info[i] = result.data[0];
+                })
+                .catch(function(error){
+                    console.log(error);
+                });
+        })(i);
+    }
+}
+GetList();//获取列表，给list赋值
 
+const goArticle = (index) => {
+    //进入文章详情页面（卡片）
+    if(index == currentCard.value){
+        card_show.value = !card_show.value;
+    }
+    else{
+        card_show.value = true;
+    }
+    currentCard.value = index;
+}
+
+const pass = (reportId) => {
+    //审核通过
+    let params = {
+        report_id: reportId,
+        adminId: store.state.Info.id,
+        is_true: 1,
+        result:"情况属实，已做处理"
+    }
+    DealReportAync(params)
+        .then(function (result) { 
+            /*通过之后的操作 */
+            GetList();
+            currentCard.value = -1;
+            card_show.value = false;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
+const decline = (reportId) => {
+    //审核不通过
+    let params = {
+        report_id: reportId,
+        adminId: store.state.Info.id,
+        is_true: 2,
+        result:"抱歉，原帖没有问题"
+    }
+    DealReportAync(params)
+        .then(function (result) { 
+            /*不通过之后的操作 */
+            GetList();
+            currentCard.value = -1;
+            card_show.value = false;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }
 
 const back = () => {
     router.push({ name: 'homeAdmin' })
 }
-
-let list = [{
-    postID: 25001,
-    name: "如何做好宫保鸡丁"
-},
-{
-    postID: 25002,
-    name: "如何做好宫保鸡丁"
-},
-{
-    postID: 25003,
-    name: "如何做好宫保鸡丁"
-},
-{
-    postID: 25004,
-    name: "如何做好宫保鸡丁"
-},
-{
-    postID: 25005,
-    name: "如何做好宫保鸡丁"
-},
-{
-    postID: 25006,
-    name: "如何做好宫保鸡丁"
-},
-{
-    postID: 25007,
-    name: "如何做好宫保鸡丁"
-},
-]
 
 </script>
 

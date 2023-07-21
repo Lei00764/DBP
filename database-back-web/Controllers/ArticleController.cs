@@ -97,7 +97,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
     }
 
 
-    [HttpGet("viewArticle/{article_id}")]
+    [HttpGet("viewArticle")]
     public async Task<IActionResult> GetArticleDetailsAsync(int article_id)
     {
         var code = 200;
@@ -131,6 +131,8 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                         FavouriteNum = article.FavouriteNum,  // 文章收藏量
                         LikeNum = article.LikeNum,  // 文章点赞量
                         AuthorName = user.UserName, // 包含作者的名字
+                        AuthorId = user.UserId, // 包含作者的ID
+                        AuthorAvatar = user.Avatar, // 包含作者的ID
                         Content = article.Content,  // 文章内容
                         IsBanned = article.IsBanned
                     })
@@ -164,7 +166,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             {
                 code = code,
                 msg = msg,
-                data = article_data
+                data = article_data,
             });
         }
         else
