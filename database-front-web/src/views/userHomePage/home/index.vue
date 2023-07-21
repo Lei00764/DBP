@@ -49,7 +49,7 @@
                     v-model:current-page="changePage.currentPage" -->
                 </div>
 
-                <el-button>申请专业厨师认证</el-button>
+                <el-button @click="toApplyForProfession">申请专业厨师认证</el-button>
             </div>
         </div>
 
@@ -159,9 +159,9 @@ const CheckImgExists = (imgurl) => {
 }
 
 // 点击按钮，跳转到“申请成为专业厨师”页面
-const applyForProfession = () => {
+const toApplyForProfession = () => {
     router.push({
-        path: '/applyForProfession',
+        path: '/applyProfession',
     })
 }
 

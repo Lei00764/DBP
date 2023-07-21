@@ -111,6 +111,11 @@ const router = createRouter({
             path: '/adminHomePage',  // 管理员主页
             name: 'adminHomePage',
             component: () => import('@/views/adminHomePage/index.vue'),
+        },
+        {
+            path: '/applyProfession',
+            name: 'applyProfession',
+            component: () => import('@/views/applyProfession/index.vue')
         }
     ]
 })

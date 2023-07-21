@@ -94,57 +94,52 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
     public async Task<IActionResult> RegisterUserAsync(string username, string email, string password, int type)
     {
         var code = 200;
-        var msg = "success";
+        var msg = "";
 
-        if (type == 1)
+        // AnyAsync 异步地确定序列中是否包含任何元素
+        var emailUserExists = await _database.Users.AnyAsync(u => u.Email == email);
+        if (emailUserExists)
         {
-            // AnyAsync 异步地确定序列中是否包含任何元素
-            var emailExists = await _database.Users.AnyAsync(u => u.Email == email);
-            if (emailExists)
+            return BadRequest(new
             {
-                return BadRequest(new
-                {
-                    code = 400,
-                    msg = "电子邮件已经被使用",
-                });
-            }
-            else
-            {
-                var newUser = new User
-                {
-                    // UserId = 5,
-                    UserName = username,
-                    Email = email,
-                    PassWord = password,
-                };
+                code = 400,
+                msg = "该邮箱已被注册成为用户",
+            });
+        }
 
-                await _database.Users.AddAsync(newUser);
-                msg = "用户成功注册";
-            }
+        var emailAdminExists = await _database.Administrators.AnyAsync(u => u.Email == email);
+        if (emailAdminExists)
+        {
+            return BadRequest(new
+            {
+                code = 400,
+                msg = "该邮箱已被注册成为管理员"
+            });
+        }
+
+        if (type == 1)  // 注册用户
+        {
+            var newUser = new User
+            {
+                UserName = username,
+                Email = email,
+                PassWord = password,
+            };
+
+            await _database.Users.AddAsync(newUser);
+            msg = "用户成功注册";
         }
         else if (type == 0)
         {
-            var emailExists = await _database.Administrators.AnyAsync(u => u.Email == email);
-            if (emailExists)
+            var newAdmin = new Administrator
             {
-                return BadRequest(new
-                {
-                    code = 400,
-                    msg = "电子邮件已经被使用",
-                });
-            }
-            else
-            {
-                var newAdmin = new Administrator
-                {
-                    AdminName = username,
-                    Email = email,
-                    PassWord = password,
-                };
+                AdminName = username,
+                Email = email,
+                PassWord = password,
+            };
 
-                await _database.Administrators.AddAsync(newAdmin);
-                msg = "管理员成功注册";
-            }
+            await _database.Administrators.AddAsync(newAdmin);
+            msg = "管理员成功注册";
         }
         else  // 通过网页注册不会出现这种情况，仅用于 swagger 调试
         {
@@ -257,8 +252,8 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
         });
     }
 
- //通过ID获取用户/管理员资料信息
-[HttpGet("InfoByID")]
+    //通过ID获取用户/管理员资料信息
+    [HttpGet("InfoByID")]
     public IActionResult GetInfoByID(int ID, int type)//参数type:0为管理员，1为普通用户
     {
         // 根据业务逻辑获取信息对象

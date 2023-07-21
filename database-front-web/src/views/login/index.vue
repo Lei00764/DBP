@@ -100,7 +100,7 @@ const afterLogin = (type) => {
             }
             //进行store存储
             store.commit('SaveInfo', person_info);//调用mutations，将信息传入store
-            //console.log(store.state.Info)
+            console.log(store.state.Info)
         })
         .catch(function (error) {
             console.log(error);
