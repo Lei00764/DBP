@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
+import { reactive } from 'vue';
 import router from "@/router/index.js"
 import navTopAdmin from "@/components/navTopAdmin.vue"
 import { useStore } from 'vuex'//引入store
@@ -101,8 +101,6 @@ console.log(store.state);
     position: absolute;
     width: 100%;
 }
-
-
 
 .homeAdmin-logout-btn {
     /* 设置退出登录按钮风格 */
