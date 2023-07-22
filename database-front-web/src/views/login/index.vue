@@ -17,9 +17,9 @@
                 </el-form>
             </div>
             <div class="login-form-button">
-                <elform>
+                <el-form>
                     <el-form-item>
-                        <el-button class="button" @click="doSubmitLogin">
+                        <el-button class="button" @click="doSubmitLogin" @keyup.enter="enterDown(e)">
                             <span>登录</span>
                             <span class="iconfont icon-ic_play_black"></span>
                         </el-button>
@@ -30,20 +30,19 @@
                             <span class="iconfont icon-ic_play_black"></span>
                         </el-button>
                     </el-form-item>
-                </elform>
+                </el-form>
             </div>
         </div>
     </div>
 </template>
   
 <script setup>
-import { ref, reactive, computed } from 'vue';
+import { ref, reactive, onMounted, onUnmounted} from 'vue';
 import { userLogin, GetInfoByEmail } from '@/api/user';  // 引入 api 请求函数 userLogin,GetInfo
 import Message from "@/utils/Message.js"
 import router from "@/router/index.js"
 import { useStore } from 'vuex' // 引入store
 const store = useStore(); // 使用store必须加上
-
 
 const formData = reactive({
     email: '',
@@ -51,6 +50,21 @@ const formData = reactive({
 });
 
 const showPassword = ref(false);
+
+const enterDown = (e) => {
+    if (e.keyCode == 13 || e.keyCode == 100) {
+        doSubmitLogin(); // 定义的登录方法
+    }
+}
+onMounted(() => {
+    // 绑定监听事件
+    window.addEventListener("keydown", enterDown);
+});
+onUnmounted(() => {
+    // 销毁事件
+    window.removeEventListener("keydown", enterDown, false);
+ 
+});
 
 // 登录
 const doSubmitLogin = () => {
@@ -91,7 +105,6 @@ const afterLogin = (type) => {
         .then(function (result) {
             // result 包括 code、msg和data三部分，只需要其中的 data 部分
             result = result.data;
-            console.log(result);
             let person_info = {
                 avatar: result.avatar,
                 id: result.id,
