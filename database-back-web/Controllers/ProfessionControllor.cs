@@ -35,8 +35,11 @@ public class ProfessionController : ControllerBase
             });
         }
 
-        // 判断该用户是否已经是专业厨师：取 Profession 表查找是否存在 UserId = user_id 的记录
-        bool existProfessionalChef = _database.Professions.Any(x => x.UserId == user_id);
+        // 判断该用户是否已经是专业厨师：取 Profession 表查找是否存在 UserId = user_id 且 IsAccepted = 1 的记录
+        // IsAccepted 等于 1 表示已经同意申请，用户已经是专业厨师
+        // IsAccepted 等于 0 表示正在申请中
+        // IsAccepted 等于 2 表示申请被拒绝
+        bool existProfessionalChef = _database.Professions.Any(x => x.UserId == user_id && x.IsAccepted == 1);
         if (existProfessionalChef)
         {
             code = 400;
