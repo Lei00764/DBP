@@ -11,18 +11,21 @@ const store = createStore({
             password: "",
             email: "",
         },
-        login: false  // 登录状态
+        login: false,  // 登录状态
+        type:-1  //0为管理员，1为用户
     },
     // 计算属性，获取state里的数据内容
     // 只可读取不可修改
     getters: {},
     // 定义对state的各种操作，只能同步不能异步
     mutations: {
-        doLogin(state) { // 登录
+        doLogin(state,type) { // 登录
             state.login = true;
+            state.type = type;
         },
         doLogout(state) { // 退出
             state.login = false;
+            state.type = -1;
         },
         SaveInfo(state, person_info) {
             state.Info = {

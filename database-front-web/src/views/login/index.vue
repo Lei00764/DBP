@@ -37,7 +37,7 @@
 </template>
   
 <script setup>
-import { ref, reactive, onMounted, onUnmounted} from 'vue';
+import { ref, reactive, onMounted, onUnmounted, nextTick} from 'vue';
 import { userLogin, GetInfoByEmail } from '@/api/user';  // 引入 api 请求函数 userLogin,GetInfo
 import Message from "@/utils/Message.js"
 import router from "@/router/index.js"
@@ -51,15 +51,18 @@ const formData = reactive({
 
 const showPassword = ref(false);
 
+onMounted(() => {
+    // 绑定监听事件
+    nextTick(() => {
+        window.addEventListener("keydown", enterDown);
+    });
+});
 const enterDown = (e) => {
     if (e.keyCode == 13 || e.keyCode == 100) {
+        e.preventDefault(); // 阻止默认提交动作
         doSubmitLogin(); // 定义的登录方法
     }
 }
-onMounted(() => {
-    // 绑定监听事件
-    window.addEventListener("keydown", enterDown);
-});
 onUnmounted(() => {
     // 销毁事件
     window.removeEventListener("keydown", enterDown, false);
@@ -85,7 +88,7 @@ const doSubmitLogin = () => {
             // 在这里可以使用 person_info 变量  
             // eg. 登录完成后，调用其他函数
             // console.log(person_info);  // {code: 200, msg: '普通用户登录成功', type: 1}
-            afterLogin();
+            afterLogin(person_info);
         })
         .catch(function (error) {
             console.log(error);
@@ -95,9 +98,9 @@ const doSubmitLogin = () => {
 };
 
 
-const afterLogin = (type) => {
-    store.commit("doLogin"); // 修改登录状态
-    // console.log(store.state.login); / 获取state值
+const afterLogin = (person_info) => {
+    store.commit("doLogin",person_info.type); // 修改登录状态
+    //console.log(store.state.type); // 获取state值
     let params = {
         Email: formData.email,
     };
