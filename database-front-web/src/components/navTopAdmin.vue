@@ -10,7 +10,7 @@
 
             <!-- 中间 搜索栏 -->
             <div class="search-panel">
-                <el-input placeholder="Search Key Words" class="custom-input" v-model="formData.keywords">
+                <el-input placeholder="Search Key Words" class="custom-input" v-model="formData.keywords" @keyup.enter="enterDown">
                     <!-- prefix 前置插入槽 -->
                     <template #prefix>
                         <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
@@ -36,13 +36,44 @@
 <script setup>
 // 修改当前页面的 element-plus 主题色
 import { changeTheme } from '@/utils/changeTheme';
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue';
 import router from "@/router/index.js"
+import { searchPost } from '@/api/search';  // 引入 api 请求函数 searchPost
 changeTheme("#FFD700");  // 目前为红色，可以修改
 
 const formData = reactive({
     keywords: '',
 });
+
+onMounted(() => {
+    // 绑定监听事件
+    nextTick(() => {
+        window.addEventListener("keydown", enterDown);
+    });
+});
+const enterDown = (e) => {
+    if (e.keyCode == 13 || e.keyCode == 100) {
+        e.preventDefault(); // 阻止默认提交动作
+        doSearch(); // 定义的登录方法
+    }
+}
+onUnmounted(() => {
+    // 销毁事件
+    window.removeEventListener("keydown", enterDown, false);
+});
+
+const doSearch = () => {
+    let params = {
+        keyword:formData.keywords
+    }
+    searchPost(params)
+        .then(function (result) {  
+            console.log(result.data);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
 
 const ToHome = () => {
     router.push(`/homeUser`);
