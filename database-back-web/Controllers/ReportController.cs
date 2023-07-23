@@ -16,6 +16,38 @@ public class ReportController : ControllerBase
         _database = appDbContext;  // 依赖注入，在整个类中使用它来进行数据库操作
     }
 
+
+    [HttpPost("PostReport")]//提交举报
+    public async Task<IActionResult> ReportArticleAsync(int user_id,int article_id,string reason)
+    {
+       var code = 200;
+       var msg = "success"; 
+       if(_database.Users.Any(x=>x.UserId==user_id)==false||_database.Articles.Any(x=>x.PostId==article_id)==false)
+       {
+         return BadRequest(new
+            {
+                code = 400,
+                msg = "举报者或被举报文章不存在",
+            });
+       }
+       ReportPost newRecord =new ReportPost{
+            UserId=user_id,
+            PostId=article_id,
+            Reason=reason,
+            Time=DateTime.Now,
+            IsTrue=0,
+       };
+        _database.ReportPost.AddRange(newRecord);
+        await _database.SaveChangesAsync();
+        msg="提交成功";
+       return Ok(new
+        {
+            code = code,
+            msg = msg,
+        });   
+    }
+
+
     [HttpGet("ReportPostToDeal")]//列出未被处理的被举报的帖子
     public async Task<IActionResult> ReportPostToDeal()
     {
