@@ -8,7 +8,7 @@
                 </span>
             </router-link>
 
-            <!-- 中间 搜索栏 -->                                                                           <!--搜素事件，回车触发   -->
+            <!-- 中间 搜索栏 -->
             <div class="search-panel">
                 <el-input placeholder="Search Key Words" class="custom-input" v-model="formData.keywords" @keyup.enter="enterDown">
                     <!-- prefix 前置插入槽 -->
@@ -20,14 +20,6 @@
 
             <!-- 右侧 个人信息 -->
             <div class="user-info-panel">
-                <el-button class="icon-button" @click="ToHome">
-                    <font-awesome-icon :icon="['fas', 'house']" />
-                    <span class="button-text">首页</span>
-                </el-button>
-                <el-button class="icon-button" @click="ToMy">
-                    <font-awesome-icon :icon="['fas', 'circle-user']" />
-                    <span class="button-text">我的主页</span>
-                </el-button>
                 <el-button class="icon-button" @click="ToLogOut">
                     <font-awesome-icon :icon="['fas', 'right-to-bracket']" />
                     <span class="button-text">退出登录</span>
@@ -47,13 +39,7 @@ import { changeTheme } from '@/utils/changeTheme';
 import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue';
 import router from "@/router/index.js"
 import { searchPost } from '@/api/search';  // 引入 api 请求函数 searchPost
-import { useStore } from 'vuex' // 引入store
-const store = useStore(); // 使用store必须加上
-
 changeTheme("#FFD700");  // 目前为红色，可以修改
-
-
-
 
 const formData = reactive({
     keywords: '',
@@ -92,16 +78,9 @@ const doSearch = () => {
 const ToHome = () => {
     router.push(`/homeUser`);
 }
-const ToMy = () => {
-    if(store.state.type == 1){ //管理员身份
-        router.push(`/userHomePage`);
-    }  
-    else if(store.state.type == 0){  //用户身份
-        router.push(`/homeAdmin`);
-    }
-}
+
 const ToLogOut = () => {
-    router.push(`/login`);
+    router.push({ name: 'login' });
 }
 const ToCheckMessage = () => {
     //跳转到消息界面（管理员可以给用户发送消息）

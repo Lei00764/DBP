@@ -80,7 +80,7 @@ const handleButtonClick = (p_board_id) => {
     width: 240px;
     height: 70px;
     border: none;
-    background-position:20%;
+    background-position: 20%;
     background-repeat: no-repeat;
     background-size: cover;
 }

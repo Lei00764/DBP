@@ -59,7 +59,7 @@ onMounted(() => {
 
 // 使用 watch 监听父级路由参数的变化
 watch(() => router.currentRoute.value.params.pBoardId, (newValue) => {
-    console.log(newValue);
+    // console.log(newValue);
     pBoardId.value = newValue;
     fetchData();
 });

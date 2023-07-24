@@ -7,6 +7,7 @@
             <div class="point">
                 积分：{{ point }}
             </div>
+            <el-button @click="applyForProfession">申请专业厨师认证</el-button>
         </div>
         <!-- 签到积分 -->
         <el-form-item>
@@ -21,6 +22,8 @@
             </el-button>
         </el-form-item>
 
+
+
         <!-- 简直傻逼 如果你不小心看到了我的注释请无视它 它并没有什么真实意思 -->
         <el-button class=button12 round color=transparent @click="stars"
             style="color:#000000;background-color:transparent;margin-top: 2px;">
@@ -31,7 +34,8 @@
         <!-- 论坛展示 -->
         <!-- 在这一部分我学会了把某些样式和定义放在一起 -->
         <div class="ShowPart">
-            <p v-if="posting === 0" class="Post" style="color:rgb(63, 66, 85);font-family: Poppins;font-size: 25px">
+            <p v-if="formData.posting === 0" class="Post"
+                style="color:rgb(63, 66, 85);font-family: Poppins;font-size: 25px">
                 Post:
             </p>
             <p v-else class="Post" style="color:rgb(63, 66, 85);font-family: Poppins;font-size: 25px">
@@ -71,10 +75,19 @@ function handleSignIn() {
     point.value += 2
     // 执行积分+2的逻辑
 }
+function stars() {
+    if (formData.posting == 0) {
+        formData.posting = 1;
+    }
+    else {
+        formData.posting = 0;
+    }
+};
 const point = ref(0)
 const formData = reactive({
     isSigned: false,
-    buttonLabel: '签到'
+    buttonLabel: '签到',
+    posting: 0
 
 });
 const { isSigned, buttonLabel } = toRefs(formData)
@@ -120,14 +133,7 @@ onMounted(() => {
 //     }
 //   }
 
-const stars = () => {
-    if (posting === 0) {
-        posting = 1
-    }
-    else {
-        posting = 0
-    }
-};
+
 const input = reactive({
     code: {
         input: '',
@@ -145,7 +151,11 @@ const CheckImgExists = (imgurl) => {
     }
 }
 
-</script>
+
+const applyForProfession = () => {
+    router.push(`/applyProfession`);
+}
+</script> 
   
 <style scoped>
 /* 初始化 */

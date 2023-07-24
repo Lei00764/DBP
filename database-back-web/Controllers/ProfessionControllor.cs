@@ -16,22 +16,15 @@ public class ProfessionController : ControllerBase
         _database = appDbContext;  // 依赖注入，在整个类中使用它来进行数据库操作
     }
 
-    [HttpPost("ApplyForProfession")]//提交专业认证申请（用户）
-    public async Task<IActionResult> ApplyForAsync(int user_id, int year, int month, int day, string illustrate, string evidence)//提交专业认证申请（用户）
+    // lx 修改 2023.7.21
+    [HttpPost("ApplyForProfession")] // 提交专业认证申请（用户）
+    public async Task<IActionResult> ApplyForProfessionAsync(int user_id, string illustrate, string evidence)//提交专业认证申请（用户）
     {
         var code = 200;
-        var msg = "申请已提交";
-        bool exist = false;
-        var u = _database.Users.Where(x => x.UserId == user_id);
-        foreach (var item in u)
-        {
-            if (item.UserId == user_id)
-            {
-                exist = true;
-                break;
-            }
-        }
-        if (exist == false)
+        var msg = "";
+
+        bool existUser = _database.Users.Any(x => x.UserId == user_id);  //  Any() 方法来检查是否存在任何匹配 UserId 的记录
+        if (!existUser)
         {
             code = 400;
             msg = "用户不存在";
@@ -41,22 +34,42 @@ public class ProfessionController : ControllerBase
                 msg = msg,
             });
         }
-        var newRecord = new Profession()
+
+        // 判断该用户是否已经是专业厨师：取 Profession 表查找是否存在 UserId = user_id 且 IsAccepted = 1 的记录
+        // IsAccepted 等于 1 表示已经同意申请，用户已经是专业厨师
+        // IsAccepted 等于 0 表示正在申请中
+        // IsAccepted 等于 2 表示申请被拒绝
+        bool existProfessionalChef = _database.Professions.Any(x => x.UserId == user_id && x.IsAccepted == 1);
+        if (existProfessionalChef)
+        {
+            code = 400;
+            msg = "该用户已经是专业厨师";
+            return BadRequest(new
+            {
+                code = code,
+                msg = msg,
+            });
+        }
+
+        // 创建一个 Profesion() 对象
+        var newProfession = new Profession()
         {
             UserId = user_id,
-            ApplyTime = new System.DateTime(year, month, day),
+            ApplyTime = DateTime.Now,
             Illustrate = illustrate,
             Evidence = evidence,
             IsAccepted = 0
         };
-        _database.Professions.AddRange(newRecord);
+
+        _database.Professions.AddRange(newProfession);
         await _database.SaveChangesAsync();
+        code = 200;
+        msg = "申请成功";
         return Ok(new
         {
             code = code,
             msg = msg
         });
-
     }
 
     [HttpGet("ViewRequest/{request_id}")]
@@ -105,7 +118,7 @@ public class ProfessionController : ControllerBase
         var msg = "success";
         var profession_data = await (
             from request in _database.Professions
-            where request.IsAccepted == 0 
+            where request.IsAccepted == 0
             select new
             {
                 id = request.UserId,//申请者ID

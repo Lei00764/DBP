@@ -1,16 +1,9 @@
 <template>
   <el-row>
-    <el-col
-      v-for="(o, index) in 2"
-      :key="o"
-      :span="8"
-      :offset="index > 0 ? 2 : 0"
-    >
+    <el-col v-for="(o, index) in 2" :key="o" :span="8" :offset="index > 0 ? 2 : 0">
       <el-card :body-style="{ padding: '0px' }">
-        <img
-          src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-          class="image"
-        />
+        <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+          class="image" />
         <div style="padding: 14px">
           <span>Yummy hamburger</span>
           <div class="bottom">
@@ -28,7 +21,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 const currentDate = ref(new Date())//
-import  {getArticle} from "@/api/article"
 
 // 存储返回的数据
 // const allMenus = ref()

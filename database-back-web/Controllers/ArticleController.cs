@@ -271,7 +271,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
 
     //发布文章  
     [HttpPost("postArticle")]
-    public async Task<IActionResult> postArticleAsync(int post_id, int user_id, string tag, string title, string content, string picture, string Sharelink)
+    public async Task<IActionResult> postArticleAsync(int user_id, string tag, string title, string content, string picture, string Sharelink)
     {
         var code = 200;
         var msg = "success";
@@ -298,12 +298,13 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 Title = title,
                 Content = content,
                 AuthorId = user_id,
-                PostId = post_id,
+                //PostId = post_id,
                 ShareLink = Sharelink,
                 Views = 0,
                 FavouriteNum = 0,
                 LikeNum = 0,
-                IsBanned = 0
+                IsBanned = 0,
+                ReleaseTime=DateTime.Now
             };
 
             _database.Articles.AddRange(newRecord);

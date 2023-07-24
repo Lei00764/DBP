@@ -7,6 +7,7 @@ namespace auth.Models;
 public class Comment
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // 告知 Entity Framework Core UserId 是由数据库生成的  --- 自增
     [Column("MSGID")]
     public int? MsgId { get; set; }
 

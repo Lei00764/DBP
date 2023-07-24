@@ -2,7 +2,7 @@
     <div>
         <div class="homeAdmin-page">
             <div class="header">
-                <navTop></navTop>
+                <navTopAdmin></navTopAdmin>
             </div>
             <el-card class="homeAdmin-card">
                 <!-- 管理员信息卡片 -->
@@ -49,9 +49,9 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
+import { reactive } from 'vue';
 import router from "@/router/index.js"
-import navTop from "@/components/navTop.vue"
+import navTopAdmin from "@/components/navTopAdmin.vue"
 import { useStore } from 'vuex'//引入store
 
 const store = useStore();//使用store必须加上
@@ -72,11 +72,13 @@ const intoCheckArticle = () => {
     router.push({ name: 'checkArticle' })
 }
 const intoForum = () => {
-    router.push({ name: 'forum' })
+    router.push({ path: 'layout' })
 }
 const formData = reactive({
     keyword: '',
 });
+
+console.log(store.state);
 </script>
 
 <style scoped>
@@ -99,8 +101,6 @@ const formData = reactive({
     position: absolute;
     width: 100%;
 }
-
-
 
 .homeAdmin-logout-btn {
     /* 设置退出登录按钮风格 */
@@ -142,7 +142,7 @@ const formData = reactive({
     position: absolute;
 }
 
-.classify-position{
+.classify-position {
     position: absolute;
     top: 30%;
     left: 40%;
