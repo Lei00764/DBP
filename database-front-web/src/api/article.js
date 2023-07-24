@@ -49,7 +49,7 @@ export function forum_searchArticle(params) {
       params: params
     }).then(function (response) {
         if (response.data.code === 200) {
-            return response.data.data;
+            return response.data;
         } else {
             Message.error("未搜索到结果");
             return null;
