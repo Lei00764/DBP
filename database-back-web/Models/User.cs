@@ -29,6 +29,10 @@ public class User
     public int? FollowerNum { get; set; }
     [Column("THEMEID")]
     public int? ThemeID { get; set; }
+    [Column("POINTS")]
+    public int? Points { get; set; }
+    [Column("LEVELS")]
+    public int? Levels { get; set; }
 
 
     public User()
@@ -37,5 +41,7 @@ public class User
         Avatar = "https://img-qn.51miz.com/Element/00/88/59/99/8de317d3_E885999_245f75fb.png!/quality/90/unsharp/true/compress/true/format/png/fw/720";
         FollowerNum = 0;
         ThemeID = 1;  // 默认主题
+        Points=0;
+        Levels=0;
     }
 }
