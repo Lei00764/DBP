@@ -16,6 +16,7 @@ import { ref, onMounted, watch } from 'vue';
 
 import articleListItem from "@/components/articleListItem.vue"
 import { loadArticle } from "@/api/article.js"
+import { forum_searchArticle } from "@/api/article.js"
 import router from "@/router/index.js"
 
 // 子组件接收父组件的传值 和 子路由接收父路由的传值不同
@@ -28,18 +29,27 @@ const pBoardId = ref(router.currentRoute.value.params.pBoardId);
 const articleListInfo = ref([]);
 
 // 获取文章数据
-const fetchData = async () => {
-    const params = {
-        p_board_id: pBoardId.value,
-        page_num: 1
-    };
-    // console.log(pBoardId);
-    const result = await loadArticle(params);
+const fetchData = async (stringValue = '') => {
+    let result;
+    if (!stringValue) {
+        stringValue = "0"
+        const params = {
+            p_board_id: pBoardId.value,
+            page_num:1
+        };
+        result = await loadArticle(params);
+    } 
+    else {
+        const params = {
+            keyword: stringValue
+        };
+        result = await forum_searchArticle(params);
+    }
+
     if (!result)
         return;
-    // 将结果存放在 articleListInfo 变量中
     articleListInfo.value = result.data;
-    // console.log(articleListInfo.value);
+ 
 };
 
 // 在组件挂载时获取初始文章数据

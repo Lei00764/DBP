@@ -8,7 +8,7 @@
                 </span>
             </router-link>
 
-            <!-- 中间 搜索栏 -->
+            <!-- 中间 搜索栏 -->                                                                           <!--搜素事件，回车触发   -->
             <div class="search-panel">
                 <el-input placeholder="Search Key Words" class="custom-input" v-model="formData.keywords" @keyup.enter="enterDown">
                     <!-- prefix 前置插入槽 -->
@@ -51,6 +51,9 @@ import { useStore } from 'vuex' // 引入store
 const store = useStore(); // 使用store必须加上
 
 changeTheme("#FFD700");  // 目前为红色，可以修改
+
+
+
 
 const formData = reactive({
     keywords: '',

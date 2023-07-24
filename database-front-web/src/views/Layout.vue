@@ -2,7 +2,7 @@
     <div>
         <div id="container">
             <div id="header">
-                <navTop></navTop>
+                <navTop @searchPerformed="handleSearch2"></navTop>
             </div>
             <div id="choice-buttons">
                 <el-form :inline="true" class="form-container">
@@ -30,12 +30,18 @@ const pBoardId = ref(0);  // 默认为 0，即全部板块
 
 const buttonStyle = [
     // 将图片换成修改之后的图片，注意：这里不能使用 @ 代替 src
-    { background: "src/assets/forum-classify/all.png", hoverOpacity: 0.8 },
-    { background: "src/assets/forum-classify/chinesefood.png", hoverOpacity: 0.8 },
-    { background: "src/assets/forum-classify/westernfood.png", hoverOpacity: 0.8 },
-    { background: "src/assets/forum-classify/dessert.png", hoverOpacity: 0.8 },
-    { background: "src/assets/forum-classify/others.png", hoverOpacity: 0.8 }
+    { name: "全部", background: "src/assets/forum-classify/all.png", hoverOpacity: 0.8 },
+    { name: "中餐", background: "src/assets/forum-classify/chinesefood.png", hoverOpacity: 0.8 },
+    { name: "西餐", background: "src/assets/forum-classify/westernfood.png", hoverOpacity: 0.8 },
+    { name: "甜点", background: "src/assets/forum-classify/dessert.png", hoverOpacity: 0.8 },
+    { name: "其他", background: "src/assets/forum-classify/others.png", hoverOpacity: 0.8 }
 ];
+
+//可能有问题
+const handleSearch2=(keywords)=>{
+    fetchData(keywords);
+}
+
 
 // 点击本页面上的按钮，跳转到相应的板块
 const handleButtonClick = (p_board_id) => {
