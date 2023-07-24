@@ -23,6 +23,26 @@
         </el-form-item>
 
 
+        <!-- START 用户申请专业认证弹窗 -->
+        <el-dialog v-model="dialogVisible" title="Apply for Professional Chef Certification" width="50%"
+            :before-close="handleClose">
+            <el-form @submit.native.prevent="submitApplication">
+                <el-form-item label="Description:">
+                    <el-input type="textarea" v-model="form.illustrate" />
+                </el-form-item>
+                <el-form-item label="Evidence:">
+                    <el-input type="textarea" v-model="form.evidence" />
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="dialogVisible = false">Cancel</el-button>
+                    <el-button type="primary" @click="submitApplication">Submit</el-button>
+                </span>
+            </template>
+        </el-dialog>
+        <!-- END 用户申请专业认证弹窗 -->
+
 
         <!-- 简直傻逼 如果你不小心看到了我的注释请无视它 它并没有什么真实意思 -->
         <el-button class=button12 round color=transparent @click="stars"
@@ -64,6 +84,49 @@ import Message from "@/utils/Message.js"
 import { ElPagination } from 'element-plus'
 import router from "@/router/index.js"
 import { useRoute, useRouter } from "vue-router"
+import { ApplyProfession } from "@/api/profession.js"
+import { useStore } from 'vuex' // 引入store
+
+// START 用户申请专业认证弹窗
+
+const store = useStore(); // 使用store必须加上
+
+
+const dialogVisible = ref(false)
+
+const form = ref({
+    illustrate: '',
+    evidence: '',
+});
+
+const applyForProfession = () => {
+    dialogVisible.value = true;
+}
+
+const handleClose = (done) => {
+    ElMessageBox.confirm('Are you sure to close this dialog?')
+        .then(() => {
+            done()
+        })
+        .catch(() => {
+            // catch error
+        })
+}
+
+const submitApplication = () => {
+    // 提交申请的逻辑，这里暂时只做 console.log 输出
+    // console.log(form.value);
+    let params = {
+        user_id: store.state.Info.id,
+        illustrate: form.value.illustrate,
+        evidence: form.value.evidence
+    }
+    console.log(params);
+    ApplyProfession(params);
+};
+// END 用户申请专业认证弹窗
+
+
 const state = reactive({
     fits: ['fill'],
     url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
@@ -152,9 +215,7 @@ const CheckImgExists = (imgurl) => {
 }
 
 
-const applyForProfession = () => {
-    router.push(`/applyProfession`);
-}
+
 </script> 
   
 <style scoped>
@@ -222,3 +283,8 @@ const applyForProfession = () => {
 }
 </style>
   
+
+
+
+
+

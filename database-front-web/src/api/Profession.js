@@ -15,7 +15,10 @@ export function ApplyProfession(params) {
         if (response.data.code === 200) {
             Message.success("申请成功");
             return response.data;
-        } else {
+        } else if (response.data.code === 401) {
+            Message.error("当前用户已经是专业厨师");
+        }
+        else {
             Message.error("申请失败");
         }
     }).catch(function (error) {

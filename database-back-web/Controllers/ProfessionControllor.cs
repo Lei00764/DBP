@@ -28,7 +28,7 @@ public class ProfessionController : ControllerBase
         {
             code = 400;
             msg = "用户不存在";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg,
@@ -42,9 +42,9 @@ public class ProfessionController : ControllerBase
         bool existProfessionalChef = _database.Professions.Any(x => x.UserId == user_id && x.IsAccepted == 1);
         if (existProfessionalChef)
         {
-            code = 400;
+            code = 401;
             msg = "该用户已经是专业厨师";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg,
@@ -95,7 +95,7 @@ public class ProfessionController : ControllerBase
         {
             code = 400;
             msg = "认证申请不存在";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg,

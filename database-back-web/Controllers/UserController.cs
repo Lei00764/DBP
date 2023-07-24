@@ -100,7 +100,7 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
         var emailUserExists = await _database.Users.AnyAsync(u => u.Email == email);
         if (emailUserExists)
         {
-            return BadRequest(new
+            return Ok(new
             {
                 code = 400,
                 msg = "该邮箱已被注册成为用户",
@@ -110,7 +110,7 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
         var emailAdminExists = await _database.Administrators.AnyAsync(u => u.Email == email);
         if (emailAdminExists)
         {
-            return BadRequest(new
+            return Ok(new
             {
                 code = 400,
                 msg = "该邮箱已被注册成为管理员"
@@ -206,7 +206,7 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
         }
 
         // 如果在用户表和管理员表都找不到，返回错误信息
-        return BadRequest(new
+        return Ok(new
         {
             code = 400,
             msg = "在用户表和管理员表都找不到",
@@ -250,7 +250,7 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
         {// 如果数据库中没有数据，返回错误信息
             code = 400;
             msg = "用户不存在";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg,

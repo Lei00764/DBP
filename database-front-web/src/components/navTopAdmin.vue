@@ -10,7 +10,8 @@
 
             <!-- 中间 搜索栏 -->
             <div class="search-panel">
-                <el-input placeholder="Search Key Words" class="custom-input" v-model="formData.keywords" @keyup.enter="enterDown">
+                <el-input placeholder="Search Key Words" class="custom-input" v-model="formData.keywords"
+                    @keyup.enter="enterDown">
                     <!-- prefix 前置插入槽 -->
                     <template #prefix>
                         <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
@@ -64,10 +65,10 @@ onUnmounted(() => {
 
 const doSearch = () => {
     let params = {
-        keyword:formData.keywords
+        keyword: formData.keywords
     }
     searchPost(params)
-        .then(function (result) {  
+        .then(function (result) {
             console.log(result.data);
         })
         .catch(function (error) {
