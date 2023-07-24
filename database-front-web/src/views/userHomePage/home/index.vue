@@ -24,13 +24,13 @@
 
 
         <!-- START 用户申请专业认证弹窗 -->
-        <el-dialog v-model="dialogVisible" title="Apply for Professional Chef Certification" width="50%"
-            :before-close="handleClose">
+        <!-- 【BUG】：当没有输出完成时，用户点击确认，系统应给出提示！ lx -->
+        <el-dialog v-model="dialogVisible" title="专业厨师认证申请" width="50%" :before-close="handleClose" :show-close="false">
             <el-form @submit.native.prevent="submitApplication">
-                <el-form-item label="Description:">
+                <el-form-item label="阐述:">
                     <el-input type="textarea" v-model="form.illustrate" />
                 </el-form-item>
-                <el-form-item label="Evidence:">
+                <el-form-item label="证明:">
                     <el-input type="textarea" v-model="form.evidence" />
                 </el-form-item>
             </el-form>
@@ -81,7 +81,7 @@
 import { ref, reactive, toRefs, onMounted } from 'vue';
 import component1 from '../component1/component1.vue';
 import Message from "@/utils/Message.js"
-import { ElPagination } from 'element-plus'
+// import { ElPagination } from 'element-plus'
 import router from "@/router/index.js"
 import { useRoute, useRouter } from "vue-router"
 import { ApplyProfession } from "@/api/profession.js"
