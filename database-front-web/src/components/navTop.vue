@@ -72,11 +72,9 @@ const enterDown = (e) => {
         e.preventDefault(); // 阻止默认提交动作
         doSearch(); // 定义的登录方法
     }
-}
-onUnmounted(() => {
     // 销毁事件
     window.removeEventListener("keydown", enterDown, false);
-});
+}
 
 const doSearch = () => {
     let params = {
