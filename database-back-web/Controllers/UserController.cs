@@ -373,4 +373,44 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
         }
 
     }
+
+    //根据用户ID获取部分个人信息:用户昵称、个人积分、粉丝数量/ 关注数量、文章数量
+    // [HttpGet("getUserInfo/user_id")]
+    // public async Task<IActionResult> getUserInfoAsync(int user_id)
+    // {
+    //     var code = 200;
+    //     var msg = "success";
+    //     var temp = await _database.Users.ToListAsync();
+    //     bool exist = false;
+    //     if (temp != null)//判断表内是否有信息
+    //     {
+    //         foreach (var user in temp)
+    //         {
+    //             if (user.UserId == user_id)
+    //             {
+    //                 exist = true;
+    //                 break;
+    //             }
+    //         }
+    //     }
+    //     if(exist){
+    //         //查找用户的粉丝数量并返回
+    //         var fans_data = _database.Users.Where(a => a.UserId == user_id).Select(a => a.FollowerNum);
+    //         return Ok(new
+    //         {
+    //             code = code,
+    //             msg = msg,
+    //             data = fans_data
+    //         });
+    //     }
+    //     else{
+    //         code = 400;
+    //         msg = "不存在该用户信息";
+    //         return BadRequest(new
+    //         {
+    //             code = code,
+    //             msg = msg
+    //         });
+    //     }
+    // }
 }
