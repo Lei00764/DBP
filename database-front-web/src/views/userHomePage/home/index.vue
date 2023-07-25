@@ -7,7 +7,7 @@
             <div class="point">
                 积分：{{ point }}
             </div>
-            <el-button class="pro" @click="applyForProfession">申请专业厨师认证</el-button>
+            <el-button @click="applyForProfession">申请专业厨师认证</el-button>
         </div>
         <!-- 签到积分 -->
         <el-form-item>
@@ -68,12 +68,12 @@
             </el-row>
             <!-- 底部页面跳转 -->
             <div class="myart1">
-                {{articleNumber}}
+
                 <div class="article">
                     <router-view />
                 </div>
                 <div class="example-pagination-block">
-                    <el-pagination background :page-size="2" layout="->,prev, pager, next,jumper" :total = "1000" />
+                    <el-pagination background :page-size="2" layout="->,prev, pager, next,jumper" :total="1000" />
                     <!-- @current-change="handelCurrentChange"
                     v-model:current-page="changePage.currentPage" -->
                 </div>
@@ -92,7 +92,7 @@ import router from "@/router/index.js"
 import { useRoute, useRouter } from "vue-router"
 import { ApplyProfession } from "@/api/profession.js"
 import { useStore } from 'vuex' // 引入store
-import { searchArticle,getArticleNumber } from "@/api/article.js"
+import { searchArticle,loadArticle } from "@/api/article.js"
 import { forum_searchArticle } from "@/api/article.js"
 import userHomeArticleListltem from "@/components/userHomeArticleListltem.vue"
 
@@ -135,7 +135,7 @@ const submitApplication = () => {
 };
 // END 用户申请专业认证弹窗
 
-//用户头像
+
 const state = reactive({
     fits: ['fill'],
     url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
@@ -164,11 +164,10 @@ const formData = reactive({
 });
 const { isSigned, buttonLabel } = toRefs(formData)
 const pBoardId = ref(router.currentRoute.value.params.pBoardId);
-
 // 文章列表获取
 // 存储获取的文章数据
 const articleListInfo = ref([]);
-const articleNumber = ref(0);
+
 // 获取文章数据
 const fetchData = async (stringValue = '') => {
     let result;
@@ -183,7 +182,6 @@ const fetchData = async (stringValue = '') => {
         const params = {
             keyword: stringValue
         };
-        // 这里并没有写好还得改
         result = await forum_searchArticle(params);
     }
 
@@ -192,33 +190,10 @@ const fetchData = async (stringValue = '') => {
     articleListInfo.value = result.data;
 
 };
-const fetchnum = async (stringValue = '') => {
-    let result;
-    if (!stringValue) {
-        stringValue = "0"
-        const params = {
-            user_id: 8
-        };
-        result = await getArticleNumber(params);
-    }
-    else {
-        const params = {
-            keyword: stringValue
-        };
-        // 这里并没有写好还得改
-        result = await getArticleNumber(params);
-    }
-
-    if (!result)
-        return;
-    articleNumber = result.data;
-
-};
 
 onMounted(() => {
     console.log(`计数器初始值为 ${point.value}。`);
     fetchData();
-    fetchnum();
 })
 
 // const changePage = reactive({
@@ -283,13 +258,25 @@ const CheckImgExists = (imgurl) => {
   
 <style scoped>
 /* 初始化 */
-.pro {
-    position: absolute;
-    left: 75px;
-    top: -310px;
-    border-radius: 15px;
+.time {
+    font-size: 12px;
+    color: #999;
 }
 
+.bottom {
+    margin-top: 13px;
+    line-height: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.image {
+    width: 100%;
+    display: block;
+}
 
 .sign-button {
     position: absolute;
