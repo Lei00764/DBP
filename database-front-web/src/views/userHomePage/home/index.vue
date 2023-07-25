@@ -61,6 +61,12 @@
             <p v-else class="Post" style="color:rgb(63, 66, 85);font-family: Poppins;font-size: 25px">
                 Star:
             </p>
+            <!-- 帖子展示部分 -->
+            <el-row>
+                <userHomeArticleListltem v-for="item in articleListInfo" :key="item.id" :data="item">
+                </userHomeArticleListltem>
+            </el-row>
+            <!-- 底部页面跳转 -->
             <div class="myart1">
 
                 <div class="article">
@@ -86,6 +92,9 @@ import router from "@/router/index.js"
 import { useRoute, useRouter } from "vue-router"
 import { ApplyProfession } from "@/api/profession.js"
 import { useStore } from 'vuex' // 引入store
+import { searchArticle,loadArticle } from "@/api/article.js"
+import { forum_searchArticle } from "@/api/article.js"
+import userHomeArticleListltem from "@/components/userHomeArticleListltem.vue"
 
 // START 用户申请专业认证弹窗
 
@@ -154,8 +163,37 @@ const formData = reactive({
 
 });
 const { isSigned, buttonLabel } = toRefs(formData)
+const pBoardId = ref(router.currentRoute.value.params.pBoardId);
+// 文章列表获取
+// 存储获取的文章数据
+const articleListInfo = ref([]);
+
+// 获取文章数据
+const fetchData = async (stringValue = '') => {
+    let result;
+    if (!stringValue) {
+        stringValue = "0"
+        const params = {
+            user_id: 8
+        };
+        result = await searchArticle(params);
+    }
+    else {
+        const params = {
+            keyword: stringValue
+        };
+        result = await forum_searchArticle(params);
+    }
+
+    if (!result)
+        return;
+    articleListInfo.value = result.data;
+
+};
+
 onMounted(() => {
-    console.log(`计数器初始值为 ${point.value}。`)
+    console.log(`计数器初始值为 ${point.value}。`);
+    fetchData();
 })
 
 // const changePage = reactive({
@@ -220,6 +258,26 @@ const CheckImgExists = (imgurl) => {
   
 <style scoped>
 /* 初始化 */
+.time {
+    font-size: 12px;
+    color: #999;
+}
+
+.bottom {
+    margin-top: 13px;
+    line-height: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.image {
+    width: 100%;
+    display: block;
+}
+
 .sign-button {
     position: absolute;
     width: 219px;

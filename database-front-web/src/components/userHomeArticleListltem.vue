@@ -1,0 +1,118 @@
+<!-- 用户主页文章缩略图卡片 -->
+<template>
+  <el-card :body-style="{ padding: '0px' }" class="cards">
+    <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image" />
+    <div style="padding: 10px">
+      <!-- 文字展示 -->
+      <div class="article-panel">
+        <div class="article-list">
+          <div class="article-item">
+            <div class="article-item-inner">
+              <div class="article-body">
+                <!-- 用户信息 -->
+                <div class="user-info">
+                  <!-- <div class="content"> {{ data.content }}</div> -->
+                </div>
+                <div class="title">{{ data.title }}</div>
+                <div class="tag">{{ data.tag }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bottom">
+        <time class="time">{{ currentDate }}</time>
+        <el-button type="primary" round class editButton size="small">编辑</el-button>
+        <el-button type="danger" round class deleteButton size="small">删除</el-button>
+      </div>
+    </div>
+  </el-card>
+</template>
+
+<script setup>
+import { defineProps } from 'vue';
+import { ref, reactive, toRefs, onMounted } from 'vue';
+const currentDate = ref(new Date())//
+
+// 接收父组件的信息
+const props = defineProps({
+  data: {
+    type: Object
+  },
+});
+
+// console.log(props.data);
+</script>
+
+<style>
+.cards{
+  position:relative;
+  width:26%;
+  left:30px;
+  padding: 5px;
+}
+
+.time {
+    font-size: 12px;
+    color: #999;
+    margin-left: 5px;
+}
+
+.bottom {
+    margin-top: 5px;
+    line-height: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.image {
+    width: 100%;
+    height: 10%;
+    display: block;
+}
+
+.article-item {
+  padding-left: 5px;
+}
+
+.article-item-inner {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.article-body {
+  flex: 1;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #4e5969;
+}
+
+.link-info {
+  margin-left: 5px;
+  color: #494949;
+  text-decoration: none;
+}
+
+.link-info:hover {
+  color: var(--link);
+}
+
+.post-time {
+  font-size: 13px;
+  color: #9a9a9a;
+}
+
+.title {
+  font-weight: bold;
+  text-decoration: none;
+  color: #4a4a4a;
+  font-size: 16px;
+  margin: 10px 0px;
+  display: inline-block;
+}
+</style>
