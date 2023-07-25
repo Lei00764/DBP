@@ -53,7 +53,7 @@
                         :value="item.value" />
                     </el-select>
                 </el-form-item>
-                <el-row class="m-4">
+                <!-- <el-row class="m-4">
                 </el-row>
                 <el-row class="mb-4">
                     <el-button plain>Plain</el-button>
@@ -62,7 +62,7 @@
                     <el-button type="info" plain>Info</el-button>
                     <el-button type="warning" plain>Warning</el-button>
                     <el-button type="danger" plain>Danger</el-button>
-                </el-row>
+                </el-row> -->
             </div>
         </div>
 
