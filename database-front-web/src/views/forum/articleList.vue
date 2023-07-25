@@ -3,7 +3,7 @@
     <div>
         <div class="article-panel">
             <div class="article-list">
-                <articleListItem v-for="item in articleListInfo" :key="item.id" :data="item">
+                <articleListItem v-for="item in articleListInfo" :key="item.ID" :data="item">
                 </articleListItem>
             </div>
         </div>
@@ -74,3 +74,4 @@ watch(() => router.currentRoute.value.params.pBoardId, (newValue) => {
     margin: 0px auto;
 }
 </style>
+

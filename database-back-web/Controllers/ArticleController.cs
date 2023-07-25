@@ -462,8 +462,6 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                         IsBanned = article.IsBanned  // 是否被封禁
             }).ToList();
 
-        
-
             return Ok(new
             {
                 code = code,
