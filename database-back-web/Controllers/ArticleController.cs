@@ -462,6 +462,8 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                         IsBanned = article.IsBanned  // 是否被封禁
             }).ToList();
 
+        
+
             return Ok(new
             {
                 code = code,
@@ -479,9 +481,9 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 msg = msg
             });
         }
-    }
-
-    //获取文章数量
+    
+}
+//获取文章数量
     [HttpGet("ArticleNumber")]
     public async Task<IActionResult> ArticleNumberAsync(int user_id)
     {
@@ -521,4 +523,8 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             });
         }
     }
+
+
+
 }
+
