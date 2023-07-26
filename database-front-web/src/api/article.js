@@ -61,23 +61,23 @@ export function forum_searchArticle(params) {
 }
 
 
-// //删除文章（未完成
-// export function deleteArticle(params) {
-//     return Request({
-//         method: 'DELETE',
-//         url: 'Article/deleteArticle',
-//         params: params
-//     }).then(function (response) {
-//         if (response.data.code === 200) {
-//             Message.error("文章删成功");
-//             return deleteArticle;  // 返回 code + msg + data???
-//         } else {
-//             Message.error("文章删除失败");
-//             return null;
-//         }
-//     }).catch(function (error) {
-//         console.log(error);
-//     })
+//删除文章（未完成
+export function deleteArticle(params) {
+    return Request({
+        method: 'DELETE',
+        url: 'Article/deleteArticle',
+        params: params
+    }).then(function (response) {
+        if (response.data.code === 200) {
+            return response.data;
+        } else if (response.data.code === 400){
+            Message.error("参数错误");
+            return null;
+        }
+    }).catch(function (error) {
+        console.log(error);
+    })
+}
   
   
 //获取文章详情
@@ -137,3 +137,38 @@ export function getArticleNumber(params) {
     });
 }
 
+//修改文章（传参：文章id+修改的标题+内容）
+export function editArticle(params) {
+    return Request({
+        method: 'POST',
+        url: 'Article/updateArticle',
+        params: params
+    }).then(function (response) {
+        if (response.data.code === 200) {
+            return response.data;
+        } else if (response.data.code === 400) {
+            Message.error("参数错误");
+            return null;
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
+
+//发布文章
+export function postArticle(params) {
+    return Request({
+        method: 'POST',
+        url: 'Article/postArticle',
+        params: params
+    }).then(function (response) {
+        if (response.data.code === 200) {
+            return response.data;
+        } else if (response.data.code === 400) {
+            Message.error("参数错误");
+            return null;
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
