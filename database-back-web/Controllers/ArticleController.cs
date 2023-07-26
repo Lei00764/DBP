@@ -483,48 +483,5 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         }
     
 }
-//获取文章数量
-    [HttpGet("ArticleNumber")]
-    public async Task<IActionResult> ArticleNumberAsync(int user_id)
-    {
-        var code = 200;
-        var msg = "success";
-        var temp = await _database.Articles.ToListAsync();
-        bool exist = false;
-        if (temp != null)//判断表内是否有该用户的文章
-        {
-            foreach (var article in temp)
-            {
-                if (article.AuthorId == user_id)
-                {
-                    exist = true;
-                    break;
-                }
-            }
-        }
-        if(exist){
-            //查找用户的文章数量并返回
-            var article_num = _database.Articles.Count(a => a.AuthorId == user_id);
-            return Ok(new
-            {
-                code = code,
-                msg = msg,
-                data = article_num
-            });
-        }
-        else{
-            code = 400;
-            msg = "该用户没有发布的文章";
-            return Ok(new
-            {
-                code = code,
-                msg = msg,
-                data = 0  //考虑用户的参数无效问题
-            });
-        }
-    }
 
-
-
-}
 
