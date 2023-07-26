@@ -183,7 +183,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
     }
 
     //删除文章
-    [HttpDelete("deleteArticle/post_id")]
+    [HttpDelete("deleteArticle")]
     public async Task<IActionResult> DeleteArticleAsync(int post_id)
     {
         var code = 200;
@@ -216,7 +216,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             code = 400;
             msg = "不存在该文章";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -225,7 +225,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
     }
 
     //修改文章
-    [HttpPost("updateArticle/post_id")]
+    [HttpPost("updateArticle")]
     public async Task<IActionResult> UpdateArticleAsync(int post_id, string title, string content)
     {
         var code = 200;
