@@ -104,7 +104,7 @@
 
 <script setup="props">
     import { ref, reactive, toRefs, onMounted } from 'vue';
-    import { searchArticle,getArticleNumber } from "@/api/article.js"
+    import { searchArticle } from "@/api/article.js"
     import { House, Star, User } from '@element-plus/icons-vue'
     import { ElPagination } from 'element-plus'
     import { useRouter } from 'vue-router'

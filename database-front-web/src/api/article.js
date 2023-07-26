@@ -119,21 +119,5 @@ export function getArticle(params) {
     // });
 }
 
-// 获取用户的文章数量
-export function getArticleNumber(params) {
-    return Request({
-        method: 'GET',
-        url: 'Article/ArticleNumber',
-        params: params
-    }).then(function (response) {
-        if (response.data.code === 200) {
-            return response.data.data;
-        } else if (response.data.code === 400) {
-            Message.error("该用户未发布文章");
-            return response.data.data;
-        }
-    }).catch(function (error) {
-        console.log(error);
-    });
-}
+
 
