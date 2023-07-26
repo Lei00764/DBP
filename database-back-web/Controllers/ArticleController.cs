@@ -134,7 +134,8 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                         AuthorId = user.UserId, // 包含作者的ID
                         AuthorAvatar = user.Avatar, // 包含作者的ID
                         Content = article.Content,  // 文章内容
-                        IsBanned = article.IsBanned
+                        IsBanned = article.IsBanned,
+                        ReleaseTime = article.ReleaseTime
                     })
                 .ToListAsync();
 
