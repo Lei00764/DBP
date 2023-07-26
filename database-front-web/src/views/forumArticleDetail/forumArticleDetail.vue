@@ -10,7 +10,7 @@
                 {{ articleInfo[0].tag }}
                 <!-- </router-link> -->
             </div>
-            <div class="announ-announcement-form">
+            <el-form class="announ-announcement-form" :style="{ height: formHeight }">
                 <el-button class="userReportIcon" @click="Report">
                     <font-awesome-icon :icon="['fas', 'triangle-exclamation']" />
                 </el-button>
@@ -18,24 +18,26 @@
                     <font-awesome-icon :icon="['fas', 'arrow-up-from-bracket']" />
                 </el-button>
                 <!-- 文章详情展示未完成 -->
-                <div class="title">
-                    {{ articleInfo[0].title}}
+                <div class="title"> {{ articleInfo[0].title}} </div>
+                <!-- 需增加路径到作者个人主页 -->
+                <!-- <router-link :to="`/layout`"> -->
+                    <el-avatar class="avatar" :size="65" :src="authorInfo.avatar" v-if = "authorInfo">
+                    </el-avatar>
+                    <div class="author">{{ articleInfo[0].authorName }} </div>
+                <!-- </router-link> -->
+                <div class="publish_time" v-if="articleInfo[0].releaseTime">
+                    发布于 {{ articleInfo[0].releaseTime.split('T')[0] }} {{ articleInfo[0].releaseTime.split('T')[1] }}
                 </div>
-                <el-avatar class="avatar" :size="65" :src="authorInfo.avatar" v-if = "authorInfo">
-
-                </el-avatar>
-                <div class="content">
-                    Content:{{ articleInfo[0].content }}
+                <div class="content" ref="innerContent">
+                    {{ articleInfo[0].content }}
                 </div>
-                <div class="author">{{ articleInfo[0].authorName }} </div>
-                <div class="publish_time">Publish_Time</div>
-            </div>
+            </el-form>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, reactive, toRefs, onMounted, watch} from 'vue';
+import { ref, reactive, toRefs, onMounted, watch, computed } from 'vue';
 import { GetInfoByID } from '@/api/user';
 import { GetArticleDetailsAsync } from '@/api/article';
 import Message from "@/utils/Message.js"
@@ -91,10 +93,28 @@ watch(() => router.currentRoute.value.params.pBoardId, (newValue) => {
     getArticleDetail(router.currentRoute.value.params.articleId);
 });
 
-
 const formData = reactive({
 
 });
+
+const innerContent = ref(null);
+// 一个计算属性 ref
+const formHeight = computed(() => {
+  // 获取内部组件的高度
+    if(innerContent.value){
+        const innerHeight = innerContent.value.offsetHeight;
+    // 添加额外的高度，可以根据需要调整
+        const extraHeight = 180;
+    // 计算表单的高度
+        const height = innerHeight + extraHeight;
+    // 返回计算出的高度
+        return height + 'px';
+    }
+    else{
+        return 200 +'px'
+    }
+})
+
 </script>
 
 <style scoped>
@@ -109,12 +129,12 @@ const formData = reactive({
 
 /*背景图相关设置 */
 .forum-article-detail-page{
-background-image: url('@/assets/forum_bkg.png');
-background-position: center;
-background-repeat: no-repeat;
-background-size: cover;
-height: 100vh;
-width: 100vw;
+    background-image: url('@/assets/forum_bkg.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
 }
 
 .userReportIcon:hover {
@@ -125,7 +145,6 @@ width: 100vw;
     position: absolute;
     top: 20px;
     left: 85%;
-
 }
 
 .userShareIcon:hover {
@@ -136,15 +155,13 @@ width: 100vw;
     position: absolute;
     top: 20px;
     left: 90%;
-
 }
 /* 该版式为帖子详情页版式 */
 .announ-announcement-form {
     position: absolute;
     top: 150px;
     left: 300px;
-    height: 1000px;
-    width: 850px;
+    width: 840px;
     border-radius: 12px;
     background-color: #e6f0f8;
 }
@@ -165,8 +182,7 @@ width: 100vw;
     position: absolute;
     top: 15px;
     left: 20px;
-    height: 100px;
-    width: 1000px;
+    max-width: 800px;
 }
 
 /* 帖子内容展示 */
@@ -174,28 +190,31 @@ width: 100vw;
     position: absolute;
     top: 150px;
     left: 20px;
-    height: 900px;
-    width: 1000px;
+    max-width: 790px;
+    letter-spacing: 1px;
+    line-height: 22px;
 }
 
 /* 帖子作者 */
 .author {
     position: absolute;
-    top: 63px;
+    top: 65px;
     left: 100px;
 }
 /*头像 */
 .avatar{
     position: absolute;
-    top: 55px;
+    top: 60px;
     left: 20px;
 }
 
 /* 帖子发布时间 */
 .publish_time {
     position: absolute;
-    top: 90px;
+    top: 95px;
     left: 100px;
+    color: #5e5e5e;
+    font-size: small;
 }
 
 </style>
