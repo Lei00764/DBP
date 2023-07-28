@@ -2,6 +2,7 @@
 <template>
   <div>
     <div class="article-item">
+      <!-- <router-link tag="button" @dblclick="" :to="`/forumArticleDetail/${data.id}`"> -->
       <div class="article-item-inner">
         <div class="article-body">
           <!-- 用户信息 -->
@@ -10,7 +11,9 @@
             <div class="post-time"></div>
             <!-- <div class="content"> {{ data.content }}</div> -->
           </div>
-          <div class="title">{{ data.title }}</div>
+          <div class="title">
+            <router-link :to="`/forumArticleDetail/${data.id}`">{{ data.title }}</router-link>
+          </div>
           <div class="tag">{{ data.tag }}</div>
           <div class="article-info">
             <span class="iconfont icon-eye">
@@ -25,6 +28,7 @@
           </div>
         </div>
       </div>
+    <!-- </router-link> -->
     </div>
   </div>
 </template>

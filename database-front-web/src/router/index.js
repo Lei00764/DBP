@@ -76,7 +76,7 @@ const router = createRouter({
             component: () => import('@/views/addArticle/index.vue'),
         },
         {
-            path: '/forumArticleDetail',  // 论坛帖子详情页
+            path: '/forumArticleDetail/:articleId/',  // 论坛帖子详情页
             name: 'forumArticleDetail',
             component: () => import('@/views/forumArticleDetail/forumArticleDetail.vue'),
         },
@@ -93,12 +93,6 @@ const router = createRouter({
                     path: '',
                     name: 'homo',
                     component: () => import('@/views/userHomePage/home/index.vue'),
-                    children: [{
-                        path: '',
-                        name: 'article',//帖子展示详情s
-                        component: () => import('@/views/userHomePage/home/ArticleList.vue'),
-
-                    }]
                 },
                 {
                     path: 'user',
