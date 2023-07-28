@@ -33,8 +33,9 @@ public class LikeController : ControllerBase
                 msg = msg,
             });
         }
-        var u = _database.Users.Where(x => x.UserId == user_id);
-        var a = _database.Articles.Where(x => x.PostId == post_id);
+        var u = _database.Users.Where(x => x.UserId == user_id).ToList();
+        var a = _database.Articles.Where(x => x.PostId == post_id).ToList();
+        int? author_id=a.First().AuthorId;//获取被点赞的作者ID
         //Console.Write(a);
         var record = _database.Likes.Where(x => x.PostId == post_id && x.UserId == user_id);
         bool u_exist = false;
@@ -73,6 +74,19 @@ public class LikeController : ControllerBase
                 code = code,
                 msg = msg,
             });
+        }
+        var author=_database.Users.Where(x=>x.UserId==author_id).ToList().First();//获取被点赞的作者
+        if(r_exist==false)//更改作者获得的经验点数
+        {
+            author.Points+=5;
+            author.Levels=author.Points/100;
+            await _database.SaveChangesAsync();
+        }
+        else//取消点赞
+        {
+            author.Points-=5;
+            author.Levels=author.Points/100;
+            await _database.SaveChangesAsync();
         }
         foreach (var item in a)//更改点赞数及点赞记录
         {
