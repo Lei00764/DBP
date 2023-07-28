@@ -97,6 +97,12 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
     }
 
 
+    // [HttpGet("pushArticle")]//个性化推荐文章
+    // public async Task<IActionResult> GetArticlePersonalizedAsync(int user_id)
+    // {
+        
+
+    // }
     [HttpGet("viewArticle")]
     public async Task<IActionResult> GetArticleDetailsAsync(int article_id)
     {
