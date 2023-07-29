@@ -22,4 +22,5 @@ public class AppDbContext : DbContext
     public DbSet<ReportPost> ReportPost { get; set; }  // 对应 Models/ReportPost.cs
     public DbSet<Favourite> Favourites { get; set; }  // 对应 Models/Favourite.cs
     public DbSet<Comment> Comments { get; set; }  // 对应 Models/Comment.cs
+    public DbSet<ReportComments> ReportComments { get; set; }  // 对应 Models/ReportComments.cs
 }
