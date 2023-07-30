@@ -3,7 +3,7 @@ using auth.Database;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using auth.Models;
-
+using Utility;
 [ApiController]
 [Route("api/[controller]")]  // RESTful 风格
 
@@ -75,19 +75,9 @@ public class LikeController : ControllerBase
                 msg = msg,
             });
         }
-        var author=_database.Users.Where(x=>x.UserId==author_id).ToList().First();//获取被点赞的作者
-        if(r_exist==false)//更改作者获得的经验点数
-        {
-            author.Points+=5;
-            author.Levels=author.Points/100;
-            await _database.SaveChangesAsync();
-        }
-        else//取消点赞
-        {
-            author.Points-=5;
-            author.Levels=author.Points/100;
-            await _database.SaveChangesAsync();
-        }
+       
+        myutil tool=new myutil(_database);
+        
         foreach (var item in a)//更改点赞数及点赞记录
         {
             if (r_exist == false)//未点赞
@@ -102,6 +92,7 @@ public class LikeController : ControllerBase
                 };
                 _database.Likes.AddRange(newRecord);
                 await _database.SaveChangesAsync();
+                tool.ChangePoints(author_id,1);//增加积分
             }
             else//已点赞
             {
@@ -110,6 +101,7 @@ public class LikeController : ControllerBase
                 await _database.SaveChangesAsync();
                 _database.Likes.RemoveRange(record);//删除记录
                 await _database.SaveChangesAsync();
+                tool.ChangePoints(author_id,-1);//减少积分
             }
         }
 
