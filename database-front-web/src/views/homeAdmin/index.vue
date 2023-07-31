@@ -15,7 +15,7 @@
                         <el-form>
                             <!-- 用户名与ID -->
                             <h2>{{ store.state.Info.name }}</h2>
-                            <div style="color:grey">ID：{{ store.state.Info.id }}</div>
+                            <div style="color:grey">ID:{{ store.state.Info.id }}</div>
                         </el-form>
                     </el-form-item>
                     <div class="line"></div><!-- 这是一条分割线 -->
