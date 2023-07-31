@@ -1,3 +1,5 @@
+<!-- 本文件暂时没用 -->
+
 <template>
     <div>
         <div class="announcement-page">

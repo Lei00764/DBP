@@ -53,7 +53,7 @@ const router = createRouter({
         {
             path: '/announcement',  // 公告
             name: 'announcement',
-            component: () => import('@/views/announcement/index.vue'),
+            component: () => import('@/views/announcement/announcement.vue'),
         },
         {
             path: '/announcementDetail',  // 公告详情页
