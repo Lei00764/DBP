@@ -38,7 +38,7 @@ const buttonStyle = [
 ];
 
 //可能有问题
-const handleSearch2=(keywords)=>{
+const handleSearch2 = (keywords) => {
     fetchData(keywords);
 }
 

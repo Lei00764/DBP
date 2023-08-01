@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using auth.Database;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+
 using auth.Models;
+using auth.Database;
 
 [ApiController]
 [Route("api/[controller]")]  // RESTful 风格

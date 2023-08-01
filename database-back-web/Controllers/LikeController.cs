@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using auth.Database;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+
+using auth.Database;
 using auth.Models;
-using Utility;
+using auth.Utils;
+
 [ApiController]
 [Route("api/[controller]")]  // RESTful 风格
 
@@ -76,7 +78,7 @@ public class LikeController : ControllerBase
             });
         }
        
-        myutil tool=new myutil(_database);
+        MyUtil tool = new MyUtil(_database);
         
         foreach (var item in a)//更改点赞数及点赞记录
         {
