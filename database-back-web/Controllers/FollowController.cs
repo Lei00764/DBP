@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using auth.Database;
 using auth.Models;
+using auth.Utils;
 
 [ApiController]
 [Route("api/[controller]")]  // RESTful 风格
@@ -24,6 +25,7 @@ public class FollowController : ControllerBase
         var code = 200;
         var msg = "success";
         var user_data = await _database.Users.ToListAsync();
+        MyUtil tool = new MyUtil(_database);
         if (user_data == null)
         {
             code = 400;
@@ -88,6 +90,7 @@ public class FollowController : ControllerBase
                 };
                 _database.Follows.AddRange(newRecord);
                 await _database.SaveChangesAsync();
+                tool.ChangePoints(author_id,3);
             }
             else//已关注
             {
@@ -96,6 +99,7 @@ public class FollowController : ControllerBase
                 await _database.SaveChangesAsync();
                 _database.Follows.RemoveRange(record);//删除记录
                 await _database.SaveChangesAsync();
+                tool.ChangePoints(author_id,-3);
             }
         }
         return Ok(new
