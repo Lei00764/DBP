@@ -84,7 +84,7 @@ public class CommentController : ControllerBase
                 msg = "文章不存在",
             });
        }
-       var comment_data=_database.Comments.Where(x=>x.PostId==article_id).OrderBy(x=>x.ReleaseTime).ToList();
+       var comment_data=await _database.Comments.Where(x=>x.PostId==article_id).OrderBy(x=>x.ReleaseTime).ToListAsync();
        msg="留言获取成功";
         return Ok(new
         {
