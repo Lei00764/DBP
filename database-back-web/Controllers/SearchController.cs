@@ -53,4 +53,40 @@ public class SearchController : ControllerBase  // 命名规范，继承自 Cont
             });
         }
     }
+
+    [HttpPost("AddSearchHistory")]
+    public async Task<IActionResult> AddSearchHistory(int user_id,string content)
+    {
+        var code = 200;
+        var msg = "success";
+        if(_database.Users.Any(x=>x.UserId==user_id)==false)
+        {
+            return BadRequest(new
+            {
+                code = 400,
+                msg = "用户不存在"
+            });
+        }
+        if(_database.SearchHistories.Any(x=>x.Content==content)==true)
+        {//同名记录已存在
+            msg="数据库已有该记录";
+        }
+        else
+        {
+            var newRecord = new SearchHistory()
+            {
+                UserId = user_id,
+                Content = content
+            };
+            _database.SearchHistories.AddRange(newRecord);
+            await _database.SaveChangesAsync();
+            msg="添加成功";
+        }
+        return Ok(new
+        {
+            code = code,
+            msg = msg,
+        });
+        
+    }
 }
