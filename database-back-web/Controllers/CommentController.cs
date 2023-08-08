@@ -84,7 +84,7 @@ public class CommentController : ControllerBase
                 msg = "文章不存在",
             });
        }
-       var comment_data=_database.Comments.Where(x=>x.PostId==article_id).OrderBy(x=>x.ReleaseTime).ToList();
+       var comment_data=await _database.Comments.Where(x=>x.PostId==article_id).OrderBy(x=>x.ReleaseTime).ToListAsync();
        msg="留言获取成功";
         return Ok(new
         {
@@ -92,5 +92,71 @@ public class CommentController : ControllerBase
             msg = msg,
             data=comment_data
         }); 
+    }
+
+    [HttpGet("viewComment")]
+    public async Task<IActionResult> GetCommentDetailsAsync(int msg_id)
+    {
+        var code = 200;
+        var msg = "success";
+        var temp = await _database.Comments.ToListAsync();
+        bool exist = false;
+        if (temp != null)//判断表内是否有该留言
+        {
+            foreach (var comment in temp)
+            {
+                if (comment.MsgId == msg_id)
+                {
+                    exist = true;
+                    break;
+                }
+            }
+        }
+        if (exist)
+        {
+            var comment_data = await _database.Comments
+                .Where(a => a.MsgId == msg_id)
+                .Join(_database.Users,
+                    comment => comment.UserId,
+                    user => user.UserId,
+                    (comment, user) => new
+                    {
+                        ID = comment.MsgId,//留言ID
+                        AuthorName = user.UserName, // 包含留言者的名字
+                        AuthorId = user.UserId, // 包含留言者的ID
+                        AuthorAvatar = user.Avatar, // 包含留言者的头像
+                        Content = comment.Content,  // 留言内容
+                        IsBanned = comment.IsBanned
+                    })
+                .ToListAsync();
+
+            if (comment_data[0].IsBanned != 0)
+            {
+                code = 400;
+                msg = "该留言已被封禁";
+                return BadRequest(new
+                {
+                    code = code,
+                    msg = msg
+                });
+            }
+            
+            return Ok(new
+            {
+                code = code,
+                msg = msg,
+                data = comment_data,
+            });
+        }
+        else
+        {
+            code = 400;
+            msg = "不存在该留言";
+            return BadRequest(new
+            {
+                code = code,
+                msg = msg
+            });
+        }
     }
 }

@@ -51,6 +51,11 @@ const router = createRouter({
             component: () => import('@/views/checkProfession/index.vue'),
         },
         {
+            path: '/checkComment',  // 审核被举报留言
+            name: 'checkComment',
+            component: () => import('@/views/checkComment/index.vue'),
+        },
+        {
             path: '/announcement',  // 公告
             name: 'announcement',
             component: () => import('@/views/announcement/announcement.vue'),

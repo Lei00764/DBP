@@ -25,5 +25,5 @@ public class AppDbContext : DbContext
     public DbSet<ReportComments> ReportComments { get; set; }  // 对应 Models/ReportComments.cs
     public DbSet<Announcement> Announcements { get; set; }  // 对应 Models/Announcement.cs
     public DbSet<Notice> Notices { get; set; }  // 对应 Models/Notice.cs
-    
+    public DbSet<SearchHistory> SearchHistories { get; set; }  // 对应 Models/SearchHistory.cs
 }
