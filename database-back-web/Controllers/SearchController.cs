@@ -17,8 +17,8 @@ public class SearchController : ControllerBase  // 命名规范，继承自 Cont
 
 
     // 关键词搜索帖子
-    [HttpGet("post")]
-     public async Task<IActionResult> SearchPost(string keyword)
+    [HttpGet("searchArticle")]
+     public async Task<IActionResult> SearchPost(int user_id,string keyword)
     {
         var code = 200;
         var msg = "success";
@@ -35,6 +35,17 @@ public class SearchController : ControllerBase  // 命名规范，继承自 Cont
                 isBanned = article.IsBanned,
             }
             ).ToListAsync();
+        if(_database.SearchHistories.Any(x=>x.UserId==user_id&&x.Content==keyword)==false)//数据库中没有相同的搜索记录
+        {
+            var record =new SearchHistory()
+            {
+                UserId=user_id,
+                Content=keyword
+            };
+            _database.SearchHistories.AddRange(record);
+            _database.SaveChanges();
+        }
+        
         if (article_data.Count > 0)
         {
             return Ok(new
