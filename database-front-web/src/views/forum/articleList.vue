@@ -35,10 +35,11 @@ const fetchData = async (stringValue = '') => {
         stringValue = "0"
         const params = {
             p_board_id: pBoardId.value,
-            page_num:1
+            page_num: 1,
+            page_size: 20
         };
         result = await loadArticle(params);
-    } 
+    }
     else {
         const params = {
             keyword: stringValue
@@ -49,7 +50,7 @@ const fetchData = async (stringValue = '') => {
     if (!result)
         return;
     articleListInfo.value = result.data;
- 
+
 };
 
 // 在组件挂载时获取初始文章数据

@@ -17,13 +17,13 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
     }
 
     [HttpGet("loadArticle")]
-    public async Task<IActionResult> GetArticleByTagAsync(int p_board_id, int page_num,int page_size)
+    public async Task<IActionResult> GetArticleByTagAsync(int p_board_id, int page_num, int page_size)
     {//page_num为页码从1开始，page_size为每页的文章数
         var code = 400;
         var msg = "success";
         // 初始化一个列表
         List<string> tag_list = new List<string>() { "全部", "中餐", "西餐", "甜点", "其他" };
-        if(p_board_id>4)
+        if (p_board_id > 4)
         {
             code = 400;
             msg = "不存在该板块";
@@ -38,16 +38,16 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         code = 200;
         if (tag == "全部")
         {
-        var data=await _database
-            .Articles
-            .OrderByDescending(x=>x.PostId)
-            .ToListAsync();
-            
-        data=data.Skip((page_num-1)*page_size).Take(page_size).ToList();//截取第page_num页的数据
-        if(data.Count()==0)
-        {
-            msg="数据不足";
-        }
+            var data = await _database
+                .Articles
+                .OrderByDescending(x => x.PostId)
+                .ToListAsync();
+
+            data = data.Skip((page_num - 1) * page_size).Take(page_size).ToList();//截取第page_num页的数据
+            if (data.Count() == 0)
+            {
+                msg = "数据不足";
+            }
             return Ok(new
             {
                 code = code,
@@ -57,21 +57,21 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         }
         else//按Tag取
         {
-        var data=await _database
-            .Articles
-            .OrderByDescending(x=>x.PostId)
-            .Where(x=>x.Tag==tag_list[p_board_id])
-            .ToListAsync();
-        data=data.Skip((page_num-1)*page_size).Take(page_size).ToList();//截取第page_num页的数据
-        if(data.Count()==0)
-        {
-            msg="数据不足";
-        }
+            var data = await _database
+                .Articles
+                .OrderByDescending(x => x.PostId)
+                .Where(x => x.Tag == tag_list[p_board_id])
+                .ToListAsync();
+            data = data.Skip((page_num - 1) * page_size).Take(page_size).ToList();//截取第page_num页的数据
+            if (data.Count() == 0)
+            {
+                msg = "数据不足";
+            }
             return Ok(new
             {
                 code = code,
                 msg = msg,
-                data =data
+                data = data
             });
         }
     }
@@ -284,7 +284,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 FavouriteNum = 0,
                 LikeNum = 0,
                 IsBanned = 0,
-                ReleaseTime=DateTime.Now
+                ReleaseTime = DateTime.Now
             };
 
             _database.Articles.AddRange(newRecord);
@@ -380,7 +380,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
 
         if (articles.Count > 0)
         {
-            
+
             return Ok(new
             {
                 code = code,
@@ -398,7 +398,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 msg = msg
             });
         }
-    
+
     }
 }
 
