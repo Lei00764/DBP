@@ -67,36 +67,9 @@ public class NoticeController : ControllerBase
     public async Task<IActionResult> PostNoticeAsync(int adminId, int userId, string noticeContent)
     {
         var code = 200;
-        var msg = "success";
+        var msg = "已成功发送";
 
-        //var admin = await _database.Administrators.FindAsync(adminId);
-        var temp1 = await _database.Administrators.ToListAsync();
-        var temp2 = await _database.Users.ToListAsync();
-        bool exist1 = false;
-        bool exist2 = false;
-        if (temp1 != null)//判断表内是否有信息
-        {
-            foreach (var user in temp1)
-            {
-                if (user.AdminId == adminId)
-                {
-                    exist1 = true;
-                    break;
-                }
-            }
-        }
-        if (temp2 != null)//判断表内是否有信息
-        {
-            foreach (var user in temp2)
-            {
-                if (user.UserId == adminId)
-                {
-                    exist2 = true;
-                    break;
-                }
-            }
-        }
-        if (exist1 && exist2)
+        if (_database.Administrators.Any(x=>x.AdminId==adminId)==true&&_database.Users.Any(x=>x.UserId==userId))
         {
             Notice newNotice = new Notice
             {
@@ -132,11 +105,11 @@ public class NoticeController : ControllerBase
     public async Task<IActionResult> DeleteNoticeAsync(int noticeId)
     {
         var code = 200;
-        var msg = "success";
+        var msg = "已成功删除";
 
         var notice = await _database.Notices.Where(a => a.NoticeId == noticeId).ToListAsync();
 
-        if (notice != null)
+        if(_database.Notices.Any(x=>x.NoticeId==noticeId)==true)
         {
             _database.Notices.RemoveRange(notice);
             await _database.SaveChangesAsync();
