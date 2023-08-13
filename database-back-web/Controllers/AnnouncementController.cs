@@ -73,7 +73,7 @@ public class AnnouncementController : ControllerBase
 
         var announcement = await _database.Announcements.Where(a => a.AnnouncementId == announcementId).ToListAsync();
 
-        if (announcement != null)
+        if (announcement.Count > 0)
         {
             _database.Announcements.RemoveRange(announcement);
             await _database.SaveChangesAsync();
@@ -197,7 +197,7 @@ public class AnnouncementController : ControllerBase
         var code = 200;
         var msg = "success";
         var announcement = await _database.Announcements.Where(a => a.AnnouncementId == announcementId).ToListAsync();
-        if (announcement != null)
+        if (announcement.Count > 0)
         {
             foreach (var item in announcement)
             {
@@ -228,7 +228,7 @@ public class AnnouncementController : ControllerBase
         var code = 200;
         var msg = "success";
         var announcement = await _database.Announcements.Where(a => a.AnnouncementId == announcementId).ToListAsync();
-        if (announcement != null)
+        if (announcement.Count > 0)
         {
             foreach (var item in announcement)
             {
