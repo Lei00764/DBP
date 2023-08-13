@@ -45,7 +45,7 @@ public class CommentController : ControllerBase
         return Ok(new
         {
             code = 200,
-            msg = "留言成功",
+            msg = "评论成功",
         });
     }
 
@@ -58,7 +58,7 @@ public class CommentController : ControllerBase
             return NotFound(new
             {
                 code = 404,
-                msg = "留言不存在",
+                msg = "评论不存在",
             });
         }
 
@@ -75,7 +75,7 @@ public class CommentController : ControllerBase
     }
 
     // 加载指定文章的评论 modify by Xiang Lei 2023.8.13
-    [HttpGet("loadComment")]
+    [HttpGet("loadArtricleComment")]
     public async Task<IActionResult> GetCommentByArticleId(int article_id)
     {
         if (_database.Articles.Any(x => x.PostId == article_id) == false)
@@ -88,14 +88,14 @@ public class CommentController : ControllerBase
         }
 
         var comment_data = await _database.Comments
-             .Where(x => x.PostId == article_id && x.IsBanned == 0) // 去掉被封禁的留言
+             .Where(x => x.PostId == article_id && x.IsBanned == 0) // 去掉被封禁的评论
              .OrderBy(x => x.ReleaseTime)
              .ToListAsync();
 
         return Ok(new
         {
             code = 200,
-            msg = "留言获取成功(注：留言为空会返回 [])",
+            msg = "评论获取成功(注：评论为空会返回 [])",
             data = comment_data
         });
     }
