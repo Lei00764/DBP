@@ -8,7 +8,10 @@
             width: width + 'px',
             height: width + 'px',
             'border-radius': width / 2 + 'px',
-        }" :src="proxy.globalInfo.avatarUrl + userId" fit="scale-down" loading="lazy" @click="goToUserCenter">
+        }" :src="proxy.globalInfo.avatarUrl + '?userId=' + userId" fit="scale-down" loading="lazy"
+            @click="goToUserCenter">
+            <!-- src 拼接了字符串
+                实际请求地址：http://localhost:5045/api/Files/getAvatar?userId=1 -->
         </el-image>
         <div v-else class="no-login">未登录</div>
     </div>

@@ -11,17 +11,18 @@ using System.IO;
 [Route("api/[controller]")]  // RESTful 风格
 public class FilesController : ControllerBase
 {
-    [HttpGet("getAvatar/{userId}")]
+    // TODO : 目前均是返回默认头像，需要改成通过数据库中用户的avatar
+    [HttpGet("getAvatar")]
     public IActionResult GetAvatar(string userId)
     {
         try
         {
-            string avatarPath = Path.Combine("wwwroot", "images", "avatars", "default.jpg");
+            string avatarPath = Path.Combine("wwwroot", "images", "avatars", "default.jpg");  // 即 /wwwroot/images/avatars/default.jpg
 
             if (System.IO.File.Exists(avatarPath))
             {
-                var imageBytes = System.IO.File.ReadAllBytes(avatarPath);
-                return File(imageBytes, "image/jpeg"); // Set content type to "image/jpeg"
+                var imageBytes = System.IO.File.ReadAllBytes(avatarPath);  // 读取头像图片的字节数据
+                return File(imageBytes, "image/jpeg");
             }
             else
             {
