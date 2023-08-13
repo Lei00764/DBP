@@ -3,7 +3,7 @@
     <div>
         <div class="article-panel">
             <div class="article-list">
-                <articleListItem v-for="item in articleListInfo" :key="item.id" :data="item">
+                <articleListItem v-for="item in store.state.articles" :key="item.id" :data="item">
                 </articleListItem>
             </div>
         </div>
@@ -18,7 +18,8 @@ import articleListItem from "@/components/articleListItem.vue"
 import { loadArticle } from "@/api/article.js"
 import { forum_searchArticle } from "@/api/article.js"
 import router from "@/router/index.js"
-
+import { useStore } from 'vuex';//！！！！！！！！！
+const store = useStore();
 // 子组件接收父组件的传值 和 子路由接收父路由的传值不同
 // 前者：defineProps()
 // 后者：router.currentRoute.value.params.pBoardId
@@ -28,6 +29,9 @@ const pBoardId = ref(router.currentRoute.value.params.pBoardId);
 // 存储获取的文章数据
 const articleListInfo = ref([]);
 
+
+
+ 
 // 获取文章数据
 const fetchData = async (stringValue = '') => {
     let result;
@@ -49,8 +53,10 @@ const fetchData = async (stringValue = '') => {
 
     if (!result)
         return;
-    articleListInfo.value = result.data;
-
+    
+    store.commit('setArticles', result.data);
+    console.log(store.state.articles);
+    articleListInfo.value = store.state.articles;
 };
 
 // 在组件挂载时获取初始文章数据
