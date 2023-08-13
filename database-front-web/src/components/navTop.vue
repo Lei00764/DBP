@@ -39,6 +39,8 @@
                     <span class="button-text">消息</span>
                 </el-button>
             </div>
+            <!-- 现在用户头像是写死的 lx -->
+            <avatar :userId="1" :width="50" :addLink="false"></avatar>
         </div>
     </div>
 </template>
@@ -53,8 +55,6 @@ import { useStore } from 'vuex' // 引入store
 const store = useStore(); // 使用store必须加上
 
 changeTheme("#FFD700");  // 目前为红色，可以修改
-
-
 
 
 const formData = reactive({
