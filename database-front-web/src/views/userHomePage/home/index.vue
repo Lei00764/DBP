@@ -7,7 +7,7 @@
             <div class="point">
                 积分：{{ point }}
             </div>
-            <el-button @click="applyForProfession">申请专业厨师认证</el-button>
+            <el-button class="pro" @click="applyForProfession">申请专业厨师认证</el-button>
         </div>
         <!-- 签到积分 -->
         <el-form-item>
@@ -24,13 +24,13 @@
 
 
         <!-- START 用户申请专业认证弹窗 -->
-        <el-dialog v-model="dialogVisible" title="Apply for Professional Chef Certification" width="50%"
-            :before-close="handleClose">
+        <!-- 【BUG】：当没有输出完成时，用户点击确认，系统应给出提示！ lx -->
+        <el-dialog v-model="dialogVisible" title="专业厨师认证申请" width="50%" :before-close="handleClose" :show-close="false">
             <el-form @submit.native.prevent="submitApplication">
-                <el-form-item label="Description:">
+                <el-form-item label="阐述:">
                     <el-input type="textarea" v-model="form.illustrate" />
                 </el-form-item>
-                <el-form-item label="Evidence:">
+                <el-form-item label="证明:">
                     <el-input type="textarea" v-model="form.evidence" />
                 </el-form-item>
             </el-form>
@@ -61,15 +61,20 @@
             <p v-else class="Post" style="color:rgb(63, 66, 85);font-family: Poppins;font-size: 25px">
                 Star:
             </p>
+            <!-- 帖子展示部分 -->
+            <el-row>
+                <userHomeArticleListltem v-for="item in articleListInfo.slice(formData.index,formData.index+2)" :data="item">
+                </userHomeArticleListltem>
+            </el-row>
+            <!-- 底部页面跳转 -->
             <div class="myart1">
-
                 <div class="article">
                     <router-view />
                 </div>
                 <div class="example-pagination-block">
-                    <el-pagination background :page-size="2" layout="->,prev, pager, next,jumper" :total="1000" />
-                    <!-- @current-change="handelCurrentChange"
-                    v-model:current-page="changePage.currentPage" -->
+                    <el-pagination background :page-size="2" layout="->,prev, pager, next,jumper" :total = "articleNumber"
+                    @current-change="handleCurrentChange"
+                     />
                 </div>
             </div>
         </div>
@@ -81,28 +86,46 @@
 import { ref, reactive, toRefs, onMounted } from 'vue';
 import component1 from '../component1/component1.vue';
 import Message from "@/utils/Message.js"
-import { ElPagination } from 'element-plus'
+// import { ElPagination } from 'element-plus'
 import router from "@/router/index.js"
 import { useRoute, useRouter } from "vue-router"
 import { ApplyProfession } from "@/api/profession.js"
 import { useStore } from 'vuex' // 引入store
+import { searchArticle,getArticleNumber } from "@/api/article.js"
+import { forum_searchArticle } from "@/api/article.js"
+import userHomeArticleListltem from "@/components/userHomeArticleListltem.vue"
 
 // START 用户申请专业认证弹窗
 
 const store = useStore(); // 使用store必须加上
 
-
+//——————————————————定义————————————————————————————
 const dialogVisible = ref(false)
-
 const form = ref({
     illustrate: '',
     evidence: '',
 });
+//用户头像
+const state = reactive({
+    fits: ['fill'],
+    url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+})
+const { fits, url } = toRefs(state)
+const point = ref(0)
+const formData = reactive({
+    isSigned: false,
+    buttonLabel: '签到',
+    posting: 0,
+    index: 0,
+});
 
+//———————————————————函数——————————————————————————
 const applyForProfession = () => {
     dialogVisible.value = true;
 }
-
+const handleCurrentChange = (number) => {
+  formData.index=number*2-2;
+}
 const handleClose = (done) => {
     ElMessageBox.confirm('Are you sure to close this dialog?')
         .then(() => {
@@ -127,11 +150,7 @@ const submitApplication = () => {
 // END 用户申请专业认证弹窗
 
 
-const state = reactive({
-    fits: ['fill'],
-    url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-})
-const { fits, url } = toRefs(state)
+//签到
 function handleSignIn() {
     formData.isSigned = true;
     formData.buttonLabel = '签到成功，积分+2';
@@ -146,16 +165,63 @@ function stars() {
         formData.posting = 0;
     }
 };
-const point = ref(0)
-const formData = reactive({
-    isSigned: false,
-    buttonLabel: '签到',
-    posting: 0
 
-});
 const { isSigned, buttonLabel } = toRefs(formData)
+const pBoardId = ref(router.currentRoute.value.params.pBoardId);
+
+// 文章列表获取
+// 存储获取的文章数据
+const articleListInfo = ref([]);
+const articleNumber = ref(0);
+// 获取文章数据
+const fetchData = async (stringValue = '') => {
+    let result;
+    if (!stringValue) {
+        stringValue = "0"
+        const params = {
+            user_id: 8
+        };
+        result = await searchArticle(params);
+    }
+    else {
+        const params = {
+            keyword: stringValue
+        };
+        // 这里并没有写好还得改
+        result = await forum_searchArticle(params);
+    }
+
+    if (!result)
+        return;
+    articleListInfo.value = result.data;
+
+};
+const fetchnum = async (stringValue = '') => {
+    let result;
+    if (!stringValue) {
+        stringValue = "0"
+        const params = {
+            user_id: 8
+        };
+        result = await getArticleNumber(params);
+    }
+    else {
+        const params = {
+            keyword: stringValue
+        };
+        // 这里并没有写好还得改
+        result = await getArticleNumber(params);
+    }
+
+    if (!result)
+        return;
+    articleNumber.value = result;
+
+};
+
 onMounted(() => {
-    console.log(`计数器初始值为 ${point.value}。`)
+    fetchData();
+    fetchnum();
 })
 
 // const changePage = reactive({
@@ -220,6 +286,14 @@ const CheckImgExists = (imgurl) => {
   
 <style scoped>
 /* 初始化 */
+.pro {
+    position: absolute;
+    left: 75px;
+    top: -310px;
+    border-radius: 15px;
+}
+
+
 .sign-button {
     position: absolute;
     width: 219px;

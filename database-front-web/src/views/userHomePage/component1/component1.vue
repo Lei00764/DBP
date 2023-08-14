@@ -32,7 +32,7 @@
                     Following:{{ props.following_num }}
                 </div>
                 <div class="content">
-                    Content:{{ props.content_num }}
+                    Content:{{ articleNumber }}
                 </div>
 
             </div>
@@ -53,7 +53,7 @@
                         :value="item.value" />
                     </el-select>
                 </el-form-item>
-                <el-row class="m-4">
+                <!-- <el-row class="m-4">
                 </el-row>
                 <el-row class="mb-4">
                     <el-button plain>Plain</el-button>
@@ -62,7 +62,7 @@
                     <el-button type="info" plain>Info</el-button>
                     <el-button type="warning" plain>Warning</el-button>
                     <el-button type="danger" plain>Danger</el-button>
-                </el-row>
+                </el-row> -->
             </div>
         </div>
 
@@ -104,8 +104,7 @@
 
 <script setup="props">
     import { ref, reactive, toRefs, onMounted } from 'vue';
-    import { userLogin } from '@/api/user';
-    import Message from "@/utils/Message.js"
+    import { searchArticle,getArticleNumber } from "@/api/article.js"
     import { House, Star, User } from '@element-plus/icons-vue'
     import { ElPagination } from 'element-plus'
     import { useRouter } from 'vue-router'
@@ -135,6 +134,33 @@
             default: 0
         },
     })
+    onMounted(() => {
+        fetchnum();
+    })
+    const articleNumber = ref(0);
+    const fetchnum = async (stringValue = '') => {
+    let result;
+    if (!stringValue) {
+        stringValue = "0"
+        const params = {
+            user_id: 8
+        };
+        result = await getArticleNumber(params);
+    }
+    else {
+        const params = {
+            keyword: stringValue
+        };
+        // 这里并没有写好还得改
+        result = await getArticleNumber(params);
+    }
+
+    if (!result)
+        return;
+    articleNumber.value = result;
+
+};
+
     const home = () => {
         router.push({ path: 'homeUser' })
     };
@@ -148,7 +174,7 @@
     const gotoCreate = () => {
         router.push({ path: 'register' })
     };
-
+    
 
 
 
