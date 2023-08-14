@@ -86,11 +86,9 @@ const enterDown = async(e) => {
         console.log(store.state.articles);
         //fetchData(formData.keywords);
     }
-}
-onUnmounted(() => {
     // 销毁事件
     window.removeEventListener("keydown", enterDown, false);
-});
+}
 
 const doSearch = () => {
     let params = {

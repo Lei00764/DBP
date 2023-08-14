@@ -28,7 +28,7 @@ export function searchArticle(params) {
         params: params
     }).then(function (response) {
         if (response.data.code === 200) {
-            return response.data.data;
+            return response.data;
         } else if (response.data.code === 404) {
             Message.error("没有发布的文章");
             return null;

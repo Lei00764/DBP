@@ -381,6 +381,20 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         if (articles.Count > 0)
         {
 
+//             var articleList = articles.Select(article => new
+//             {
+//                 ID = article.PostId,//文章ID
+//                    	    TAG = article.Tag,  // 文章标签
+//                         Title = article.Title,  // 文章标题
+//                         Views = article.Views,  // 文章浏览量
+//                         FavouriteNum = article.FavouriteNum,  // 文章收藏量
+//                         LikeNum = article.LikeNum,  // 文章点赞量
+//                         AuthorName = _database.Users.FirstOrDefault(user => user.UserId == article.AuthorId)?.UserName,
+//                         Content = article.Content,  // 文章内容
+//                         IsBanned = article.IsBanned  // 是否被封禁
+//             }).ToList();
+
+
             return Ok(new
             {
                 code = code,
