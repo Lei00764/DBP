@@ -39,6 +39,8 @@
                     <span class="button-text">消息</span>
                 </el-button>
             </div>
+            <!-- 现在用户头像是写死的 lx -->
+            <avatar :userId="1" :width="50" :addLink="false"></avatar>
         </div>
     </div>
 </template>
@@ -49,13 +51,15 @@ import { changeTheme } from '@/utils/changeTheme';
 import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue';
 import router from "@/router/index.js"
 import { searchPost } from '@/api/search';  // 引入 api 请求函数 searchPost
+import { forum_searchArticle } from "@/api/article.js"
 import { useStore } from 'vuex' // 引入store
-const store = useStore(); // 使用store必须加上
+//import { fetchData } from '@/views/forum/articleList'
+
 
 changeTheme("#FFD700");  // 目前为红色，可以修改
 
 
-
+const store = useStore(); // 使用store必须加上
 
 const formData = reactive({
     keywords: '',
@@ -67,10 +71,20 @@ onMounted(() => {
         window.addEventListener("keydown", enterDown);
     });
 });
-const enterDown = (e) => {
+const enterDown = async(e) => {
+    console.log("chufa");
+    let result;
     if (e.keyCode == 13 || e.keyCode == 100) {
         e.preventDefault(); // 阻止默认提交动作
-        doSearch(); // 定义的登录方法
+        //doSearch(); // 定义的登录方法
+        const params = {
+            keyword: formData.keywords
+        };
+        result = await forum_searchArticle(params);
+        store.commit('setArticles', result.data);
+        console.log(result.data);
+        console.log(store.state.articles);
+        //fetchData(formData.keywords);
     }
     // 销毁事件
     window.removeEventListener("keydown", enterDown, false);

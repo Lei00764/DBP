@@ -52,8 +52,8 @@ const Report = () => {
     router.push({ name: 'reportArticle' })
 };
 
-const Share=()=>{
-    
+const Share = () => {
+
 }
 
 //文章详情
@@ -118,8 +118,6 @@ const formHeight = computed(() => {
 </script>
 
 <style scoped>
-
-
 #header {
     /* 如果调整height，记得去 @/components/navTop.vue 中调整 header-content 样式 */
     height: 10vh;
@@ -128,7 +126,11 @@ const formHeight = computed(() => {
 }
 
 /*背景图相关设置 */
-.forum-article-detail-page{
+
+
+
+.forum-article-detail-page {
+
     background-image: url('@/assets/forum_bkg.png');
     background-position: center;
     background-repeat: no-repeat;

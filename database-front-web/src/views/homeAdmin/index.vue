@@ -4,7 +4,7 @@
             <div class="header">
                 <navTopAdmin></navTopAdmin>
             </div>
-            <el-card class="homeAdmin-card">
+            <div class="homeAdmin-card">
                 <!-- 管理员信息卡片 -->
                 <el-form :inline=true class="homeAdmin-avatar-ID">
                     <el-form-item>
@@ -15,16 +15,40 @@
                         <el-form>
                             <!-- 用户名与ID -->
                             <h2>{{ store.state.Info.name }}</h2>
-                            <div style="color:grey">ID：{{ store.state.Info.id }}</div>
                         </el-form>
                     </el-form-item>
-                    <div class="line"></div><!-- 这是一条分割线 -->
+                    <div class="line"></div>
+                    <!-- 这是一条分割线 -->
+                </el-form>
+                <el-form :inline=true style="position:absolute;top:25%;left:20%;">
+                    <el-form-item style="width:50px;">
+                        <b style="color:black;">ID</b>
+                    </el-form-item>
+                    <el-form-item>  
+                        <b style="position:absolute;left:80%;color:black;">{{ store.state.Info.id }}</b>
+                    </el-form-item>
+                </el-form>
+                <el-form :inline=true style="position:absolute;top:35%;left:20%;">
+                    <el-form-item style="width:50px;">
+                        <b style="color:black;">Email</b>
+                    </el-form-item>
+                    <el-form-item>  
+                        <b style="position:absolute;left:80%;color:black;">{{ store.state.Info.email }}</b>
+                    </el-form-item>
+                </el-form>
+                <el-form :inline=true style="position:absolute;top:45%;left:20%;">
+                    <el-form-item style="width:50px;">
+                        <b style="color:black;">Tel</b>
+                    </el-form-item>
+                    <el-form-item>  
+                        <b style="position:absolute;left:80%;color:black;">{{ store.state.Info.tel }}</b>
+                    </el-form-item>
                 </el-form>
                 <!-- 退出登录的按钮 -->
                 <el-button class="homeAdmin-logout-btn" style="position:absolute;bottom:5%;left:40%" @click="logout">
                     <span>退出登录</span>
                 </el-button>
-            </el-card>
+            </div>
             <el-form style="position: absolute" class="classify-position" :inline=true>
                 <!-- 功能选择分区 -->
                 <el-form-item>
@@ -121,9 +145,8 @@ console.log(store.state);
     position: absolute;
     top: 11%;
     left: 0.6%;
-    background-color: #E7FAFE;
     width: 342px;
-    height: 500px;
+    height: 700px;
 }
 
 .homeAdmin-avatar-ID {

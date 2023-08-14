@@ -12,7 +12,8 @@ const store = createStore({
             email: "",
         },
         login: false,  // 登录状态
-        type:-1  //0为管理员，1为用户
+        type:-1,  //0为管理员，1为用户
+        articles: [] //xinjiade   asdasdadadadadad
     },
     // 计算属性，获取state里的数据内容
     // 只可读取不可修改
@@ -31,6 +32,9 @@ const store = createStore({
             state.Info = {
                 ...person_info
             };
+        },
+        setArticles(state, payload) {  //新加的 爱仕达阿达阿asdad
+            state.articles = payload;
         }
     },
     // 调用mmutations的操作，异步执行
@@ -42,6 +46,7 @@ const store = createStore({
     //state信息过长时，用以进行分割
     modules: {}
 })
+
 
 // 保存store状态到sessionStorage
 function saveStateToSessionStorage() {

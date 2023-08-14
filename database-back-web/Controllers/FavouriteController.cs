@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using auth.Database;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+
+using auth.Database;
 using auth.Models;
+using auth.Utils;
 
 [ApiController]
 [Route("api/[controller]")]  // RESTful 风格
@@ -23,6 +25,7 @@ public class FavouriteController : ControllerBase
         var msg = "success";
         var user_data = await _database.Users.ToListAsync();
         var article_data = await _database.Articles.ToListAsync();
+        MyUtil tool = new MyUtil(_database);
         if (user_data == null || article_data == null)
         {
             code = 400;
@@ -34,7 +37,8 @@ public class FavouriteController : ControllerBase
             });
         }
         var u = _database.Users.Where(x => x.UserId == user_id);
-        var a = _database.Articles.Where(x => x.PostId == post_id);
+        var a = _database.Articles.Where(x => x.PostId == post_id).ToList();
+        int? author_id=a.First().AuthorId;//获取被收藏的作者ID
         //Console.Write(a);
         var record = _database.Favourites.Where(x => x.PostId == post_id && x.UserId == user_id);
         bool u_exist = false;
@@ -88,6 +92,8 @@ public class FavouriteController : ControllerBase
                 };
                 _database.Favourites.AddRange(newRecord);
                 await _database.SaveChangesAsync();
+
+                tool.ChangePoints(author_id,2);
             }
             else//已收藏
             {
@@ -96,6 +102,7 @@ public class FavouriteController : ControllerBase
                 await _database.SaveChangesAsync();
                 _database.Favourites.RemoveRange(record);//删除记录
                 await _database.SaveChangesAsync();
+                tool.ChangePoints(author_id,-2);
             }
         }
 

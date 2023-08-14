@@ -164,7 +164,6 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
     public IActionResult GetInfoByEmail(string email) // email 可以用来判断是管理员还是用户
     {
         // 在用户表中找到匹配的邮箱
-        
         var user = _database.Users.Where(x => x.Email == email).ToList();
         if (user.Any())
         {
@@ -180,7 +179,9 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
                     password = firstUser.PassWord,
                     avatar = firstUser.Avatar,
                     tel = firstUser.Tel,
-                    name = firstUser.UserName
+                    name = firstUser.UserName,
+                    levels=firstUser.Levels,
+                    points=firstUser.Points
                 }
             });
         }
@@ -218,160 +219,152 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
     [HttpGet("InfoByID")]
     public IActionResult GetInfoByID(int ID, int type)//参数type:0为管理员，1为普通用户
     {
-        // 根据业务逻辑获取信息对象
-        var code = 200;
-        if (type == 1)
-        {
-            var user = _database.Users.Where(x => x.UserId == ID).ToList();
-            if (user.Any())
-            {
-                var user_data = user.First();
-                return Ok(new
-                {
-                    code = code,
-                    msg = "查询到用户信息",
-                    data = new
-                    {
-                        email = user_data.Email,
-                        password = user_data.PassWord,
-                        avatar = user_data.Avatar,
-                        tel = user_data.Tel,
-                        name = user_data.UserName
-                    }
-                });
-            }
-            else
-            {
-                return Ok(new
-                {
-                    code = 400,
-                    msg = "未查询到用户信息",
-                });
-            }
-        }
-        else
+        if(type==0)
         {
             var admin = _database.Administrators.Where(x => x.AdminId == ID).ToList();
-            if (admin.Any())
-            {
-                var admin_data = admin.First();
-                return Ok(new
-                {
-                    code = code,
-                    msg = "查询到用户信息",
-                    data = new
-                    {
-                        email = admin_data.Email,
-                        password = admin_data.PassWord,
-                        avatar = admin_data.Avatar,
-                        tel = admin_data.Tel,
-                        name = admin_data.AdminName
-                    }
-                });
-            }
-            else
-            {
-                return Ok(new
-                {
-                    code = 400,
-                    msg = "未查询到管理员信息",
-                });
-            }
-        }
-    }
-
-
-    //编辑个人信息
-    //返回用户认证令牌(Token)未实现
-    [HttpPost("edit")]
-    public async Task<IActionResult> EditAsync(int Id, int type, string name, string password, string email, string signature, string avatar, int themeID)
-    {
-        var code = 200;
-        var msg = "success";
-        var user_data = _database.Users.Where(x => x.UserId == Id);
-        var admin_data = _database.Administrators.Where(x => x.AdminId == Id);
-        bool exist = false;
-
-        if (type==1)
+        if (admin.Any())
         {
-            foreach (var item in user_data)
+            var firstAdmin = admin.First();
+            return Ok(new
             {
-                if (item.UserId == Id)
+                code = 200,
+                msg = "已返回管理员信息",
+                data = new
                 {
-                    exist = true;
-                    break;
+                    id = firstAdmin.AdminId,
+                    email = firstAdmin.Email,
+                    password = firstAdmin.PassWord,
+                    avatar = firstAdmin.Avatar,
+                    tel = firstAdmin.Tel,
+                    name = firstAdmin.AdminName
                 }
-            }
+            });
+        }
+        }
+        else if(type==1)
+        {
+            var user = _database.Users.Where(x => x.UserId == ID).ToList();
+        if (user.Any())
+        {
+            var firstUser = user.First();
+            return Ok(new
+            {
+                code = 200,
+                msg = "已返回用户信息",
+                data = new
+                {
+                    id = firstUser.UserId,
+                    email = firstUser.Email,
+                    password = firstUser.PassWord,
+                    avatar = firstUser.Avatar,
+                    tel = firstUser.Tel,
+                    name = firstUser.UserName,
+                    levels=firstUser.Levels,
+                    points=firstUser.Points
+                }
+            });
+        }
         }
         else
         {
-            foreach (var item in admin_data)
-            {
-                if (item.AdminId == Id)
-                {
-                    exist = true;
-                    break;
-                }
-            }
-        }
-        if (exist == false)
-        {// 如果数据库中没有数据，返回错误信息
-            code = 400;
-            msg = "用户不存在";
-            return BadRequest(new
-            {
-                code = code,
-                msg = msg,
+            return BadRequest(new{
+                code=400,
+                msg="type值无效"
             });
         }
 
-        //参数无效，返回401
-        if (name == null || password == null || email == null || avatar == null)
+        return Ok(new
         {
-            code = 401;
-            msg = "参数无效";
-            return BadRequest(new
-            {
-                code = code,
-                msg = msg,
-            });
-        }
+            code = 400,
+            msg = "不存在该用户或管理员",
+        });
+        // 以下代码较繁琐，先注释掉（7.28 李泽凯）
+        //根据业务逻辑获取信息对象
+        // var code = 200;
+        // var msg = "success";
+        // var user_data = _database.Users.Where(x => x.UserId == ID);
+        // var admin_data = _database.Administrators.Where(x => x.AdminId == ID);
+        // bool exist = false;
 
-        if (type==1)
-        {
-            foreach (var item in user_data)
-            {
-                item.UserName = name;
-                item.PassWord = password;
-                item.Email = email;
-                item.Signature = signature;
-                item.Avatar = avatar;
-                item.ThemeID = themeID;
-            }
-            await _database.SaveChangesAsync();
-            return Ok(new
-            {
-                code = code,
-                msg = msg,
-            });
-        }
-        else
-        {
-            foreach (var item in admin_data)
-            {
-                item.AdminName = name;
-                item.PassWord = password;
-                item.Email = email;
-                item.Avatar = avatar;
-            }
-            await _database.SaveChangesAsync();
-            return Ok(new
-            {
-                code = code,
-                msg = msg,
-            });
-        }
-
+        // if (type == 1)
+        // {
+        //     foreach (var item in user_data)
+        //     {
+        //         if (item.UserId == ID)
+        //         {
+        //             exist = true;
+        //             break;
+        //         }
+        //     }
+        // }
+        // else
+        // {
+        //     foreach (var item in admin_data)
+        //     {
+        //         if (item.AdminId == ID)
+        //         {
+        //             exist = true;
+        //             break;
+        //         }
+        //     }
+        // }
+        // if (exist == false)
+        // {// 如果数据库中没有数据，返回错误信息
+        //     code = 400;
+        //     msg = "用户不存在";
+        //     return Ok(new
+        //     {
+        //         code = code,
+        //         msg = msg,
+        //     });
+        // }
+        // // 遍历data，找到id匹配的用户
+        // var name = "";
+        // var avatar = "";
+        // var tel = "";
+        // var email = "";
+        // if (type == 1)
+        // {
+        //     foreach (var user in user_data)
+        //     {
+        //         if (user.UserId == ID)
+        //         {
+        //             code = 200;
+        //             msg = "查询到用户信息";
+        //             name = user.UserName;
+        //             avatar = user.Avatar;
+        //             tel = user.Tel;
+        //             email = user.Email;
+        //             break;
+        //         }
+        //     }
+        // }
+        // else
+        // {
+        //     foreach (var admin in admin_data)
+        //     {
+        //         if (admin.AdminId == ID)
+        //         {
+        //             code = 200;
+        //             msg = "查询到管理员信息";
+        //             name = admin.AdminName;
+        //             avatar = admin.Avatar;
+        //             tel = admin.Tel;
+        //             email = admin.Email;
+        //             break;
+        //         }
+        //     }
+        // }
+        // // 将信息对象作为响应的数据发送回前端
+        // return Ok(new
+        // {
+        //     code = code,
+        //     msg = msg,
+        //     name = name,  // 2023.7.12 lx
+        //     avatar = avatar,
+        //     tel = tel,
+        //     email = email
+        // });
     }
 
     //根据用户ID获取部分个人信息:用户昵称、个人积分、粉丝数量/ 关注数量、文章数量
@@ -387,6 +380,26 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
     //         foreach (var user in temp)
     //         {
     //             if (user.UserId == user_id)
+    // 下面这段代码有问题！！！
+    // 请以后提交代码前务必使用 dotnet run 运行后端代码
+
+
+    // //编辑个人信息
+    // //返回用户认证令牌(Token)未实现
+    // [HttpPost("edit")]
+    // public async Task<IActionResult> EditAsync(int Id, int type, string name, string password, string email, string signature, string avatar, int themeID)
+    // {
+    //     var code = 200;
+    //     var msg = "success";
+    //     var user_data = _database.Users.Where(x => x.UserId == Id);
+    //     var admin_data = _database.Administrators.Where(x => x.AdminId == Id);
+    //     bool exist = false;
+
+    //     if (type)
+    //     {
+    //         foreach (var item in user_data)
+    //         {
+    //             if (item.UserId == Id)
     //             {
     //                 exist = true;
     //                 break;
@@ -412,5 +425,76 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
     //             msg = msg
     //         });
     //     }
+    //     else
+    //     {
+    //         foreach (var item in admin_data)
+    //         {
+    //             if (item.AdminId == Id)
+    //             {
+    //                 exist = true;
+    //                 break;
+    //             }
+    //         }
+    //     }
+    //     if (exist == false)
+    //     {// 如果数据库中没有数据，返回错误信息
+    //         code = 400;
+    //         msg = "用户不存在";
+    //         return BadRequest(new
+    //         {
+    //             code = code,
+    //             msg = msg,
+    //         });
+    //     }
+
+    //     //参数无效，返回401
+    //     if (name == null || password == null || email == null || signature == null || avatar == null)
+    //     {
+    //         code = 401;
+    //         msg = "参数无效";
+    //         return BadRequest(new
+    //         {
+    //             code = code,
+    //             msg = msg,
+    //         });
+    //     }
+
+    //     if (type)
+    //     {
+    //         foreach (var item in user_data)
+    //         {
+    //             item.UserName = name;
+    //             item.PassWord = passWord;
+    //             item.Email = email;
+    //             item.Signature = signature;
+    //             item.Avatar = avatar;
+    //             item.ThemeID = themeID;
+    //         }
+    //         await _database.SaveChangesAsync();
+    //         return Ok(new
+    //         {
+    //             code = code,
+    //             msg = msg,
+    //         });
+    //     }
+    //     else
+    //     {
+    //         foreach (var item in admin_data)
+    //         {
+    //             item.AdminName = name;
+    //             item.PassWord = passWord;
+    //             item.Email = email;
+    //             item.Signature = signature;
+    //             item.Avatar = avatar;
+    //             item.ThemeID = themeID;
+    //         }
+    //         await _database.SaveChangesAsync();
+    //         return Ok(new
+    //         {
+    //             code = code,
+    //             msg = msg,
+    //         });
+    //     }
+
     // }
 }

@@ -39,6 +39,7 @@ const currentDate = ref(new Date())//
 
 // 接收父组件的信息
 const props = defineProps({
+
 data: {
   type: Object,
 },
