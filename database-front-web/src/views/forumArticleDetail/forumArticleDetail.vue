@@ -50,8 +50,8 @@ const Report = () => {
     router.push({ name: 'reportArticle' })
 };
 
-const Share=()=>{
-    
+const Share = () => {
+
 }
 
 //文章详情
@@ -98,8 +98,6 @@ const formData = reactive({
 </script>
 
 <style scoped>
-
-
 #header {
     /* 如果调整height，记得去 @/components/navTop.vue 中调整 header-content 样式 */
     height: 10vh;
@@ -108,13 +106,13 @@ const formData = reactive({
 }
 
 /*背景图相关设置 */
-.forum-article-detail-page{
-background-image: url('@/assets/forum_bkg.png');
-background-position: center;
-background-repeat: no-repeat;
-background-size: cover;
-height: 100vh;
-width: 100vw;
+.forum-article-detail-page {
+    background-image: url('@/assets/forum_bkg.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100vw;
 }
 
 .userReportIcon:hover {

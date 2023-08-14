@@ -1,7 +1,8 @@
 <!-- 用户主页文章缩略图卡片 -->
 <template>
-  <el-card :body-style="{ padding: '0px' }" class="cards">
-    <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image" />
+  <el-card :body-style="{ padding: '0px' }"  style="height: 370px" class="cards">
+    <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+      class="image" />
     <div style="padding: 10px">
       <!-- 文字展示 -->
       <div class="article-panel">
@@ -30,89 +31,95 @@
 </template>
 
 <script setup>
+import { defaultInitialZIndex } from 'element-plus';
 import { defineProps } from 'vue';
 import { ref, reactive, toRefs, onMounted } from 'vue';
 const currentDate = ref(new Date())//
 
 // 接收父组件的信息
 const props = defineProps({
-  data: {
-    type: Object
-  },
+
+data: {
+  type: Object,
+},
+index: {
+  type: Int16Array,
+},
 });
 
 // console.log(props.data);
 </script>
 
 <style>
-.cards{
-  position:relative;
-  width:26%;
-  left:30px;
-  padding: 5px;
+.cards {
+position: inherit;
+width: 40%;
+left: 40px;
+top:-15px;
+padding: 5px;
 }
 
 .time {
-    font-size: 12px;
-    color: #999;
-    margin-left: 5px;
+font-size: 12px;
+color: #999;
+margin-left: 5px;
 }
 
 .bottom {
-    margin-top: 5px;
-    line-height: 12px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+margin-top: 5px;
+line-height: 12px;
+display: flex;
+justify-content: space-between;
+align-items: center;
 }
 
 .image {
-    width: 100%;
-    height: 10%;
-    display: block;
+position: relative;
+width:320px;
+height: 250px;
 }
 
 .article-item {
-  padding-left: 5px;
+padding-left: 5px;
 }
 
 .article-item-inner {
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 5px;
+border-bottom: 1px solid #ddd;
+padding-bottom: 5px;
 }
 
 .article-body {
-  flex: 1;
+flex: 1;
 }
 
 .user-info {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  color: #4e5969;
+display: flex;
+align-items: center;
+font-size: 14px;
+color: #4e5969;
 }
 
 .link-info {
-  margin-left: 5px;
-  color: #494949;
-  text-decoration: none;
+margin-left: 5px;
+color: #494949;
+text-decoration: none;
 }
 
 .link-info:hover {
-  color: var(--link);
+color: var(--link);
 }
 
 .post-time {
-  font-size: 13px;
-  color: #9a9a9a;
+font-size: 13px;
+color: #9a9a9a;
 }
 
 .title {
-  font-weight: bold;
-  text-decoration: none;
-  color: #4a4a4a;
-  font-size: 16px;
-  margin: 10px 0px;
-  display: inline-block;
+font-weight: bold;
+text-decoration: none;
+color: #4a4a4a;
+font-size: 16px;
+margin: 10px 0px;
+display: inline-block;
 }
 </style>

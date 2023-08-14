@@ -2,43 +2,43 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
-using auth.Database;
 using auth.Models;
+using auth.Database;
 
 [ApiController]
 [Route("api/[controller]")]  // RESTful 风格
 
-public class ReportController : ControllerBase
+public class ReportCommentController : ControllerBase
 {
     private AppDbContext _database;
 
-    public ReportController(AppDbContext appDbContext)
+    public ReportCommentController(AppDbContext appDbContext)
     {
         _database = appDbContext;  // 依赖注入，在整个类中使用它来进行数据库操作
     }
 
 
-    [HttpPost("PostReport")]//提交举报
-    public async Task<IActionResult> ReportArticleAsync(int user_id,int article_id,string reason)
+    [HttpPost("CommentReport")]//提交举报
+    public async Task<IActionResult> ReportCommentAsync(int user_id,int msg_id,string reason)
     {
        var code = 200;
        var msg = "success"; 
-       if(_database.Users.Any(x=>x.UserId==user_id)==false||_database.Articles.Any(x=>x.PostId==article_id)==false)
+       if(_database.Users.Any(x=>x.UserId==user_id)==false||_database.Comments.Any(x=>x.MsgId==msg_id)==false)
        {
          return BadRequest(new
             {
                 code = 400,
-                msg = "举报者或被举报文章不存在",
+                msg = "举报者或被举报留言不存在",
             });
        }
-       ReportPost newRecord =new ReportPost{
+       ReportComments newRecord =new ReportComments{
             UserId=user_id,
-            PostId=article_id,
+            MsgId=msg_id,
             Reason=reason,
             Time=DateTime.Now,
             IsTrue=0,
        };
-        _database.ReportPost.AddRange(newRecord);
+        _database.ReportComments.AddRange(newRecord);
         await _database.SaveChangesAsync();
         msg="提交成功";
        return Ok(new
@@ -49,31 +49,31 @@ public class ReportController : ControllerBase
     }
 
 
-    [HttpGet("ReportPostToDeal")]//列出未被处理的被举报的帖子
-    public async Task<IActionResult> ReportPostToDeal()
+    [HttpGet("ReportCommentToDeal")]//列出未被处理的被举报的留言
+    public async Task<IActionResult> ReportCommentToDeal()
     {
         var code = 200;
         var msg = "success";
-        var report_post = await (
-            from report in _database.ReportPost
-            join article in _database.Articles on report.PostId equals article.PostId
-            where report.IsTrue == 0 && article.IsBanned == 0 //未被管理员审核且文章未被封禁
+        var report_comment = await (
+            from report in _database.ReportComments
+            join comment in _database.Comments on report.MsgId equals comment.MsgId
+            where report.IsTrue == 0 && comment.IsBanned == 0 //未被管理员审核且留言未被封禁
             select new
             {
                 id = report.UserId,//举报者ID
                 time = report.Time,  // 举报时间
-                postId = report.PostId,  //被举报的帖子ID
+                msgId = report.MsgId,  //被举报的留言ID
                 reason = report.Reason,  // 举报原因
-                reportId = report.PostReportId  //举报信息ID
+                msgReportId = report.MsgReportId  //举报信息ID
             }
             ).ToListAsync();
-        if (report_post.Count > 0)
+        if (report_comment.Count > 0)
         {
             return Ok(new
             {
                 code = code,
                 msg = msg,
-                data = report_post
+                data = report_comment
             });
         }
         else
@@ -86,20 +86,20 @@ public class ReportController : ControllerBase
         }
     }
 
-    [HttpPut("DealReport")]
-    public async Task<IActionResult> DealReportAync(int report_id, int adminId, int is_true, string result)//处理举报信息（管理员）is_true=1为通过2为不通过
+    [HttpPut("DealMsgReport")]//处理举报
+    public async Task<IActionResult> DealMsgReportAync(int report_id, int adminId, int is_true, string result)//处理举报留言（管理员）is_true=1为通过2为不通过
     {
         var code = 200;
         var msg = "success";
         bool exist = false;
-        var record = _database.ReportPost.Where(x => x.PostReportId == report_id);
-        int? post_id = 0;
+        var record = _database.ReportComments.Where(x => x.MsgReportId == report_id);
+        int? msg_id = 0;
         foreach (var r in record)
         {
-            if (r.PostReportId == report_id)
+            if (r.MsgReportId == report_id)
             {
                 exist = true;
-                post_id = r.PostId;
+                msg_id = r.MsgId;
                 break;
             }
         }
@@ -113,8 +113,8 @@ public class ReportController : ControllerBase
                 msg = msg,
             });
         }
-        var article = _database.Articles.Where(x => x.PostId == post_id);//找到该文章
-        if (is_true == 2)//未通过
+        var comment = _database.Comments.Where(x => x.MsgId == msg_id);//找到该留言
+        if (is_true == 2)//审核未通过
         {
             foreach (var r in record)
             {
@@ -134,9 +134,9 @@ public class ReportController : ControllerBase
                 r.Result = result;
                 await _database.SaveChangesAsync();
             }
-            foreach (var a in article)
+            foreach (var c in comment)
             {
-                a.IsBanned = 1;
+                c.IsBanned = 1;
                 await _database.SaveChangesAsync();
                 msg = "举报已通过";
             }

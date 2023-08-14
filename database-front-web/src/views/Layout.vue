@@ -2,14 +2,14 @@
     <div>
         <div id="container">
             <div id="header">
-                <navTop @searchPerformed="handleSearch2"></navTop>
+                <navTop @search-enter="handleSearch2"></navTop>
             </div>
             <div id="choice-buttons">
                 <el-form :inline="true" class="form-container">
                     <template v-for="(button, index) in buttonStyle" :key="index">
                         <el-form-item>
                             <el-button class="button" @click="handleButtonClick(index)"
-                                :style="`background-image: url(${button.background})`"></el-button>
+                                :style="`background-image: url(${button.background})`">{{ button.name }}</el-button>
                         </el-form-item>
                     </template>
                 </el-form>
@@ -38,9 +38,10 @@ const buttonStyle = [
 ];
 
 //可能有问题
-const handleSearch2=(keywords)=>{
+const handleSearch2 = (keywords) => {
     fetchData(keywords);
 }
+
 
 
 // 点击本页面上的按钮，跳转到相应的板块

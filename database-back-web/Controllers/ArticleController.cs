@@ -17,15 +17,13 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
     }
 
     [HttpGet("loadArticle")]
-    public async Task<IActionResult> GetArticleByTagAsync(int p_board_id, int page_num)
-    {
+    public async Task<IActionResult> GetArticleByTagAsync(int p_board_id, int page_num, int page_size)
+    {//page_num为页码从1开始，page_size为每页的文章数
         var code = 400;
         var msg = "success";
         // 初始化一个列表
         List<string> tag_list = new List<string>() { "全部", "中餐", "西餐", "甜点", "其他" };
-        var tag = tag_list[p_board_id];
-        // 根据 tag 的值，筛选不同的文章
-        if (tag != "全部" && tag != "中餐" && tag != "西餐" && tag != "甜点" && tag != "其他")
+        if (p_board_id > 4)
         {
             code = 400;
             msg = "不存在该板块";
@@ -35,63 +33,45 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 msg = msg
             });
         }
+        var tag = tag_list[p_board_id];
 
         code = 200;
-        // var page_size = 10;  // 每一页所容纳的数据量
-
-
         if (tag == "全部")
         {
-            // 虽然此处和下面重复度高，但以后可能会改成推荐
-            var article_data = await (
-                from article in _database.Articles
-                join user in _database.Users on article.AuthorId equals user.UserId
-                select new
-                {
-                    ID = article.PostId,//文章ID
-                    TAG = article.Tag,  // 文章标签
-                    Title = article.Title,  // 文章标题
-                    Views = article.Views,  // 文章浏览量
-                    FavouriteNum = article.FavouriteNum,  // 文章收藏量
-                    LikeNum = article.LikeNum,  // 文章点赞量
-                    AuthorName = user.UserName, // 包含作者的名字
-                    Content = article.Content,  // 文章内容
-                    IsBanned = article.IsBanned  // 是否被封禁
-                }
-            ).ToListAsync();
+            var data = await _database
+                .Articles
+                .OrderByDescending(x => x.PostId)
+                .ToListAsync();
 
+            data = data.Skip((page_num - 1) * page_size).Take(page_size).ToList();//截取第page_num页的数据
+            if (data.Count() == 0)
+            {
+                msg = "数据不足";
+            }
             return Ok(new
             {
                 code = code,
                 msg = msg,
-                data = article_data
+                data = data
             });
         }
-        else
+        else//按Tag取
         {
-            var article_data = await (
-                 from article in _database.Articles
-                 join user in _database.Users on article.AuthorId equals user.UserId
-                 where article.Tag == tag
-                 select new
-                 {
-                     ID = article.PostId,//文章ID
-                     TAG = article.Tag,  // 文章标签
-                     Title = article.Title,  // 文章标题
-                     Views = article.Views,  // 文章浏览量
-                     FavouriteNum = article.FavouriteNum,  // 文章收藏量
-                     LikeNum = article.LikeNum,  // 文章点赞量
-                     AuthorName = user.UserName, // 包含作者的名字
-                     Content = article.Content,  // 文章内容
-                     IsBanned = article.IsBanned  // 是否被封禁
-                 }
-             ).ToListAsync();
-
+            var data = await _database
+                .Articles
+                .OrderByDescending(x => x.PostId)
+                .Where(x => x.Tag == tag_list[p_board_id])
+                .ToListAsync();
+            data = data.Skip((page_num - 1) * page_size).Take(page_size).ToList();//截取第page_num页的数据
+            if (data.Count() == 0)
+            {
+                msg = "数据不足";
+            }
             return Ok(new
             {
                 code = code,
                 msg = msg,
-                data = article_data
+                data = data
             });
         }
     }
@@ -304,7 +284,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 FavouriteNum = 0,
                 LikeNum = 0,
                 IsBanned = 0,
-                ReleaseTime=DateTime.Now
+                ReleaseTime = DateTime.Now
             };
 
             _database.Articles.AddRange(newRecord);
@@ -371,71 +351,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         }
     }
 
-    // 下面这段代码有问题！！！
-
-    // //论坛页面搜索文章
-    // [HttpGet("Article/forum_searchArticle")]
-    // public async Task<IActionResult> SearchArticlesAsync(string keyword,int page_num)
-    // {
-    //     var code = 200;
-    //     var msg = "success";
-
-    //     // 查询文章
-    //     var articles = await _database.Articles
-    //         .Where(a => a.Title.Contains(keyword)) // 在标题中搜索关键词
-    //         .ToListAsync();
-
-    //     if (articles.Count > 0) // 有结果的话
-    //     {
-    //         var articleList = articles.Select(a => new
-    //         {
-    //             ID = article.PostId,//文章ID
-    //             TAG = article.Tag,  // 文章标签
-    //             Title = article.Title,  // 文章标题
-    //             Views = article.Views,  // 文章浏览量
-    //             FavouriteNum = article.FavouriteNum,  // 文章收藏量
-    //             LikeNum = article.LikeNum,  // 文章点赞量
-    //             AuthorName = user.UserName, // 包含作者的名字
-    //             Content = article.Content,  // 文章内容
-    //             IsBanned = article.IsBanned
-    //         }).ToListAsync();
-
-    //         var totalCount = articleList.Count;
-    //         var pageSize = 6;// 暂定一页6篇文章
-    //         var pageTotal = (int)Math.Ceiling((double)totalCount / pageSize); // 总页数
-
-    //         var searchArticleList = articleList
-    //             .Skip((page_num - 1) * pageSize)   // 跳过前面几页的数据，拿出本页的数据
-    //             .Take(pageSize)
-    //             .ToListAsync();
-
-    //         var result = new
-    //         {
-    //             totalCount = totalCount,
-    //             pageTotal = pageTotal,
-    //             list = searchArticleList
-    //         };
-
-    //         return Ok(new
-    //         {
-    //             code = code,
-    //             msg = msg,
-    //             data = result
-    //         });
-    //     }
-    //     else
-    //     {
-    //         code = 400;
-    //         msg = "未找到相关文章";
-    //         return BadRequest(new
-    //         {
-    //             code = code,
-    //             msg = msg
-    //         });
-    //     }
-
-    // }
-
+    //论坛界面 搜索某文章
     [HttpGet("forum_searchArticle")]
     public async Task<IActionResult> SearchArticlesAsync(string keyword)
     {
@@ -443,30 +359,47 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         var msg = "success";
 
         // 查询文章
-        var articles = await _database.Articles
-            .Where(a => a.Title.Contains(keyword)) // || a.Content.Contains(keyword)) // 在标题和内容中搜索关键词
-            .ToListAsync();
+        var articles = await (
+            from article in _database.Articles
+            join user in _database.Users on article.AuthorId equals user.UserId
+            where (article.Title != null && article.Title.Contains(keyword)) ||
+            (article.Content != null && article.Content.Contains(keyword))
+            select new
+            {
+                ID = article.PostId,
+                TAG = article.Tag,
+                Title = article.Title,
+                Views = article.Views,
+                FavouriteNum = article.FavouriteNum,
+                LikeNum = article.LikeNum,
+                AuthorName = user.UserName,
+                Content = article.Content,
+                IsBanned = article.IsBanned
+            }
+        ).ToListAsync();
 
         if (articles.Count > 0)
         {
-            var articleList = articles.Select(article => new
-            {
-                ID = article.PostId,//文章ID
-                   	    TAG = article.Tag,  // 文章标签
-                        Title = article.Title,  // 文章标题
-                        Views = article.Views,  // 文章浏览量
-                        FavouriteNum = article.FavouriteNum,  // 文章收藏量
-                        LikeNum = article.LikeNum,  // 文章点赞量
-                        AuthorName = _database.Users.FirstOrDefault(user => user.UserId == article.AuthorId)?.UserName,
-                        Content = article.Content,  // 文章内容
-                        IsBanned = article.IsBanned  // 是否被封禁
-            }).ToList();
+
+//             var articleList = articles.Select(article => new
+//             {
+//                 ID = article.PostId,//文章ID
+//                    	    TAG = article.Tag,  // 文章标签
+//                         Title = article.Title,  // 文章标题
+//                         Views = article.Views,  // 文章浏览量
+//                         FavouriteNum = article.FavouriteNum,  // 文章收藏量
+//                         LikeNum = article.LikeNum,  // 文章点赞量
+//                         AuthorName = _database.Users.FirstOrDefault(user => user.UserId == article.AuthorId)?.UserName,
+//                         Content = article.Content,  // 文章内容
+//                         IsBanned = article.IsBanned  // 是否被封禁
+//             }).ToList();
+
 
             return Ok(new
             {
                 code = code,
                 msg = msg,
-                data = articleList
+                data = articles
             });
         }
         else
@@ -479,10 +412,49 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 msg = msg
             });
         }
+
+    }
+    //获取文章数量
+    [HttpGet("ArticleNumber")]
+    public async Task<IActionResult> ArticleNumberAsync(int user_id)
+    {
+        var code = 200;
+        var msg = "success";
+        var temp = await _database.Articles.ToListAsync();
+        bool exist = false;
+        if (temp != null)//判断表内是否有该用户的文章
+        {
+            foreach (var article in temp)
+            {
+                if (article.AuthorId == user_id)
+                {
+                    exist = true;
+                    break;
+                }
+            }
+        }
+        if(exist){
+            //查找用户的文章数量并返回
+            var article_num = _database.Articles.Count(a => a.AuthorId == user_id);
+            return Ok(new
+            {
+                code = code,
+                msg = msg,
+                data = article_num
+            });
+        }
+        else{
+            code = 400;
+            msg = "该用户没有发布的文章";
+            return Ok(new
+            {
+                code = code,
+                msg = msg,
+                data = 0  //考虑用户的参数无效问题
+            });
+        }
+    }
+
 }
 
-
-
-
-}
 

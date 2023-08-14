@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using auth.Database;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+
+using auth.Database;
 using auth.Models;
+using auth.Utils;
 
 [ApiController]
 [Route("api/[controller]")]  // RESTful 风格
@@ -33,8 +35,9 @@ public class LikeController : ControllerBase
                 msg = msg,
             });
         }
-        var u = _database.Users.Where(x => x.UserId == user_id);
-        var a = _database.Articles.Where(x => x.PostId == post_id);
+        var u = _database.Users.Where(x => x.UserId == user_id).ToList();
+        var a = _database.Articles.Where(x => x.PostId == post_id).ToList();
+        int? author_id=a.First().AuthorId;//获取被点赞的作者ID
         //Console.Write(a);
         var record = _database.Likes.Where(x => x.PostId == post_id && x.UserId == user_id);
         bool u_exist = false;
@@ -74,6 +77,9 @@ public class LikeController : ControllerBase
                 msg = msg,
             });
         }
+       
+        MyUtil tool = new MyUtil(_database);
+        
         foreach (var item in a)//更改点赞数及点赞记录
         {
             if (r_exist == false)//未点赞
@@ -88,6 +94,7 @@ public class LikeController : ControllerBase
                 };
                 _database.Likes.AddRange(newRecord);
                 await _database.SaveChangesAsync();
+                tool.ChangePoints(author_id,1);//增加积分
             }
             else//已点赞
             {
@@ -96,6 +103,7 @@ public class LikeController : ControllerBase
                 await _database.SaveChangesAsync();
                 _database.Likes.RemoveRange(record);//删除记录
                 await _database.SaveChangesAsync();
+                tool.ChangePoints(author_id,-1);//减少积分
             }
         }
 

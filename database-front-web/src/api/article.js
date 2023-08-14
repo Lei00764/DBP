@@ -44,9 +44,9 @@ export function searchArticle(params) {
 //搜索论坛中搜索框中的关键词
 export function forum_searchArticle(params) {
     return Request({
-      method: 'GET',
-      url: 'Article/forum_searchArticle',
-      params: params
+        method: 'GET',
+        url: 'Article/forum_searchArticle',
+        params: params
     }).then(function (response) {
         if (response.data.code === 200) {
             return response.data;
@@ -55,8 +55,8 @@ export function forum_searchArticle(params) {
             return null;
         }
     }).catch(function (error) {
-      console.log(error);
-      return null;
+        console.log(error);
+        return null;
     });
 }
 
@@ -78,14 +78,14 @@ export function forum_searchArticle(params) {
 //     }).catch(function (error) {
 //         console.log(error);
 //     })
-  
-  
+
+
 //获取文章详情
 export function GetArticleDetailsAsync(params) {
     return Request({
-      method: 'GET',
-      url: 'Article/viewArticle',
-      params: params
+        method: 'GET',
+        url: 'Article/viewArticle',
+        params: params
     }).then(function (response) {
         if (response.data.code === 200) {
             return response.data;
@@ -94,8 +94,8 @@ export function GetArticleDetailsAsync(params) {
             return null;
         }
     }).catch(function (error) {
-      console.log(error);
-      return null;
+        console.log(error);
+        return null;
     });
 }
 
@@ -119,4 +119,20 @@ export function getArticle(params) {
     // });
 }
 
-
+// 获取用户的文章数量
+export function getArticleNumber(params) {
+    return Request({
+        method: 'GET',
+        url: 'Article/ArticleNumber',
+        params: params
+    }).then(function (response) {
+        if (response.data.code === 200) {
+            return response.data.data;
+        } else if (response.data.code === 400) {
+            Message.error("该用户未发布文章");
+            return response.data.data;
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
