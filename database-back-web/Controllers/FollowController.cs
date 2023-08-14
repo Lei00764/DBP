@@ -110,8 +110,8 @@ public class FollowController : ControllerBase
     }
 
     //获取粉丝数量
-    [HttpGet("FollowNumber")]
-    public async Task<IActionResult> FollowNumberAsync(int user_id)
+    [HttpGet("FansNumber")]
+    public async Task<IActionResult> FansNumberAsync(int user_id)
     {
         var code = 200;
         var msg = "success";
@@ -145,6 +145,47 @@ public class FollowController : ControllerBase
             {
                 code = code,
                 msg = msg
+            });
+        }
+    }
+
+    //获取关注数量
+    [HttpGet("FollowNumber")]
+    public async Task<IActionResult> FollowNumberAsync(int user_id)
+    {
+        var code = 200;
+        var msg = "success";
+        var temp = await _database.Follows.ToListAsync();
+        bool exist = false;
+        if (temp != null)//判断表内是否有该用户为关注者的信息
+        {
+            foreach (var Follower in temp)
+            {
+                if (Follower.FollowerUserId == user_id)
+                {
+                    exist = true;
+                    break;
+                }
+            }
+        }
+        if(exist){
+            //查找用户的粉丝数量并返回
+            var follow_num = _database.Follows.Count(a => a.FollowerUserId == user_id);
+            return Ok(new
+            {
+                code = code,
+                msg = msg,
+                data = follow_num
+            });
+        }
+        else{
+            code = 400;
+            msg = "该用户没有关注他人";
+            return Ok(new
+            {
+                code = code,
+                msg = msg,
+                data = 0  //
             });
         }
     }
