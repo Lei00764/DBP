@@ -40,7 +40,7 @@
                 </el-button>
             </div>
             <!-- 现在用户头像是写死的 lx -->
-            <avatar :userId="1" :width="50" :addLink="false"></avatar>
+            <userAvatar :userId=8 :width=50 :addLink="false"></userAvatar>
         </div>
     </div>
 </template>
@@ -71,7 +71,7 @@ onMounted(() => {
         window.addEventListener("keydown", enterDown);
     });
 });
-const enterDown = async(e) => {
+const enterDown = async (e) => {
     console.log("chufa");
     let result;
     if (e.keyCode == 13 || e.keyCode == 100) {

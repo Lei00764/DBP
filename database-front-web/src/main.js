@@ -24,7 +24,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 library.add(fas)
 
 // 全局组件
-import Avatar from "@/components/Avatar.vue"
+import userAvatar from "@/components/userAvatar.vue"
 
 const app = createApp(App)
 
@@ -33,7 +33,7 @@ for (let iconName in ELIcons) {
   app.component(iconName, ELIcons[iconName])
 }
 app.component('font-awesome-icon', FontAwesomeIcon)
-app.component("Avatar", Avatar);
+app.component("userAvatar", userAvatar);
 
 // 从sessionStorage中恢复store状态
 const savedState = JSON.parse(sessionStorage.getItem('store'))

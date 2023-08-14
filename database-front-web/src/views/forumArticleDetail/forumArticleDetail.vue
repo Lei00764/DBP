@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="forum-article-detail-page" v-if = "Object.keys(articleInfo).length > 0">
+        <div class="forum-article-detail-page" v-if="Object.keys(articleInfo).length > 0">
             <div id="header">
                 <navTop></navTop>
             </div>
@@ -18,12 +18,12 @@
                     <font-awesome-icon :icon="['fas', 'arrow-up-from-bracket']" />
                 </el-button>
                 <!-- 文章详情展示未完成 -->
-                <div class="title"> {{ articleInfo[0].title}} </div>
+                <div class="title"> {{ articleInfo[0].title }} </div>
                 <!-- 需增加路径到作者个人主页 -->
                 <!-- <router-link :to="`/layout`"> -->
-                    <el-avatar class="avatar" :size="65" :src="authorInfo.avatar" v-if = "authorInfo">
-                    </el-avatar>
-                    <div class="author">{{ articleInfo[0].authorName }} </div>
+                <el-avatar class="avatar" :size="65" :src="authorInfo.avatar" v-if="authorInfo">
+                </el-avatar>
+                <div class="author">{{ articleInfo[0].authorName }} </div>
                 <!-- </router-link> -->
                 <div class="publish_time" v-if="articleInfo[0].releaseTime">
                     发布于 {{ articleInfo[0].releaseTime.split('T')[0] }} {{ articleInfo[0].releaseTime.split('T')[1] }}
@@ -62,7 +62,7 @@ const authorInfo = ref({});
 
 const getArticleDetail = async (articleId) => {
     const params = {
-       article_id: articleId,
+        article_id: articleId,
     }
     let result = await GetArticleDetailsAsync(params);
     if (!result) {
@@ -73,8 +73,8 @@ const getArticleDetail = async (articleId) => {
 }
 const getAuthor = async (userId) => {
     const params = {
-       ID: userId,
-       type: 1
+        ID: userId,
+        type: 1
     }
     let result = await GetInfoByID(params);
     if (!result) {
@@ -100,18 +100,18 @@ const formData = reactive({
 const innerContent = ref(null);
 // 一个计算属性 ref
 const formHeight = computed(() => {
-  // 获取内部组件的高度
-    if(innerContent.value){
+    // 获取内部组件的高度
+    if (innerContent.value) {
         const innerHeight = innerContent.value.offsetHeight;
-    // 添加额外的高度，可以根据需要调整
+        // 添加额外的高度，可以根据需要调整
         const extraHeight = 180;
-    // 计算表单的高度
+        // 计算表单的高度
         const height = innerHeight + extraHeight;
-    // 返回计算出的高度
+        // 返回计算出的高度
         return height + 'px';
     }
-    else{
-        return 200 +'px'
+    else {
+        return 200 + 'px'
     }
 })
 
@@ -158,6 +158,7 @@ const formHeight = computed(() => {
     top: 20px;
     left: 90%;
 }
+
 /* 该版式为帖子详情页版式 */
 .announ-announcement-form {
     position: absolute;
@@ -167,20 +168,22 @@ const formHeight = computed(() => {
     border-radius: 12px;
     background-color: #e6f0f8;
 }
+
 /*标签样式*/
-.tag{
+.tag {
     position: absolute;
     top: 110px;
     left: 250px;
     width: 50px;
-    padding:5px;
+    padding: 5px;
     background-color: rgba(0, 255, 255, 0.551);
     border-radius: 5px;
 }
+
 /* 帖子标题 */
 .title {
-    font-weight:bolder;
-    font-size:larger;
+    font-weight: bolder;
+    font-size: larger;
     position: absolute;
     top: 15px;
     left: 20px;
@@ -203,8 +206,9 @@ const formHeight = computed(() => {
     top: 65px;
     left: 100px;
 }
+
 /*头像 */
-.avatar{
+.avatar {
     position: absolute;
     top: 60px;
     left: 20px;
@@ -217,6 +221,4 @@ const formHeight = computed(() => {
     left: 100px;
     color: #5e5e5e;
     font-size: small;
-}
-
-</style>
+}</style>

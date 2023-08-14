@@ -12,7 +12,7 @@
             <!-- <div class="content"> {{ data.content }}</div> -->
           </div>
           <div class="title">
-            <router-link :to="`/forumArticleDetail/${data.id}`">{{ data.title }}</router-link>
+            <router-link :to="`/forumArticleDetail/${data.postId}`">{{ data.title }}</router-link>
           </div>
           <div class="tag">{{ data.tag }}</div>
           <div class="article-info">
@@ -28,7 +28,7 @@
           </div>
         </div>
       </div>
-    <!-- </router-link> -->
+      <!-- </router-link> -->
     </div>
   </div>
 </template>
@@ -42,7 +42,8 @@ const props = defineProps({
   },
 });
 
-// console.log(props.data);
+console.log(props.data);
+
 </script>
 
 <style>

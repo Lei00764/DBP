@@ -16,8 +16,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // 注册数据库上下文
+// 指定版本 11 是为了使用 Find、FirstOrDefault、Skip Task
+// 参考：https://www.cnblogs.com/colorchild/p/12755638.html
 builder.Services.AddDbContext<auth.Database.AppDbContext>(options =>
-    options.UseOracle(builder.Configuration.GetConnectionString("oracle")));
+    options.UseOracle(builder.Configuration.GetConnectionString("oracle"), UseOracleOptions => UseOracleOptions.UseOracleSQLCompatibility("11")));
 
 
 var app = builder.Build();

@@ -20,11 +20,11 @@
 <script setup>
 import { getCurrentInstance } from "vue";
 const { proxy } = getCurrentInstance();
-// 通过 <avatar :userId="用户Id" :width="50" :addLink="false"></avatar> 使用该组件
+// 通过 <userAvatar :userId="用户Id" :width="50" :addLink="false"></userAvatar> 使用该组件
 
 const props = defineProps({
     userId: {
-        type: String,
+        type: Number,
     },
     width: {
         type: Number,
