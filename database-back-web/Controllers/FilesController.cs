@@ -6,6 +6,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 using auth.Database;
+using System.Buffers.Text;
 
 [ApiController]
 [Route("api/[controller]")]  // RESTful 风格
@@ -50,5 +51,22 @@ public class FilesController : ControllerBase
         }
 
         return NotFound("用户头像不存在");
+
+        
+    }
+
+    [HttpPost("setAvatar")]
+    public IActionResult SetAvatar(int user_id,byte[] image)
+    {
+        var user = _database.Users.FirstOrDefault(x => x.UserId == user_id);
+        if (user == null)
+        {
+            return NotFound("用户不存在");
+        }
+        MemoryStream ms = new MemoryStream(image);
+        System.Drawing.Image img = System.Drawing.Image.FromStream(ms);
+        string path="wwwroot/images/avatars/"+user_id.ToString()+".jpg";//已含文件名
+        img.Save(path,System.Drawing.Imaging.ImageFormat.Jpeg);
+        return Content("头像上传成功");
     }
 }
