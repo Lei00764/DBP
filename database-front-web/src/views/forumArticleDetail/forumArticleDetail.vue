@@ -21,8 +21,8 @@
                 <div class="title"> {{ articleInfo[0].title }} </div>
                 <!-- 需增加路径到作者个人主页 -->
                 <!-- <router-link :to="`/layout`"> -->
-                <el-avatar class="avatar" :size="65" :src="authorInfo.avatar" v-if="authorInfo">
-                </el-avatar>
+                <userAvatar :userId="authorInfo.id" :width="50" :addLink="false"></userAvatar>
+
                 <div class="author">{{ articleInfo[0].authorName }} </div>
                 <!-- </router-link> -->
                 <div class="publish_time" v-if="articleInfo[0].releaseTime">
@@ -33,18 +33,20 @@
                 </div>
             </el-form>
         </div>
+        <div v-if="Object.keys(articleInfo).length > 0">
+            <commentList></commentList>
+        </div>
     </div>
 </template>
 
 <script setup>
 import { ref, reactive, toRefs, onMounted, watch, computed } from 'vue';
+import { useRouter } from 'vue-router'
 import { GetInfoByID } from '@/api/user';
 import { GetArticleDetailsAsync } from '@/api/article';
-import Message from "@/utils/Message.js"
-import { House, Star, User } from '@element-plus/icons-vue'
-import { ElPagination } from 'element-plus'
-import { useRouter } from 'vue-router'
 import navTop from "@/components/navTop.vue"
+import commentList from "./commentList.vue"
+
 const router = useRouter()
 
 const Report = () => {
@@ -126,8 +128,6 @@ const formHeight = computed(() => {
 }
 
 /*背景图相关设置 */
-
-
 
 .forum-article-detail-page {
 
@@ -221,4 +221,5 @@ const formHeight = computed(() => {
     left: 100px;
     color: #5e5e5e;
     font-size: small;
-}</style>
+}
+</style>

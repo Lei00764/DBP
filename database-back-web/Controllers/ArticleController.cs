@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using auth.Database;
 using auth.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 [ApiController]
 [Route("api/[controller]")]  // RESTful 风格
@@ -77,11 +78,10 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
     }
 
 
+    // modify by Xiang Lei 2023.8.16
     [HttpGet("viewArticle")]
     public async Task<IActionResult> GetArticleDetailsAsync(int article_id)
     {
-        var code = 200;
-        var msg = "success";
         var temp = await _database.Articles.ToListAsync();
         bool exist = false;
         if (temp != null)//判断表内是否有改文章
@@ -121,12 +121,10 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
 
             if (article_data[0].IsBanned != 0)
             {
-                code = 400;
-                msg = "该文章已被封禁";
-                return BadRequest(new
+                return Ok(new
                 {
-                    code = code,
-                    msg = msg
+                    code = 404,
+                    msg = "帖子已被封禁"
                 });
             }
             async void UpdateData()
@@ -145,19 +143,17 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             UpdateData();
             return Ok(new
             {
-                code = code,
-                msg = msg,
+                code = 200,
+                msg = "success",
                 data = article_data,
             });
         }
         else
         {
-            code = 400;
-            msg = "不存在该文章";
-            return BadRequest(new
+            return Ok(new
             {
-                code = code,
-                msg = msg
+                code = 404,
+                msg = "帖子不存在"
             });
         }
     }
