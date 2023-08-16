@@ -47,17 +47,11 @@
 </template>
 
 <script setup>
-// 修改当前页面的 element-plus 主题色
-import { changeTheme } from '@/utils/changeTheme';
 import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue';
 import router from "@/router/index.js"
-import { searchPost } from '@/api/search';  // 引入 api 请求函数 searchPost
-import { forum_searchArticle } from "@/api/article.js"
 import { useStore } from 'vuex' // 引入store
-//import { fetchData } from '@/views/forum/articleList'
 
-
-changeTheme("#FFD700");  // 目前为红色，可以修改
+import { searchPost } from '@/api/search';  // 引入 api 请求函数 searchPost
 
 
 const store = useStore(); // 使用store必须加上
@@ -73,22 +67,22 @@ onMounted(() => {
     });
 });
 const enterDown = async (e) => {
-    console.log("chufa");
-    let result;
-    if (e.keyCode == 13 || e.keyCode == 100) {
-        e.preventDefault(); // 阻止默认提交动作
-        //doSearch(); // 定义的登录方法
-        const params = {
-            keyword: formData.keywords
-        };
-        result = await forum_searchArticle(params);
-        store.commit('setArticles', result.data);
-        console.log(result.data);
-        console.log(store.state.articles);
-        //fetchData(formData.keywords);
-    }
-    // 销毁事件
-    window.removeEventListener("keydown", enterDown, false);
+    // console.log("chufa");
+    // let result;
+    // if (e.keyCode == 13 || e.keyCode == 100) {
+    //     e.preventDefault(); // 阻止默认提交动作
+    //     //doSearch(); // 定义的登录方法
+    //     const params = {
+    //         keyword: formData.keywords
+    //     };
+    //     result = await forum_searchArticle(params);
+    //     store.commit('setArticles', result.data);
+    //     console.log(result.data);
+    //     console.log(store.state.articles);
+    //     //fetchData(formData.keywords);
+    // }
+    // // 销毁事件
+    // window.removeEventListener("keydown", enterDown, false);
 }
 
 const doSearch = () => {
@@ -107,6 +101,7 @@ const doSearch = () => {
 const ToHome = () => {
     router.push(`/homeUser`);
 }
+
 const ToMy = () => {
     if (store.state.type == 1) { //管理员身份
         router.push(`/userHomePage`);
@@ -115,11 +110,13 @@ const ToMy = () => {
         router.push(`/homeAdmin`);
     }
 }
+
 const ToLogOut = () => {
     router.push(`/login`);
 }
+
 const ToCheckMessage = () => {
-    //跳转到消息界面（管理员可以给用户发送消息）
+    // 跳转到消息界面（管理员可以给用户发送消息）
 }
 </script>
 

@@ -3,7 +3,7 @@ import { createStore } from 'vuex'
 const store = createStore({
     // 存放全局数据
     state: {
-        Info: { //用户信息
+        Info: { // 用户信息
             avatar: "",
             id: "",
             name: "",
@@ -12,15 +12,14 @@ const store = createStore({
             email: "",
         },
         login: false,  // 登录状态
-        type:-1,  //0为管理员，1为用户
-        articles: [] //xinjiade   asdasdadadadadad
+        type: -1,  //0为管理员，1为用户
     },
     // 计算属性，获取state里的数据内容
     // 只可读取不可修改
     getters: {},
     // 定义对state的各种操作，只能同步不能异步
     mutations: {
-        doLogin(state,type) { // 登录
+        doLogin(state, type) { // 登录
             state.login = true;
             state.type = type;
         },
@@ -32,9 +31,6 @@ const store = createStore({
             state.Info = {
                 ...person_info
             };
-        },
-        setArticles(state, payload) {  //新加的 爱仕达阿达阿asdad
-            state.articles = payload;
         }
     },
     // 调用mmutations的操作，异步执行
@@ -43,7 +39,7 @@ const store = createStore({
         // commit('UpdateInfo', person_info);
         // }
     },
-    //state信息过长时，用以进行分割
+    // state信息过长时，用以进行分割
     modules: {}
 })
 

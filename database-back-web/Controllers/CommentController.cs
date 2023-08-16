@@ -153,7 +153,7 @@ public class CommentController : ControllerBase
                     user => user.UserId,
                     (comment, user) => new
                     {
-                        ID = comment.MsgId, //留言ID
+                        ID = comment.MsgId, // 留言ID
                         AuthorName = user.UserName, // 包含留言者的名字
                         AuthorId = user.UserId, // 包含留言者的ID
                         AuthorAvatar = user.Avatar, // 包含留言者的头像

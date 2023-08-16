@@ -14,6 +14,8 @@ export function postComment(params) {
     else if (response.data.code === 404) {
       Message.error("用户或文章不存在");
     }
+  }).catch(function (error) {  // catch 表示接收到错误响应后的操作
+    console.log(error);
   });
 }
 
@@ -30,6 +32,8 @@ export function deleteComment(params) {
     else if (response.data.code === 404) {
       Message.error("评论不存在");
     }
+  }).catch(function (error) {  // catch 表示接收到错误响应后的操作
+    console.log(error);
   });
 }
 
@@ -46,7 +50,9 @@ export function loadComment(params) {
     else if (response.data.code === 404) {
       Message.error("文章不存在");
     }
-  })
+  }).catch(function (error) {  // catch 表示接收到错误响应后的操作
+    console.log(error);
+  });
 }
 
 // 获取留言详情

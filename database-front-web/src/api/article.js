@@ -41,22 +41,18 @@ export function searchArticle(params) {
     });
 }
 
-//搜索论坛中搜索框中的关键词
-export function forum_searchArticle(params) {
+// navTop 根据关键词去搜索文章列表
+export function searchArticles(params) {
     return Request({
         method: 'GET',
-        url: 'Article/forum_searchArticle',
+        url: 'Article/searchArticle',
         params: params
     }).then(function (response) {
         if (response.data.code === 200) {
             return response.data;
-        } else {
-            Message.error("未搜索到结果");
-            return null;
         }
     }).catch(function (error) {
         console.log(error);
-        return null;
     });
 }
 

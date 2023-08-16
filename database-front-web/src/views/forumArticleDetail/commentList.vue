@@ -25,7 +25,7 @@ const fetchData = async () => {
         order: 0  // order=0 顺序 1 倒序
     };
     let result = await loadComment(params);
-    console.log(result);
+    // console.log(result);
     commentListInfo.value = result.data;
 }
 
