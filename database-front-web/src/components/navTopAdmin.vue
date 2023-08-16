@@ -39,7 +39,6 @@
 import { changeTheme } from '@/utils/changeTheme';
 import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue';
 import router from "@/router/index.js"
-import { searchPost } from '@/api/search';  // 引入 api 请求函数 searchPost
 changeTheme("#FFD700");  // 目前为红色，可以修改
 
 const formData = reactive({
@@ -52,27 +51,21 @@ onMounted(() => {
         window.addEventListener("keydown", enterDown);
     });
 });
-const enterDown = (e) => {
+
+const enterDown = async (e) => {
     if (e.keyCode == 13 || e.keyCode == 100) {
+        console.log("进入搜索页面");
+        console.log("搜索关键词：", formData.keyword);
         e.preventDefault(); // 阻止默认提交动作
-        doSearch(); // 定义的登录方法
+        // 将 keyword 作为查询参数传递给 /search 路由
+        // 导航到一个新的路由，同时还传递了一个查询参数 keyword
+        router.push({ path: '/search', query: { keyword: formData.keyword } });
     }
     // 销毁事件
     window.removeEventListener("keydown", enterDown, false);
 }
 
-const doSearch = () => {
-    let params = {
-        keyword: formData.keywords
-    }
-    searchPost(params)
-        .then(function (result) {
-            console.log(result.data);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-}
+
 
 const ToHome = () => {
     router.push(`/homeUser`);
