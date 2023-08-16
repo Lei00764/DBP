@@ -167,7 +167,7 @@ public class CommentController : ControllerBase
             {
                 code = 400;
                 msg = "该留言已被封禁";
-                return BadRequest(new
+                return Ok(new
                 {
                     code = code,
                     msg = msg
@@ -185,7 +185,7 @@ public class CommentController : ControllerBase
         {
             code = 400;
             msg = "不存在该留言";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg

@@ -57,7 +57,7 @@ public class SearchController : ControllerBase  // 命名规范，继承自 Cont
         }
         else
         {
-            return BadRequest(new
+            return Ok(new
             {
                 code = 400,
                 msg = "未查询到结果"
@@ -72,7 +72,7 @@ public class SearchController : ControllerBase  // 命名规范，继承自 Cont
         var msg = "success";
         if(_database.Users.Any(x=>x.UserId==user_id)==false)
         {
-            return BadRequest(new
+            return Ok(new
             {
                 code = 400,
                 msg = "用户不存在"
@@ -108,7 +108,7 @@ public class SearchController : ControllerBase  // 命名规范，继承自 Cont
         var msg = "success";
         if(_database.SearchHistories.Any(x=>x.SearchId==id)==false)
         {
-            return BadRequest(new
+            return Ok(new
             {
                 code = 400,
                 msg = "搜索记录不存在"
@@ -132,7 +132,7 @@ public class SearchController : ControllerBase  // 命名规范，继承自 Cont
         List<SearchHistory> data=new List<SearchHistory>();
         if(_database.Users.Any(x=>x.UserId==user_id)==false)
         {
-            return BadRequest(new
+            return Ok(new
             {
                 code = 400,
                 msg = "用户不存在"
@@ -154,7 +154,7 @@ public class SearchController : ControllerBase  // 命名规范，继承自 Cont
         }
         else
         {
-            return BadRequest(new
+            return Ok(new
             {
                 code = 400,
                 msg = "num取值有误"

@@ -25,7 +25,7 @@ public class ReportCommentController : ControllerBase
        var msg = "success"; 
        if(_database.Users.Any(x=>x.UserId==user_id)==false||_database.Comments.Any(x=>x.MsgId==msg_id)==false)
        {
-         return BadRequest(new
+         return Ok(new
             {
                 code = 400,
                 msg = "举报者或被举报留言不存在",
@@ -78,7 +78,7 @@ public class ReportCommentController : ControllerBase
         }
         else
         {
-            return BadRequest(new
+            return Ok(new
             {
                 code = 400,
                 msg = "当前没有新的举报信息",
@@ -107,7 +107,7 @@ public class ReportCommentController : ControllerBase
         {
             code = 400;
             msg = "该举报信息不存在";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg,
@@ -145,7 +145,7 @@ public class ReportCommentController : ControllerBase
         {
             code = 400;
             msg = "is_true参数错误";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg,

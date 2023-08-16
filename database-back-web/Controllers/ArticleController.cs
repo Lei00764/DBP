@@ -27,7 +27,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             code = 400;
             msg = "不存在该板块";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -124,7 +124,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             {
                 code = 400;
                 msg = "该文章已被封禁";
-                return BadRequest(new
+                return Ok(new
                 {
                     code = code,
                     msg = msg
@@ -155,7 +155,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             code = 400;
             msg = "不存在该文章";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -197,7 +197,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             code = 400;
             msg = "不存在该文章";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -243,7 +243,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             code = 400;
             msg = "不存在该文章";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -302,7 +302,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             code = 400;
             msg = "不存在该用户信息";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -345,7 +345,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             code = 400;
             msg = "该用户无发布的文章";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -410,7 +410,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             code = 400;
             msg = "未找到相关文章";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg

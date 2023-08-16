@@ -30,7 +30,7 @@ public class FavouriteController : ControllerBase
         {
             code = 400;
             msg = "数据库中没有数据";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg,
@@ -72,7 +72,7 @@ public class FavouriteController : ControllerBase
         {
             code = 400;
             msg = "用户或文章不存在";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg,
@@ -132,7 +132,7 @@ public class FavouriteController : ControllerBase
         if(u_exist==false)
         {
             msg="用户不存在";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg,

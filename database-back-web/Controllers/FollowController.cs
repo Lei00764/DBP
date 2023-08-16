@@ -30,7 +30,7 @@ public class FollowController : ControllerBase
         {
             code = 400;
             msg = "数据库中没有数据";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg,
@@ -70,7 +70,7 @@ public class FollowController : ControllerBase
         {
             code = 400;
             msg = "用户不存在";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg,
@@ -141,7 +141,7 @@ public class FollowController : ControllerBase
         else{
             code = 400;
             msg = "不存在该用户信息";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg

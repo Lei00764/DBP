@@ -53,7 +53,7 @@ public class NoticeController : ControllerBase
         else{
             code = 400;
             msg = "没有信息";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -92,7 +92,7 @@ public class NoticeController : ControllerBase
         {
             code = 400;
             msg = "管理员或用户信息不存在";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -123,7 +123,7 @@ public class NoticeController : ControllerBase
         {
             code = 400;
             msg = "不存在该公告";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
