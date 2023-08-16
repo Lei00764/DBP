@@ -18,6 +18,7 @@ public class FilesController : ControllerBase
     {
         _database = appDbContext;  // 依赖注入，在整个类中使用它来进行数据库操作
     }
+
     // 返回用户头像
     [HttpGet("getAvatar")]
     public IActionResult GetAvatar(int userId)
@@ -25,7 +26,7 @@ public class FilesController : ControllerBase
         var user = _database.Users.FirstOrDefault(x => x.UserId == userId);
         if (user == null)
         {
-            return NotFound(new
+            return Ok(new
             {
                 code = 404,
                 msg = "用户不存在",
@@ -54,7 +55,7 @@ public class FilesController : ControllerBase
             }
         }
 
-        return NotFound(new
+        return Ok(new
         {
             code = 404,
             msg = "用户头像不存在",
@@ -66,25 +67,25 @@ public class FilesController : ControllerBase
     // 必须要显示指明参数来自 [FromForm] 
     // 去掉 [FromForm] 后，可以在 swagger 上上传图片
     [HttpPost("uploadAvatar")]
-    public IActionResult UploadAvatar( int userId, IFormFile avatarFile)
+    public IActionResult UploadAvatar([FromForm] int userId, [FromForm] IFormFile avatarFile)
     {
         var user = _database.Users.FirstOrDefault(x => x.UserId == userId);
         if (user == null)
         {
-            return NotFound(new
+            return Ok(new
             {
                 code = 404,
                 msg = "用户不存在",
             });
         }
-        user.Avatar="images/avatars/" + userId.ToString() + ".jpg";
+        user.Avatar = "images/avatars/" + userId.ToString() + ".jpg";
         _database.SaveChanges();
         string path = "wwwroot/images/avatars/" + userId.ToString() + ".jpg";  // 指定图片存储路径
 
         // 存储图片
         using (var stream = new FileStream(path, FileMode.Create))
         {
-            avatarFile.CopyTo(stream);  // Copy the uploaded avatar file to the specified path
+            avatarFile.CopyTo(stream);  // 将图片上传到指定路径
         }
 
         return Ok(new

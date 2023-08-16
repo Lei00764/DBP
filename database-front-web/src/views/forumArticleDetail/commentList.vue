@@ -21,20 +21,18 @@ const commentListInfo = ref([]);
 
 const fetchData = async () => {
     let params = {
-        article_id: 25
+        article_id: 25,  // 目前全部文章的评论都一样
+        order: 0  // order=0 顺序 1 倒序
     };
     let result = await loadComment(params);
     console.log(result);
     commentListInfo.value = result.data;
 }
 
-
 // 在组件挂载时获取文章评论数据
 onMounted(() => {
     fetchData();
 });
-
-
 </script>
 
 <style lang="scss"></style>

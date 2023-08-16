@@ -3,10 +3,11 @@
         <div class="comment-info">
             <div class="avatar-container">
                 <userAvatar :userId="data.userId" :width="50" :addLink="false"></userAvatar>
+                <span class="user-name">{{ data.userName }}</span>
             </div>
             <div class="details-container">
                 <p class="comment-content">{{ data.content }}</p>
-                <p class="comment-time">{{ formatTime(data.releaseTime) }}</p>
+                <p class="comment-time">{{ formatTime(data.time) }}</p>
             </div>
         </div>
     </div>
@@ -24,7 +25,10 @@ const props = defineProps({
 
 // 格式化时间
 const formatTime = (time) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const options = {
+        year: 'numeric', month: 'long', day: 'numeric',
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+    };
     return new Date(time).toLocaleDateString(undefined, options);
 };
 </script>
@@ -50,6 +54,21 @@ const formatTime = (time) => {
 
 .avatar-container {
     margin-right: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.user-name {
+    font-size: 14px;
+    color: #333;
 }
 
 .details-container {
@@ -64,13 +83,6 @@ const formatTime = (time) => {
 .comment-time {
     font-size: 12px;
     color: #666;
-}
-
-.user-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
 }
 </style>
   
