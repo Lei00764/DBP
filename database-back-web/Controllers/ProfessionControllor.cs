@@ -141,7 +141,7 @@ public class ProfessionController : ControllerBase
         }
         else
         {
-            return BadRequest(new
+            return Ok(new
             {
                 code = 400,
                 msg = "当前没有新的专业申请",
@@ -172,7 +172,7 @@ public class ProfessionController : ControllerBase
         {
             code = 400;
             msg = "认证申请不存在";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg,
@@ -206,7 +206,7 @@ public class ProfessionController : ControllerBase
         {
             code = 400;
             msg = "response参数错误";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg,

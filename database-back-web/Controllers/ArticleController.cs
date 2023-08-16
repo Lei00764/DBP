@@ -28,7 +28,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             code = 400;
             msg = "不存在该板块";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -41,6 +41,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             var data = await _database
                 .Articles
+                .Where(x=>x.IsBanned==0)
                 .OrderByDescending(x => x.PostId)
                 .ToListAsync();
 
@@ -61,7 +62,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             var data = await _database
                 .Articles
                 .OrderByDescending(x => x.PostId)
-                .Where(x => x.Tag == tag_list[p_board_id])
+                .Where(x => x.Tag == tag_list[p_board_id]&&x.IsBanned==0)
                 .ToListAsync();
             data = data.Skip((page_num - 1) * page_size).Take(page_size).ToList();//截取第page_num页的数据
             if (data.Count() == 0)
@@ -192,7 +193,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             code = 400;
             msg = "不存在该文章";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -238,7 +239,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             code = 400;
             msg = "不存在该文章";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -297,7 +298,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             code = 400;
             msg = "不存在该用户信息";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -340,7 +341,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             code = 400;
             msg = "该用户无发布的文章";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -405,7 +406,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             code = 400;
             msg = "未找到相关文章";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg

@@ -143,7 +143,7 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
         }
         else  // 通过网页注册不会出现这种情况，仅用于 swagger 调试
         {
-            return BadRequest(new
+            return Ok(new
             {
                 code = 400,
                 msg = "type 类型错误",
@@ -267,7 +267,7 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
         }
         else
         {
-            return BadRequest(new{
+            return Ok(new{
                 code=400,
                 msg="type值无效"
             });
@@ -419,7 +419,7 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
     //     else{
     //         code = 400;
     //         msg = "不存在该用户信息";
-    //         return BadRequest(new
+    //         return Ok(new
     //         {
     //             code = code,
     //             msg = msg
@@ -440,7 +440,7 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
     //     {// 如果数据库中没有数据，返回错误信息
     //         code = 400;
     //         msg = "用户不存在";
-    //         return BadRequest(new
+    //         return Ok(new
     //         {
     //             code = code,
     //             msg = msg,
@@ -452,7 +452,7 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
     //     {
     //         code = 401;
     //         msg = "参数无效";
-    //         return BadRequest(new
+    //         return Ok(new
     //         {
     //             code = code,
     //             msg = msg,

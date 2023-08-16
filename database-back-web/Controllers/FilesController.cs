@@ -66,7 +66,7 @@ public class FilesController : ControllerBase
     // 必须要显示指明参数来自 [FromForm] 
     // 去掉 [FromForm] 后，可以在 swagger 上上传图片
     [HttpPost("uploadAvatar")]
-    public IActionResult UploadAvatar([FromForm] int userId, [FromForm] IFormFile avatarFile)
+    public IActionResult UploadAvatar( int userId, IFormFile avatarFile)
     {
         var user = _database.Users.FirstOrDefault(x => x.UserId == userId);
         if (user == null)
@@ -77,7 +77,8 @@ public class FilesController : ControllerBase
                 msg = "用户不存在",
             });
         }
-
+        user.Avatar="images/avatars/" + userId.ToString() + ".jpg";
+        _database.SaveChanges();
         string path = "wwwroot/images/avatars/" + userId.ToString() + ".jpg";  // 指定图片存储路径
 
         // 存储图片

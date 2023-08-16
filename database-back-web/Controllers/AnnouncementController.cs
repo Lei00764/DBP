@@ -56,7 +56,7 @@ public class AnnouncementController : ControllerBase
         else{
             code = 400;
             msg = "没有公告";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -87,7 +87,7 @@ public class AnnouncementController : ControllerBase
         {
             code = 400;
             msg = "不存在该公告";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -139,7 +139,7 @@ public class AnnouncementController : ControllerBase
         {
             code = 400;
             msg = "不存在该管理员信息";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -182,7 +182,7 @@ public class AnnouncementController : ControllerBase
         {
             code = 400;
             msg = "未找到相关公告";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -214,7 +214,7 @@ public class AnnouncementController : ControllerBase
         {
             code = 400;
             msg = "不存在该公告";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
@@ -245,7 +245,7 @@ public class AnnouncementController : ControllerBase
         {
             code = 400;
             msg = "操作失败";
-            return BadRequest(new
+            return Ok(new
             {
                 code = code,
                 msg = msg
