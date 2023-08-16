@@ -70,7 +70,7 @@ export function deleteArticle(params) {
     }).then(function (response) {
         if (response.data.code === 200) {
             return response.data;
-        } else if (response.data.code === 400){
+        } else if (response.data.code === 400) {
             Message.error("参数错误");
             return null;
         }
@@ -78,9 +78,10 @@ export function deleteArticle(params) {
         console.log(error);
     })
 }
-  
 
-//获取文章详情
+
+// 获取文章详情
+// modify by Xiang Lei 2023.8.16
 export function GetArticleDetailsAsync(params) {
     return Request({
         method: 'GET',
@@ -89,8 +90,8 @@ export function GetArticleDetailsAsync(params) {
     }).then(function (response) {
         if (response.data.code === 200) {
             return response.data;
-        } else {
-            Message.error("未搜索到结果");
+        } else if (response.data.code === 404) {
+            Message.error("帖子已被封禁");
             return null;
         }
     }).catch(function (error) {

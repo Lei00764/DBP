@@ -34,10 +34,10 @@ export function deleteComment(params) {
 }
 
 // 加载指定文章的评论
-export function getCommentByArticleId(params) {
+export function loadComment(params) {
   return Request({
     method: "GET",
-    url: "Comment/loadArtricleComment",
+    url: "Comment/loadComment",
     params: params
   }).then(function (response) {
     if (response.data.code === 200) {

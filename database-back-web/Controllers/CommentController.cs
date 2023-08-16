@@ -23,7 +23,7 @@ public class CommentController : ControllerBase
     {
         if (_database.Users.Any(x => x.UserId == user_id) == false || _database.Articles.Any(x => x.PostId == article_id) == false)
         {
-            return NotFound(new
+            return Ok(new
             {
                 code = 404,
                 msg = "用户或文章不存在",
@@ -55,7 +55,7 @@ public class CommentController : ControllerBase
     {
         if (_database.Comments.Any(x => x.MsgId == msg_id) == false)
         {
-            return NotFound(new
+            return Ok(new
             {
                 code = 404,
                 msg = "评论不存在",
@@ -75,12 +75,12 @@ public class CommentController : ControllerBase
     }
 
     // 加载指定文章的评论 modify by Xiang Lei 2023.8.13
-    [HttpGet("loadArtricleComment")]
-    public async Task<IActionResult> GetCommentByArticleId(int article_id,int order)//order=0顺序1倒序
+    [HttpGet("loadComment")]
+    public async Task<IActionResult> loadComment(int article_id,int order)
     {
         if (_database.Articles.Any(x => x.PostId == article_id) == false)
         {
-            return NotFound(new
+            return Ok(new
             {
                 code = 404,
                 msg = "文章不存在",
@@ -127,11 +127,10 @@ public class CommentController : ControllerBase
         });
     }
 
+    // modify by Xiang Lei 2023.8.16
     [HttpGet("viewComment")]
     public async Task<IActionResult> GetCommentDetailsAsync(int msg_id)
     {
-        var code = 200;
-        var msg = "success";
         var temp = await _database.Comments.ToListAsync();
         bool exist = false;
         if (temp != null)//判断表内是否有该留言
@@ -165,30 +164,26 @@ public class CommentController : ControllerBase
 
             if (comment_data[0].IsBanned != 0)
             {
-                code = 400;
-                msg = "该留言已被封禁";
                 return Ok(new
                 {
-                    code = code,
-                    msg = msg
+                    code = 404,
+                    msg = "该留言已被封禁"
                 });
             }
 
             return Ok(new
             {
-                code = code,
-                msg = msg,
+                code = 200,
+                msg = "success",
                 data = comment_data,
             });
         }
         else
         {
-            code = 400;
-            msg = "不存在该留言";
             return Ok(new
             {
-                code = code,
-                msg = msg
+                code = 404,
+                msg = "该留言不存在"
             });
         }
     }

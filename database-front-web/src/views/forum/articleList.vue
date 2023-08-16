@@ -4,7 +4,6 @@
         <div class="article-panel">
             <div class="article-list">
                 <articleListItem v-for="item in articleListInfo" :key="item.ID" :data="item">
-
                 </articleListItem>
             </div>
         </div>
@@ -13,8 +12,6 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue';
-// import { useRouter } from 'vue-router';
-
 import articleListItem from "@/components/articleListItem.vue"
 import { loadArticle } from "@/api/article.js"
 import { forum_searchArticle } from "@/api/article.js"
@@ -30,9 +27,6 @@ const pBoardId = ref(router.currentRoute.value.params.pBoardId);
 // 存储获取的文章数据
 const articleListInfo = ref([]);
 
-
-
- 
 // 获取文章数据
 const fetchData = async (stringValue = '') => {
     let result;
@@ -54,7 +48,7 @@ const fetchData = async (stringValue = '') => {
 
     if (!result)
         return;
-    
+
     store.commit('setArticles', result.data);
     console.log(store.state.articles);
     articleListInfo.value = store.state.articles;

@@ -130,12 +130,14 @@ public class FollowController : ControllerBase
         }
         if(exist){
             //查找用户的粉丝数量并返回
-            var fans_data = _database.Users.Where(a => a.UserId == user_id).Select(a => a.FollowerNum);
+            //var fans_data = _database.Users.Where(a => a.UserId == user_id).Select(a => a.FollowerNum);
+            //！！！数据库 用户表中粉丝数量信息与关注表中的数量不一致 ！！！
+            var fans_num = _database.Follows.Count(a => a.UserId == user_id);
             return Ok(new
             {
                 code = code,
                 msg = msg,
-                data = fans_data
+                data = fans_num
             });
         }
         else{
@@ -189,5 +191,9 @@ public class FollowController : ControllerBase
             });
         }
     }
+
+    //获取关注列表
+
+    //获取粉丝列表
 
 }
