@@ -6,7 +6,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 using auth.Database;
-using System.Buffers.Text;
+
 
 [ApiController]
 [Route("api/[controller]")]  // RESTful 风格
@@ -25,7 +25,11 @@ public class FilesController : ControllerBase
         var user = _database.Users.FirstOrDefault(x => x.UserId == userId);
         if (user == null)
         {
-            return NotFound("用户不存在");
+            return NotFound(new
+            {
+                code = 404,
+                msg = "用户不存在",
+            });
         }
 
         string? avatarPath = user.Avatar;
@@ -50,23 +54,42 @@ public class FilesController : ControllerBase
             }
         }
 
-        return NotFound("用户头像不存在");
-
-        
+        return NotFound(new
+        {
+            code = 404,
+            msg = "用户头像不存在",
+        });
     }
 
-    [HttpPost("setAvatar")]
-    public IActionResult SetAvatar(int user_id,byte[] image)
+    // 前端通过 formdata 上传图片数据
+    // 参考：https://www.cnblogs.com/leoxuan/articles/11087121.html
+    // 必须要显示指明参数来自 [FromForm] 
+    // 去掉 [FromForm] 后，可以在 swagger 上上传图片
+    [HttpPost("uploadAvatar")]
+    public IActionResult UploadAvatar([FromForm] int userId, [FromForm] IFormFile avatarFile)
     {
-        var user = _database.Users.FirstOrDefault(x => x.UserId == user_id);
+        var user = _database.Users.FirstOrDefault(x => x.UserId == userId);
         if (user == null)
         {
-            return NotFound("用户不存在");
+            return NotFound(new
+            {
+                code = 404,
+                msg = "用户不存在",
+            });
         }
-        MemoryStream ms = new MemoryStream(image);
-        System.Drawing.Image img = System.Drawing.Image.FromStream(ms);
-        string path="wwwroot/images/avatars/"+user_id.ToString()+".jpg";//已含文件名
-        img.Save(path,System.Drawing.Imaging.ImageFormat.Jpeg);
-        return Content("头像上传成功");
+
+        string path = "wwwroot/images/avatars/" + userId.ToString() + ".jpg";  // 指定图片存储路径
+
+        // 存储图片
+        using (var stream = new FileStream(path, FileMode.Create))
+        {
+            avatarFile.CopyTo(stream);  // Copy the uploaded avatar file to the specified path
+        }
+
+        return Ok(new
+        {
+            code = 200,
+            msg = "用户头像上传成功",
+        });
     }
 }

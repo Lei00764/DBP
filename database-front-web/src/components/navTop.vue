@@ -39,8 +39,9 @@
                     <span class="button-text">消息</span>
                 </el-button>
             </div>
-            <!-- 现在用户头像是写死的 lx -->
+            <!-- 现在用户头像是写死的 lei xiang -->
             <userAvatar :userId=8 :width=50 :addLink="false"></userAvatar>
+            <avatarUploader></avatarUploader>
         </div>
     </div>
 </template>

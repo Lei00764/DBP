@@ -10,13 +10,5 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))  // 为 src 创建一个别名
     }
-  },
-  server: {
-    proxy: {
-      '/api': {
-        target: 'http://localhost:5045',
-        changeOrigin: true,  // 允许跨域请求
-      }
-    }
-  },
+  }
 })
