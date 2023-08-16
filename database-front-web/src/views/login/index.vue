@@ -37,7 +37,7 @@
 </template>
   
 <script setup>
-import { ref, reactive, onMounted, onUnmounted, nextTick} from 'vue';
+import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue';
 import { userLogin, GetInfoByEmail } from '@/api/user';  // 引入 api 请求函数 userLogin,GetInfo
 import Message from "@/utils/Message.js"
 import router from "@/router/index.js"
@@ -66,7 +66,7 @@ const enterDown = (e) => {
 onUnmounted(() => {
     // 销毁事件
     window.removeEventListener("keydown", enterDown, false);
- 
+
 });
 
 // 登录
@@ -99,7 +99,7 @@ const doSubmitLogin = () => {
 
 
 const afterLogin = (person_info) => {
-    store.commit("doLogin",person_info.type); // 修改登录状态
+    store.commit("doLogin", person_info.type); // 修改登录状态
     //console.log(store.state.type); // 获取state值
     let params = {
         Email: formData.email,

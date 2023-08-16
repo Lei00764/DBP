@@ -2,7 +2,7 @@
     <div>
         <div id="container">
             <div id="header">
-                <navTop @search-enter="handleSearch2"></navTop>
+                <navTop></navTop>
             </div>
             <div id="choice-buttons">
                 <el-form :inline="true" class="form-container">
@@ -36,12 +36,6 @@ const buttonStyle = [
     { name: "甜点", background: "src/assets/forum-classify/dessert.png", hoverOpacity: 0.8 },
     { name: "其他", background: "src/assets/forum-classify/others.png", hoverOpacity: 0.8 }
 ];
-
-//可能有问题
-const handleSearch2 = (keywords) => {
-    fetchData(keywords);
-}
-
 
 
 // 点击本页面上的按钮，跳转到相应的板块

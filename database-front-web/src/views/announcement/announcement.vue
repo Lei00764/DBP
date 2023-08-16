@@ -14,8 +14,7 @@
             </div>
         </div>
         <!-- START 用户申请专业认证弹窗 -->
-        <el-dialog v-model="dialogVisible" title="发布一条新公告" width="50%"
-            :before-close="handleClose">
+        <el-dialog v-model="dialogVisible" title="发布一条新公告" width="50%" :before-close="handleClose">
             <el-form @submit.native.prevent="submitAnnouncement">
                 <el-form-item label="Content:">
                     <el-input type="textarea" v-model="form.announcementContent" />
@@ -60,10 +59,10 @@ const fetchData = async (stringValue = '') => {
         stringValue = "0"
         const params = {
             p_board_id: pBoardId.value,
-            page_num:1
+            page_num: 1
         };
         result = await loadAnnouncement(params);
-    } 
+    }
     else {
         const params = {
             keyword: stringValue
@@ -109,11 +108,10 @@ const submitAnnouncement = () => {
     console.log(params);
     postAnnouncement(params);
     fetchdata();//上传新公告后，更新一下前端显示公告
-    };
+};
 </script>
 
 <style>
-
 .header {
     /* 如果调整height，记得去 @/components/navTop.vue 中调整 header-content 样式 */
     height: 10vh;

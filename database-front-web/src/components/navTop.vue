@@ -11,7 +11,7 @@
             <!-- 中间 搜索栏 -->
             <!--搜素事件，回车触发   -->
             <div class="search-panel">
-                <el-input placeholder="Search Key Words" class="custom-input" v-model="formData.keywords"
+                <el-input placeholder="Search Key Words" class="custom-input" v-model="formData.keyword"
                     @keyup.enter="enterDown">
                     <!-- prefix 前置插入槽 -->
                     <template #prefix>
@@ -39,8 +39,7 @@
                     <span class="button-text">消息</span>
                 </el-button>
             </div>
-            <!-- 现在用户头像是写死的 lei xiang -->
-            <userAvatar :userId=8 :width=50 :addLink="false"></userAvatar>
+            <userAvatar :userId=store.state.Info.id :width=50 :addLink="false"></userAvatar>
             <avatarUploader></avatarUploader>
         </div>
     </div>
@@ -51,13 +50,10 @@ import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue';
 import router from "@/router/index.js"
 import { useStore } from 'vuex' // 引入store
 
-import { searchPost } from '@/api/search';  // 引入 api 请求函数 searchPost
-
-
 const store = useStore(); // 使用store必须加上
 
-const formData = reactive({
-    keywords: '',
+const formData = reactive({  // 用 reactive，而不用 ref
+    keyword: '',
 });
 
 onMounted(() => {
@@ -66,36 +62,18 @@ onMounted(() => {
         window.addEventListener("keydown", enterDown);
     });
 });
-const enterDown = async (e) => {
-    // console.log("chufa");
-    // let result;
-    // if (e.keyCode == 13 || e.keyCode == 100) {
-    //     e.preventDefault(); // 阻止默认提交动作
-    //     //doSearch(); // 定义的登录方法
-    //     const params = {
-    //         keyword: formData.keywords
-    //     };
-    //     result = await forum_searchArticle(params);
-    //     store.commit('setArticles', result.data);
-    //     console.log(result.data);
-    //     console.log(store.state.articles);
-    //     //fetchData(formData.keywords);
-    // }
-    // // 销毁事件
-    // window.removeEventListener("keydown", enterDown, false);
-}
 
-const doSearch = () => {
-    let params = {
-        keyword: formData.keywords
+const enterDown = async (e) => {
+    if (e.keyCode == 13 || e.keyCode == 100) {
+        console.log("进入搜索页面");
+        console.log("搜索关键词：", formData.keyword);
+        e.preventDefault(); // 阻止默认提交动作
+        // 将 keyword 作为查询参数传递给 /search 路由
+        // 导航到一个新的路由，同时还传递了一个查询参数 keyword
+        router.push({ path: '/search', query: { keyword: formData.keyword } });
     }
-    searchPost(params)
-        .then(function (result) {
-            console.log(result.data);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+    // 销毁事件
+    window.removeEventListener("keydown", enterDown, false);
 }
 
 const ToHome = () => {

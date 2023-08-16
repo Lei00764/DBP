@@ -37,19 +37,6 @@ const fetchData = async () => {
     let result = await loadArticle(params);
 
     articleListInfo.value = result.data;
-    // console.log(articleListInfo.value);
-
-    // stringValue = "0"
-
-    // else {
-    //     const params = {
-    //         keyword: stringValue
-    //     };
-    //     result = await forum_searchArticle(params);
-    // }
-    // store.commit('setArticles', result.data);
-    // console.log(store.state.articles);
-    // articleListInfo.value = store.state.articles;
 };
 
 // 在组件挂载时获取初始文章数据

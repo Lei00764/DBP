@@ -36,6 +36,11 @@ const router = createRouter({
             ]
         },
         {
+            path: '/Search',  // 搜索页面
+            name: 'Search',
+            component: () => import('@/views/Search.vue'),
+        },
+        {
             path: '/homeUser',  // 用户首页
             name: 'homeUser',
             component: () => import('@/views/homeUser/index.vue'),
