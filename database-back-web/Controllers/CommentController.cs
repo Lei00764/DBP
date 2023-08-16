@@ -76,7 +76,7 @@ public class CommentController : ControllerBase
 
     // 加载指定文章的评论 modify by Xiang Lei 2023.8.13
     [HttpGet("loadArtricleComment")]
-    public async Task<IActionResult> GetCommentByArticleId(int article_id)
+    public async Task<IActionResult> GetCommentByArticleId(int article_id,int order)//order=0顺序1倒序
     {
         if (_database.Articles.Any(x => x.PostId == article_id) == false)
         {
@@ -86,12 +86,39 @@ public class CommentController : ControllerBase
                 msg = "文章不存在",
             });
         }
+        if(order!=0&&order!=1)
+        {
+            return Ok(new
+        {
+            code = 400,
+            msg = "order参数值只能为0或1",
+        });
+        }
+        // var comment_data = await _database.Comments
+        //      .Where(x => x.PostId == article_id && x.IsBanned == 0) // 去掉被封禁的评论
+        //      .OrderBy(x => x.ReleaseTime)
+        //      .ToListAsync();
 
         var comment_data = await _database.Comments
-             .Where(x => x.PostId == article_id && x.IsBanned == 0) // 去掉被封禁的评论
-             .OrderBy(x => x.ReleaseTime)
-             .ToListAsync();
-
+                .Where(a => a.PostId == article_id&& a.IsBanned == 0)
+                .Join(_database.Users,
+                    comment => comment.UserId,
+                    user => user.UserId,
+                    (comment, user) => new
+                    {
+                        MsgID = comment.MsgId, //留言ID
+                        UserId = user.UserId, // 包含留言者的ID
+                        UserName = user.UserName, // 包含留言者的名字
+                        Content = comment.Content,  // 留言内容
+                        Time= comment.ReleaseTime //留言时间
+                    })
+                .OrderBy(x=>x.Time)
+                .ToListAsync();
+        
+        if(order==1)
+        {
+            comment_data.Reverse();
+        }
         return Ok(new
         {
             code = 200,

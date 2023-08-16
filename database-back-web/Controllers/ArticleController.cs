@@ -40,6 +40,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             var data = await _database
                 .Articles
+                .Where(x=>x.IsBanned==0)
                 .OrderByDescending(x => x.PostId)
                 .ToListAsync();
 
@@ -60,7 +61,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             var data = await _database
                 .Articles
                 .OrderByDescending(x => x.PostId)
-                .Where(x => x.Tag == tag_list[p_board_id])
+                .Where(x => x.Tag == tag_list[p_board_id]&&x.IsBanned==0)
                 .ToListAsync();
             data = data.Skip((page_num - 1) * page_size).Take(page_size).ToList();//截取第page_num页的数据
             if (data.Count() == 0)
