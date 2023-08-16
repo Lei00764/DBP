@@ -5,12 +5,21 @@ import Message from "@/utils/Message.js"  // 在每个 api 文件里都要引入
 
 // 显示图片/用户头像不需要api，直接通过url就行
 
+const config = {
+    headers: {
+        'Content-Type': 'multipart/form-data'
+    }
+};
+
 // 上传用户头像
-export function uploadAvatar(params) {
+// 将参数放到 formData 表单里面
+// database-front-web/src/components/avatarUploader.vue
+export function uploadAvatar(formData) {
     return Request({
         method: "POST",
-        url: 'file/uploadAvatar',
-        params: params
+        url: 'files/uploadAvatar',
+        data: formData,
+        headers: config.headers
     }).then(function (response) {
         if (response.data.code === 200) {
             Message.success("上传成功");

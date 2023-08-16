@@ -16,9 +16,9 @@
 <script setup>
 import { ref } from 'vue';
 import { useStore } from 'vuex' // 引入store
-import axios from 'axios'
-const store = useStore(); // 使用store必须加上
+import { uploadAvatar } from '@/api/files.js'
 
+const store = useStore(); // 使用store必须加上
 
 const formData = new FormData();
 
@@ -28,29 +28,11 @@ const beforeUpload = (file) => {
     return false; // 阻止默认上传
 };
 
-const uploadAvatar = async () => {
-    formData.append('userId', 16);
+const submitForm = () => {
+    formData.append('userId', store.state.Info.id);
     formData.append('avatarFile', formData.avatarFile);
 
-    try {
-        const response = await axios.post('http://localhost:5045/api/Files/uploadAvatar', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
-
-        if (response.data.code === 200) {
-            console.log('上传成功', response.data.msg);
-        } else {
-            console.error('上传失败', response.data.msg);
-        }
-    } catch (error) {
-        console.error('请求失败', error);
-    }
-};
-
-const submitForm = () => {
-    uploadAvatar();
+    uploadAvatar(formData);
 };
 </script>
 
