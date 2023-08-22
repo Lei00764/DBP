@@ -160,7 +160,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
     }
 
     //删除文章
-    [HttpDelete("deleteArticle/post_id")]
+    [HttpPost("deleteArticle")]
     public async Task<IActionResult> DeleteArticleAsync(int post_id)
     {
         var code = 200;
