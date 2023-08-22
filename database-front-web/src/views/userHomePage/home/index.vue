@@ -76,6 +76,13 @@
                     @current-change="handleCurrentChange"
                      />
                 </div>
+                <!-- 新增的按钮部分 -->
+                <div class="add-post-button">
+                    <router-link to="/addArticle" class="add-button">
+                        <!-- 这里可以使用适当的图标库来创建白色十字图标 -->
+                        <span class="cross-icon">+</span>
+                    </router-link>
+                </div>
             </div>
         </div>
 
@@ -92,7 +99,7 @@ import { useRoute, useRouter } from "vue-router"
 import { ApplyProfession } from "@/api/profession.js"
 import { useStore } from 'vuex' // 引入store
 import { searchArticle,getArticleNumber } from "@/api/article.js"
-import { forum_searchArticle } from "@/api/article.js"
+// import { forum_searchArticle } from "@/api/article.js"
 import userHomeArticleListltem from "@/components/userHomeArticleListltem.vue"
 
 // START 用户申请专业认证弹窗
@@ -355,6 +362,33 @@ const CheckImgExists = (imgurl) => {
     letter-spacing: 0px;
     display: flex;
 }
+.add-post-button {
+    /* position: fixed; */
+    /* bottom: 240px;
+    right: 110px; */ 
+    position: absolute;
+    left: 680px;
+    top: 450px;
+    width: 50px;
+    height: 50px;
+    background-color: #446b5c;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-button {
+    color: white;
+    text-decoration: none;
+    font-size: 35px;
+    line-height: 1;
+}
+
+.cross-icon {
+    transform: rotate(45deg);
+}
+
 </style>
   
 
