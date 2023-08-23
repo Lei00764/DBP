@@ -387,6 +387,7 @@ const CheckImgExists = (imgurl) => {
 .cross-icon {
     transform: rotate(45deg);
 }
+
 </style>
   
 
