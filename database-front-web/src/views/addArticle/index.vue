@@ -43,12 +43,8 @@
             </div>
             <!-- 展示公告板，添加内容 -->
             <div class="editArticle-form">
-                 <!-- <span class="editArticle-title-word">标题</span>
-                <div class="editArticle-title"></div>
-                <span class="editArticle-tag-word">标签</span>
-                <div class="editArticle-tag"></div>
-                <span class="editArticle-content-word">内容</span>
-                <div class="editArticle-content"></div> -->
+
+           
                 <span class="editArticle-title-word">标题</span>
                 <input class="editArticle-title" type="text" >
                 <span class="editArticle-tag-word">标签</span>

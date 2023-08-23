@@ -76,6 +76,7 @@
                     @current-change="handleCurrentChange"
                      />
                 </div>
+
                  <!-- 新增的按钮部分 -->
                  <div class="add-post-button">
                     <router-link to="/addArticle" class="add-button">
@@ -387,6 +388,7 @@ const CheckImgExists = (imgurl) => {
 .cross-icon {
     transform: rotate(45deg);
 }
+
 </style>
   
 
