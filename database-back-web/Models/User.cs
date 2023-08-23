@@ -33,6 +33,8 @@ public class User
     public int? Points { get; set; }
     [Column("LEVELS")]
     public int? Levels { get; set; }
+    [Column("FOLLOWNUM")]
+    public int? FollowNum { get; set; }
 
 
     public User()
