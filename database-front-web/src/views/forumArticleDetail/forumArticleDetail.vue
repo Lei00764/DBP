@@ -22,8 +22,10 @@
                 <!-- 需增加路径到作者个人主页 -->
                 <!-- <router-link :to="`/layout`"> -->
                 <userAvatar :userId="authorInfo.id" :width="50" :addLink="false"></userAvatar>
-
-                <div class="author">{{ articleInfo[0].authorName }} </div>
+                <!-- isFollowing ? '已关注' : '关注' -->
+                <div class="author">{{ articleInfo[0].authorName }} 
+                    <el-button @click="Follow(articleInfo[0].authorId)">{{ isFollowing ? '已关注' : '关注' }}</el-button>
+                </div>
                 <!-- </router-link> -->
                 <div class="publish_time" v-if="articleInfo[0].releaseTime">
                     发布于 {{ articleInfo[0].releaseTime.split('T')[0] }} {{ articleInfo[0].releaseTime.split('T')[1] }}
@@ -44,8 +46,12 @@ import { ref, reactive, toRefs, onMounted, watch, computed } from 'vue';
 import { useRouter } from 'vue-router'
 import { GetInfoByID } from '@/api/user';
 import { GetArticleDetailsAsync } from '@/api/article';
+import { followAuthor } from '@/api/follow';
 import navTop from "@/components/navTop.vue"
 import commentList from "./commentList.vue"
+import { useStore } from 'vuex' // 引入store
+
+const store = useStore(); // 使用store必须加上
 
 const router = useRouter()
 
@@ -61,6 +67,7 @@ const Share = () => {
 //文章详情
 const articleInfo = ref({});
 const authorInfo = ref({});
+const userId = ref();
 
 const getArticleDetail = async (articleId) => {
     const params = {
@@ -72,6 +79,7 @@ const getArticleDetail = async (articleId) => {
     }
     articleInfo.value = result.data;
     getAuthor(articleInfo.value[0].authorId);
+    Follow(articleInfo.value[0].authorId);
 }
 const getAuthor = async (userId) => {
     const params = {
@@ -94,6 +102,23 @@ watch(() => router.currentRoute.value.params.pBoardId, (newValue) => {
     // console.log(newValue);
     getArticleDetail(router.currentRoute.value.params.articleId);
 });
+
+//！！！用户是否关注了作者应该在页面加载时查询！！！
+//！！！user_id应该写成全局传入的用户信息
+const isFollowing = ref(1)
+//处理关注逻辑
+const Follow = async (userId='') => {
+    const params = {
+        user_id: store.state.Info.id,
+        author_id: userId,
+    }
+    let result = await followAuthor(params); 
+    if(!result){
+       return;
+    }
+    //if(result)
+    isFollowing.value = !isFollowing.value;
+}
 
 const formData = reactive({
 
