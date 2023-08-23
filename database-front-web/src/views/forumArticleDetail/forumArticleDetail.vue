@@ -31,10 +31,11 @@
                 <div class="content" ref="innerContent">
                     {{ articleInfo[0].content }}
                 </div>
+
             </el-form>
         </div>
         <div v-if="Object.keys(articleInfo).length > 0">
-            <commentList></commentList>
+            <commentList :articleId="router.currentRoute.value.params.articleId"></commentList>
         </div>
     </div>
 </template>
