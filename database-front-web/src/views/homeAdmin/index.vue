@@ -24,7 +24,7 @@
                     <el-form-item style="width:50px;">
                         <b style="color:black;">ID</b>
                     </el-form-item>
-                    <el-form-item>  
+                    <el-form-item>
                         <b style="position:absolute;left:80%;color:black;">{{ store.state.Info.id }}</b>
                     </el-form-item>
                 </el-form>
@@ -32,7 +32,7 @@
                     <el-form-item style="width:50px;">
                         <b style="color:black;">Email</b>
                     </el-form-item>
-                    <el-form-item>  
+                    <el-form-item>
                         <b style="position:absolute;left:80%;color:black;">{{ store.state.Info.email }}</b>
                     </el-form-item>
                 </el-form>
@@ -40,7 +40,7 @@
                     <el-form-item style="width:50px;">
                         <b style="color:black;">Tel</b>
                     </el-form-item>
-                    <el-form-item>  
+                    <el-form-item>
                         <b style="position:absolute;left:80%;color:black;">{{ store.state.Info.tel }}</b>
                     </el-form-item>
                 </el-form>
