@@ -76,7 +76,6 @@
                     @current-change="handleCurrentChange"
                      />
                 </div>
-
                  <!-- 新增的按钮部分 -->
                  <div class="add-post-button">
                     <router-link to="/addArticle" class="add-button">
