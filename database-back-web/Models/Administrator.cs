@@ -24,6 +24,6 @@ public class Administrator
 
     public Administrator()
     {
-        Avatar = "https://img-qn.51miz.com/Element/00/88/59/99/8de317d3_E885999_245f75fb.png!/quality/90/unsharp/true/compress/true/format/png/fw/720";
+        Avatar = "images/avatars/default.jpg";
     }
 }

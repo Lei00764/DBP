@@ -2,21 +2,24 @@
     <div>
         <div class="checkArticle-page">
             <el-form style="position: absolute;top:20%;left:7%">
-                <el-form-item v-for="(item,index) in list" :key="index">
+                <el-form-item v-for="(item, index) in list" :key="index">
                     <el-card class="article-list" @click.native="goArticle(index)">
                         <!-- 下面组件的v-if都不能省略，否则刷新页面会出错 -->
-                        <b v-if="Info[index]" style="position: absolute;top:20%;left:5%;font-size: 18px;color:rgb(61, 61, 61)">
-                            标题：{{ Info[index].title}}
+                        <b v-if="Info[index]"
+                            style="position: absolute;top:20%;left:5%;font-size: 18px;color:rgb(61, 61, 61)">
+                            标题：{{ Info[index].title }}
                         </b>
                         <b style="position: absolute;top:55%;left:5%;font-size: 14px;color:rgb(120, 120, 120)">
                             帖子ID：{{ item.postId }}
                         </b>
-                        <el-button class="pass_btn" style="position:absolute;top:35%;left:78%;" @click="pass(item.reportId)">
+                        <el-button class="pass_btn" style="position:absolute;top:35%;left:78%;"
+                            @click="pass(item.reportId)">
                             <el-icon>
                                 <Check />
                             </el-icon>
                         </el-button>
-                        <el-button class="close_btn" style="position: absolute;top:35%;left:85%;" @click="decline(item.reportId)">
+                        <el-button class="close_btn" style="position: absolute;top:35%;left:85%;"
+                            @click="decline(item.reportId)">
                             <el-icon>
                                 <Close />
                             </el-icon>
@@ -26,12 +29,13 @@
             </el-form>
 
             <el-card class="card" v-show="card_show" v-if="Info[currentCard]">
-                <el-avatar :size="70" :src="Info[currentCard].authorAvatar" style="position: absolute;top:8%;left:7%"></el-avatar>
+                <el-avatar :size="70" :src="Info[currentCard].authorAvatar"
+                    style="position: absolute;top:8%;left:7%"></el-avatar>
                 <b style="position: absolute;top:9%;left:25%;font-size: 20px;color:rgb(61, 61, 61)">
                     作者名：{{ Info[currentCard].authorName }}
                 </b>
                 <b style="position: absolute;top:16%;left:25%;font-size: 16px;color:rgb(120, 120, 120)">
-                    作者ID：{{ Info[currentCard].authorId}}
+                    作者ID：{{ Info[currentCard].authorId }}
                 </b>
                 <b style="position: absolute;top:28%;left:9%;font-size: 20px;color:rgb(61, 61, 61)">
                     举报原因：{{ list[currentCard].reason }}
@@ -42,12 +46,14 @@
                 <b style="position: absolute;top:52%;left:9%;font-size: 20px;color:rgb(61, 61, 61)">
                     帖子内容：{{ Info[currentCard].content }}
                 </b>
-                <el-button class="pass_btn" style="position: absolute;bottom:5%;left:45%;" @click="pass(list[currentCard].reportId)">
+                <el-button class="pass_btn" style="position: absolute;bottom:5%;left:45%;"
+                    @click="pass(list[currentCard].reportId)">
                     <el-icon>
                         <Check />
                     </el-icon>
                 </el-button>
-                <el-button class="close_btn" style="position: absolute;bottom:5%;left:55%;" @click="decline(list[currentCard].reportId)">
+                <el-button class="close_btn" style="position: absolute;bottom:5%;left:55%;"
+                    @click="decline(list[currentCard].reportId)">
                     <el-icon>
                         <Close />
                     </el-icon>
@@ -77,7 +83,7 @@ const Info = reactive([]); // 定义并初始化 Info 变量
 const GetList = () => {
     //将获取列表信息的接口封装在函数中
     ReportPostToDeal()
-        .then(function (result) { 
+        .then(function (result) {
             afterGet(result);
         })
         .catch(function (error) {
@@ -85,18 +91,18 @@ const GetList = () => {
         });
 }
 
-const afterGet = async(request) => {
+const afterGet = async (request) => {
     list.value = request.data;//申请信息放入list中
-    for(let i = 0; i < list.value.length; i++ ){
+    for (let i = 0; i < list.value.length; i++) {
         (function (index) {
             let params = {
                 article_id: list.value[index].postId,
             }
             GetArticleDetailsAsync(params)//获取对应举报的帖子信息
-                .then(function(result){
+                .then(function (result) {
                     Info[i] = result.data[0];
                 })
-                .catch(function(error){
+                .catch(function (error) {
                     console.log(error);
                 });
         })(i);
@@ -106,10 +112,10 @@ GetList();//获取列表，给list赋值
 
 const goArticle = (index) => {
     //进入文章详情页面（卡片）
-    if(index == currentCard.value){
+    if (index == currentCard.value) {
         card_show.value = !card_show.value;
     }
-    else{
+    else {
         card_show.value = true;
     }
     currentCard.value = index;
@@ -121,10 +127,10 @@ const pass = (reportId) => {
         report_id: reportId,
         adminId: store.state.Info.id,
         is_true: 1,
-        result:"情况属实，已做处理"
+        result: "情况属实，已做处理"
     }
     DealReportAync(params)
-        .then(function (result) { 
+        .then(function (result) {
             /*通过之后的操作 */
             GetList();
             currentCard.value = -1;
@@ -140,10 +146,10 @@ const decline = (reportId) => {
         report_id: reportId,
         adminId: store.state.Info.id,
         is_true: 2,
-        result:"抱歉，原帖没有问题"
+        result: "抱歉，原帖没有问题"
     }
     DealReportAync(params)
-        .then(function (result) { 
+        .then(function (result) {
             /*不通过之后的操作 */
             GetList();
             currentCard.value = -1;
@@ -218,5 +224,4 @@ const back = () => {
 
 .icon:hover {
     color: grey;
-}
-</style>
+}</style>

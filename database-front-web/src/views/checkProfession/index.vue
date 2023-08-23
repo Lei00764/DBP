@@ -211,5 +211,6 @@ const backToHome = () => {
     height: 650px;
     box-shadow: 4px 4px 4px 2px gray;
     border-radius: 10px;
-}</style>
+}
+</style>
   

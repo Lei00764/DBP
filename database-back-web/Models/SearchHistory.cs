@@ -14,5 +14,5 @@ public class SearchHistory
     [Column("USERID")]
     public int? UserId { get; set; }
     [Column("CONTENT")]
-    public string? Content{get;set;}
+    public string? Content { get; set; }
 }

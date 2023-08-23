@@ -19,7 +19,7 @@ public class Announcement
     public int? AdminId { get; set; }
     [Column("ISTOP")]
     public int? IsTop { get; set; }
-    
+
     public Announcement()
     {//设置默认值（初始值）
         IsTop = 0;
