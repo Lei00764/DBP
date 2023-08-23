@@ -2,25 +2,7 @@
     <div>
         <component1></component1>
         <!-- <calendar1></calendar1> -->
-        <!-- 签到积分 -->
-        <div class="rectangle_point">
-            <div class="point">
-                积分：{{ point }}
-            </div>
-            <el-button class="pro" @click="applyForProfession">申请专业厨师认证</el-button>
-        </div>
-        <!-- 签到积分 -->
-        <el-form-item>
-            <el-button class=sign-button round color=transparent :class="{ 'disabled': isSigned }" :disabled="isSigned"
-                @click="handleSignIn" style="color: rgb(8, 102, 75);
-                        background-color:rgba(224, 248, 242, 0.9);
-                        ;border-radius: 15px;">
-                <el-icon :size="23">
-                    <CircleCheckFilled />
-                </el-icon>
-                {{ formData.buttonLabel }}
-            </el-button>
-        </el-form-item>
+        
 
 
         <!-- START 用户申请专业认证弹窗 -->
@@ -43,6 +25,38 @@
         </el-dialog>
         <!-- END 用户申请专业认证弹窗 -->
 
+        <!-- 顶部的很好的 -->
+        <div class="topp">
+            <el-form>
+                <el-form-item>
+                    <el-input v-model="formData.keyword" clearable placehoder="请输入内容" @keyup.enter.native="fetchData(formData.keyword)">
+                    </el-input>
+                </el-form-item>
+                <el-button class=button11 round color=transparent @click="home"
+                    style="color:#000000;background-color:transparent;margin-top: 2px;">
+                    <el-icon :size="20">
+
+                        <House />
+
+                    </el-icon>
+                </el-button>
+                <el-button class=button13 round color=transparent @click="user"
+                    style="color:#000000;background-color:transparent;margin-top: 2px;">
+                    <el-icon :size="20">
+
+                        <User />
+
+                    </el-icon>
+                </el-button>
+
+                <div class="button2" @click="gotoLogin">
+                    &emsp;退出登录
+                </div>
+                <div class="button3" @click="gotoCreate">
+                    &emsp;创建账号
+                </div>
+            </el-form>
+        </div>
 
         <!-- 简直傻逼 如果你不小心看到了我的注释请无视它 它并没有什么真实意思 -->
         <el-button class=button12 round color=transparent @click="stars"
@@ -63,7 +77,8 @@
             </p>
             <!-- 帖子展示部分 -->
             <el-row>
-                <userHomeArticleListltem v-for="item in articleListInfo.slice(formData.index,formData.index+2)" :data="item">
+                <userHomeArticleListltem v-for="item in articleListInfo.slice(formData.index, formData.index + 2)"
+                    :data="item">
                 </userHomeArticleListltem>
             </el-row>
             <!-- 底部页面跳转 -->
@@ -72,12 +87,11 @@
                     <router-view />
                 </div>
                 <div class="example-pagination-block">
-                    <el-pagination background :page-size="2" layout="->,prev, pager, next,jumper" :total = "articleNumber"
-                    @current-change="handleCurrentChange"
-                     />
+                    <el-pagination background :page-size="2" layout="->,prev, pager, next,jumper" :total="articleNumber"
+                        @current-change="handleCurrentChange" />
                 </div>
-                 <!-- 新增的按钮部分 -->
-                 <div class="add-post-button">
+                <!-- 新增的按钮部分 -->
+                <div class="add-post-button">
                     <router-link to="/addArticle" class="add-button">
                         <!-- 这里可以使用适当的图标库来创建白色十字图标 -->
                         <span class="cross-icon">+</span>
@@ -98,7 +112,7 @@ import router from "@/router/index.js"
 import { useRoute, useRouter } from "vue-router"
 import { ApplyProfession } from "@/api/profession.js"
 import { useStore } from 'vuex' // 引入store
-import { searchArticle,getArticleNumber } from "@/api/article.js"
+import { searchArticle, getArticleNumber,searchArticles } from "@/api/article.js"
 import userHomeArticleListltem from "@/components/userHomeArticleListltem.vue"
 
 // START 用户申请专业认证弹窗
@@ -125,12 +139,19 @@ const formData = reactive({
     index: 0,
 });
 
+onMounted(() => {
+    fetchData();
+    fetchnum();
+
+})
 //———————————————————函数——————————————————————————
+
+
 const applyForProfession = () => {
     dialogVisible.value = true;
 }
 const handleCurrentChange = (number) => {
-  formData.index=number*2-2;
+    formData.index = number * 2 - 2;
 }
 const handleClose = (done) => {
     ElMessageBox.confirm('Are you sure to close this dialog?')
@@ -156,13 +177,7 @@ const submitApplication = () => {
 // END 用户申请专业认证弹窗
 
 
-//签到
-function handleSignIn() {
-    formData.isSigned = true;
-    formData.buttonLabel = '签到成功，积分+2';
-    point.value += 2
-    // 执行积分+2的逻辑
-}
+
 function stars() {
     if (formData.posting == 0) {
         formData.posting = 1;
@@ -174,7 +189,6 @@ function stars() {
 
 const { isSigned, buttonLabel } = toRefs(formData)
 const pBoardId = ref(router.currentRoute.value.params.pBoardId);
-
 // 文章列表获取
 // 存储获取的文章数据
 const articleListInfo = ref([]);
@@ -193,8 +207,7 @@ const fetchData = async (stringValue = '') => {
         const params = {
             keyword: stringValue
         };
-        // 这里并没有写好还得改
-        result = await forum_searchArticle(params);
+        result = await searchArticles(params);
     }
 
     if (!result)
@@ -225,10 +238,6 @@ const fetchnum = async (stringValue = '') => {
 
 };
 
-onMounted(() => {
-    fetchData();
-    fetchnum();
-})
 
 // const changePage = reactive({
 //   currentPage: 1,
@@ -292,29 +301,6 @@ const CheckImgExists = (imgurl) => {
   
 <style scoped>
 /* 初始化 */
-.pro {
-    position: absolute;
-    left: 75px;
-    top: -310px;
-    border-radius: 15px;
-}
-
-
-.sign-button {
-    position: absolute;
-    width: 219px;
-    height: 50px;
-    left: 0px;
-    top: 500px;
-    border-radius: 15px;
-}
-
-.disabled {
-    background-color: #888888;
-    color: #ffffff;
-    cursor: not-allowed;
-}
-
 .button12 {
     position: absolute;
     left: 800px;
@@ -337,34 +323,11 @@ const CheckImgExists = (imgurl) => {
 
 }
 
-/* 积分 */
-.rectangle_point {
-    position: absolute;
-    width: 220px;
-    height: 111px;
-    left: 8px;
-    top: 380px;
-    background: rgba(224, 248, 242, 0.9);
-    border-radius:
-        27px;
-}
 
-/* 积分 */
-.point {
-    /* 积分：769 */
-    position: absolute;
-    left: 30px;
-    top: 45px;
-    color: rgb(8, 102, 75);
-    font-family: Noto Sans SC;
-    font-size: 20px;
-    letter-spacing: 0px;
-    display: flex;
-}
 .add-post-button {
     /* position: fixed; */
     /* bottom: 240px;
-    right: 110px; */ 
+    right: 110px; */
     position: absolute;
     left: 680px;
     top: 450px;
@@ -388,6 +351,110 @@ const CheckImgExists = (imgurl) => {
     transform: rotate(45deg);
 }
 
+/* 头像 */
+.PersonSide_img {
+    width: 60px;
+    height: 60px;
+    background: url('@/assets/head.jpg');
+    background-size: cover;
+    background-position: center;
+    background-color: transparent;
+    margin-right: 3%;
+    margin-left: 5%;
+    border-radius: 20px;
+}
+
+.PersonSide_img.hover {
+    opacity: 0.2;
+}
+
+/* 用来设计输入框 */
+.topp {
+    position: absolute;
+    left: 300px;
+    top: 45px;
+    width: 800px;
+}
+
+.el-input {
+    position: absolute;
+    width: 400px;
+    /*调整整个组件的宽度*/
+    height: 30px;
+}
+
+:deep().el-input__wrapper {
+    background: rgb(8, 102, 75);
+    border: 0;
+    border-radius: 10px;
+}
+
+:deep().el-input__inner {
+    font-size: 14px;
+    font-family: PingFangSC-Regular, PingFang SC;
+    color: #ffffff;
+
+}
+
+/* el-button */
+.button11 {
+    position: absolute;
+    left: 410px;
+    top: -18px;
+
+}
+
+.button13 {
+    position: absolute;
+    left: 445px;
+    top: -18px;
+
+}
+
+/* login */
+.button2 {
+    border-radius: 8px;
+    font-size: 12px;
+    background-color: #ffffff;
+    border: 2px solid rgb(46, 47, 53);
+    position: absolute;
+    width: 75px;
+    height: 27px;
+    left: 610px;
+    top: -14px;
+    /* 盒子阴影的样式 */
+    box-shadow: 2px 2px 0px rgb(46, 47, 53);
+}
+
+/* 按钮被点击时将阴影切换 */
+.button2:active {
+    box-shadow: 3px 3px 3px inset rgb(99, 99, 99),
+        -6px 6px 8px inset rgba(255, 255, 255, 0.6);
+
+}
+
+/* switch account */
+.button3 {
+    border-radius: 8px;
+    font-size: 12px;
+    color: #ffffff;
+    background: rgb(8, 102, 75);
+    border: 2px solid rgb(46, 47, 53);
+    position: absolute;
+    width: 78px;
+    height: 27px;
+    left: 700px;
+    top: -14px;
+    /* 盒子阴影的样式 */
+    box-shadow: 2px 2px 0px rgb(46, 47, 53);
+}
+
+/* 按钮被点击时将阴影切换 */
+.button3:active {
+    box-shadow: 3px 3px 0px inset rgb(1, 18, 0),
+        -3px 3px 0px inset rgba(0, 0, 0, 0.1);
+
+}
 </style>
   
 

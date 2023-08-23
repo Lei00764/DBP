@@ -366,7 +366,34 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
         //     email = email
         // });
     }
-
+    //更改用户积分
+    [HttpPost("changePoint")]
+    public async Task<IActionResult> UserchangePoint(int user_id,int point_add,int level_add) // 传入增加的参数
+    {
+        
+        // 在用户表中找到匹配的用户
+        var user = _database.Users.Where(x => x.UserId == user_id);
+        if (user.Any())
+        {
+            var firstUser = user.First();
+            firstUser.Points = firstUser.Points+point_add;
+            firstUser.Levels = firstUser.Levels+level_add;
+            return Ok(new
+            {
+                code = 200,
+                msg = "success",
+            });
+        }
+        else{
+            // 如果在用户表找不到，返回错误信息
+            return Ok(new
+            {
+                code = 404,
+                msg = "Not Found",
+            });
+        }
+        
+    }
     //根据用户ID获取部分个人信息:用户昵称、个人积分、粉丝数量/ 关注数量、文章数量
     // [HttpGet("getUserInfo/user_id")]
     // public async Task<IActionResult> getUserInfoAsync(int user_id)
