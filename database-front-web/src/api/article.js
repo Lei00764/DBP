@@ -60,7 +60,7 @@ export function searchArticles(params) {
 //删除文章
 export function deleteArticle(params) {
     return Request({
-        method: 'DELETE',
+        method: 'POST',
         url: 'Article/deleteArticle',
         params: params
     }).then(function (response) {

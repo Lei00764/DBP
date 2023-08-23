@@ -50,25 +50,18 @@
             <!-- 展示公告板，添加内容 -->
 
             <div class="editArticle-form">
-                 <!-- <span class="editArticle-title-word">标题</span>
-                <div class="editArticle-title"></div>
-                <span class="editArticle-tag-word">标签</span>
-                <div class="editArticle-tag"></div>
-                <span class="editArticle-content-word">内容</span>
-                <div class="editArticle-content"></div> -->
-                <span class="editArticle-title-word">标题*</span>
+            <span class="editArticle-title-word">标题</span>
                 <input class="editArticle-title" v-model="formData.title" placeholder="Please input title">
-                <span class="editArticle-tag-word">标签*</span>
+                <span class="editArticle-tag-word">标签</span>
+                <select class="editArticle-tag" v-model="formData.tag">
+                    <option disabled value="">Please select one</option>
+                    <option>中餐</option>
+                    <option>西餐</option>
+                    <option>其他</option>
+                    <option>甜点</option>
+                </select>
 
-                <el-select class="editArticle-tag" v-model="formData.tag" placeholder="option"  >
-					<el-option label="中餐" value="2"></el-option>
-					<el-option label="西餐" value="3"></el-option>
-					<el-option label="其他" value="4"></el-option>
-					<el-option label="甜点" value="5"></el-option>
-				</el-select>
-
-
-                <span class="editArticle-content-word">内容*</span>
+                <span class="editArticle-content-word">内容</span>
                 <textarea class="editArticle-content" v-model="formData.content" placeholder="Type what you want"></textarea>
             </div>
         </div>

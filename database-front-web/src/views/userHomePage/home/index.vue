@@ -76,8 +76,8 @@
                     @current-change="handleCurrentChange"
                      />
                 </div>
-                <!-- 新增的按钮部分 -->
-                <div class="add-post-button">
+                 <!-- 新增的按钮部分 -->
+                 <div class="add-post-button">
                     <router-link to="/addArticle" class="add-button">
                         <!-- 这里可以使用适当的图标库来创建白色十字图标 -->
                         <span class="cross-icon">+</span>
@@ -99,7 +99,6 @@ import { useRoute, useRouter } from "vue-router"
 import { ApplyProfession } from "@/api/profession.js"
 import { useStore } from 'vuex' // 引入store
 import { searchArticle,getArticleNumber } from "@/api/article.js"
-// import { forum_searchArticle } from "@/api/article.js"
 import userHomeArticleListltem from "@/components/userHomeArticleListltem.vue"
 
 // START 用户申请专业认证弹窗

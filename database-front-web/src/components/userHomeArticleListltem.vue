@@ -22,8 +22,8 @@
       </div>
       <div class="bottom">
         <time class="time">{{ currentDate }}</time>
-        <el-button type="primary" round class editButton size="small">编辑</el-button>
-        <el-button type="danger" round class deleteButton size="small">删除</el-button>
+        <el-button type="primary" round class editButton size="small" @click="edit">编辑</el-button>
+        <el-button type="danger" round class deleteButton size="small" @click="deleteArticles">删除</el-button>
       </div>
     </div>
   </el-card>
@@ -32,6 +32,8 @@
 <script setup>
 import { defaultInitialZIndex } from 'element-plus';
 import { ref, reactive, toRefs, onMounted } from 'vue';
+import { useRouter } from 'vue-router'
+import { deleteArticle } from "@/api/article.js"
 const currentDate = ref(new Date())//
 
 // 接收父组件的信息
@@ -44,7 +46,22 @@ const props = defineProps({
     type: Int16Array,
   },
 });
-
+const edit = () => {
+  router.push({ path: 'forumArticleDetail'})
+};
+const deleteArticles = async(postId) => {
+    let result;
+    const params = {
+      post_id: props.data.postId
+    };
+    result = await deleteArticle(params);
+    // if(result.code==200){
+    //   window.alert('success');
+    // }
+    // else{
+    //   window.alert('error');
+    // }
+};
 // console.log(props.data);
 </script>
 
