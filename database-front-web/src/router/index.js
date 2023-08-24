@@ -86,6 +86,11 @@ const router = createRouter({
             component: () => import('@/views/addArticle/index.vue'),
         },
         {
+            path: '/editArticle/:articleId/',  // 修改文章
+            name: 'editArticle',
+            component: () => import('@/views/editArticle/index.vue'),
+        },
+        {
             path: '/forumArticleDetail/:articleId/',  // 论坛帖子详情页
             name: 'forumArticleDetail',
             component: () => import('@/views/forumArticleDetail/forumArticleDetail.vue'),

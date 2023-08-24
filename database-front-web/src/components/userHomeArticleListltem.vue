@@ -35,10 +35,9 @@ import { ref, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router'
 import { deleteArticle } from "@/api/article.js"
 const currentDate = ref(new Date())//
-
+const router = useRouter();
 // 接收父组件的信息
 const props = defineProps({
-
   data: {
     type: Object,
   },
@@ -47,7 +46,12 @@ const props = defineProps({
   },
 });
 const edit = () => {
-  router.push({ path: 'forumArticleDetail'})
+  router.push({ 
+    path: 'editArticle/:articleId',
+    query:{
+      articleId:props.data.postId
+    }
+  })
 };
 const deleteArticles = async(postId) => {
     let result;
