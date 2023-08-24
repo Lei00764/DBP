@@ -202,7 +202,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
     }
 
     //修改文章
-    [HttpPost("updateArticle/post_id")]
+    [HttpPost("updateArticle")]
     public async Task<IActionResult> UpdateArticleAsync(int post_id, string title, string content)
     {
         var code = 200;

@@ -146,7 +146,19 @@ onMounted(() => {
 })
 //———————————————————函数——————————————————————————
 
+const home = () => {
+    router.push({ path: 'homeUser' })
+};
 
+const user = () => {
+    router.push({ path: '/userHomePage/user' })
+};
+const gotoLogin = () => {
+    router.push({ path: 'login' })
+};
+const gotoCreate = () => {
+    router.push({ path: 'register' })
+};
 const applyForProfession = () => {
     dialogVisible.value = true;
 }
