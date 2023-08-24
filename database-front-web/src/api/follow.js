@@ -23,6 +23,19 @@ export function followAuthor(params) {
     });
 }
 
+//判断关注状态
+export function isfollowAuthor(params) {
+    return Request({
+        method: 'GET',
+        url: 'Follow/isFollow',
+        params: params
+    }).then(function (response) {
+        return response.data;
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
+
 //获取用户粉丝数量
 export function getFansNumber(params) {
     return Request({

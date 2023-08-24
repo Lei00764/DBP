@@ -123,6 +123,38 @@ public class FollowController : ControllerBase
         });
     }
 
+    //判断关注状态
+    [HttpGet("isFollow")]
+    public IActionResult isFollowAsync(int user_id, int author_id)
+    {
+        var code = 200;
+        var msg = "success";
+        var a = _database.Users.Where(x => x.UserId == user_id);
+        var b = _database.Users.Where(x => x.UserId == author_id);
+        var record = _database.Follows.Where(x => x.UserId == author_id && x.FollowerUserId == user_id);
+        bool r_exist = false;
+        foreach (var r in record)
+        {
+            if (r.UserId == author_id && r.FollowerUserId == user_id)
+            {
+                r_exist = true;
+                return Ok(new
+                {
+                    data = r_exist,
+                    code = code,
+                    msg = msg,
+                });
+            }
+        }
+        return Ok(new
+        {
+            data = r_exist,
+            code = code,
+            msg = msg
+        });
+    }
+
+
     //获取粉丝数量
     [HttpGet("FansNumber")]
     public async Task<IActionResult> FansNumberAsync(int user_id)

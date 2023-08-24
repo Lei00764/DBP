@@ -375,9 +375,12 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
         var user = _database.Users.Where(x => x.UserId == user_id);
         if (user.Any())
         {
-            var firstUser = user.First();
-            firstUser.Points = firstUser.Points+point_add;
-            firstUser.Levels = firstUser.Levels+level_add;
+            foreach (var item in user)
+            {
+                item.Points = item.Points+point_add;
+                item.Levels = item.Levels+level_add;
+            }
+            await _database.SaveChangesAsync();
             return Ok(new
             {
                 code = 200,
@@ -388,7 +391,7 @@ public class UserController : ControllerBase  // 命名规范，继承自 Contro
             // 如果在用户表找不到，返回错误信息
             return Ok(new
             {
-                code = 404,
+                code = 400,
                 msg = "Not Found",
             });
         }
