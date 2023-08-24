@@ -47,7 +47,7 @@ import { ref, reactive, toRefs, onMounted, watch, computed } from 'vue';
 import { useRouter } from 'vue-router'
 import { GetInfoByID } from '@/api/user';
 import { GetArticleDetailsAsync } from '@/api/article';
-import { followAuthor } from '@/api/follow';
+import { followAuthor,isfollowAuthor } from '@/api/follow';
 import navTop from "@/components/navTop.vue"
 import commentList from "./commentList.vue"
 import { useStore } from 'vuex' // 引入store
@@ -80,7 +80,7 @@ const getArticleDetail = async (articleId) => {
     }
     articleInfo.value = result.data;
     getAuthor(articleInfo.value[0].authorId);
-    Follow(articleInfo.value[0].authorId);
+    isFollow(articleInfo.value[0].authorId);
 }
 const getAuthor = async (userId) => {
     const params = {
@@ -104,9 +104,21 @@ watch(() => router.currentRoute.value.params.pBoardId, (newValue) => {
     getArticleDetail(router.currentRoute.value.params.articleId);
 });
 
-//！！！用户是否关注了作者应该在页面加载时查询！！！
-//！！！user_id应该写成全局传入的用户信息
-const isFollowing = ref(1)
+const isFollowing = ref()
+//页面加载时判断是否关注
+const isFollow  = async (userId) => {
+    const params = {
+        user_id: store.state.Info.id,
+        author_id: userId,
+    }
+    let result = await isfollowAuthor(params); 
+    if(result.data == true){
+        isFollowing.value = 1;
+    }
+    else{
+        isFollowing.value = 0;
+    }
+}
 //处理关注逻辑
 const Follow = async (userId='') => {
     const params = {
@@ -117,7 +129,6 @@ const Follow = async (userId='') => {
     if(!result){
        return;
     }
-    //if(result)
     isFollowing.value = !isFollowing.value;
 }
 
