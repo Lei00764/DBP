@@ -32,7 +32,7 @@
                 <!-- 发布按钮 -->
                 <el-form-item>
                  
-                    <el-button type="primary" class="publish-button" @click="editArticle" >
+                    <el-button type="primary" class="publish-button" @click="edit" >
                         <span class="iconfont icon-publish"></span>
                         <span>发布</span>
                     </el-button>
@@ -60,7 +60,7 @@
 import router from "@/router/index.js"
 import { ref, reactive, toRefs, onMounted } from 'vue';
 import { useRoute } from 'vue-router'
-import { postArticle,GetArticleDetailsAsync } from "@/api/article.js"
+import { postArticle,GetArticleDetailsAsync,editArticle } from "@/api/article.js"
 import { useStore } from 'vuex' // 引入store
 onMounted(() => {
     getArticleDetail(route.query.articleId);
@@ -89,12 +89,12 @@ const formData = reactive({
     content:"",
    
 });
-const editArticle = async() => {
+const edit = async() => {
     let result;
     const params = {
-        post_id: router.query.articleId,
-        title:formData.value.title,
-        content:formData.value.content,
+        post_id: route.query.articleId,
+        title:formData.title,
+        content:formData.content,
     };
     console.log(params);
     result = await editArticle(params);
@@ -115,7 +115,7 @@ const doUser = () => {
 };
 const doReturn = () => {
     //返回论坛界面
-    router.push({ path: 'forum/:tag' })
+    router.push({ path: 'userHomePage' })
 };
 const doLogoff = () => {
     //退出登录
