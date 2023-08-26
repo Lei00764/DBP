@@ -77,8 +77,8 @@
             </p>
             <!-- 帖子展示部分 -->
             <el-row>
-                <userHomeArticleListltem v-for="item in articleListInfo.slice(formData.index, formData.index + 2)"
-                    :data="item">
+                <userHomeArticleListltem v-if="refreshs" v-for="item in articleListInfo.slice(formData.index, formData.index + 2)"
+                    :data="item" @child-click="refreshing" >
                 </userHomeArticleListltem>
             </el-row>
             <!-- 底部页面跳转 -->
@@ -104,7 +104,7 @@
 </template>
   
 <script setup="props">
-import { ref, reactive, toRefs, onMounted } from 'vue';
+import { getCurrentInstance, ref, reactive, toRefs, onMounted,nextTick, watch } from 'vue';
 import component1 from '../component1/component1.vue';
 import Message from "@/utils/Message.js"
 // import { ElPagination } from 'element-plus'
@@ -124,7 +124,9 @@ const dialogVisible = ref(false)
 const form = ref({
     illustrate: '',
     evidence: '',
+    
 });
+const refreshs=ref(true)
 //用户头像
 const state = reactive({
     fits: ['fill'],
@@ -145,20 +147,15 @@ onMounted(() => {
 
 })
 //———————————————————函数——————————————————————————
+const refreshing = () => {
+    fetchData();
+    fetchnum();
+    refreshs.value = false
+    nextTick(()=>{
+        refreshs.value = true
+    })
+}
 
-const home = () => {
-    router.push({ path: 'homeUser' })
-};
-
-const user = () => {
-    router.push({ path: '/userHomePage/user' })
-};
-const gotoLogin = () => {
-    router.push({ path: 'login' })
-};
-const gotoCreate = () => {
-    router.push({ path: 'register' })
-};
 const applyForProfession = () => {
     dialogVisible.value = true;
 }
