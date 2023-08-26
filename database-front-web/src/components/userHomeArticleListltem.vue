@@ -31,11 +31,12 @@
 
 <script setup>
 import { defaultInitialZIndex } from 'element-plus';
-import { ref, reactive, toRefs, onMounted } from 'vue';
+import { ref, reactive, toRefs, onMounted,defineEmits} from 'vue';
 import { useRouter } from 'vue-router'
 import { deleteArticle } from "@/api/article.js"
 const currentDate = ref(new Date())//
 const router = useRouter();
+const emit = defineEmits(['child-click'])
 // 接收父组件的信息
 const props = defineProps({
   data: {
@@ -59,12 +60,13 @@ const deleteArticles = async(postId) => {
       post_id: props.data.postId
     };
     result = await deleteArticle(params);
-    // if(result.code==200){
-    //   window.alert('success');
-    // }
-    // else{
-    //   window.alert('error');
-    // }
+    if(result.code==200){
+      window.alert('success');
+      emit('child-click',1)
+    }
+    else{
+      window.alert('error');
+    }
 };
 // console.log(props.data);
 </script>

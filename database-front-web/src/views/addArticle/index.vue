@@ -97,6 +97,7 @@ const postArticles = async(user_id,tag,content,picture,Sharelink) => {
     result = await postArticle(params);
     if(result.code==200){
       window.alert('成功了哦');
+      router.push({ path: 'userHomePage' });
     }
     else{
       window.alert('error');
