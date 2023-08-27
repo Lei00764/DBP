@@ -11,10 +11,30 @@
                 <!-- </router-link> -->
             </div>
             <el-form class="announ-announcement-form" :style="{ height: formHeight }">
-                <el-button class="userReportIcon" @click="Report">
+                <!-- 举报按钮 点击弹窗 -->
+                <el-button class="userReportIcon" text @click="centerDialogVisible = true">
                     <font-awesome-icon :icon="['fas', 'triangle-exclamation']" />
                 </el-button>
-                <el-button class="userShareIcon" @click="Share">
+  
+                <el-dialog
+                    v-model="centerDialogVisible"
+                    title="举报"
+                    width="30%"
+                    align-center
+                >
+                <span>举报原因</span>
+                <el-input placeholder="Reason" v-model="formData.reportReason">
+                </el-input>
+                <template #footer>
+                    <span class="dialog-footer">
+                        <el-button @click="centerDialogVisible = false">取消</el-button>
+                        <el-button type="primary" @click="centerDialogVisible = false, reportConfirm">确认</el-button>
+                    </span>
+                </template>
+                </el-dialog>
+
+                <OnlineModal :controlVisible="visibleIt" @closeModal="visibleIt=false"/>
+                <el-button class="userShareIcon" text @click="Share">
                     <font-awesome-icon :icon="['fas', 'arrow-up-from-bracket']" />
                 </el-button>
                 <!-- 文章详情展示未完成 -->
@@ -46,13 +66,13 @@ import { GetInfoByID } from '@/api/user';
 import { GetArticleDetailsAsync } from '@/api/article';
 import navTop from "@/components/navTop.vue"
 import commentList from "./commentList.vue"
+import { ReportArticle } from '@/api/report';//引入举报api
 
 const router = useRouter()
 
-const Report = () => {
-    //举报页
-    router.push({ name: 'reportArticle' })
-};
+//举报弹窗
+const centerDialogVisible = ref(false)
+
 
 const Share = () => {
 
@@ -116,6 +136,33 @@ const formHeight = computed(() => {
         return 200 + 'px'
     }
 })
+
+
+
+
+//举报信息：作者名，作者id，举报原因，帖子标题，帖子内容
+
+const reportConfirm = async(userId , articleId) => {
+    // 提交举报
+    if(!formData.reportReason){
+        Message.error("举报原因不能为空");
+        return;
+    }
+    let result;
+    const params = {
+        user_id: userId,
+        article_id:articleId,
+        reason:formData.reportReason
+    };
+    console.log(params);
+    result = await ReportArticle(params);
+    if(result.code==200){
+      window.alert('举报成功');
+    }
+    else{
+      window.alert('error');
+    }
+};
 
 </script>
 
@@ -222,4 +269,9 @@ const formHeight = computed(() => {
     color: #5e5e5e;
     font-size: small;
 }
+
+
+.dialog-footer button:first-child {
+    margin-right: 10px;
+  }
 </style>
