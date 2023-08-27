@@ -23,10 +23,10 @@
             </div>
             <div class="information">
                 <div class="fans">
-                    Fans:{{ props.fans_num }}
+                    Fans:{{ fansNumber }}
                 </div>
                 <div class="following">
-                    Following:{{ props.following_num }}
+                    Following:{{ followerNumber }}
                 </div>
                 <div class="content">
                     Content:{{ articleNumber }}
@@ -90,6 +90,7 @@
 import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue';
 import { searchArticle,getArticleNumber } from "@/api/article.js"
 import { GetInfoByID, changePoint} from "@/api/user.js"
+import { getFansNumber,getFollowNumber} from "@/api/follow.js"
 import { House, Star, User } from '@element-plus/icons-vue'
 import { ElPagination } from 'element-plus'
 import { useRouter } from 'vue-router'
@@ -127,9 +128,13 @@ const props = defineProps({
 onMounted(() => {
     fetchnum();
     fetchuser();
+    fetchfollownum();
+    fetchfansnum();
 })
 const UserInfo = ref([]);
 const articleNumber = ref(0);
+const fansNumber = ref(0);
+const followerNumber = ref(0);
 //签到
 const handleSignIn = async(point,current_point) => {
     formData.isSigned = true;
@@ -178,6 +183,52 @@ const fetchnum = async (stringValue = '') => {
     if (!result)
         return;
     articleNumber.value = result;
+
+};
+//关注数目
+const fetchfollownum = async (stringValue = '') => {
+    let result;
+    if (!stringValue) {
+        stringValue = "0"
+        const params = {
+            user_id: 8
+        };
+        result = await getArticleNumber(params);
+    }
+    else {
+        const params = {
+            keyword: stringValue
+        };
+        // 这里并没有写好还得改
+        result = await getArticleNumber(params);
+    }
+
+    if (!result)
+        return;
+    fansNumber.value = result;
+
+};
+//粉丝数目
+const fetchfansnum = async (stringValue = '') => {
+    let result;
+    if (!stringValue) {
+        stringValue = "0"
+        const params = {
+            user_id: 8
+        };
+        result = await getFollowNumber(params);
+    }
+    else {
+        const params = {
+            keyword: stringValue
+        };
+        // 这里并没有写好还得改
+        result = await getFollowNumber(params);
+    }
+
+    if (!result)
+        return;
+    followerNumber.value = result;
 
 };
 //获取当前用户信息

@@ -63,7 +63,7 @@ export function getFollowNumber(params) {
         if (response.data.code === 200) {
             return response.data.data;
         } else if (response.data.code === 400) {
-            Message.error("该用户无关注的用户");
+            //Message.error("该用户无关注的用户");
             return response.data.data;
         }
     }).catch(function (error) {
