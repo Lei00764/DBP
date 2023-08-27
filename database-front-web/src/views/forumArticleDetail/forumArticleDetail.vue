@@ -67,6 +67,9 @@ import { GetArticleDetailsAsync } from '@/api/article';
 import navTop from "@/components/navTop.vue"
 import commentList from "./commentList.vue"
 import { ReportArticle } from '@/api/report';//引入举报api
+import { useStore } from 'vuex' // 引入store
+
+const store = useStore(); // 使用store必须加上
 
 const router = useRouter()
 
