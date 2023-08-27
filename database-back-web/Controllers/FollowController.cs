@@ -36,9 +36,11 @@ public class FollowController : ControllerBase
                 msg = msg,
             });
         }
+        //userid是关注者，author是被关注者
         var a = _database.Users.Where(x => x.UserId == user_id);
         var b = _database.Users.Where(x => x.UserId == author_id);
-        var record = _database.Follows.Where(x => x.UserId == user_id && x.FollowerUserId == author_id);
+        //改了这里
+        var record = _database.Follows.Where(x => x.UserId == author_id && x.FollowerUserId == user_id);
         bool a_exist = false;
         bool b_exist = false;
         bool r_exist = false;
@@ -60,7 +62,8 @@ public class FollowController : ControllerBase
         }
         foreach (var r in record)
         {
-            if (r.UserId == user_id && r.FollowerUserId == author_id)
+            //改了这里
+            if (r.UserId == author_id && r.FollowerUserId == user_id)
             {
                 r_exist = true;
                 break;
@@ -68,7 +71,7 @@ public class FollowController : ControllerBase
         }
         if (a_exist == false || b_exist == false)
         {
-            code = 400;
+            code = 401;
             msg = "用户不存在";
             return Ok(new
             {
@@ -76,7 +79,17 @@ public class FollowController : ControllerBase
                 msg = msg,
             });
         }
-        foreach (var item in a)//更改粉丝数及关注记录
+        foreach (var item in a)//更改关注的人的数量
+        {
+            if (r_exist == false)//未关注
+            {
+                item.FollowNum += 1;
+            }
+            else{ //已关注
+                item.FollowNum -= 1;
+            }
+        }
+        foreach (var item in b)//更改粉丝数及关注记录
         {
             if (r_exist == false)//未关注
             {
@@ -85,8 +98,9 @@ public class FollowController : ControllerBase
                 await _database.SaveChangesAsync();
                 var newRecord = new Follow()
                 {
-                    UserId = user_id,
-                    FollowerUserId = author_id
+                    //还有这里
+                    UserId = author_id,
+                    FollowerUserId = user_id
                 };
                 _database.Follows.AddRange(newRecord);
                 await _database.SaveChangesAsync();
@@ -108,6 +122,38 @@ public class FollowController : ControllerBase
             msg = msg
         });
     }
+
+    //判断关注状态
+    [HttpGet("isFollow")]
+    public IActionResult isFollowAsync(int user_id, int author_id)
+    {
+        var code = 200;
+        var msg = "success";
+        var a = _database.Users.Where(x => x.UserId == user_id);
+        var b = _database.Users.Where(x => x.UserId == author_id);
+        var record = _database.Follows.Where(x => x.UserId == author_id && x.FollowerUserId == user_id);
+        bool r_exist = false;
+        foreach (var r in record)
+        {
+            if (r.UserId == author_id && r.FollowerUserId == user_id)
+            {
+                r_exist = true;
+                return Ok(new
+                {
+                    data = r_exist,
+                    code = code,
+                    msg = msg,
+                });
+            }
+        }
+        return Ok(new
+        {
+            data = r_exist,
+            code = code,
+            msg = msg
+        });
+    }
+
 
     //获取粉丝数量
     [HttpGet("FansNumber")]

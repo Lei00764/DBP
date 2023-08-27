@@ -33,15 +33,17 @@ public class User
     public int? Points { get; set; }
     [Column("LEVELS")]
     public int? Levels { get; set; }
+    [Column("FOLLOWNUM")]
+    public int? FollowNum { get; set; }
 
 
     public User()
     {
         Professional = "NONE";
-        Avatar = "https://img-qn.51miz.com/Element/00/88/59/99/8de317d3_E885999_245f75fb.png!/quality/90/unsharp/true/compress/true/format/png/fw/720";
+        Avatar = "images/avatars/default.jpg";
         FollowerNum = 0;
         ThemeID = 1;  // 默认主题
-        Points=0;
-        Levels=0;
+        Points = 0;
+        Levels = 0;
     }
 }

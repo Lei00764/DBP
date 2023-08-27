@@ -80,3 +80,21 @@ export function GetInfoByID(params) {
         console.log(error);
     });
 }
+
+// 更改用户积分
+export function changePoint(params) {
+    return Request({
+        method: 'POST',
+        url: 'user/changePoint',
+        params: params
+    }).then(function (response) {
+        if (response.data.code === 200) {
+            Message.success("success");
+            return response.data;
+        } else {
+            Message.error("error");
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+}

@@ -1,8 +1,3 @@
-<!--该界面尚未完全完成-->
-<!--标签添加功能尚未完善（计划做成让用户选择/输入后添加到标签栏）-->
-<!--发布新文章还需要添加图片，目前尚未添加-->
-
-
 <template>
     <div>
         <div class="addArticle">
@@ -37,7 +32,7 @@
                 <!-- 发布按钮 -->
                 <el-form-item>
                  
-                    <el-button type="primary" class="publish-button" @click="postArticles" >
+                    <el-button type="primary" class="publish-button" @click="edit" >
                         <span class="iconfont icon-publish"></span>
                         <span>发布</span>
                     </el-button>
@@ -45,22 +40,15 @@
             </div>
 
             <div class="page_head">
-            <span class="welcome-word">一起开启美食世界吧~</span>
+            <span class="welcome-word">在这里更改你的文章</span>
             </div>
             <!-- 展示公告板，添加内容 -->
 
             <div class="editArticle-form">
             <span class="editArticle-title-word">标题</span>
-                <input class="editArticle-title" v-model="formData.title" placeholder="Please input title">
+                <input class="editArticle-title" v-model="formData.title" placeholder="Please input title" disabled>
                 <span class="editArticle-tag-word">标签</span>
-                <select class="editArticle-tag" v-model="formData.tag">
-                    <option disabled value="">Please select one</option>
-                    <option>中餐</option>
-                    <option>西餐</option>
-                    <option>其他</option>
-                    <option>甜点</option>
-                </select>
-
+                <input class="editArticle-tag" v-model="formData.tag" placeholder="Please input title" disabled>
                 <span class="editArticle-content-word">内容</span>
                 <textarea class="editArticle-content" v-model="formData.content" placeholder="Type what you want"></textarea>
             </div>
@@ -71,33 +59,47 @@
 <script setup>
 import router from "@/router/index.js"
 import { ref, reactive, toRefs, onMounted } from 'vue';
-import { useRouter } from 'vue-router'
-import { postArticle } from "@/api/article.js"
+import { useRoute } from 'vue-router'
+import { postArticle,GetArticleDetailsAsync,editArticle } from "@/api/article.js"
 import { useStore } from 'vuex' // 引入store
+onMounted(() => {
+    getArticleDetail(route.query.articleId);
+});
 
 const store = useStore(); // 使用store必须加上
-const formData = ref({
-    title:'',
-    tag:'',
-    content:'',
+const route = useRoute();
+const articleInfo = ref([]);
+const getArticleDetail = async () => {
+    const params = {
+        article_id: route.query.articleId,
+    }
+    let result = await GetArticleDetailsAsync(params);
+    if (!result) {
+        return;
+    }
+    
+    articleInfo.value = result.data;
+    formData.title=articleInfo.value[0].title;
+    formData.tag=articleInfo.value[0].tag;
+    formData.content=articleInfo.value[0].content;
+}
+const formData = reactive({
+    title:"",
+    tag:"",
+    content:"",
    
 });
-const postArticles = async(user_id,tag,content,picture,Sharelink) => {
+const edit = async() => {
     let result;
     const params = {
-        // user_id: store.state.Info.id,
-        user_id: 8,
-        title:formData.value.title,
-        tag:formData.value.tag,
-        content:formData.value.content,
-        picture:'1',
-        Sharelink:'1'
+        post_id: route.query.articleId,
+        title:formData.title,
+        content:formData.content,
     };
     console.log(params);
-    result = await postArticle(params);
+    result = await editArticle(params);
     if(result.code==200){
-      window.alert('成功了哦');
-      router.push({ path: 'userHomePage' });
+      window.alert('success');
     }
     else{
       window.alert('error');
@@ -107,25 +109,18 @@ const doHome = () => {
     //返回主页
     router.push({ name: 'homeUser' });
 }
-
 const doUser = () => {
     //返回用户主页
     router.push({ path: 'userHomePage' });
 };
-
-
 const doReturn = () => {
     //返回论坛界面
-    router.push({ path: 'forum/:tag' })
+    router.push({ path: 'userHomePage' })
 };
-
-
 const doLogoff = () => {
     //退出登录
     router.push({ name: 'login' })
 };
-
-
 </script>
 
 <style scoped>
