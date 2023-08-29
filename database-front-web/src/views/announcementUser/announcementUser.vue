@@ -1,9 +1,6 @@
 <!-- 文章缩略图 -->
 <template>
     <div>
-        <div class="addAnnouncement">
-            <el-button @click="addAnnouncement">发布公告</el-button>
-        </div>
         <div class="announcement-panel">
             <div class="header">
                 <navTop></navTop>
@@ -13,21 +10,6 @@
                 </announcementListItem>
             </div>
         </div>
-        <!-- START 用户申请专业认证弹窗 -->
-        <el-dialog v-model="dialogVisible" title="发布一条新公告" width="50%" :before-close="handleClose">
-            <el-form @submit.native.prevent="submitAnnouncement">
-                <el-form-item label="Content:">
-                    <el-input type="textarea" v-model="form.announcementContent" />
-                </el-form-item>
-            </el-form>
-            <template #footer>
-                <span class="dialog-footer">
-                    <el-button @click="dialogVisible = false">Cancel</el-button>
-                    <el-button type="primary" @click="submitAnnouncement">Submit</el-button>
-                </span>
-            </template>
-        </el-dialog>
-        <!-- END 用户申请专业认证弹窗 -->
     </div>
 </template>
 
@@ -87,28 +69,6 @@ watch(() => router.currentRoute.value.params.pBoardId, (newValue) => {
     pBoardId.value = newValue;
     fetchData();
 });
-
-const store = useStore(); // 使用store必须加上
-
-const dialogVisible = ref(false)
-
-const form = ref({
-    announcementContent: '',
-});
-
-const addAnnouncement = () => {
-    dialogVisible.value = true;
-}
-
-const submitAnnouncement = () => {
-    let params = {
-        adminId: store.state.Info.id,
-        announcementContent: form.value.announcementContent,
-    }
-    console.log(params);
-    postAnnouncement(params);
-    fetchdata();//上传新公告后，更新一下前端显示公告
-};
 </script>
 
 <style>
@@ -125,12 +85,6 @@ const submitAnnouncement = () => {
     justify-content: center;
     align-items: center;
     margin: 0px auto;
-}
-
-.addAnnouncement {
-    position: absolute;
-    left: 8px;
-    top: 110px;
 }
 </style>
 

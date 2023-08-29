@@ -29,6 +29,7 @@ public class AnnouncementController : ControllerBase
             join admin in _database.Administrators on announcement.AdminId equals admin.AdminId
             select new
             {
+                AdminId = announcement.AdminId,
                 AnnouncementID = announcement.AnnouncementId,
                 AnnouncementTime = announcement.AnnouncementTime,
                 AnnouncementContent = announcement.AnnouncementContent,

@@ -7,38 +7,78 @@
         <div class="announcement-body">
           <!-- 管理员信息 -->
           <div class="admin-info">
-            <router-link :to="`/layout`">{{ data.adminName }}</router-link>
-            <div class="post-time">
-              <span>
-                {{ data.announcementTime }}
-              </span>
-            </div>
+            <userAvatar :userId=data.adminId :width=30 :addLink="false"></userAvatar>
+
+            <div class="user-info">{{ data.adminName }}</div>
+
+            <el-divider direction="vertical"></el-divider>
+
+            <div class="post-time">{{ data.announcementTime }}</div>
+
+            <el-divider direction="vertical"></el-divider>
+
+            <div class="tag">{{ "公告  " }}</div>
+
+            <el-divider direction="vertical"></el-divider>
+
+            <el-button type="danger" round class deleteButton size="small" @click="deleteArticles">删除</el-button>
           </div>
-          <div class="content">
-            <router-link :to="`/announcementDetail/${data.announcementID}`">{{ data.announcementContent }}</router-link>
-          </div>
+          <router-link :to="`/announcementDetail/${data.announcementID}`" class="announcementTitle">{{ data.announcementContent }}</router-link>
         </div>
       </div>
-    <!--  -->
     </div>
   </div>
 </template>
 
 <script setup>
 
+import { deleteAnnouncement } from "@/api/announcement.js"
+import { ref, reactive, toRefs, onMounted,defineEmits} from 'vue';
+import { useRouter } from 'vue-router'
+const router = useRouter();
+const emit = defineEmits(['child-click'])
 // 接收父组件的信息
 const props = defineProps({
   data: {
     type: Object
   },
+  index: {
+    type: Int16Array,
+  },
 });
 
+// const deleteAnnouncement = async(announcementId) => {
+//     let result;
+//     const params = {
+//       announcement_id: props.data.announcementId
+//     };
+//     result = await deleteAnnouncement(params);
+//     if(result.code==200){
+//       window.alert('success');
+//       emit('child-click',1)
+//     }
+//     else{
+//       window.alert('error');
+//     }
+// };
 // console.log(props.data);
 </script>
 
 <style>
 .announcement-item {
   padding: 5px 15px 0 15px;
+}
+
+.announcementTitle {
+  font-weight: bold;
+  text-decoration: none;
+  color: #4a4a4a;
+  font-size: 16px;
+  margin: 10px 0px;
+  display: inline-block;
+}
+.announcementTitle:hover{
+  color:rgb(121, 182, 248)
 }
 
 .announcement-item-inner {
