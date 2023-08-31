@@ -61,14 +61,9 @@ const router = createRouter({
             component: () => import('@/views/checkComment/index.vue'),
         },
         {
-            path: '/announcementAdmin',  // 管理员界面的公告栏
-            name: 'announcementAdmin',
-            component: () => import('@/views/announcementAdmin/announcementAdmin.vue'),
-        },
-        {
-            path: '/announcementUser',  // 用户界面的公告栏
-            name: 'announcementUser',
-            component: () => import('@/views/announcementUser/announcementUser.vue'),
+            path: '/announcement',  // 公告
+            name: 'announcement',
+            component: () => import('@/views/announcement/announcement.vue'),
         },
         {
             path: '/announcementDetail',  // 公告详情页
