@@ -11,7 +11,7 @@
             <!-- 中间 搜索栏 -->
             <!--搜素事件，回车触发   -->
             <div class="search-panel">
-                <el-input placeholder="Search Key Words" class="custom-input" v-model="formData.keyword"
+                <el-input placeholder= "Search Key Words" class="custom-input" v-model="formData.keyword"
                     @keyup.enter="enterDown">
                     <!-- prefix 前置插入槽 -->
                     <template #prefix>
@@ -53,6 +53,11 @@
 import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue';
 import router from "@/router/index.js"
 import { useStore } from 'vuex' // 引入store
+// 1111
+import { searchArticles } from "@/api/article.js"
+import { getCurrentInstance } from "vue";
+
+const instance = getCurrentInstance();
 
 const store = useStore(); // 使用store必须加上
 
@@ -74,11 +79,25 @@ const enterDown = async (e) => {
         e.preventDefault(); // 阻止默认提交动作
         // 将 keyword 作为查询参数传递给 /search 路由
         // 导航到一个新的路由，同时还传递了一个查询参数 keyword
-        router.push({ path: '/search', query: { keyword: formData.keyword } });
+        //router.push({ path: '/search', query: { keyword: formData.keyword } });
     }
+    
+    // 123
+    /*proxy.globalInfo.search_keyword = formData.keyword;
+    let params = {
+        keyword: formData.keyword
+    };
+    let result = await searchArticles(params);
+    console.log(result);
+    //proxy.globalInfo.search_result.value = result.data;
+    console.log("进入搜索页面");
+    //console.log(proxy.globalInfo.search_result.value);*/
+    instance.emit('articlesupdated', formData.keyword);
+    
     // 销毁事件
     window.removeEventListener("keydown", enterDown, false);
 }
+
 
 const ToHome = () => {
     router.push(`/homeUser`);

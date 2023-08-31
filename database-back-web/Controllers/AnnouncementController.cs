@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using auth.Database;
 using auth.Models;
+using Microsoft.AspNetCore.Components.Web;
 
 [ApiController]
 [Route("api/[controller]")]  // RESTful 风格
@@ -29,6 +30,8 @@ public class AnnouncementController : ControllerBase
             join admin in _database.Administrators on announcement.AdminId equals admin.AdminId
             select new
             {
+                AdminId = announcement.AdminId,
+                Title = announcement.Title, //公告标题
                 AnnouncementID = announcement.AnnouncementId,
                 AnnouncementTime = announcement.AnnouncementTime,
                 AnnouncementContent = announcement.AnnouncementContent,
@@ -96,7 +99,7 @@ public class AnnouncementController : ControllerBase
     }
     //发布公告
     [HttpPost("postAnnouncement")]
-    public async Task<IActionResult> PostAnnouncementAsync(int adminId, string announcementContent)
+    public async Task<IActionResult> PostAnnouncementAsync(int adminId, string title, string announcementContent)
     {
         var code = 200;
         var msg = "success";
@@ -121,6 +124,7 @@ public class AnnouncementController : ControllerBase
             {
                 //AnnouncementId = 4,
                 AnnouncementTime = DateTime.Now,
+                Title = title,
                 AnnouncementContent = announcementContent,
                 AdminId = adminId,
                 IsTop = 0 // 默认为0，即未置顶
@@ -161,6 +165,7 @@ public class AnnouncementController : ControllerBase
             select new
             {
                 AnnouncementID = announcement.AnnouncementId,
+                Title = announcement.Title,
                 AnnouncementTime = announcement.AnnouncementTime,
                 AnnouncementContent = announcement.AnnouncementContent,
                 AdminName = admin.AdminName,
@@ -192,7 +197,7 @@ public class AnnouncementController : ControllerBase
     }
     //修改公告
     [HttpPost("updateAnnouncement")]
-    public async Task<IActionResult> UpdateAnnouncementAsync(int announcementId,string content)
+    public async Task<IActionResult> UpdateAnnouncementAsync(int announcementId, string title, string content)
     {
         var code = 200;
         var msg = "success";
@@ -202,6 +207,7 @@ public class AnnouncementController : ControllerBase
             foreach (var item in announcement)
             {
                 item.AnnouncementContent = content;
+                item.Title = title;
             }
             await _database.SaveChangesAsync();
             return Ok(new
