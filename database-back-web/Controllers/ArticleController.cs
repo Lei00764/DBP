@@ -104,7 +104,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 x.Content,
                 x.AuthorName,
                 x.Avatar,
-                x.ReleaseTime,
+                ReleaseTime = x.ReleaseTime != null ? x.ReleaseTime.Value.ToString("yyyy-MM-dd") : null,
                 x.Picture,
                 Summary = GetSummary(x.Content) // 获取文章概要
             });
@@ -158,7 +158,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 x.Content,
                 x.AuthorName,
                 x.Avatar,
-                x.ReleaseTime,
+                ReleaseTime = x.ReleaseTime != null ? x.ReleaseTime.Value.ToString("yyyy-MM-dd") : null,
                 x.Picture,
                 Summary = GetSummary(x.Content) // 获取文章概要
             });
@@ -484,7 +484,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             x.Content,
             x.AuthorName,
             x.IsBanned,
-            x.ReleaseTime,
+            ReleaseTime = x.ReleaseTime != null ? x.ReleaseTime.Value.ToString("yyyy-MM-dd") : null,
             Summary = GetSummary(x.Content) // 获取文章概要
         });
 

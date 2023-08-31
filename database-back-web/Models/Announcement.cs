@@ -11,6 +11,8 @@ public class Announcement
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // 告知 Entity Framework Core ANNOUNCEMENTID 是由数据库生成的  --- 自增
     [Column("ANNOUNCEMENTID")]
     public int? AnnouncementId { get; set; }
+    [Column("TITLE")]
+    public string? Title { get; set; }
     [Column("ANNOUNCEMENTTIME")]
     public DateTime? AnnouncementTime { get; set; }
     [Column("ANNOUNCEMENTCONTENT")]

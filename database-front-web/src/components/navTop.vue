@@ -94,11 +94,11 @@ const ToMy = () => {
 }
 
 const ToAnnouncement = () => {
-    if (store.state.type == 1) { //管理员身份
-        router.push(`/announcementAdmin`);
-    }
-    else if (store.state.type == 0) {  //用户身份
+    if (store.state.type == 1) { //用户身份
         router.push(`/announcementUser`);
+    }
+    else if (store.state.type == 0) {  //管理员身份
+        router.push(`/announcementAdmin`);
     }
 }
 

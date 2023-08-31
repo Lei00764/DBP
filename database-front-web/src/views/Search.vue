@@ -1,13 +1,22 @@
 <template>
     <div>
-        搜索结果
-        <div class="article-panel">
+        <div id="header">
             <search_navTop @articlesupdated="handleArticlesUpdated"></search_navTop>
-            <div class="article-list">
-                <articleListItem v-for="item in articleListInfo" :key="item.postId" :data="item">
+        </div>
+        <div id="article-panel">
+            <div class="article-list" v-if="dis_articleListInfo.length > 0">
+                <articleListItem v-for="item in dis_articleListInfo" :key="item.postId" :data="item">
                 </articleListItem>
             </div>
+            <div v-else>
+                没有相关文章
+            </div>
+            <div class="pagination">
+                <el-pagination :current-page="currentPage" :page-size="pageSize" :total="totalCount"
+                @current-change="handlePageChange"></el-pagination>
+            </div>
         </div>
+        
     </div>
 </template>
 
@@ -29,6 +38,11 @@ const route = useRoute();
 
 // 存储获取的文章数据 搜索
 const articleListInfo = ref([]);
+const dis_articleListInfo = ref([]);
+const currentPage = ref(1);   // 当前页码
+const pageSize = 8;          // 每页元素数量
+const totalpagenumber = ref(1);  //总页数
+const totalCount = ref(0);
 
 const keyword = route.query.keyword; // 在 URL 中以 ? 开头的键值对
 const keywords = ref([]);
@@ -42,6 +56,10 @@ const fetchData = async () => {
     console.log("666");
     console.log(result);
     articleListInfo.value = result.data;
+    totalpagenumber.value = Math.ceil(articleListInfo.value.length / pageSize);   //计算总页数
+    totalCount.value = articleListInfo.value.length;
+    dis_articleListInfo.value = articleListInfo.value.slice(0, 8);
+    console.log(dis_articleListInfo.value);
 }
 
 const handleArticlesUpdated = async (keywords) => {
@@ -55,9 +73,20 @@ const handleArticlesUpdated = async (keywords) => {
             console.log(result1);
             articleListInfo.value = result1.data;
         }
-
+        totalpagenumber.value = Math.ceil(articleListInfo.value.length / pageSize); //计算总页数
+        totalCount.value = articleListInfo.value.length;
+        dis_articleListInfo.value = articleListInfo.value.slice(0, 8);
     }
     
+}
+
+const handlePageChange = (page) => {
+  if (page >= 1 && page <= totalpagenumber.value) {
+    currentPage.value = page;
+    const start = (currentPage.value - 1) * pageSize;
+    const end = start + pageSize;
+    dis_articleListInfo.value = articleListInfo.value.slice(start, end);
+  }
 }
 
 
@@ -70,11 +99,42 @@ onMounted(() => {
   
 
 <style>
+#header {
+  /* 如果调整height，记得去 @/components/navTop.vue 中调整 header-content 样式 */
+  height: 10vh;
+  width: 100vw;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 2px 6px 0 #ddd;
+}
+
+#article-panel {
+  height: 166vh;
+  width: 85vw;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2vh;
+  box-shadow: 0 2px 6px 0 #ddd;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .article-list {
-    width: 80vw;
-    /* display: flex; */
-    justify-content: center;
-    align-items: center;
-    margin: 0px auto;
+  width: 80vw;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  margin: 0px auto;
+  flex: 1;
+}
+
+.pagination {
+  width: 30vw;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1.5vh;
+  order: 1;
 }
 </style>

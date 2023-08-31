@@ -6,8 +6,8 @@
                 <navTop></navTop>
             </div>
             <div class="announcement-list">
-                <announcementListItem v-for="item in announcementListInfo" :key="item.ID" :data="item">
-                </announcementListItem>
+                <announcementListItemUser v-for="item in announcementListInfo" :key="item.ID" :data="item">
+                </announcementListItemUser>
             </div>
         </div>
     </div>
@@ -18,7 +18,7 @@ import { ref, onMounted, watch } from 'vue';
 // import { useRouter } from 'vue-router';
 
 import navTop from "@/components/navTop.vue"
-import announcementListItem from "@/components/announcementListItem.vue"
+import announcementListItemUser from "@/components/announcementListItemUser.vue"
 import { loadAnnouncement } from "@/api/announcement.js"
 //import { forum_searchArticle } from "@/api/article.js"
 import router from "@/router/index.js"
