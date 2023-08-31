@@ -17,6 +17,33 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         _database = appDbContext;  // 依赖注入，在整个类中使用它来进行数据库操作
     }
 
+    private string GetSummary(string content)
+    {
+        const int MaxSummaryLength = 5; // 设置文章概要的最大长度为5
+        var summary = string.Empty;
+        if (!string.IsNullOrEmpty(content))
+        {
+            var paragraphs = content.Split("\n\n"); // 假设每段之间是用两个换行符（\n\n）分隔的
+            foreach (var paragraph in paragraphs)
+            {
+                if (summary.Length + paragraph.Length <= MaxSummaryLength)
+                {
+                    summary += paragraph;
+                }
+                else
+                {
+                    summary += paragraph.Substring(0, MaxSummaryLength - summary.Length);
+                    break;
+                }
+            }
+            if(summary.Length == MaxSummaryLength)
+            {
+                summary += "...";
+            }
+        }
+        return summary;
+   }
+
     [HttpGet("loadArticle")]
     public async Task<IActionResult> GetArticleByTagAsync(int p_board_id, int page_num, int page_size)
     {//page_num为页码从1开始，page_size为每页的文章数
@@ -39,13 +66,48 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         code = 200;
         if (tag == "全部")
         {
-            var data = await _database
+            var data = await (
+                from article in _database.Articles
+                join user in _database.Users on article.AuthorId equals user.UserId
+                select new
+                {
+                    ID = article.PostId,//文章ID
+                    TAG = article.Tag,  // 文章标签
+                    AuthorId = article.AuthorId, //文章作者ID
+                    Title = article.Title,  // 文章标题
+                    Views = article.Views,  // 文章浏览量
+                    FavouriteNum = article.FavouriteNum,  // 文章收藏量
+                    LikeNum = article.LikeNum,  // 文章点赞量
+                    AuthorName = user.UserName, // 包含作者的名字
+                    Avatar=user.Avatar, //作者头像
+                    Content = article.Content,  // 文章内容
+                    IsBanned = article.IsBanned,  // 是否被封禁
+                    ReleaseTime=article.ReleaseTime, //文章发布时间
+                    Picture = article.Picture //文章内的图片
+                }
+            ).Where(x => x.IsBanned == 0).OrderByDescending(x => x.ID).ToListAsync();
+            /*var data = await _database
                 .Articles
                 .Where(x => x.IsBanned == 0)
                 .OrderByDescending(x => x.PostId)
-                .ToListAsync();
+                .ToListAsync();*/
 
             data = data.Skip((page_num - 1) * page_size).Take(page_size).ToList();//截取第page_num页的数据
+            var summarizedData = data.Select(x => new {
+                x.ID,
+                x.Title,
+                x.TAG,
+                x.AuthorId,
+                x.Views,
+                x.FavouriteNum,
+                x.LikeNum,
+                x.Content,
+                x.AuthorName,
+                x.Avatar,
+                ReleaseTime = x.ReleaseTime != null ? x.ReleaseTime.Value.ToString("yyyy-MM-dd") : null,
+                x.Picture,
+                Summary = GetSummary(x.Content) // 获取文章概要
+            });
             if (data.Count() == 0)
             {
                 msg = "数据不足";
@@ -54,17 +116,52 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             {
                 code = code,
                 msg = msg,
-                data = data
+                data = summarizedData
             });
         }
         else//按Tag取
         {
-            var data = await _database
+            var data = await (
+                from article in _database.Articles
+                join user in _database.Users on article.AuthorId equals user.UserId
+                select new
+                {
+                    ID = article.PostId,//文章ID
+                    TAG = article.Tag,  // 文章标签
+                    Title = article.Title,  // 文章标题
+                    AuthorId = article.AuthorId, //文章作者ID
+                    Views = article.Views,  // 文章浏览量
+                    FavouriteNum = article.FavouriteNum,  // 文章收藏量
+                    LikeNum = article.LikeNum,  // 文章点赞量
+                    AuthorName = user.UserName, // 包含作者的名字
+                    Avatar=user.Avatar,
+                    Content = article.Content,  // 文章内容
+                    IsBanned = article.IsBanned,  // 是否被封禁
+                    ReleaseTime=article.ReleaseTime,
+                    Picture = article.Picture
+                }
+            ).Where(x => x.TAG == tag_list[p_board_id] && x.IsBanned == 0).OrderByDescending(x => x.ID).ToListAsync();
+            /*var data = await _database
                 .Articles
                 .OrderByDescending(x => x.PostId)
                 .Where(x => x.Tag == tag_list[p_board_id] && x.IsBanned == 0)
-                .ToListAsync();
+                .ToListAsync();*/
             data = data.Skip((page_num - 1) * page_size).Take(page_size).ToList();//截取第page_num页的数据
+            var summarizedData = data.Select(x => new {
+                x.ID,
+                x.Title,
+                x.TAG,
+                x.AuthorId,
+                x.Views,
+                x.FavouriteNum,
+                x.LikeNum,
+                x.Content,
+                x.AuthorName,
+                x.Avatar,
+                ReleaseTime = x.ReleaseTime != null ? x.ReleaseTime.Value.ToString("yyyy-MM-dd") : null,
+                x.Picture,
+                Summary = GetSummary(x.Content) // 获取文章概要
+            });
             if (data.Count() == 0)
             {
                 msg = "数据不足";
@@ -73,7 +170,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             {
                 code = code,
                 msg = msg,
-                data = data
+                data = summarizedData
             });
         }
     }
@@ -370,9 +467,26 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 LikeNum = article.LikeNum,
                 AuthorName = user.UserName,
                 Content = article.Content,
-                IsBanned = article.IsBanned
+                IsBanned = article.IsBanned,
+                ReleaseTime = article.ReleaseTime,
+                AuthorId = article.AuthorId,
             }
         ).ToListAsync();
+
+        var SearchData = articles.Select(x => new {
+            x.PostId,
+            x.Title,
+            x.Tag,
+            x.AuthorId,
+            x.Views,
+            x.FavouriteNum,
+            x.LikeNum,
+            x.Content,
+            x.AuthorName,
+            x.IsBanned,
+            ReleaseTime = x.ReleaseTime != null ? x.ReleaseTime.Value.ToString("yyyy-MM-dd") : null,
+            Summary = GetSummary(x.Content) // 获取文章概要
+        });
 
         if (articles.Count > 0)
         {
@@ -380,7 +494,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             {
                 code = 200,
                 msg = "success",
-                data = articles
+                data = SearchData
             });
         }
         else

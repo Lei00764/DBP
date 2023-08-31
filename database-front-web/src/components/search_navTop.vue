@@ -30,6 +30,10 @@
                     <font-awesome-icon :icon="['fas', 'circle-user']" />
                     <span class="button-text">我的主页</span>
                 </el-button>
+                <el-button class="icon-button" @click="ToAnnouncement">
+                    <font-awesome-icon :icon="['fas', 'paperclip']" />
+                    <span class="button-text">公告栏</span>
+                </el-button>
                 <el-button class="icon-button" @click="ToLogOut">
                     <font-awesome-icon :icon="['fas', 'right-to-bracket']" />
                     <span class="button-text">退出登录</span>
@@ -105,6 +109,15 @@ const ToMy = () => {
     }
     else if (store.state.type == 0) {  //用户身份
         router.push(`/homeAdmin`);
+    }
+}
+
+const ToAnnouncement = () => {
+    if (store.state.type == 1) { //用户身份
+        router.push(`/announcementUser`);
+    }
+    else if (store.state.type == 0) {  //管理员身份
+        router.push(`/announcementAdmin`);
     }
 }
 
