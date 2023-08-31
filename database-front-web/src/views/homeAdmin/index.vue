@@ -90,7 +90,7 @@ const intoCheckProfession = () => {
     router.push({ name: 'checkProfession' })
 }
 const intoAnnounce = () => {
-    router.push({ name: 'announcement' })
+    router.push({ name: 'announcementAdmin' })
 }
 const intoCheckArticle = () => {
     router.push({ name: 'checkArticle' })

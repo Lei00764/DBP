@@ -4,22 +4,22 @@
         <div class="addAnnouncement">
             <el-button @click="addAnnouncement">发布公告</el-button>
         </div>
-        <div class="deleteAnnouncement">
-            <el-button @click="addAnnouncement">删除公告</el-button>
-        </div>
         <div class="announcement-panel">
             <div class="header">
                 <navTop></navTop>
             </div>
             <div class="announcement-list">
-                <announcementListItem v-for="item in announcementListInfo" :key="item.ID" :data="item">
-                </announcementListItem>
+                <announcementListItemAdmin v-for="item in announcementListInfo" :key="item.AnnouncementId" :data="item">
+                </announcementListItemAdmin>
             </div>
         </div>
         <!-- START 发布公告弹窗 -->
         <el-dialog v-model="dialogVisible" title="发布一条新公告" width="50%" :before-close="handleClose">
             <el-form @submit.native.prevent="submitAnnouncement">
-                <el-form-item label="Content:">
+                <el-form-item label="标题：">
+                    <el-input type="textarea" v-model="form.title" />
+                </el-form-item>
+                <el-form-item label="内容：">
                     <el-input type="textarea" v-model="form.announcementContent" />
                 </el-form-item>
             </el-form>
@@ -31,21 +31,6 @@
             </template>
         </el-dialog>
         <!-- END 发布公告弹窗 -->
-        <!-- START 删除公告弹窗 -->
-        <el-dialog v-model="dialogVisible" title="发布一条新公告" width="50%" :before-close="handleClose">
-            <el-form @submit.native.prevent="submitAnnouncement">
-                <el-form-item label="Content:">
-                    <el-input type="textarea" v-model="form.announcementContent" />
-                </el-form-item>
-            </el-form>
-            <template #footer>
-                <span class="dialog-footer">
-                    <el-button @click="dialogVisible = false">Cancel</el-button>
-                    <el-button type="primary" @click="submitAnnouncement">Submit</el-button>
-                </span>
-            </template>
-        </el-dialog>
-        <!-- END 删除公告弹窗 -->
     </div>
 </template>
 
@@ -54,7 +39,7 @@ import { ref, onMounted, watch } from 'vue';
 // import { useRouter } from 'vue-router';
 
 import navTop from "@/components/navTop.vue"
-import announcementListItem from "@/components/announcementListItem.vue"
+import announcementListItemAdmin from "@/components/announcementListItemAdmin.vue"
 import { loadAnnouncement } from "@/api/announcement.js"
 //import { forum_searchArticle } from "@/api/article.js"
 import router from "@/router/index.js"
@@ -121,11 +106,14 @@ const addAnnouncement = () => {
 const submitAnnouncement = () => {
     let params = {
         adminId: store.state.Info.id,
+        title: form.value.title,
         announcementContent: form.value.announcementContent,
     }
-    console.log(params);
+    //console.log(params);
     postAnnouncement(params);
+    dialogVisible.value = false;
     fetchData();//上传新公告后，更新一下前端显示公告
+    location.reload();
 };
 </script>
 
@@ -151,10 +139,5 @@ const submitAnnouncement = () => {
     top: 110px;
 }
 
-.deleteAnnouncement {
-    position: absolute;
-    left: 8px;
-    top: 150px;
-}
 </style>
 
