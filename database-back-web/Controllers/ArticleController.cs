@@ -45,7 +45,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
    }
 
     [HttpGet("loadArticle")]
-    public async Task<IActionResult> GetArticleByTagAsync(int p_board_id, int page_num, int page_size)
+    public async Task<IActionResult> GetArticleByTagAsync(int p_board_id)
     {//page_num为页码从1开始，page_size为每页的文章数
         var code = 400;
         var msg = "success";
@@ -92,7 +92,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 .OrderByDescending(x => x.PostId)
                 .ToListAsync();*/
 
-            data = data.Skip((page_num - 1) * page_size).Take(page_size).ToList();//截取第page_num页的数据
+            //data = data.Skip((page_num - 1) * page_size).Take(page_size).ToList();//截取第page_num页的数据
             var summarizedData = data.Select(x => new {
                 x.ID,
                 x.Title,
@@ -146,7 +146,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 .OrderByDescending(x => x.PostId)
                 .Where(x => x.Tag == tag_list[p_board_id] && x.IsBanned == 0)
                 .ToListAsync();*/
-            data = data.Skip((page_num - 1) * page_size).Take(page_size).ToList();//截取第page_num页的数据
+            //data = data.Skip((page_num - 1) * page_size).Take(page_size).ToList();//截取第page_num页的数据
             var summarizedData = data.Select(x => new {
                 x.ID,
                 x.Title,

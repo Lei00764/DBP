@@ -26,7 +26,7 @@
 
             <el-divider direction="vertical"></el-divider>
 
-            <div class="istop" v-if="data.istop == 1">
+            <div class="istop" v-if="data.isTop == 1">
               <el-button type="primary" round class editButton size="small" @click="cancelTop">取消置顶</el-button>
             </div>
             <div v-else>
