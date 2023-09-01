@@ -108,6 +108,7 @@ const submitAnnouncement = () => {
     console.log(params);
     postAnnouncement(params);
     fetchdata();//上传新公告后，更新一下前端显示公告
+    location.reload();
 };
 </script>
 

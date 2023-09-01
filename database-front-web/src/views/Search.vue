@@ -12,7 +12,7 @@
                 没有相关文章
             </div>
             <div class="pagination">
-                <el-pagination :current-page="currentPage" :page-size="pageSize" :total="totalCount"
+                <el-pagination :current-page="currentPage" :page-size="pageSize" :total="totalCount" layout="->,prev, pager, next,jumper"
                 @current-change="handlePageChange"></el-pagination>
             </div>
         </div>
