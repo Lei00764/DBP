@@ -79,7 +79,7 @@ watch(() => router.currentRoute.value.params.pBoardId, (newValue) => {
 
 <style>
 #article-panel {
-  height: 166vh;
+  height: 135vh;
   width: 85vw;
   margin-left: auto;
   margin-right: auto;
@@ -99,7 +99,8 @@ watch(() => router.currentRoute.value.params.pBoardId, (newValue) => {
   flex: 1;
 }
 .pagination {
-  width: 30vw;
+  display: flex;
+  justify-content: center;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 1.5vh;

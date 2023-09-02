@@ -18,6 +18,32 @@ public class AnnouncementController : ControllerBase
         _database = appDbContext;  // 依赖注入，在整个类中使用它来进行数据库操作
     }
 
+    private string GetSummary(string content)
+    {
+        const int MaxSummaryLength = 25; // 设置文章概要的最大长度为5
+        var summary = string.Empty;
+        if (!string.IsNullOrEmpty(content))
+        {
+            var paragraphs = content.Split("\n\n"); // 假设每段之间是用两个换行符（\n\n）分隔的
+            foreach (var paragraph in paragraphs)
+            {
+                if (summary.Length + paragraph.Length <= MaxSummaryLength)
+                {
+                    summary += paragraph;
+                }
+                else
+                {
+                    summary += paragraph.Substring(0, MaxSummaryLength - summary.Length);
+                    break;
+                }
+            }
+            if(summary.Length == MaxSummaryLength)
+            {
+                summary += "...";
+            }
+        }
+        return summary;
+    }
     //加载公告
     [HttpGet("loadAnnouncement")]
     public async Task<IActionResult> GetAnnouncementAsync()
@@ -43,6 +69,16 @@ public class AnnouncementController : ControllerBase
         .ToListAsync();
         //.ToListAsync();
 
+        var summarizedData = announcements.Select(x => new {
+            x.AdminId,
+            x.Title,
+            x.AnnouncementID,
+            x.AnnouncementContent,
+            x.AdminName,
+            x.IsTop,
+            AnnouncementTime = x.AnnouncementTime != null ? x.AnnouncementTime.Value.ToString("yyyy-MM-dd") : null,
+            Summary = GetSummary(x.AnnouncementContent) // 获取文章概要
+        });
         /* 在这分页的话
         int pageSize = 6; // 每页显示的公告数
         int pageNumber; // 要获取的页码
@@ -53,7 +89,7 @@ public class AnnouncementController : ControllerBase
             {
                 code = code,
                 msg = msg,
-                data = announcements
+                data = summarizedData
             });
         }
         else{

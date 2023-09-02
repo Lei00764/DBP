@@ -153,7 +153,7 @@ const handlePageChange = (page) => {
 }
 
 #announcement-panel {
-  height: 134vh;
+  height: 128vh;
   width: 85vw;
   margin-left: auto;
   margin-right: auto;
@@ -175,7 +175,8 @@ const handlePageChange = (page) => {
 }
 
 .pagination {
-  width: 40vw;
+  display: flex;
+  justify-content: center;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 1.5vh;
