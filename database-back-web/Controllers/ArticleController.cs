@@ -19,7 +19,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
 
     private string GetSummary(string content)
     {
-        const int MaxSummaryLength = 5; // 设置文章概要的最大长度为5
+        const int MaxSummaryLength = 25; // 设置文章概要的最大长度为5
         var summary = string.Empty;
         if (!string.IsNullOrEmpty(content))
         {
@@ -71,7 +71,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 join user in _database.Users on article.AuthorId equals user.UserId
                 select new
                 {
-                    ID = article.PostId,//文章ID
+                    postId = article.PostId,//文章ID
                     TAG = article.Tag,  // 文章标签
                     AuthorId = article.AuthorId, //文章作者ID
                     Title = article.Title,  // 文章标题
@@ -85,7 +85,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                     ReleaseTime=article.ReleaseTime, //文章发布时间
                     Picture = article.Picture //文章内的图片
                 }
-            ).Where(x => x.IsBanned == 0).OrderByDescending(x => x.ID).ToListAsync();
+            ).Where(x => x.IsBanned == 0).OrderByDescending(x => x.postId).ToListAsync();
             /*var data = await _database
                 .Articles
                 .Where(x => x.IsBanned == 0)
@@ -94,7 +94,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
 
             //data = data.Skip((page_num - 1) * page_size).Take(page_size).ToList();//截取第page_num页的数据
             var summarizedData = data.Select(x => new {
-                x.ID,
+                x.postId,
                 x.Title,
                 x.TAG,
                 x.AuthorId,
@@ -126,7 +126,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 join user in _database.Users on article.AuthorId equals user.UserId
                 select new
                 {
-                    ID = article.PostId,//文章ID
+                    postId = article.PostId,//文章ID
                     TAG = article.Tag,  // 文章标签
                     Title = article.Title,  // 文章标题
                     AuthorId = article.AuthorId, //文章作者ID
@@ -140,7 +140,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                     ReleaseTime=article.ReleaseTime,
                     Picture = article.Picture
                 }
-            ).Where(x => x.TAG == tag_list[p_board_id] && x.IsBanned == 0).OrderByDescending(x => x.ID).ToListAsync();
+            ).Where(x => x.TAG == tag_list[p_board_id] && x.IsBanned == 0).OrderByDescending(x => x.postId).ToListAsync();
             /*var data = await _database
                 .Articles
                 .OrderByDescending(x => x.PostId)
@@ -148,7 +148,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 .ToListAsync();*/
             //data = data.Skip((page_num - 1) * page_size).Take(page_size).ToList();//截取第page_num页的数据
             var summarizedData = data.Select(x => new {
-                x.ID,
+                x.postId,
                 x.Title,
                 x.TAG,
                 x.AuthorId,
