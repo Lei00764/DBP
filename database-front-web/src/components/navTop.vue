@@ -43,8 +43,6 @@
                     <span class="button-text">消息</span>
                 </el-button>
             </div>
-            <userAvatar :userId=store.state.Info.id :width=50 :addLink="false"></userAvatar>
-            <avatarUploader></avatarUploader>
         </div>
     </div>
 </template>
@@ -59,6 +57,8 @@ const store = useStore(); // 使用store必须加上
 const formData = reactive({  // 用 reactive，而不用 ref
     keyword: '',
 });
+
+
 
 onMounted(() => {
     // 绑定监听事件
@@ -94,11 +94,11 @@ const ToMy = () => {
 }
 
 const ToAnnouncement = () => {
-    if (store.state.type == 1) { //管理员身份
-        router.push(`/announcementAdmin`);
-    }
-    else if (store.state.type == 0) {  //用户身份
+    if (store.state.type == 1) { //用户身份
         router.push(`/announcementUser`);
+    }
+    else if (store.state.type == 0) {  //管理员身份
+        router.push(`/announcementAdmin`);
     }
 }
 

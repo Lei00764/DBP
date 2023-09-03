@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using auth.Database;
 using auth.Models;
+using Microsoft.AspNetCore.Components.Web;
 
 [ApiController]
 [Route("api/[controller]")]  // RESTful 风格
@@ -17,6 +18,32 @@ public class AnnouncementController : ControllerBase
         _database = appDbContext;  // 依赖注入，在整个类中使用它来进行数据库操作
     }
 
+    private string GetSummary(string content)
+    {
+        const int MaxSummaryLength = 25; // 设置文章概要的最大长度为5
+        var summary = string.Empty;
+        if (!string.IsNullOrEmpty(content))
+        {
+            var paragraphs = content.Split("\n\n"); // 假设每段之间是用两个换行符（\n\n）分隔的
+            foreach (var paragraph in paragraphs)
+            {
+                if (summary.Length + paragraph.Length <= MaxSummaryLength)
+                {
+                    summary += paragraph;
+                }
+                else
+                {
+                    summary += paragraph.Substring(0, MaxSummaryLength - summary.Length);
+                    break;
+                }
+            }
+            if(summary.Length == MaxSummaryLength)
+            {
+                summary += "...";
+            }
+        }
+        return summary;
+    }
     //加载公告
     [HttpGet("loadAnnouncement")]
     public async Task<IActionResult> GetAnnouncementAsync()
@@ -30,6 +57,7 @@ public class AnnouncementController : ControllerBase
             select new
             {
                 AdminId = announcement.AdminId,
+                Title = announcement.Title, //公告标题
                 AnnouncementID = announcement.AnnouncementId,
                 AnnouncementTime = announcement.AnnouncementTime,
                 AnnouncementContent = announcement.AnnouncementContent,
@@ -41,6 +69,16 @@ public class AnnouncementController : ControllerBase
         .ToListAsync();
         //.ToListAsync();
 
+        var summarizedData = announcements.Select(x => new {
+            x.AdminId,
+            x.Title,
+            x.AnnouncementID,
+            x.AnnouncementContent,
+            x.AdminName,
+            x.IsTop,
+            AnnouncementTime = x.AnnouncementTime != null ? x.AnnouncementTime.Value.ToString("yyyy-MM-dd") : null,
+            Summary = GetSummary(x.AnnouncementContent) // 获取文章概要
+        });
         /* 在这分页的话
         int pageSize = 6; // 每页显示的公告数
         int pageNumber; // 要获取的页码
@@ -51,7 +89,7 @@ public class AnnouncementController : ControllerBase
             {
                 code = code,
                 msg = msg,
-                data = announcements
+                data = summarizedData
             });
         }
         else{
@@ -97,7 +135,7 @@ public class AnnouncementController : ControllerBase
     }
     //发布公告
     [HttpPost("postAnnouncement")]
-    public async Task<IActionResult> PostAnnouncementAsync(int adminId, string announcementContent)
+    public async Task<IActionResult> PostAnnouncementAsync(int adminId, string title, string announcementContent)
     {
         var code = 200;
         var msg = "success";
@@ -122,6 +160,7 @@ public class AnnouncementController : ControllerBase
             {
                 //AnnouncementId = 4,
                 AnnouncementTime = DateTime.Now,
+                Title = title,
                 AnnouncementContent = announcementContent,
                 AdminId = adminId,
                 IsTop = 0 // 默认为0，即未置顶
@@ -162,6 +201,7 @@ public class AnnouncementController : ControllerBase
             select new
             {
                 AnnouncementID = announcement.AnnouncementId,
+                Title = announcement.Title,
                 AnnouncementTime = announcement.AnnouncementTime,
                 AnnouncementContent = announcement.AnnouncementContent,
                 AdminName = admin.AdminName,
@@ -193,7 +233,7 @@ public class AnnouncementController : ControllerBase
     }
     //修改公告
     [HttpPost("updateAnnouncement")]
-    public async Task<IActionResult> UpdateAnnouncementAsync(int announcementId,string content)
+    public async Task<IActionResult> UpdateAnnouncementAsync(int announcementId, string title, string content)
     {
         var code = 200;
         var msg = "success";
@@ -203,6 +243,7 @@ public class AnnouncementController : ControllerBase
             foreach (var item in announcement)
             {
                 item.AnnouncementContent = content;
+                item.Title = title;
             }
             await _database.SaveChangesAsync();
             return Ok(new
