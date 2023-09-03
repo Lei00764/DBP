@@ -6,9 +6,11 @@
             </div>
         </div>
         <!-- 侧边栏展示 -->
+
         <div class="PersonSide">
             <el-form-item>
-                <userAvatar :src= UserInfo.avatar></userAvatar>
+                <userAvatar :key="avatarKey" :userId=store.state.Info.id :width=50 :addLink="false"></userAvatar>
+                <avatarUploader @avatarUploaded="handleAvatarUploaded"></avatarUploader>
             </el-form-item>
             <div class="PersonSide_text">
                 <div class="user_name">
@@ -38,16 +40,8 @@
             <!-- 更换主题皮肤 -->
             <div class="theme-page">
                 <el-form-item label="动态皮肤">
-                    <el-select 
-                    v-model="value" 
-                    placeholder="请选择" 
-                    size="large" 
-                    @change="handleChange">
-                        <el-option 
-                        v-for="item in options" 
-                        :key="item.value" 
-                        :label="item.label" 
-                        :value="item.value" />
+                    <el-select v-model="value" placeholder="请选择" size="large" @change="handleChange">
+                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
                     </el-select>
                 </el-form-item>
                 <!-- <el-row class="m-4">
@@ -72,7 +66,7 @@
         <!-- 签到积分 -->
         <el-form-item>
             <el-button class=sign-button round color=transparent :class="{ 'disabled': isSigned }" :disabled="isSigned"
-                @click="handleSignIn(2,UserInfo.points)" style="color: rgb(8, 102, 75);
+                @click="handleSignIn(2, UserInfo.points)" style="color: rgb(8, 102, 75);
                         background-color:rgba(224, 248, 242, 0.9);
                         ;border-radius: 15px;">
                 <el-icon :size="23">
@@ -82,15 +76,15 @@
             </el-button>
         </el-form-item>
 
-       
+
     </div>
 </template>
 
 <script setup="props">
 import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue';
-import { searchArticle,getArticleNumber } from "@/api/article.js"
-import { GetInfoByID, changePoint} from "@/api/user.js"
-import { getFansNumber,getFollowNumber} from "@/api/follow.js"
+import { searchArticle, getArticleNumber } from "@/api/article.js"
+import { GetInfoByID, changePoint } from "@/api/user.js"
+import { getFansNumber, getFollowNumber } from "@/api/follow.js"
 import { House, Star, User } from '@element-plus/icons-vue'
 import { ElPagination } from 'element-plus'
 import { useRouter } from 'vue-router'
@@ -123,8 +117,15 @@ const props = defineProps({
         type: Int16Array,
         default: 0
     },
-
 })
+
+const avatarKey = ref(0); // 添加一个标志位
+
+const handleAvatarUploaded = () => {
+    // 头像上传成功后，更新标志位来重新加载userAvatar组件
+    avatarKey.value += 1;
+}
+
 onMounted(() => {
     fetchnum();
     fetchuser();
@@ -136,30 +137,30 @@ const articleNumber = ref(0);
 const fansNumber = ref(0);
 const followerNumber = ref(0);
 //签到
-const handleSignIn = async(point,current_point) => {
+const handleSignIn = async (point, current_point) => {
     formData.isSigned = true;
     formData.buttonLabel = '签到成功，积分+2';
-    let result,level;
-    if(current_point+point>20){
-        point-=20;
-        level=1;
+    let result, level;
+    if (current_point + point > 20) {
+        point -= 20;
+        level = 1;
     }
-    else{
-        level=0;
+    else {
+        level = 0;
     }
     const params = {
         // user_id: store.state.Info.id,
         user_id: 6,
-        point_add:point,
-        level_add:level,
+        point_add: point,
+        level_add: level,
     };
     console.log(params);
     result = await changePoint(params);
-    if(result.code==200){
-      window.alert('success');
+    if (result.code == 200) {
+        window.alert('success');
     }
-    else{
-      window.alert('error');
+    else {
+        window.alert('error');
     }
 };
 //文章数目
@@ -235,11 +236,11 @@ const fetchfansnum = async (stringValue = '') => {
 const fetchuser = async () => {
     const params = {
         // ID:store.state.Info.id,
-        ID:6,
-        type:1
+        ID: 6,
+        type: 1
     }
     let result = await GetInfoByID(params);
-    if(!result){
+    if (!result) {
         return;
     }
     UserInfo.value = result.data;
@@ -283,27 +284,28 @@ const handleChange = (e) => {
 }
 
 .pro {
-position: absolute;
-left: 75px;
-top: -310px;
-border-radius: 15px;
+    position: absolute;
+    left: 75px;
+    top: -310px;
+    border-radius: 15px;
 }
 
 
 .sign-button {
-position: absolute;
-width: 219px;
-height: 50px;
-left: 0px;
-top: 500px;
-border-radius: 15px;
+    position: absolute;
+    width: 219px;
+    height: 50px;
+    left: 0px;
+    top: 500px;
+    border-radius: 15px;
 }
 
 .disabled {
-background-color: #888888;
-color: #ffffff;
-cursor: not-allowed;
+    background-color: #888888;
+    color: #ffffff;
+    cursor: not-allowed;
 }
+
 /* 积分 */
 .rectangle_point {
     position: absolute;
@@ -328,6 +330,7 @@ cursor: not-allowed;
     letter-spacing: 0px;
     display: flex;
 }
+
 .background1 {
     position: absolute;
     width: 1230px;

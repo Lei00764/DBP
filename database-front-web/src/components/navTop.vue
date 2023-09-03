@@ -43,8 +43,6 @@
                     <span class="button-text">消息</span>
                 </el-button>
             </div>
-            <userAvatar :key="avatarKey" :userId=store.state.Info.id :width=50 :addLink="false"></userAvatar>
-            <avatarUploader @avatarUploaded="handleAvatarUploaded"></avatarUploader>
         </div>
     </div>
 </template>
@@ -60,12 +58,7 @@ const formData = reactive({  // 用 reactive，而不用 ref
     keyword: '',
 });
 
-const avatarKey = ref(0); // 添加一个标志位
 
-const handleAvatarUploaded = () => {
-    // 头像上传成功后，更新标志位来重新加载userAvatar组件
-    avatarKey.value += 1;
-}
 
 onMounted(() => {
     // 绑定监听事件
