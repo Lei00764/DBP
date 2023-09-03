@@ -15,20 +15,25 @@
                 <el-button class="userReportIcon" text @click="centerDialogVisible = true">
                     <font-awesome-icon :icon="['fas', 'triangle-exclamation']" />
                 </el-button>
-
-                <el-dialog v-model="centerDialogVisible" title="举报" width="30%" align-center>
-                    <span>举报原因</span>
-                    <el-input placeholder="Reason" v-model="formData.reportReason">
-                    </el-input>
-                    <template #footer>
-                        <span class="dialog-footer">
-                            <el-button @click="centerDialogVisible = false">取消</el-button>
-                            <el-button type="primary" @click="centerDialogVisible = false, reportConfirm">确认</el-button>
-                        </span>
-                    </template>
+  
+                <el-dialog
+                    v-model="centerDialogVisible"
+                    title="举报"
+                    width="30%"
+                    align-center
+                >
+                <span>举报原因</span>
+                <el-input placeholder="Reason" v-model="formData.reportReason">
+                </el-input>
+                <template #footer>
+                    <span class="dialog-footer">
+                        <el-button @click="centerDialogVisible = false">取消</el-button>
+                        <el-button type="primary" @click="centerDialogVisible = false, reportConfirm">确认</el-button>
+                    </span>
+                </template>
                 </el-dialog>
 
-                <OnlineModal :controlVisible="visibleIt" @closeModal="visibleIt = false" />
+                <OnlineModal :controlVisible="visibleIt" @closeModal="visibleIt=false"/>
                 <el-button class="userShareIcon" text @click="Share">
                     <font-awesome-icon :icon="['fas', 'arrow-up-from-bracket']" />
                 </el-button>
@@ -38,14 +43,17 @@
                 <!-- <router-link :to="`/layout`"> -->
                 <userAvatar :userId="authorInfo.id" :width="50" :addLink="false"></userAvatar>
                 <!-- isFollowing ? '已关注' : '关注' -->
-                <div class="author">{{ articleInfo[0].authorName }}
+                <div class="author">{{ articleInfo[0].authorName }} 
                     <el-button @click="Follow(articleInfo[0].authorId)">{{ isFollowing ? '已关注' : '关注' }}</el-button>
                 </div>
                 <!-- </router-link> -->
                 <div class="publish_time" v-if="articleInfo[0].releaseTime">
                     发布于 {{ articleInfo[0].releaseTime.split('T')[0] }} {{ articleInfo[0].releaseTime.split('T')[1] }}
                 </div>
-                <div class="content" ref="innerContent" v-html="articleInfo[0].content"></div>
+                <div class="content" ref="innerContent">
+                    {{ articleInfo[0].content }}
+                </div>
+
             </el-form>
         </div>
         <div v-if="Object.keys(articleInfo).length > 0">
@@ -59,7 +67,7 @@ import { ref, reactive, toRefs, onMounted, watch, computed } from 'vue';
 import { useRouter } from 'vue-router'
 import { GetInfoByID } from '@/api/user';
 import { GetArticleDetailsAsync } from '@/api/article';
-import { followAuthor, isfollowAuthor } from '@/api/follow';
+import { followAuthor,isfollowAuthor } from '@/api/follow';
 import navTop from "@/components/navTop.vue"
 import commentList from "./commentList.vue"
 
@@ -120,28 +128,28 @@ watch(() => router.currentRoute.value.params.pBoardId, (newValue) => {
 
 const isFollowing = ref()
 //页面加载时判断是否关注
-const isFollow = async (userId) => {
+const isFollow  = async (userId) => {
     const params = {
         user_id: store.state.Info.id,
         author_id: userId,
     }
-    let result = await isfollowAuthor(params);
-    if (result.data == true) {
+    let result = await isfollowAuthor(params); 
+    if(result.data == true){
         isFollowing.value = 1;
     }
-    else {
+    else{
         isFollowing.value = 0;
     }
 }
 //处理关注逻辑
-const Follow = async (userId = '') => {
+const Follow = async (userId='') => {
     const params = {
         user_id: store.state.Info.id,
         author_id: userId,
     }
-    let result = await followAuthor(params);
-    if (!result) {
-        return;
+    let result = await followAuthor(params); 
+    if(!result){
+       return;
     }
     isFollowing.value = !isFollowing.value;
 }
@@ -173,25 +181,25 @@ const formHeight = computed(() => {
 
 //举报信息：作者名，作者id，举报原因，帖子标题，帖子内容
 
-const reportConfirm = async (userId, articleId) => {
+const reportConfirm = async(userId , articleId) => {
     // 提交举报
-    if (!formData.reportReason) {
+    if(!formData.reportReason){
         Message.error("举报原因不能为空");
         return;
     }
     let result;
     const params = {
         user_id: userId,
-        article_id: articleId,
-        reason: formData.reportReason
+        article_id:articleId,
+        reason:formData.reportReason
     };
     console.log(params);
     result = await ReportArticle(params);
-    if (result.code == 200) {
-        window.alert('举报成功');
+    if(result.code==200){
+      window.alert('举报成功');
     }
-    else {
-        window.alert('error');
+    else{
+      window.alert('error');
     }
 };
 
@@ -304,5 +312,5 @@ const reportConfirm = async (userId, articleId) => {
 
 .dialog-footer button:first-child {
     margin-right: 10px;
-}
+  }
 </style>

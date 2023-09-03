@@ -26,7 +26,6 @@ library.add(fas)
 // 全局组件
 import userAvatar from "@/components/userAvatar.vue"
 import avatarUploader from "@/components/avatarUploader.vue"
-import tiptapEditor from "@/components/tiptapEditor.vue"
 
 const app = createApp(App)
 
@@ -37,7 +36,6 @@ for (let iconName in ELIcons) {
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.component("userAvatar", userAvatar);
 app.component("avatarUploader", avatarUploader);
-app.component("tiptapEditor", tiptapEditor);
 
 
 // 从sessionStorage中恢复store状态
@@ -52,7 +50,7 @@ if (savedState) {
 // const { proxy } = getCurrentInstance();
 app.config.globalProperties.globalInfo = {
   avatarUrl: "http://localhost:5045/api/files/getAvatar/",
-  search_keyword: "Search Key Words",
+  search_keyword:"Search Key Words",
 }
 
 app.use(ElementPlus);

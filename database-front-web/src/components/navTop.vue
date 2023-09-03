@@ -51,13 +51,13 @@
 import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue';
 import router from "@/router/index.js"
 import { useStore } from 'vuex' // 引入store
-import tiptapEditor from "@/components/tiptapEditor.vue"
 
 const store = useStore(); // 使用store必须加上
 
 const formData = reactive({  // 用 reactive，而不用 ref
     keyword: '',
 });
+
 
 
 onMounted(() => {
