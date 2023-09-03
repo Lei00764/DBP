@@ -1,8 +1,7 @@
 <template>
     <div>
-        <component1></component1>
-        <!-- <calendar1></calendar1> -->
-        
+        <component1 v-if="refreshs" @child-click="refreshing"></component1>
+  
 
 
         <!-- START 用户申请专业认证弹窗 -->
@@ -155,6 +154,15 @@ const refreshing = () => {
         refreshs.value = true
     })
 }
+const home = () => {
+    router.push(`/homeUser`);
+}
+const gotoLogin = () => {
+    router.push(`/login`);
+}
+const gotoCreate = () => {
+    router.push('/register');
+}
 
 const applyForProfession = () => {
     dialogVisible.value = true;
@@ -208,7 +216,7 @@ const fetchData = async (stringValue = '') => {
     if (!stringValue) {
         stringValue = "0"
         const params = {
-            user_id: 8
+            user_id: store.state.Info.id,
         };
         result = await searchArticle(params);
     }
@@ -229,7 +237,7 @@ const fetchnum = async (stringValue = '') => {
     if (!stringValue) {
         stringValue = "0"
         const params = {
-            user_id: 8
+            user_id: store.state.Info.id,
         };
         result = await getArticleNumber(params);
     }
@@ -246,46 +254,6 @@ const fetchnum = async (stringValue = '') => {
     articleNumber.value = result;
 
 };
-
-
-// const changePage = reactive({
-//   currentPage: 1,
-//   total: gdata.length + 1 / 9,
-// });
-
-// const handelCurrentChange = (value) => {
-
-
-//   //获取当前页码
-//     changePage.currentPage = value; 
-
-
-//   //判断当前页是否为首页 页码从1开始，是则直接调用后端数据，否则要进行计算
-//     if (value > 1) {
-
-//       var i = (value - 1) * 2;  //计算当前页第一条数据的下标，
-
-//       var arry = [];  //建立一个临时数组
-
-//       //比如每页10条数据，第二页的第一条数据就是从 （2-1）*10 = 10 开始的 结束下标就是2*10=20 
-//       while (i < value * 2) {
-//        //解决最后一页出现null值
-//         if (gdata[i] != null) {
-//           arry.push(gdata[i]);
-//           i++;
-//           continue
-//         }
-//         break
-//       }
-//       sdata.value=arry
-
-//      } else {
-
-//       sdata.value = gdata;
-
-//     }
-//   }
-
 
 const input = reactive({
     code: {

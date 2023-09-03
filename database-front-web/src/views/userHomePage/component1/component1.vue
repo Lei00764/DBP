@@ -65,7 +65,7 @@
         </div>
         <!-- 签到积分 -->
         <el-form-item>
-            <el-button class=sign-button round color=transparent :class="{ 'disabled': isSigned }" :disabled="isSigned"
+            <el-button class=sign-button round color=transparent :class="{ 'disabled': formData.isSigned }" :disabled="formData.isSigned"
                 @click="handleSignIn(2, UserInfo.points)" style="color: rgb(8, 102, 75);
                         background-color:rgba(224, 248, 242, 0.9);
                         ;border-radius: 15px;">
@@ -81,7 +81,7 @@
 </template>
 
 <script setup="props">
-import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue';
+import { ref, reactive, onMounted, onUnmounted, nextTick,defineEmits} from 'vue';
 import { searchArticle, getArticleNumber } from "@/api/article.js"
 import { GetInfoByID, changePoint } from "@/api/user.js"
 import { getFansNumber, getFollowNumber } from "@/api/follow.js"
@@ -91,7 +91,10 @@ import { useRouter } from 'vue-router'
 import { useStore } from 'vuex' // 引入store
 import '../theme/theme.css';
 const store = useStore(); // 使用store必须加上
+const emit = defineEmits(['child-click'])
 const router = useRouter()
+
+
 const formData = reactive({
     keyword: '',
     isSigned: false,
@@ -120,7 +123,6 @@ const props = defineProps({
 })
 
 const avatarKey = ref(0); // 添加一个标志位
-
 const handleAvatarUploaded = () => {
     // 头像上传成功后，更新标志位来重新加载userAvatar组件
     avatarKey.value += 1;
@@ -131,11 +133,32 @@ onMounted(() => {
     fetchuser();
     fetchfollownum();
     fetchfansnum();
+    performFunction();
 })
 const UserInfo = ref([]);
 const articleNumber = ref(0);
 const fansNumber = ref(0);
 const followerNumber = ref(0);
+//————————————————————————————————函数————————————————————————
+const performFunction = () => {
+    const lastExecutionDate = localStorage.getItem('lastExecutionDate');
+    if (!lastExecutionDate || isNewDay(new Date(lastExecutionDate))) {
+        localStorage.setItem('lastExecutionDate', new Date().toISOString());
+        formData.isSigned = false;
+    } 
+    else {
+        formData.buttonLabel = '今天已经签过了！';
+        formData.isSigned = true;
+    }
+}
+function isNewDay(date){
+    const today = new Date();
+    return (
+    date.getDate() !== today.getDate() ||
+    date.getMonth() !== today.getMonth() ||
+    date.getFullYear() !== today.getFullYear()
+    );
+}
 //签到
 const handleSignIn = async (point, current_point) => {
     formData.isSigned = true;
@@ -149,8 +172,7 @@ const handleSignIn = async (point, current_point) => {
         level = 0;
     }
     const params = {
-        // user_id: store.state.Info.id,
-        user_id: 6,
+        user_id: store.state.Info.id,
         point_add: point,
         level_add: level,
     };
@@ -158,6 +180,7 @@ const handleSignIn = async (point, current_point) => {
     result = await changePoint(params);
     if (result.code == 200) {
         window.alert('success');
+        emit('child-click',1)
     }
     else {
         window.alert('error');
@@ -235,8 +258,7 @@ const fetchfansnum = async (stringValue = '') => {
 //获取当前用户信息
 const fetchuser = async () => {
     const params = {
-        // ID:store.state.Info.id,
-        ID: 6,
+        ID:store.state.Info.id,
         type: 1
     }
     let result = await GetInfoByID(params);
