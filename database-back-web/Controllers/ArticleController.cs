@@ -44,6 +44,131 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         return summary;
    }
 
+    [HttpGet("recommendArticle")]
+    public async Task<IActionResult> GetArticleIndividually(int user_id, int page_num)//每页数量固定为10
+    {
+        if(page_num<1)
+        {
+            return Ok(new
+            {
+                code = 400,
+                msg = "页面数量错误"
+            });
+        }
+        if(_database.Likes.Any(x=>x.UserId==user_id)==false)
+        {
+            return Ok(new
+            {
+                code = 400,
+                msg = "用户未留下点赞记录，无法进行个性化推荐"
+            });
+        }
+        double[] priority =new double[4]{0,0,0,0};//对应 "中餐", "西餐", "甜点", "其他"
+        var like_data = await _database.Likes.Where(x=>x.UserId==user_id).ToListAsync();
+
+        foreach(var r in like_data)
+        {
+            var article = _database.Articles.Where(x=>x.PostId==r.PostId).First();
+            if(article.Tag=="中餐")
+            {
+                priority[0]+=1;
+            }
+            else if(article.Tag=="西餐")
+            {
+                priority[1]+=1;
+            }
+            else if(article.Tag=="甜点")
+            {
+                priority[2]+=1;
+            }
+            else if(article.Tag=="其他")
+            {
+                priority[3]+=1;
+            }
+        }
+            double total=priority.Sum();
+            for(int i=0;i<4;i++)
+            {
+                priority[i]/=total;
+                priority[i]*=10;
+                if(priority[i]<1)
+                {
+                    priority[i]=1;
+                }
+                else
+                {//做四舍五入
+                    int temp=Convert.ToInt32(priority[i]);
+                    if(priority[i]-temp<0.5)
+                    {
+                        priority[i]=temp;
+                    }
+                    else
+                    {
+                        priority[i]=temp+1;
+                    }
+                }
+            }
+            int diff=10-Convert.ToInt32(priority.Sum());
+            if(diff!=0)
+            {
+                int index=0;
+                for(int i=1;i<4;i++)
+                {
+                    if(priority[i]>priority[index])
+                    {
+                        index=i;
+                    }
+                }
+                priority[index]+=diff;
+            }
+            int[] num =new int[4];
+            for(int i=0;i<4;i++)
+            {
+                num[i]=Convert.ToInt32(priority[i])*page_num;
+            }
+            List<Article> data0 = await _database
+                .Articles
+                .Where(x => x.IsBanned == 0&&x.Tag=="中餐")
+                .OrderByDescending(x => x.PostId)
+                .ToListAsync();
+            data0=data0.Take(num[0]).ToList();
+            List<Article> data1 = await _database
+                .Articles
+                .Where(x => x.IsBanned == 0&&x.Tag=="西餐")
+                .OrderByDescending(x => x.PostId)
+                .ToListAsync();
+            data1=data1.Take(num[1]).ToList();
+            List<Article> data2 = await _database
+                .Articles
+                .Where(x => x.IsBanned == 0&&x.Tag=="甜点")
+                .OrderByDescending(x => x.PostId)
+                .ToListAsync();
+            data2=data2.Take(num[2]).ToList();
+            List<Article> data3 = await _database
+                .Articles
+                .Where(x => x.IsBanned == 0&&x.Tag=="其他")
+                .OrderByDescending(x => x.PostId)
+                .ToListAsync();
+            data3=data3.Take(num[3]).ToList();
+            //拼接四个列表
+            data0=data0.Concat(data1).ToList();
+            data0=data0.Concat(data2).ToList();
+            data0=data0.Concat(data3).ToList();
+            //打乱列表顺序
+            var random= new Random();
+            List<Article> data = new List<Article>();
+            foreach(var item in data0)
+            {
+                data.Insert(random.Next(data.Count),item);
+            }
+        return Ok(new
+            {
+                code = 200,
+                msg = "成功获取个性化推荐文章",
+                data= data
+            });
+    }
+
     [HttpGet("loadArticle")]
     public async Task<IActionResult> GetArticleByTagAsync(int p_board_id)
     {//page_num为页码从1开始，page_size为每页的文章数
