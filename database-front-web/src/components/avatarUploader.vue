@@ -12,15 +12,16 @@
         </el-form>
     </div>
 </template>
-
+  
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, defineEmits } from 'vue';
 import { useStore } from 'vuex' // 引入store
 import { uploadAvatar } from '@/api/files.js'
 
 const store = useStore(); // 使用store必须加上
 
 const formData = new FormData();
+const emit = defineEmits(['avatarUploaded']); // 定义自定义事件
 
 const beforeUpload = (file) => {
     // 添加头像文件到 form
@@ -32,8 +33,13 @@ const submitForm = () => {
     formData.append('userId', store.state.Info.id);
     formData.append('avatarFile', formData.avatarFile);
 
-    uploadAvatar(formData);
+    uploadAvatar(formData)
+        .then(() => {
+            // 上传成功后触发自定义事件
+            emit('avatarUploaded');
+        });
 };
 </script>
-
+  
 <style lang="scss"></style>
+  
