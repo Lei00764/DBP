@@ -177,9 +177,10 @@ export function postArticle(params) {
         params: params
     }).then(function (response) {
         if (response.data.code === 200) {
+            Message.success("发布成功");
             return response.data;
         } else if (response.data.code === 400) {
-            Message.error("参数错误");
+            Message.error("发布失败");
             return null;
         }
     }).catch(function (error) {
