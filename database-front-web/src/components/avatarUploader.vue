@@ -16,7 +16,7 @@
 </template>
   
 <script setup>
-import { ref, onMounted, defineEmits } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { uploadAvatar } from '@/api/files.js';
 

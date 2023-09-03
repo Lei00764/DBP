@@ -36,18 +36,18 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                     break;
                 }
             }
-            if(summary.Length == MaxSummaryLength)
+            if (summary.Length == MaxSummaryLength)
             {
                 summary += "...";
             }
         }
         return summary;
-   }
+    }
 
     [HttpGet("recommendArticle")]
     public async Task<IActionResult> GetArticleIndividually(int user_id, int page_num)//每页数量固定为10
     {
-        if(page_num<1)
+        if (page_num < 1)
         {
             return Ok(new
             {
@@ -55,7 +55,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 msg = "页面数量错误"
             });
         }
-        if(_database.Likes.Any(x=>x.UserId==user_id)==false)
+        if (_database.Likes.Any(x => x.UserId == user_id) == false)
         {
             return Ok(new
             {
@@ -63,110 +63,110 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 msg = "用户未留下点赞记录，无法进行个性化推荐"
             });
         }
-        double[] priority =new double[4]{0,0,0,0};//对应 "中餐", "西餐", "甜点", "其他"
-        var like_data = await _database.Likes.Where(x=>x.UserId==user_id).ToListAsync();
+        double[] priority = new double[4] { 0, 0, 0, 0 };//对应 "中餐", "西餐", "甜点", "其他"
+        var like_data = await _database.Likes.Where(x => x.UserId == user_id).ToListAsync();
 
-        foreach(var r in like_data)
+        foreach (var r in like_data)
         {
-            var article = _database.Articles.Where(x=>x.PostId==r.PostId).First();
-            if(article.Tag=="中餐")
+            var article = _database.Articles.Where(x => x.PostId == r.PostId).First();
+            if (article.Tag == "中餐")
             {
-                priority[0]+=1;
+                priority[0] += 1;
             }
-            else if(article.Tag=="西餐")
+            else if (article.Tag == "西餐")
             {
-                priority[1]+=1;
+                priority[1] += 1;
             }
-            else if(article.Tag=="甜点")
+            else if (article.Tag == "甜点")
             {
-                priority[2]+=1;
+                priority[2] += 1;
             }
-            else if(article.Tag=="其他")
+            else if (article.Tag == "其他")
             {
-                priority[3]+=1;
+                priority[3] += 1;
             }
         }
-            double total=priority.Sum();
-            for(int i=0;i<4;i++)
+        double total = priority.Sum();
+        for (int i = 0; i < 4; i++)
+        {
+            priority[i] /= total;
+            priority[i] *= 10;
+            if (priority[i] < 1)
             {
-                priority[i]/=total;
-                priority[i]*=10;
-                if(priority[i]<1)
+                priority[i] = 1;
+            }
+            else
+            {//做四舍五入
+                int temp = Convert.ToInt32(priority[i]);
+                if (priority[i] - temp < 0.5)
                 {
-                    priority[i]=1;
+                    priority[i] = temp;
                 }
                 else
-                {//做四舍五入
-                    int temp=Convert.ToInt32(priority[i]);
-                    if(priority[i]-temp<0.5)
-                    {
-                        priority[i]=temp;
-                    }
-                    else
-                    {
-                        priority[i]=temp+1;
-                    }
-                }
-            }
-            int diff=10-Convert.ToInt32(priority.Sum());
-            if(diff!=0)
-            {
-                int index=0;
-                for(int i=1;i<4;i++)
                 {
-                    if(priority[i]>priority[index])
-                    {
-                        index=i;
-                    }
+                    priority[i] = temp + 1;
                 }
-                priority[index]+=diff;
             }
-            int[] num =new int[4];
-            for(int i=0;i<4;i++)
+        }
+        int diff = 10 - Convert.ToInt32(priority.Sum());
+        if (diff != 0)
+        {
+            int index = 0;
+            for (int i = 1; i < 4; i++)
             {
-                num[i]=Convert.ToInt32(priority[i])*page_num;
+                if (priority[i] > priority[index])
+                {
+                    index = i;
+                }
             }
-            List<Article> data0 = await _database
-                .Articles
-                .Where(x => x.IsBanned == 0&&x.Tag=="中餐")
-                .OrderByDescending(x => x.PostId)
-                .ToListAsync();
-            data0=data0.Take(num[0]).ToList();
-            List<Article> data1 = await _database
-                .Articles
-                .Where(x => x.IsBanned == 0&&x.Tag=="西餐")
-                .OrderByDescending(x => x.PostId)
-                .ToListAsync();
-            data1=data1.Take(num[1]).ToList();
-            List<Article> data2 = await _database
-                .Articles
-                .Where(x => x.IsBanned == 0&&x.Tag=="甜点")
-                .OrderByDescending(x => x.PostId)
-                .ToListAsync();
-            data2=data2.Take(num[2]).ToList();
-            List<Article> data3 = await _database
-                .Articles
-                .Where(x => x.IsBanned == 0&&x.Tag=="其他")
-                .OrderByDescending(x => x.PostId)
-                .ToListAsync();
-            data3=data3.Take(num[3]).ToList();
-            //拼接四个列表
-            data0=data0.Concat(data1).ToList();
-            data0=data0.Concat(data2).ToList();
-            data0=data0.Concat(data3).ToList();
-            //打乱列表顺序
-            var random= new Random();
-            List<Article> data = new List<Article>();
-            foreach(var item in data0)
-            {
-                data.Insert(random.Next(data.Count),item);
-            }
+            priority[index] += diff;
+        }
+        int[] num = new int[4];
+        for (int i = 0; i < 4; i++)
+        {
+            num[i] = Convert.ToInt32(priority[i]) * page_num;
+        }
+        List<Article> data0 = await _database
+            .Articles
+            .Where(x => x.IsBanned == 0 && x.Tag == "中餐")
+            .OrderByDescending(x => x.PostId)
+            .ToListAsync();
+        data0 = data0.Take(num[0]).ToList();
+        List<Article> data1 = await _database
+            .Articles
+            .Where(x => x.IsBanned == 0 && x.Tag == "西餐")
+            .OrderByDescending(x => x.PostId)
+            .ToListAsync();
+        data1 = data1.Take(num[1]).ToList();
+        List<Article> data2 = await _database
+            .Articles
+            .Where(x => x.IsBanned == 0 && x.Tag == "甜点")
+            .OrderByDescending(x => x.PostId)
+            .ToListAsync();
+        data2 = data2.Take(num[2]).ToList();
+        List<Article> data3 = await _database
+            .Articles
+            .Where(x => x.IsBanned == 0 && x.Tag == "其他")
+            .OrderByDescending(x => x.PostId)
+            .ToListAsync();
+        data3 = data3.Take(num[3]).ToList();
+        //拼接四个列表
+        data0 = data0.Concat(data1).ToList();
+        data0 = data0.Concat(data2).ToList();
+        data0 = data0.Concat(data3).ToList();
+        //打乱列表顺序
+        var random = new Random();
+        List<Article> data = new List<Article>();
+        foreach (var item in data0)
+        {
+            data.Insert(random.Next(data.Count), item);
+        }
         return Ok(new
-            {
-                code = 200,
-                msg = "成功获取个性化推荐文章",
-                data= data
-            });
+        {
+            code = 200,
+            msg = "成功获取个性化推荐文章",
+            data = data
+        });
     }
 
     [HttpGet("loadArticle")]
@@ -204,10 +204,10 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                     FavouriteNum = article.FavouriteNum,  // 文章收藏量
                     LikeNum = article.LikeNum,  // 文章点赞量
                     AuthorName = user.UserName, // 包含作者的名字
-                    Avatar=user.Avatar, //作者头像
+                    Avatar = user.Avatar, //作者头像
                     Content = article.Content,  // 文章内容
                     IsBanned = article.IsBanned,  // 是否被封禁
-                    ReleaseTime=article.ReleaseTime, //文章发布时间
+                    ReleaseTime = article.ReleaseTime, //文章发布时间
                     Picture = article.Picture //文章内的图片
                 }
             ).Where(x => x.IsBanned == 0).OrderByDescending(x => x.postId).ToListAsync();
@@ -218,7 +218,8 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 .ToListAsync();*/
 
             //data = data.Skip((page_num - 1) * page_size).Take(page_size).ToList();//截取第page_num页的数据
-            var summarizedData = data.Select(x => new {
+            var summarizedData = data.Select(x => new
+            {
                 x.postId,
                 x.Title,
                 x.TAG,
@@ -259,10 +260,10 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                     FavouriteNum = article.FavouriteNum,  // 文章收藏量
                     LikeNum = article.LikeNum,  // 文章点赞量
                     AuthorName = user.UserName, // 包含作者的名字
-                    Avatar=user.Avatar,
+                    Avatar = user.Avatar,
                     Content = article.Content,  // 文章内容
                     IsBanned = article.IsBanned,  // 是否被封禁
-                    ReleaseTime=article.ReleaseTime,
+                    ReleaseTime = article.ReleaseTime,
                     Picture = article.Picture
                 }
             ).Where(x => x.TAG == tag_list[p_board_id] && x.IsBanned == 0).OrderByDescending(x => x.postId).ToListAsync();
@@ -272,7 +273,8 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 .Where(x => x.Tag == tag_list[p_board_id] && x.IsBanned == 0)
                 .ToListAsync();*/
             //data = data.Skip((page_num - 1) * page_size).Take(page_size).ToList();//截取第page_num页的数据
-            var summarizedData = data.Select(x => new {
+            var summarizedData = data.Select(x => new
+            {
                 x.postId,
                 x.Title,
                 x.TAG,
@@ -598,7 +600,8 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             }
         ).ToListAsync();
 
-        var SearchData = articles.Select(x => new {
+        var SearchData = articles.Select(x => new
+        {
             x.PostId,
             x.Title,
             x.Tag,

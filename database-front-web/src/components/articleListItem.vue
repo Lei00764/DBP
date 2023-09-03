@@ -39,7 +39,7 @@
         <router-link :to="`/forumArticleDetail/${data.postId}`">
           <Cover :cover="data.Picture" :width="100" v-if="data.Picture"></Cover>
         </router-link>
-          <!--显示帖子信息-->
+        <!--显示帖子信息-->
       </div>
       <!-- </router-link> -->
     </div>
@@ -55,38 +55,43 @@ const props = defineProps({
   },
 });
 
-console.log(props.data);
-
-
+// console.log(props.data);
 </script>
 
 <style>
 .article-item {
   padding: 5px 15px 0 15px;
+
   .article-item-inner {
     border-bottom: 1px solid #ddd;
     padding: 10px 0px;
     display: flex;
+
     .article-body {
       flex: 1;
+
       .user-info {
         display: flex;
         align-items: center;
         font-size: 14px;
         color: #4e5969;
+
         .link-info {
           margin-left: 5px;
           color: #494949;
           text-decoration: none;
         }
+
         .link-info:hover {
           color: var(--link);
         }
+
         .post-time {
           font-size: 13px;
           color: #9a9a9a;
         }
       }
+
       .title {
         font-weight: bold;
         text-decoration: none;
@@ -95,15 +100,19 @@ console.log(props.data);
         margin: 10px 0px;
         display: inline-block;
       }
-      .title:hover{
-        color:rgb(121, 182, 248)
+
+      .title:hover {
+        color: rgb(121, 182, 248)
       }
-      .summary{
-        color:rgb(132, 132, 132)
+
+      .summary {
+        color: rgb(132, 132, 132)
       }
-      .tag{
-        color:rgb(132, 132, 132)
+
+      .tag {
+        color: rgb(132, 132, 132)
       }
+
       .article-info {
         margin-top: 10px;
         display: flex;
@@ -126,5 +135,4 @@ console.log(props.data);
 
 .article-item:hover {
   background: #fffbfb;
-}
-</style>
+}</style>

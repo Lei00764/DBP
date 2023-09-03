@@ -20,6 +20,23 @@ export function loadArticle(params) {
     })
 }
 
+export function recommendArticle(params) {
+    return Request({
+        method: 'GET',
+        url: 'Article/recommendArticle',
+        params: params
+    }).then(function (response) {
+        if (response.data.code === 200) {
+            return response.data;  // 返回 code + msg + data
+        } else {
+            Message.error("推荐文章加载失败");
+            return null;
+        }
+    }).catch(function (error) {
+        console.log(error);
+    })
+}
+
 // 获取用户的文章列表
 export function searchArticle(params) {
     return Request({
