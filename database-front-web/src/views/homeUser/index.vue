@@ -1,5 +1,15 @@
 <template>
     <div>
+        <!-- ********************************* -->
+        <el-button text @click="showTipTapEditor = true">
+            发布文章
+        </el-button>
+
+        <el-dialog v-model="showTipTapEditor" title="发布文章" width="80%" align-center>
+            <tiptapEditor></tiptapEditor>
+        </el-dialog>
+        <!-- ********************************* -->
+
         <div class="homeUser-page">
             <div class="header">
                 <navTop></navTop>
@@ -50,7 +60,6 @@ const FormData = reactive({
     keyword: '',
 });
 
-
 const toAllFood = () => {
     router.push(`/forum/0`);
 };
@@ -71,6 +80,10 @@ const toOthers = () => {
     router.push(`/forum/4`);
 
 };
+
+// START 发布文章
+const showTipTapEditor = ref(false)
+// END 发布文章
 </script>
 
 <style scoped>

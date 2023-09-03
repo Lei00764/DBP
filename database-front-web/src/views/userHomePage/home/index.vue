@@ -2,7 +2,7 @@
     <div>
         <component1></component1>
         <!-- <calendar1></calendar1> -->
-        
+
 
 
         <!-- START 用户申请专业认证弹窗 -->
@@ -29,7 +29,8 @@
         <div class="topp">
             <el-form>
                 <el-form-item>
-                    <el-input v-model="formData.keyword" clearable placehoder="请输入内容" @keyup.enter.native="fetchData(formData.keyword)">
+                    <el-input v-model="formData.keyword" clearable placehoder="请输入内容"
+                        @keyup.enter.native="fetchData(formData.keyword)">
                     </el-input>
                 </el-form-item>
                 <el-button class=button11 round color=transparent @click="home"
@@ -77,8 +78,9 @@
             </p>
             <!-- 帖子展示部分 -->
             <el-row>
-                <userHomeArticleListltem v-if="refreshs" v-for="item in articleListInfo.slice(formData.index, formData.index + 2)"
-                    :data="item" @child-click="refreshing" >
+                <userHomeArticleListltem v-if="refreshs"
+                    v-for="item in articleListInfo.slice(formData.index, formData.index + 2)" :data="item"
+                    @child-click="refreshing">
                 </userHomeArticleListltem>
             </el-row>
             <!-- 底部页面跳转 -->
@@ -104,7 +106,7 @@
 </template>
   
 <script setup="props">
-import { getCurrentInstance, ref, reactive, toRefs, onMounted,nextTick, watch } from 'vue';
+import { getCurrentInstance, ref, reactive, toRefs, onMounted, nextTick, watch } from 'vue';
 import component1 from '../component1/component1.vue';
 import Message from "@/utils/Message.js"
 // import { ElPagination } from 'element-plus'
@@ -112,7 +114,7 @@ import router from "@/router/index.js"
 import { useRoute, useRouter } from "vue-router"
 import { ApplyProfession } from "@/api/profession.js"
 import { useStore } from 'vuex' // 引入store
-import { searchArticle, getArticleNumber,searchArticles } from "@/api/article.js"
+import { searchArticle, getArticleNumber, searchArticles } from "@/api/article.js"
 import userHomeArticleListltem from "@/components/userHomeArticleListltem.vue"
 
 // START 用户申请专业认证弹窗
@@ -124,9 +126,9 @@ const dialogVisible = ref(false)
 const form = ref({
     illustrate: '',
     evidence: '',
-    
+
 });
-const refreshs=ref(true)
+const refreshs = ref(true)
 //用户头像
 const state = reactive({
     fits: ['fill'],
@@ -151,7 +153,7 @@ const refreshing = () => {
     fetchData();
     fetchnum();
     refreshs.value = false
-    nextTick(()=>{
+    nextTick(() => {
         refreshs.value = true
     })
 }
@@ -303,7 +305,6 @@ const CheckImgExists = (imgurl) => {
         return false
     }
 }
-
 
 
 </script> 

@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "tiptap": "^1.32.2",
+    "tiptap-extensions": "^1.35.2"
+  }
+}
