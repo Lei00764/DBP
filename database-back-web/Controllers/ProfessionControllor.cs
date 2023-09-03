@@ -40,11 +40,11 @@ public class ProfessionController : ControllerBase
         // IsAccepted 等于 1 表示已经同意申请，用户已经是专业厨师
         // IsAccepted 等于 0 表示正在申请中
         // IsAccepted 等于 2 表示申请被拒绝
-        bool existProfessionalChef = _database.Professions.Any(x => x.UserId == user_id && x.IsAccepted == 1);
+        bool existProfessionalChef = _database.Professions.Any(x => x.UserId == user_id && x.IsAccepted == 0);
         if (existProfessionalChef)
         {
             code = 401;
-            msg = "该用户已经是专业厨师";
+            msg = "请勿重复提交申请";
             return Ok(new
             {
                 code = code,
