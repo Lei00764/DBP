@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "cos-nodejs-sdk-v5": "^2.12.4",
     "tiptap": "^1.32.2",
     "tiptap-extensions": "^1.35.2"
   }
