@@ -60,12 +60,21 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             return Ok(new
             {
                 code = 400,
-                msg = "用户未留下点赞记录，无法进行个性化推荐"
+                msg = "成功获取个性化推荐文章",
+                data= await _database
+                    .Articles
+                    .Where(x => x.IsBanned == 0)
+                    .OrderByDescending(x => x.PostId)
+                    .ToListAsync()
             });
         }
         double[] priority =new double[4]{0,0,0,0};//对应 "中餐", "西餐", "甜点", "其他"
         var like_data = await _database.Likes.Where(x=>x.UserId==user_id).ToListAsync();
-
+        int[] sum =new int [4]{0,0,0,0};
+            sum[0]=_database.Articles.Where(x=>x.Tag=="中餐").Count();
+            sum[1]=_database.Articles.Where(x=>x.Tag=="西餐").Count();
+            sum[2]=_database.Articles.Where(x=>x.Tag=="甜点").Count();
+            sum[3]=_database.Articles.Where(x=>x.Tag=="其他").Count();
         foreach(var r in like_data)
         {
             var article = _database.Articles.Where(x=>x.PostId==r.PostId).First();
@@ -121,10 +130,19 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 }
                 priority[index]+=diff;
             }
+            int min=999999999;
+            for(int i=0;i<4;i++)
+            {
+                if(sum[i]*10/priority[i]<min)
+                {
+                    min=Convert.ToInt32(sum[i]*10/priority[i]);
+                }
+            }
+            min=min/10*10;
             int[] num =new int[4];
             for(int i=0;i<4;i++)
             {
-                num[i]=Convert.ToInt32(priority[i])*page_num;
+                num[i]=Convert.ToInt32(priority[i])*min/10;
             }
             List<Article> data0 = await _database
                 .Articles
