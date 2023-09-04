@@ -32,6 +32,7 @@
               'strike',
               'underline',
               'code',
+              'image',
               'h1',
               'h2',
               'h3',

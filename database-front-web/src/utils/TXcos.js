@@ -1,20 +1,22 @@
-import COS from 'cos-nodejs-sdk-v5';
+// https://cloud.tencent.com/document/product/436/8629
 
-const cosClient = new COS({
-    SecretId: 'YOUR_SECRET_ID',
-    SecretKey: 'YOUR_SECRET_KEY',
+import COS from 'cos-js-sdk-v5'
+var cos = new COS({
+    SecretId: 'AKIDcAxfLvMl8VkmaARl05ziEXfeR1P0Ujur', // 推荐使用环境变量获取；用户的 SecretId，建议使用子账号密钥，授权遵循最小权限指引，降低使用风险。子账号密钥获取可参考https://cloud.tencent.com/document/product/598/37140
+    SecretKey: 'siM1a0ELkyzqY4ShrfHrKfrtnYggGsU2', // 推荐使用环境变量获取；用户的 SecretKey，建议使用子账号密钥，授权遵循最小权限指引，降低使用风险。子账号密钥获取可参考https://cloud.tencent.com/document/product/598/37140
 });
 
-const uploadFileToCOS = (file) => {
+
+export default function uploadFileToCOS(file) {
     return new Promise((resolve, reject) => {
         const params = {
-            Bucket: 'YOUR_BUCKET_NAME',
-            Region: 'YOUR_REGION', // 您的存储桶所在的地区
-            Key: `images/${file.name}`, // 上传后的文件路径和名称
+            Bucket: 'dbp-1306809548',
+            Region: 'ap-shanghai', // 您的存储桶所在的地区
+            Key: `dbp/${file.name}`, // 上传后的文件路径和名称
             Body: file, // 要上传的文件
         };
 
-        cosClient.putObject(params, (err, data) => {
+        cos.putObject(params, (err, data) => {
             if (err) {
                 reject(err);
             } else {

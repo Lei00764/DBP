@@ -39,6 +39,11 @@
                     <icon name="code" />
                 </button>
 
+                <button v-if="actionName === 'image'" class="menubar__button"
+                    :class="{ 'is-active': editor.isActive('image') }" @click="uploadImage">
+                    <icon name="image" />
+                </button>
+
                 <button v-if="actionName === 'h1'" class="menubar__button menubar__button_h1"
                     :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }"
                     @click="editor.chain().focus().toggleHeading({ level: 1 }).run()">
@@ -108,8 +113,8 @@ import Underline from '@tiptap/extension-underline';
 import Icon from '@/components/Icon.vue';
 import { postArticle } from "@/api/article.js"
 import { useStore } from 'vuex' // 引入store
-
-
+import Image from '@tiptap/extension-image'
+import uploadFileToCOS from "@/utils/TXcos.js"
 
 export default {
     name: 'Editor',
@@ -122,8 +127,6 @@ export default {
 
         // 在组件中访问Info模块的id属性
         const infoId = store.state.Info.id;
-
-        // 可以在组件中使用infoId
 
         return {
             infoId,
@@ -141,12 +144,14 @@ export default {
                 for (let el of list) {
                     // The value must match one of these strings
                     if (
+                        // 修改这里的同时还要修改调用组件的地方
                         [
                             'bold',
                             'italic',
                             'strike',
                             'underline',
                             'code',
+                            'image',
                             'h1',
                             'h2',
                             'h3',
@@ -180,7 +185,7 @@ export default {
     created() {
         this.editor = new Editor({
             content: this.initialContent,
-            extensions: [StarterKit, Underline],
+            extensions: [StarterKit, Underline, Image],
         });
 
         this.html = this.editor.getHTML();
@@ -212,6 +217,31 @@ export default {
             // this.articleTitle = '';
             // this.editor.clearContent();
         },
+        async uploadImage() {
+            try {
+                // 弹出文件选择框
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = 'image/*';
+                fileInput.addEventListener('change', async () => {
+                    if (fileInput.files && fileInput.files[0]) {
+                        const uploadedFile = fileInput.files[0];
+                        const response = await uploadFileToCOS(uploadedFile);
+                        // 处理上传成功后的响应，可能是图片的 URL 等等
+                        const imageUrl = response.Location; // 假设 COS 返回图片的 URL
+                        // 拼接 http + imageUrl
+                        const url = 'https://' + imageUrl;
+                        // console.log(imageUrl);
+                        // 插入图片到编辑器
+                        this.editor.chain().focus().setImage({ src: url }).run();
+                    }
+                });
+                fileInput.click();
+            } catch (error) {
+                // 处理上传失败的情况
+                console.error('上传图片失败', error);
+            }
+        }
     },
 };
 </script>
