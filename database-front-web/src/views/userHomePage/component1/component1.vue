@@ -8,9 +8,8 @@
         <!-- 侧边栏展示 -->
 
         <div class="PersonSide">
-            <el-form-item>
+            <el-form-item class="img">
                 <userAvatar :key="avatarKey" :userId=store.state.Info.id :width=50 :addLink="false"></userAvatar>
-                <avatarUploader @avatarUploaded="handleAvatarUploaded"></avatarUploader>
             </el-form-item>
             <div class="PersonSide_text">
                 <div class="user_name">
@@ -61,7 +60,6 @@
             <div class="point">
                 积分：{{ UserInfo.points }}
             </div>
-            <el-button class="pro" @click="applyForProfession">申请专业厨师认证</el-button>
         </div>
         <!-- 签到积分 -->
         <el-form-item>
@@ -304,13 +302,14 @@ const handleChange = (e) => {
     box-sizing: border-box;
     font-family: sans-serif;
 }
-
-.pro {
+.img {
     position: absolute;
-    left: 75px;
-    top: -310px;
-    border-radius: 15px;
+    left: 25px;
+    top: 10px;
+
 }
+
+
 
 
 .sign-button {
@@ -355,8 +354,8 @@ const handleChange = (e) => {
 
 .background1 {
     position: absolute;
-    width: 1230px;
-    height: 540px;
+    width: 100%;
+    height: 100%;
     left: 0;
     top: 0;
     bottom: 340px;
@@ -368,7 +367,7 @@ const handleChange = (e) => {
     position: absolute;
     left: 0;
     width: 260px;
-    height: 800px;
+    height: 100%;
     /* White */
     background: rgb(255, 255, 255);
     /* Elevation / 06 */
@@ -379,7 +378,7 @@ const handleChange = (e) => {
 .PersonSide {
     position: absolute;
     width: 260px;
-    height: 800px;
+    height: 100%;
 }
 
 
@@ -411,7 +410,7 @@ const handleChange = (e) => {
     width: 230px;
     left: 10px;
     height: 0;
-    top: 100px;
+    top: 110px;
     border: 1px solid rgb(148, 141, 141);
     border-radius: 20px;
     transform: rotate(-0.58deg);
