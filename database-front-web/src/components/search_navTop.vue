@@ -34,14 +34,27 @@
                     <font-awesome-icon :icon="['fas', 'paperclip']" />
                     <span class="button-text">公告栏</span>
                 </el-button>
+                <div class="container">
+                    <div class="dropdown">
+                            <!-- 标题 -->
+                        <el-button class="dropdown-title" @click="ToCheckMessage">
+                            <font-awesome-icon :icon="['fas', 'comments']" />
+                            <span class="button-text">消息</span>
+                        </el-button>
+                            <!-- xiaoxi -->
+                        <div class="dropdown-content">
+                            <div class="dropdown-menu">
+                                <noticeitem v-for="item in dis_announcementListInfo" :key="item.AnnouncementId" :data="item">
+                                </noticeitem>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <el-button class="icon-button" @click="ToLogOut">
                     <font-awesome-icon :icon="['fas', 'right-to-bracket']" />
                     <span class="button-text">退出登录</span>
                 </el-button>
-                <el-button class="icon-button" @click="ToCheckMessage">
-                    <font-awesome-icon :icon="['fas', 'comments']" />
-                    <span class="button-text">消息</span>
-                </el-button>
+                
             </div>
             <userAvatar :userId=store.state.Info.id :width=50 :addLink="false"></userAvatar>
             <avatarUploader></avatarUploader>
@@ -54,8 +67,47 @@ import { ref, reactive, onMounted, onUnmounted, nextTick } from 'vue';
 import router from "@/router/index.js"
 import { useStore } from 'vuex' // 引入store
 // 1111
+import noticeitem from "@/components/noticeitem.vue"
+import { loadAnnouncement } from "@/api/announcement.js"
+import { loadNotice } from "@/api/notice.js"
+const announcementListInfo = ref([]);
+
+const dis_announcementListInfo = ref([]);
+const fetchData = async (stringValue = '') => {
+    let result;
+    if (!stringValue) {
+        stringValue = "0"
+        const params = {
+            //p_board_id: pBoardId.value,
+            //page_num: 1
+            user_id: store.state.Info.id,
+        };
+        result = await loadNotice(params);
+    }
+    else {
+        const params = {
+            keyword: stringValue
+        };
+        result = await forum_searchArticle(params);
+    }
+
+    if (!result)
+        return;
+    console.log(result.data);
+    announcementListInfo.value = result.data;
+    dis_announcementListInfo.value = announcementListInfo.value.slice(0, 8);
+
+};
+
+// 在组件挂载时获取初始文章数据
+onMounted(() => {
+    fetchData();
+});
+//111
+
 import { searchArticles } from "@/api/article.js"
 import { getCurrentInstance } from "vue";
+
 
 const instance = getCurrentInstance();
 
@@ -99,9 +151,15 @@ const enterDown = async (e) => {
 }
 
 
+
 const ToHome = () => {
     router.push(`/homeUser`);
 }
+
+const handle = () => {
+    console.log("aaaaaaa");
+}
+
 
 const ToMy = () => {
     if (store.state.type == 1) { //管理员身份
@@ -130,7 +188,7 @@ const ToCheckMessage = () => {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .header-content {
     margin: 0 auto;
     align-items: center;
@@ -166,10 +224,8 @@ const ToCheckMessage = () => {
 
 .user-info-panel .el-button {
     border: none;
-    /* 去掉按钮的背景颜色 */
     background-color: transparent;
     padding: 0;
-    /* margin: 0; */
     margin-right: 1vw;
 }
 
@@ -180,4 +236,59 @@ const ToCheckMessage = () => {
 .button-text {
     margin-left: 5px;
 }
+
+//.dropdown {
+//    margin: 0 20px;
+//}
+
+.dropdown .dropdown-title {
+    display: inline-block;
+    position: relative;
+    //height: 30px;
+    //line-height: 30px;
+    //font-size: 5px;
+    //background-color: #fff;
+    //color: #000;
+    padding: 0 24px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dropdown .dropdown-content {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.6s ease-in-out;
+}
+
+.dropdown .dropdown-content .dropdown-menu {
+    margin-top: 6px;
+    padding: 10px 8px 15px;
+    background-color: rgba(255, 255, 255, 0.011);
+    color: black;
+    border-radius: 4px;
+}
+
+.dropdown .dropdown-content .dropdown-menu .menuItem {
+    width: 100%;
+    white-space: nowrap;
+    padding: 10px 16px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.dropdown .dropdown-content .dropdown-menu .menuItem:hover {
+    background-color: #ccc;
+}
+
+.dropdown:hover .dropdown-content {
+    visibility: visible;
+    opacity: 1;
+}
+
+
+
+
 </style>

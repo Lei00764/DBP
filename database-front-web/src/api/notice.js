@@ -5,16 +5,16 @@ import router from "@/router/index.js"
 
 
 // 加载信息
-export function loadNotice() {
+export function loadNotice(params) {
     return Request({
         method: 'GET',
         url: 'Notice/loadNotice',
-        params: {}  // 空对象表示不传递任何参数
+        params: params // 空对象表示不传递任何参数
     }).then(function (response) {
         if (response.data.code === 200) {
             return response.data;  // 返回 code + msg + data
         } else {
-            Message.error("信息加载失败");
+            //Message.error("信息加载失败");   暂时删掉
             return null;
         }
     }).catch(function (error) {
