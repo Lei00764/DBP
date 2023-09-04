@@ -8,8 +8,9 @@
                 <el-form :inline="true" class="form-container">
                     <template v-for="(button, index) in buttonStyle" :key="index">
                         <el-form-item>
-                            <el-button class="button" @click="handleButtonClick(index)"
-                                :style="`background-image: url(${button.background})`">{{ button.name }}</el-button>
+                            <el-button @click="handleButtonClick(index)" :class="`button button${index}`">
+                                {{ button.name }}
+                            </el-button>
                         </el-form-item>
                     </template>
                 </el-form>
@@ -23,20 +24,18 @@
 
 <script setup>
 import { ref, reactive } from 'vue';
-import navTop from "@/components/navTop.vue"
 import router from "@/router/index.js"
+import navTop from "@/components/navTop.vue"
 
 const pBoardId = ref(0);  // 默认为 0，即全部板块
 
 const buttonStyle = [
-    // 将图片换成修改之后的图片，注意：这里不能使用 @ 代替 src
-    { name: "全部", background: "src/assets/forum-classify/all.png", hoverOpacity: 0.8 },
-    { name: "中餐", background: "src/assets/forum-classify/chinesefood.png", hoverOpacity: 0.8 },
-    { name: "西餐", background: "src/assets/forum-classify/westernfood.png", hoverOpacity: 0.8 },
-    { name: "甜点", background: "src/assets/forum-classify/dessert.png", hoverOpacity: 0.8 },
-    { name: "其他", background: "src/assets/forum-classify/others.png", hoverOpacity: 0.8 }
+    { name: "全部", hoverOpacity: 0.8 },
+    { name: "中餐", hoverOpacity: 0.8 },
+    { name: "西餐", hoverOpacity: 0.8 },
+    { name: "甜点", hoverOpacity: 0.8 },
+    { name: "其他", hoverOpacity: 0.8 }
 ];
-
 
 // 点击本页面上的按钮，跳转到相应的板块
 const handleButtonClick = (p_board_id) => {
@@ -88,5 +87,25 @@ const handleButtonClick = (p_board_id) => {
     width: 100vw;
     height: 80vh;
 
+}
+
+.button0 {
+    background: url('@/assets/forum-classify/all.png');
+}
+
+.button1 {
+    background: url('@/assets/forum-classify/chinesefood.png');
+}
+
+.button2 {
+    background: url('@/assets/forum-classify/westernfood.png');
+}
+
+.button3 {
+    background: url('@/assets/forum-classify/dessert.png');
+}
+
+.button4 {
+    background: url('@/assets/forum-classify/others.png');
 }
 </style>
