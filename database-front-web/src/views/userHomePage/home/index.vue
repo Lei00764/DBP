@@ -1,7 +1,8 @@
 <template>
     <div>
-        <component1 v-if="refreshs" @child-click="refreshing"></component1>
-  
+        <component1></component1>
+        <!-- <calendar1></calendar1> -->
+
 
 
         <!-- START 用户申请专业认证弹窗 -->
@@ -28,7 +29,8 @@
         <div class="topp">
             <el-form>
                 <el-form-item>
-                    <el-input v-model="formData.keyword" clearable placehoder="请输入内容" @keyup.enter.native="fetchData(formData.keyword)">
+                    <el-input v-model="formData.keyword" clearable placehoder="请输入内容"
+                        @keyup.enter.native="fetchData(formData.keyword)">
                     </el-input>
                 </el-form-item>
                 <el-button class=button11 round color=transparent @click="home"
@@ -76,8 +78,9 @@
             </p>
             <!-- 帖子展示部分 -->
             <el-row>
-                <userHomeArticleListltem v-if="refreshs" v-for="item in articleListInfo.slice(formData.index, formData.index + 2)"
-                    :data="item" @child-click="refreshing" >
+                <userHomeArticleListltem v-if="refreshs"
+                    v-for="item in articleListInfo.slice(formData.index, formData.index + 2)" :data="item"
+                    @child-click="refreshing">
                 </userHomeArticleListltem>
             </el-row>
             <!-- 底部页面跳转 -->
@@ -103,7 +106,7 @@
 </template>
   
 <script setup="props">
-import { getCurrentInstance, ref, reactive, toRefs, onMounted,nextTick, watch } from 'vue';
+import { getCurrentInstance, ref, reactive, toRefs, onMounted, nextTick, watch } from 'vue';
 import component1 from '../component1/component1.vue';
 import Message from "@/utils/Message.js"
 // import { ElPagination } from 'element-plus'
@@ -111,7 +114,7 @@ import router from "@/router/index.js"
 import { useRoute, useRouter } from "vue-router"
 import { ApplyProfession } from "@/api/profession.js"
 import { useStore } from 'vuex' // 引入store
-import { searchArticle, getArticleNumber,searchArticles } from "@/api/article.js"
+import { searchArticle, getArticleNumber, searchArticles } from "@/api/article.js"
 import userHomeArticleListltem from "@/components/userHomeArticleListltem.vue"
 
 // START 用户申请专业认证弹窗
@@ -123,9 +126,9 @@ const dialogVisible = ref(false)
 const form = ref({
     illustrate: '',
     evidence: '',
-    
+
 });
-const refreshs=ref(true)
+const refreshs = ref(true)
 //用户头像
 const state = reactive({
     fits: ['fill'],
@@ -150,18 +153,9 @@ const refreshing = () => {
     fetchData();
     fetchnum();
     refreshs.value = false
-    nextTick(()=>{
+    nextTick(() => {
         refreshs.value = true
     })
-}
-const home = () => {
-    router.push(`/homeUser`);
-}
-const gotoLogin = () => {
-    router.push(`/login`);
-}
-const gotoCreate = () => {
-    router.push('/register');
 }
 
 const applyForProfession = () => {
@@ -216,7 +210,7 @@ const fetchData = async (stringValue = '') => {
     if (!stringValue) {
         stringValue = "0"
         const params = {
-            user_id: store.state.Info.id,
+            user_id: 8
         };
         result = await searchArticle(params);
     }
@@ -237,7 +231,7 @@ const fetchnum = async (stringValue = '') => {
     if (!stringValue) {
         stringValue = "0"
         const params = {
-            user_id: store.state.Info.id,
+            user_id: 8
         };
         result = await getArticleNumber(params);
     }
@@ -255,6 +249,46 @@ const fetchnum = async (stringValue = '') => {
 
 };
 
+
+// const changePage = reactive({
+//   currentPage: 1,
+//   total: gdata.length + 1 / 9,
+// });
+
+// const handelCurrentChange = (value) => {
+
+
+//   //获取当前页码
+//     changePage.currentPage = value; 
+
+
+//   //判断当前页是否为首页 页码从1开始，是则直接调用后端数据，否则要进行计算
+//     if (value > 1) {
+
+//       var i = (value - 1) * 2;  //计算当前页第一条数据的下标，
+
+//       var arry = [];  //建立一个临时数组
+
+//       //比如每页10条数据，第二页的第一条数据就是从 （2-1）*10 = 10 开始的 结束下标就是2*10=20 
+//       while (i < value * 2) {
+//        //解决最后一页出现null值
+//         if (gdata[i] != null) {
+//           arry.push(gdata[i]);
+//           i++;
+//           continue
+//         }
+//         break
+//       }
+//       sdata.value=arry
+
+//      } else {
+
+//       sdata.value = gdata;
+
+//     }
+//   }
+
+
 const input = reactive({
     code: {
         input: '',
@@ -271,7 +305,6 @@ const CheckImgExists = (imgurl) => {
         return false
     }
 }
-
 
 
 </script> 
