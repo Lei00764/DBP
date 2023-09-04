@@ -4,11 +4,11 @@
             <el-row>
                 <el-col :span="12">
                     <el-upload class="avatar-uploader" :show-file-list="false" :before-upload="beforeUpload">
-                        <el-button type="primary">上传</el-button>
+                        <el-button round color=transparent style="color:#000000;background-color:transparent;margin-top: 2px;" type="primary">上传</el-button>
                     </el-upload>
                 </el-col>
                 <el-col :span="12">
-                    <el-button type="primary" @click="submitForm">提交</el-button>
+                    <el-button round color=transparent style="color:#000000;background-color:transparent;margin-top: 2px;" type="primary" @click="submitForm">提交</el-button>
                 </el-col>
             </el-row>
         </el-form>
@@ -41,5 +41,7 @@ const submitForm = () => {
 };
 </script>
   
-<style lang="scss"></style>
+<style lang="scss">
+
+</style>
   

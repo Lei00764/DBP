@@ -114,11 +114,6 @@ const router = createRouter({
                     name: 'homo',
                     component: () => import('@/views/userHomePage/home/index.vue'),
                 },
-                {
-                    path: 'user',
-                    name: 'user',
-                    component: () => import('@/views/userHomePage/user/change.vue'),
-                },
             ]
         },
         // {

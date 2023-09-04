@@ -1,9 +1,9 @@
 <template>
     <div>
         <component1 v-if="refreshs" @child-click="refreshing"></component1>
-  
 
 
+        <el-button class="pro" @click="applyForProfession">申请专业厨师认证</el-button>
         <!-- START 用户申请专业认证弹窗 -->
         <!-- 【BUG】：当没有输出完成时，用户点击确认，系统应给出提示！ lx -->
         <el-dialog v-model="dialogVisible" title="专业厨师认证申请" width="50%" :before-close="handleClose" :show-close="false">
@@ -28,7 +28,8 @@
         <div class="topp">
             <el-form>
                 <el-form-item>
-                    <el-input v-model="formData.keyword" clearable placehoder="请输入内容" @keyup.enter.native="fetchData(formData.keyword)">
+                    <el-input v-model="formData.keyword" clearable placehoder="请输入内容"
+                        @keyup.enter.native="fetchData(formData.keyword)">
                     </el-input>
                 </el-form-item>
                 <el-button class=button11 round color=transparent @click="home"
@@ -39,7 +40,7 @@
 
                     </el-icon>
                 </el-button>
-                <el-button class=button13 round color=transparent @click="user"
+                <el-button class=button13 round color=transparent @click="user = true"
                     style="color:#000000;background-color:transparent;margin-top: 2px;">
                     <el-icon :size="20">
 
@@ -47,6 +48,20 @@
 
                     </el-icon>
                 </el-button>
+                <el-dialog v-if="refreshs" v-model="user" title="更改个人信息" width="40%" height="80%" align-center>
+                    <el-form-item>
+                        头像：
+                        <userAvatar class="img" :key="avatarKey" :userId=store.state.Info.id :width=50 :addLink="false"></userAvatar>
+                        <avatarUploader class="upload" @avatarUploaded="refreshing"></avatarUploader>
+                    </el-form-item>
+                    <div class="PersonSide_text">
+                        <div class="user_name">
+                            昵称：
+                            <span> {{ UserInfo.name }} </span>
+
+                        </div>
+                    </div>
+                </el-dialog>
 
                 <div class="button2" @click="gotoLogin">
                     &emsp;退出登录
@@ -76,8 +91,9 @@
             </p>
             <!-- 帖子展示部分 -->
             <el-row>
-                <userHomeArticleListltem v-if="refreshs" v-for="item in articleListInfo.slice(formData.index, formData.index + 2)"
-                    :data="item" @child-click="refreshing" >
+                <userHomeArticleListltem v-if="refreshs"
+                    v-for="item in articleListInfo.slice(formData.index, formData.index + 2)" :data="item"
+                    @child-click="refreshing">
                 </userHomeArticleListltem>
             </el-row>
             <!-- 底部页面跳转 -->
@@ -103,15 +119,14 @@
 </template>
   
 <script setup="props">
-import { getCurrentInstance, ref, reactive, toRefs, onMounted,nextTick, watch } from 'vue';
+import { getCurrentInstance, ref, reactive, toRefs, onMounted, nextTick, watch } from 'vue';
 import component1 from '../component1/component1.vue';
-import Message from "@/utils/Message.js"
-// import { ElPagination } from 'element-plus'
+import { GetInfoByID} from "@/api/user.js"
 import router from "@/router/index.js"
 import { useRoute, useRouter } from "vue-router"
 import { ApplyProfession } from "@/api/profession.js"
 import { useStore } from 'vuex' // 引入store
-import { searchArticle, getArticleNumber,searchArticles } from "@/api/article.js"
+import { searchArticle, getArticleNumber, searchArticles } from "@/api/article.js"
 import userHomeArticleListltem from "@/components/userHomeArticleListltem.vue"
 
 // START 用户申请专业认证弹窗
@@ -123,16 +138,12 @@ const dialogVisible = ref(false)
 const form = ref({
     illustrate: '',
     evidence: '',
-    
+
 });
-const refreshs=ref(true)
-//用户头像
-const state = reactive({
-    fits: ['fill'],
-    url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-})
-const { fits, url } = toRefs(state)
+const refreshs = ref(true)
+const UserInfo = ref([]);
 const point = ref(0)
+const user = ref(false)
 const formData = reactive({
     isSigned: false,
     buttonLabel: '签到',
@@ -142,15 +153,26 @@ const formData = reactive({
 
 onMounted(() => {
     fetchData();
-    fetchnum();
+    fetchuser();
 
 })
 //———————————————————函数——————————————————————————
+const fetchuser = async () => {
+    const params = {
+        ID:store.state.Info.id,
+        type: 1
+    }
+    let result = await GetInfoByID(params);
+    if (!result) {
+        return;
+    }
+    UserInfo.value = result.data;
+};
+
 const refreshing = () => {
     fetchData();
-    fetchnum();
     refreshs.value = false
-    nextTick(()=>{
+    nextTick(() => {
         refreshs.value = true
     })
 }
@@ -230,6 +252,7 @@ const fetchData = async (stringValue = '') => {
     if (!result)
         return;
     articleListInfo.value = result.data;
+    fetchnum();
 
 };
 const fetchnum = async (stringValue = '') => {
@@ -278,13 +301,33 @@ const CheckImgExists = (imgurl) => {
   
 <style scoped>
 /* 初始化 */
+.img {
+    position: absolute;
+    left: 43px;
+    top: -5px;
+
+}
+.upload {
+    position: absolute;
+    left: 100px;
+    top: 0px;
+
+}
+.PersonSide_text{
+    margin-top: 40px;
+}
 .button12 {
     position: absolute;
     left: 800px;
     top: 26px;
 
 }
-
+.pro {
+    position: absolute;
+    left: 80px;
+    top: 75px;
+    border-radius: 15px;
+}
 .ShowPart {
     position: absolute;
     width: 750px;
