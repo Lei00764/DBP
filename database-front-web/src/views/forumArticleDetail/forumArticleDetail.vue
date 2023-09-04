@@ -5,10 +5,8 @@
                 <navTop></navTop>
             </div>
             <!-- 展示帖子详情 -->
-            <div class="tag">
-                <!-- <router-link :to="`/forum/`"> -->
-                {{ articleInfo[0].tag }}
-                <!-- </router-link> -->
+            <div class="Content-tag">
+                {{ "Content" }}
             </div>
             <el-form class="announ-announcement-form" :style="{ height: formHeight }">
                 <!-- 举报按钮 点击弹窗 -->
@@ -47,10 +45,20 @@
                 </div>
                 <div class="content" ref="innerContent" v-html="articleInfo[0].content"></div>
             </el-form>
+            <div class="Comment-tag">
+                {{ "Comment" }}
+            </div>
+            <el-form class="comment-form">
+                <div class="comment" v-if="Object.keys(articleInfo).length > 0">
+                    <commentList :articleId="router.currentRoute.value.params.articleId"></commentList>
+                </div>
+            </el-form>
         </div>
+        <!--
         <div v-if="Object.keys(articleInfo).length > 0">
             <commentList :articleId="router.currentRoute.value.params.articleId"></commentList>
         </div>
+        -->
     </div>
 </template>
 
@@ -169,8 +177,6 @@ const formHeight = computed(() => {
 })
 
 
-
-
 //举报信息：作者名，作者id，举报原因，帖子标题，帖子内容
 
 const reportConfirm = async (userId, articleId) => {
@@ -209,7 +215,6 @@ const reportConfirm = async (userId, articleId) => {
 
 .forum-article-detail-page {
 
-    background-image: url('@/assets/forum_bkg.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -241,20 +246,39 @@ const reportConfirm = async (userId, articleId) => {
 .announ-announcement-form {
     position: absolute;
     top: 150px;
-    left: 300px;
+    left: 150px;
     width: 840px;
     border-radius: 12px;
     background-color: #e6f0f8;
 }
 
+.comment-form {
+    position: absolute;
+    top: 150px;
+    left: 1050px;
+    width: 500px;
+    border-radius: 12px;
+    background-color: #e6f0f8;
+}
+
 /*标签样式*/
-.tag {
+.Content-tag {
     position: absolute;
     top: 110px;
-    left: 250px;
-    width: 50px;
+    left: 130px;
+    width: 65px;
     padding: 5px;
-    background-color: rgba(0, 255, 255, 0.551);
+    background-color: rgba(122, 164, 255, 0.756);
+    border-radius: 5px;
+}
+
+.Comment-tag {
+    position: absolute;
+    top: 110px;
+    left: 1030px;
+    width: 78px;
+    padding: 5px;
+    background-color: rgba(122, 164, 255, 0.756);
     border-radius: 5px;
 }
 
@@ -304,5 +328,11 @@ const reportConfirm = async (userId, articleId) => {
 
 .dialog-footer button:first-child {
     margin-right: 10px;
+}
+
+.comment {
+    position: absolute;
+    top: 20px;
+    left: 5%;
 }
 </style>

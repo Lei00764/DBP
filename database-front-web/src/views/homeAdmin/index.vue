@@ -45,8 +45,11 @@
                     </el-form-item>
                 </el-form>
                 <!-- 退出登录的按钮 -->
-                <el-button class="homeAdmin-logout-btn" style="position:absolute;bottom:5%;left:40%" @click="logout">
+                <el-button class="homeAdmin-logout-btn" style="position:absolute;bottom:5%;left:60%" @click="logout">
                     <span>退出登录</span>
+                </el-button>
+                <el-button class="post-notice" style="position:absolute;bottom:5%;left:15%" @click="addNotice">
+                    <span>发送消息</span>
                 </el-button>
             </div>
             <el-form style="position: absolute" class="classify-position" :inline=true>
@@ -69,14 +72,36 @@
                 </el-form-item>
             </el-form>
         </div>
+        <!-- START 发布消息弹窗 -->
+        <el-dialog v-model="dialogVisible" title="给指定用户发送一条消息" width="50%" :before-close="handleClose">
+            <el-form @submit.native.prevent="submitNotice">
+                <el-form-item label="用户ID：">
+                    <el-input type="textarea" v-model="form.USERID"/>
+                </el-form-item>
+                <el-form-item label="内容：">
+                    <el-input type="textarea" v-model="form.CONTENT"/>
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="dialogVisible = false">Cancel</el-button>
+                    <el-button type="primary" @click="submitNotice">Submit</el-button>
+                </span>
+            </template>
+        </el-dialog>
+        <!-- END 发布消息弹窗 -->
     </div>
 </template>
 
 <script setup>
+import { ref, onMounted, watch } from 'vue';
 import { reactive } from 'vue';
 import router from "@/router/index.js"
 import navTopAdmin from "@/components/navTopAdmin.vue"
 import { useStore } from 'vuex'//引入store
+import { postNotice } from "@/api/notice.js"
+
+
 
 const store = useStore();//使用store必须加上
 const doSearch = () => {
@@ -98,11 +123,36 @@ const intoCheckArticle = () => {
 const intoForum = () => {
     router.push({ path: 'layout' })
 }
+
 const formData = reactive({
     keyword: '',
 });
 
-console.log(store.state);
+//   发送消息START
+const dialogVisible = ref(false)
+
+const form = ref({
+    USERID: '',
+    CONTENT: '',
+});
+
+const addNotice = () => {
+    dialogVisible.value = true;
+}
+
+const submitNotice = () => {
+    let params = {
+        adminId: store.state.Info.id,
+        userId: form.value.USERID,
+        noticeContent: form.value.CONTENT,
+    }
+    //console.log(params);
+    postNotice(params);
+    dialogVisible.value = false;
+    //console.log("success");
+    location.reload();
+};
+//   发送消息END
 </script>
 
 <style scoped>
@@ -209,5 +259,19 @@ console.log(store.state);
     width: 300px;
     height: 150px;
     border-radius: 20px;
+}
+
+.post-notice {
+    /* 设置发送消息按钮风格 */
+    position: absolute;
+    bottom: 5%;
+    left: 40%;
+    width: 80px;
+    height: 35px;
+    border-radius: 30px;
+    background-color: #5eaedf;
+    border-color: transparent;
+    color: white;
+    box-shadow: 0px 4px 4px 0px gray;
 }
 </style>
