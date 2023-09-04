@@ -34,14 +34,29 @@
                     <font-awesome-icon :icon="['fas', 'paperclip']" />
                     <span class="button-text">公告栏</span>
                 </el-button>
+
+                <div class="container">
+                    <div class="dropdown">
+                            <!-- 消息 -->
+                        <el-button class="dropdown-title" @click="ToCheckMessage">
+                            <font-awesome-icon :icon="['fas', 'comments']" />
+                            <span class="button-text">消息</span>
+                        </el-button>
+                            <!-- xiaoxi -->
+                        <div class="dropdown-content">
+                            <div class="dropdown-menu">
+                                <noticeitem v-for="item in dis_announcementListInfo" :key="item.AnnouncementId" :data="item">
+                                </noticeitem>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <el-button class="icon-button" @click="ToLogOut">
                     <font-awesome-icon :icon="['fas', 'right-to-bracket']" />
                     <span class="button-text">退出登录</span>
                 </el-button>
-                <el-button class="icon-button" @click="ToCheckMessage">
-                    <font-awesome-icon :icon="['fas', 'comments']" />
-                    <span class="button-text">消息</span>
-                </el-button>
+                
             </div>
         </div>
     </div>
@@ -58,6 +73,33 @@ const store = useStore(); // 使用store必须加上
 const formData = reactive({  // 用 reactive，而不用 ref
     keyword: '',
 });
+// 1111
+import noticeitem from "@/components/noticeitem.vue"
+import { loadAnnouncement } from "@/api/announcement.js"
+import { loadNotice } from "@/api/notice.js"
+const announcementListInfo = ref([]);
+
+const dis_announcementListInfo = ref([]);
+const fetchData = async (stringValue = '') => {
+    let result;
+    if (!stringValue) {
+        stringValue = "0"
+        const params = {
+            user_id: store.state.Info.id,
+        };
+        result = await loadNotice(params);
+    }
+    console.log(result.data);
+    announcementListInfo.value = result.data;
+    dis_announcementListInfo.value = announcementListInfo.value.slice(0, 8);
+
+};
+
+// 在组件挂载时获取初始文章数据
+onMounted(() => {
+    fetchData();
+});
+//111
 
 
 onMounted(() => {
@@ -111,7 +153,7 @@ const ToCheckMessage = () => {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .header-content {
     margin: 0 auto;
     align-items: center;
@@ -147,10 +189,8 @@ const ToCheckMessage = () => {
 
 .user-info-panel .el-button {
     border: none;
-    /* 去掉按钮的背景颜色 */
     background-color: transparent;
     padding: 0;
-    /* margin: 0; */
     margin-right: 1vw;
 }
 
@@ -161,4 +201,51 @@ const ToCheckMessage = () => {
 .button-text {
     margin-left: 5px;
 }
+
+
+
+.dropdown .dropdown-title {
+    display: inline-block;
+    position: relative;
+    padding: 0 24px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dropdown .dropdown-content {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.6s ease-in-out;
+}
+
+.dropdown .dropdown-content .dropdown-menu {
+    margin-top: 6px;
+    padding: 10px 8px 15px;
+    background-color: rgba(255, 255, 255, 0.011);
+    color: black;
+    border-radius: 4px;
+}
+
+.dropdown .dropdown-content .dropdown-menu .menuItem {
+    width: 100%;
+    white-space: nowrap;
+    padding: 10px 16px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.dropdown .dropdown-content .dropdown-menu .menuItem:hover {
+    background-color: #ccc;
+}
+
+.dropdown:hover .dropdown-content {
+    visibility: visible;
+    opacity: 1;
+}
+
+
 </style>
+

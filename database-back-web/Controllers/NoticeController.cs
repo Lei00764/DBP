@@ -16,13 +16,41 @@ public class NoticeController : ControllerBase
     {
         _database = appDbContext;  // 依赖注入，在整个类中使用它来进行数据库操作
     }
+    private string GetSummary(string content)
+    {
+        const int MaxSummaryLength = 5; // 设置文章概要的最大长度为5
+        var summary = string.Empty;
+        if (!string.IsNullOrEmpty(content))
+        {
+            var paragraphs = content.Split("\n\n"); // 假设每段之间是用两个换行符（\n\n）分隔的
+            foreach (var paragraph in paragraphs)
+            {
+                if (summary.Length + paragraph.Length <= MaxSummaryLength)
+                {
+                    summary += paragraph;
+                }
+                else
+                {
+                    summary += paragraph.Substring(0, MaxSummaryLength - summary.Length);
+                    break;
+                }
+            }
+            if(summary.Length == MaxSummaryLength)
+            {
+                summary += "...";
+            }
+        }
+        return summary;
+   }
+
 
     //加载信息
     [HttpGet("loadNotice")]
-    public async Task<IActionResult> GetNoticeAsync()
+    public async Task<IActionResult> GetNoticeAsync(int user_id)
     {
         var code = 200;
         var msg = "success";
+        var number = 5;
 
         var notices = await (
             from notice in _database.Notices
@@ -30,24 +58,38 @@ public class NoticeController : ControllerBase
             join user in _database.Users on notice.UserId equals user.UserId
             select new
             {
+                AdminId = admin.AdminId,
+                UserId = notice.UserId,
                 NoticeID = notice.NoticeId,
                 NoticeTime = notice.NoticeTime,
                 NoticeContent = notice.NoticeContent,
                 AdminName = admin.AdminName,
+                
             }
-        ).ToListAsync();
+        ).Where(x => x.UserId == user_id).OrderByDescending(x => x.NoticeID).ToListAsync();
 
         /* 在这分页的话
         int pageSize = 6; // 每页显示的公告数
         int pageNumber; // 要获取的页码
-
+        
         var paginatedNotices = notices.Skip((pageNumber - 1) * pageSize) .Take(pageSize) .ToList();*/
+        notices = notices.Take(number).ToList();
+
+        var summarizedData = notices.Select(x => new {
+                x.AdminId,
+                x.UserId,
+                x.NoticeID,
+                x.NoticeTime,
+                x.NoticeContent,
+                x.AdminName,
+                summary = GetSummary(x.NoticeContent) // 获取文章概要
+            });
         if(notices.Count >0){
             return Ok(new
             {
                 code = code,
                 msg = msg,
-                data = notices
+                data = summarizedData
             });
         }
         else{

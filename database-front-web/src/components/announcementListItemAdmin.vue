@@ -69,7 +69,7 @@
           <el-divider direction="vertical"></el-divider> <!--分割线-->
           <div class="post-time-detail">{{ data.announcementTime }}</div> <!--发布时间-->
         </div>
-        <!--公告详细信息-->
+      <!--公告详细信息-->
         <div class="announcementTitleDetail">{{ data.title }}</div>
         <div class="announcementContentDetail">{{ data.announcementContent }}</div>
       </el-form>
@@ -187,13 +187,13 @@ const confirmAnnouncement = () => {
 };
 //   修改公告END
 
-//   修改公告START
+//   公告详细内容START
 const detaildialogVisible = ref(false)
 
 const detailAnnouncements = () => {
     detaildialogVisible.value = true;
 }
-//   修改公告END
+//   公告详细内容END
 </script>
 
 <style>
