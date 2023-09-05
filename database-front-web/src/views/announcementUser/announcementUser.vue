@@ -101,7 +101,7 @@ const handlePageChange = (page) => {
 }
 
 #announcement-panel {
-  height: 128vh;
+  height: 1210px;
   width: 85vw;
   margin-left: auto;
   margin-right: auto;
@@ -126,7 +126,7 @@ const handlePageChange = (page) => {
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 1.5vh;
+    margin-bottom: 10px;
     order: 1;
 }
 </style>

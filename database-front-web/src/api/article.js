@@ -169,6 +169,24 @@ export function editArticle(params) {
     });
 }
 
+// 浏览文章
+export function viewArticle(params) {
+    return Request({
+        method: 'POST',
+        url: 'Article/Articleview',
+        params: params
+    }).then(function (response) {
+        if (response.data.code === 200) {
+            return response.data;
+        } else if (response.data.code === 400) {
+            Message.error("参数错误");
+            return null;
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
+
 //发布文章
 export function postArticle(params) {
     return Request({

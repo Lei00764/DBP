@@ -59,11 +59,7 @@
     },
   });
 
-const handle = () => {
 
-  console.log("1111asdadadadadadasdadafdsfsf1");// 加个弹窗显示具体的内容
-
-}
 
 //   消息详细内容START
 const detaildialogVisible = ref(false)
@@ -79,9 +75,10 @@ const detailNotices = () => {
 
 .notice-item-inner {
   border-bottom: 1px solid #ddd;
-  background-color: #cec6c1;
+  background-color: #ffffff;
   padding: 0px 20px 0px 10px;
   display: flex;
+  z-index: 3; /* 将通知项的层级设置为较高的值 */
 }
 
 .notice-body {
@@ -92,7 +89,8 @@ const detailNotices = () => {
   display: flex;
   align-items: center;
   font-size: 14px;
-  color: #66694e;
+  color: black;
+  z-index: 3; /* 将通知项的层级设置为较高的值 */
 }
 
 

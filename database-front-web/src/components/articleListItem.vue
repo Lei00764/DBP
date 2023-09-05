@@ -21,8 +21,11 @@
           </div>
           <!--显示用户信息-->
 
-          <!--显示帖子信息-->
-          <router-link :to="`/forumArticleDetail/${data.postId}`" class="title">{{ data.title }}</router-link>
+          <router-link :to="`/forumArticleDetail/${data.postId}`" class="title"  @click="handleView(data.postId)">
+            {{ data.title }}
+          </router-link>
+          <!--显示帖子信息
+          <router-link :to="`/forumArticleDetail/${data.postId}`" class="title">{{ data.title }}</router-link>-->
           <div class="summary">{{ data.summary }}</div>
           <div class="article-info">
             <span class="iconfont icon-eye">
@@ -49,12 +52,17 @@
 <script setup>
 
 // 接收父组件的信息
+import { viewArticle } from "@/api/article.js"
 const props = defineProps({
   data: {
     type: Object
   },
 });
+const handleView = async (postId) =>{
+  console.log(postId);
+  viewArticle(postId);
 
+}
 // console.log(props.data);
 </script>
 

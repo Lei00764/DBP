@@ -109,7 +109,7 @@ onMounted(() => {
 }
 
 #article-panel {
-  height: 166vh;
+  height: 1220px;
   width: 85vw;
   margin-left: auto;
   margin-right: auto;
@@ -134,7 +134,7 @@ onMounted(() => {
   width: 30vw;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 1.5vh;
+  margin-bottom: 10px;
   order: 1;
 }
 </style>

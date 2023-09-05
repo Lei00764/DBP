@@ -116,7 +116,12 @@ const enterDown = async (e) => {
         e.preventDefault(); // 阻止默认提交动作
         // 将 keyword 作为查询参数传递给 /search 路由
         // 导航到一个新的路由，同时还传递了一个查询参数 keyword
-        router.push({ path: '/search', query: { keyword: formData.keyword } });
+
+        if (formData.keyword.trim() !== "") {
+            router.push({ path: '/search', query: { keyword: formData.keyword } });
+        }
+      
+    
     }
     // 销毁事件
     window.removeEventListener("keydown", enterDown, false);
@@ -217,12 +222,13 @@ const ToCheckMessage = () => {
     visibility: hidden;
     opacity: 0;
     transition: all 0.6s ease-in-out;
+    z-index: 2;
 }
 
 .dropdown .dropdown-content .dropdown-menu {
     margin-top: 6px;
     padding: 10px 8px 15px;
-    background-color: rgba(255, 255, 255, 0.011);
+    background-color: rgba(7, 1, 1, 0.011);
     color: black;
     border-radius: 4px;
 }
