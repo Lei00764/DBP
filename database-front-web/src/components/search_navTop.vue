@@ -8,17 +8,31 @@
                 </span>
             </router-link>
 
+
             <!-- 中间 搜索栏 -->
-            <!--搜素事件，回车触发   -->
-            <div class="search-panel">
-                <el-input placeholder= "Search Key Words" class="custom-input" v-model="formData.keyword"
-                    @keyup.enter="enterDown">
-                    <!-- prefix 前置插入槽 -->
-                    <template #prefix>
-                        <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
-                    </template>
-                </el-input>
+            <div class="search-container">
+                <div class="search-panel">
+                    <el-input placeholder="Search Key Words" class="custom-input" v-model="formData.keyword"
+                        @input="handleInput"  @keydown.enter="enterDown" @click="startsearch">
+                            <!-- prefix 前置插入槽 -->
+                        <template #prefix>
+                            <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
+                        </template>
+                    </el-input>
+                    <ul class="search-history" v-show="showHistory">
+                        <li>
+                            <h3 class="search-history-title">搜索历史</h3>
+                        </li>
+                        <li v-for="history in searchHistory" :key="history" @click="loadHistory(history)" class="history-row">
+                            <span class="history-item">{{ history }}</span>
+                        </li>
+                        <li>
+                            <button @click="clearSearchHistory">清空搜索历史</button>
+                        </li>
+                    </ul>
+                </div>
             </div>
+            
 
             <!-- 右侧 个人信息 -->
             <div class="user-info-panel">
@@ -56,8 +70,7 @@
                 </el-button>
                 
             </div>
-            <userAvatar :userId=store.state.Info.id :width=50 :addLink="false"></userAvatar>
-            <avatarUploader></avatarUploader>
+          
         </div>
     </div>
 </template>
@@ -123,35 +136,84 @@ onMounted(() => {
         window.addEventListener("keydown", enterDown);
     });
 });
+//1111
+const searchHistory = ref([]);
+const showHistory = ref(false);
+const MAX_HISTORY_LENGTH = 5;
 
-const enterDown = async (e) => {
-    if (e.keyCode == 13 || e.keyCode == 100) {
-        console.log("进入搜索页面");
-        console.log("搜索关键词：", formData.keyword);
-        e.preventDefault(); // 阻止默认提交动作
-        // 将 keyword 作为查询参数传递给 /search 路由
-        // 导航到一个新的路由，同时还传递了一个查询参数 keyword
-        //router.push({ path: '/search', query: { keyword: formData.keyword } });
-    }
-    
-    // 123
-    /*proxy.globalInfo.search_keyword = formData.keyword;
-    let params = {
-        keyword: formData.keyword
-    };
-    let result = await searchArticles(params);
-    console.log(result);
-    //proxy.globalInfo.search_result.value = result.data;
+// 保存搜索历史到本地存储
+const saveSearchHistory = () => {
+  localStorage.setItem('searchHistory', JSON.stringify(searchHistory.value.slice(0, MAX_HISTORY_LENGTH)));
+};
+
+// 加载搜索历史
+const loadSearchHistory = () => {
+  const savedSearchHistory = localStorage.getItem('searchHistory');
+  searchHistory.value = savedSearchHistory ? JSON.parse(savedSearchHistory) : [];
+};
+
+// 清空搜索历史
+const clearSearchHistory = () => {
+  searchHistory.value = [];
+  localStorage.removeItem('searchHistory');
+  showHistory.value = false;
+};
+
+const enterDown = (e) => {
+  if (e.keyCode === 13 || e.keyCode === 100) {
     console.log("进入搜索页面");
-    //console.log(proxy.globalInfo.search_result.value);*/
-    instance.emit('articlesupdated', formData.keyword);
+    console.log("搜索关键词：", formData.keyword);
+    e.preventDefault();
     
-    // 销毁事件
-    window.removeEventListener("keydown", enterDown, false);
-}
+    // 触发搜索历史
+    instance.emit('articlesupdated', formData.keyword);
+    console.log("触发了搜索历史");
+    const keyword = formData.keyword;
+    const historyIndex = searchHistory.value.indexOf(keyword);
+    if (historyIndex !== -1) {
+      searchHistory.value.splice(historyIndex, 1);
+    }
+    searchHistory.value.unshift(keyword);
+    
+    // 保存搜索历史到本地存储
+    saveSearchHistory();
+    showHistory.value = false;
+  }
+  
+  window.removeEventListener("keydown", enterDown, false);
+};
 
+const handleInput = () => {
+  console.log("触发了搜索框");
+  loadSearchHistory();
+  if (formData.keyword === "") {
+    showHistory.value = false;
+  } else {
+    showHistory.value = true;
+    // 在这里根据输入内容进行搜索历史的自定义逻辑
+  }
+};
 
+const startsearch = () => {
+  console.log("触发了搜索框");
+  loadSearchHistory();
+  if (formData.keyword === "") {
+    showHistory.value = true;
+  } else {
+    showHistory.value = false;
+    // 在这里根据输入内容进行搜索历史的自定义逻辑
+  }
+};
 
+const loadHistory = (history) => {
+  formData.keyword = history;
+  showHistory.value = false;
+  instance.emit('articlesupdated', formData.keyword);
+};
+
+// 页面初始化时加载搜索历史
+loadSearchHistory();
+// 22222
 const ToHome = () => {
     router.push(`/homeUser`);
 }
@@ -189,6 +251,24 @@ const ToCheckMessage = () => {
 </script>
 
 <style lang="scss" scoped>
+
+.search-container {
+  position: relative;
+}
+
+.search-history {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 8px;
+  list-style-type: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 9999; /* 设置较高的 z-index 值以确保遮盖其他组件 */
+}
+
 .header-content {
     margin: 0 auto;
     align-items: center;
@@ -288,7 +368,14 @@ const ToCheckMessage = () => {
     opacity: 1;
 }
 
+.search-history-title {
+  font-size: 14px; /* 调整字体大小为较小值，可以根据需要调整 */
+}
+.history-item:hover {
+  background-color: gray; /* 将鼠标指向时的背景色设置为灰色，你可以根据需要自行调整颜色值 */
+}
 
-
-
+.history-row:hover {
+  background-color: gray; /* 将整行的背景色设置为灰色，你可以根据需要自行调整颜色值 */
+}
 </style>

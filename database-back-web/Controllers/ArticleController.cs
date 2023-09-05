@@ -583,8 +583,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         }
     }
 
-    // navTop 根据关键词去搜索文章列表
-    // modify by Xiang Lei 2023.8.16
+    // 根据关键词去搜索文章列表
     [HttpGet("searchArticle")]
     public async Task<IActionResult> SearchArticle(string keyword)
     {
@@ -645,6 +644,54 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             });
         }
     }
+
+    // 文章浏览量+1
+    [HttpPost("Articleview")]
+    public async Task<IActionResult> ArticleView(int post_id)
+    {
+        var code = 200;
+        var msg = "success";
+        var temp = await _database.Articles.ToListAsync();
+        bool exist = false;
+        if (temp != null)//判断表内是否有该文章
+        {
+            foreach (var article in temp)
+            {
+                if (article.PostId == post_id)
+                {
+                    exist = true;
+                    break;
+                }
+            }
+        }
+        if (exist)
+        {
+            var article_data = _database.Articles.Where(a => a.PostId == post_id);
+            foreach (var item in article_data)
+            {
+                item.Views = item.Views+1;
+            }
+            await _database.SaveChangesAsync();
+            return Ok(new
+            {
+                code = code,
+                msg = msg,
+            });
+        }
+        else
+        {
+            code = 400;
+            msg = "不存在该文章";
+            return Ok(new
+            {
+                code = code,
+                msg = msg
+            });
+        }
+    }
+
+
+
 
     //获取文章数量
     [HttpGet("ArticleNumber")]

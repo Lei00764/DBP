@@ -88,7 +88,7 @@ watch(() => router.currentRoute.value.params.pBoardId, (newValue) => {
 
 <style>
 #article-panel {
-  height: 135vh;
+  height: 1220px;
   width: 85vw;
   margin-left: auto;
   margin-right: auto;
@@ -114,7 +114,7 @@ watch(() => router.currentRoute.value.params.pBoardId, (newValue) => {
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 1.5vh;
+  margin-bottom: 10px;
   order: 1;
 }
 </style>
