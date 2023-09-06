@@ -124,6 +124,7 @@ const detailNotices = () => {
 
 .noticeContentDetail{
   font-size: 18px;
+  white-space: pre-wrap;
 }
 
 .noticeTitleDetail {

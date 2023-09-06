@@ -152,6 +152,7 @@ const emit = defineEmits(['child-click'])
 .announcementContentDetail{
   color: #6e6e6e;
   font-size: 20px;
+  white-space: pre-wrap;
 }
 
 .admin-info-detail{
