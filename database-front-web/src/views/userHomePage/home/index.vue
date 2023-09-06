@@ -1,6 +1,10 @@
 <template>
     <div>
-        <component1 v-if="refreshs" @child-click="refreshing"></component1>
+        <div class="homeUser-page">
+            <div id="header">
+                <navTop></navTop>
+            </div>
+            <component1 v-if="refreshs" @child-click="refreshing"></component1>
 
 
         <el-button class="pro" @click="applyForProfession">申请专业厨师认证</el-button>
@@ -27,27 +31,6 @@
         <!-- 顶部的很好的 -->
         <div class="topp">
             <el-form>
-                <el-form-item>
-                    <el-input v-model="formData.keyword" clearable placehoder="请输入内容"
-                        @keyup.enter.native="fetchData(formData.keyword)">
-                    </el-input>
-                </el-form-item>
-                <el-button class=button11 round color=transparent @click="home"
-                    style="color:#000000;background-color:transparent;margin-top: 2px;">
-                    <el-icon :size="20">
-
-                        <House />
-
-                    </el-icon>
-                </el-button>
-                <el-button class=button13 round color=transparent @click="user = true"
-                    style="color:#000000;background-color:transparent;margin-top: 2px;">
-                    <el-icon :size="20">
-
-                        <User />
-
-                    </el-icon>
-                </el-button>
                 <el-dialog v-if="refreshs" v-model="user" title="更改个人信息" width="40%" height="80%" align-center>
                     <el-form-item>
                         头像：
@@ -62,13 +45,6 @@
                         </div>
                     </div>
                 </el-dialog>
-
-                <div class="button2" @click="gotoLogin">
-                    &emsp;退出登录
-                </div>
-                <div class="button3" @click="gotoCreate">
-                    &emsp;创建账号
-                </div>
             </el-form>
         </div>
 
@@ -114,6 +90,9 @@
                 </div>
             </div>
         </div>
+        </div>
+
+        
 
     </div>
 </template>
@@ -128,6 +107,7 @@ import { ApplyProfession } from "@/api/profession.js"
 import { useStore } from 'vuex' // 引入store
 import { searchArticle, getArticleNumber, searchArticles } from "@/api/article.js"
 import userHomeArticleListltem from "@/components/userHomeArticleListltem.vue"
+import navTop from "@/components/navTop.vue"
 
 // START 用户申请专业认证弹窗
 
@@ -301,6 +281,27 @@ const CheckImgExists = (imgurl) => {
   
 <style scoped>
 /* 初始化 */
+#header {
+    /* 如果调整height，记得去 @/components/navTop.vue 中调整 header-content 样式 */
+    height: 10vh;
+    width: 100vw;
+    box-shadow: 0 2px 6px 0 #ddd;
+}
+
+.homeUser-page {
+    background-image: url('@/assets/home-user-bkg.png');
+    /* 背景图片地址 */
+    background-position: center center;
+    /* 背景图片位置 */
+    background-repeat: no-repeat;
+    /* 背景图片是否重复 */
+    background-size: 100% 100%;
+    /* 背景图片大小 */
+    height: 98vh;
+    /* 背景图片宽高 */
+    width: 99vw;
+}
+
 .img {
     position: absolute;
     left: 43px;
@@ -318,29 +319,28 @@ const CheckImgExists = (imgurl) => {
 }
 .button12 {
     position: absolute;
-    left: 800px;
-    top: 26px;
+    left: 85%;
+    top: 17%;
 
 }
 .pro {
     position: absolute;
-    left: 80px;
-    top: 75px;
+    left: 7%;
+    top: 18%;
     border-radius: 15px;
 }
 .ShowPart {
     position: absolute;
-    width: 750px;
+    width: 60%;
     height: 620px;
-    left: 350px;
-    top: 100px;
+    left: 35%;
+    top: 15%;
 }
 
 .example-pagination-block {
     position: absolute;
-    left: 100px;
-    bottom: 120px;
-
+    left: 20%;
+    top: 90%;
 }
 
 
@@ -349,11 +349,11 @@ const CheckImgExists = (imgurl) => {
     /* bottom: 240px;
     right: 110px; */
     position: absolute;
-    left: 680px;
-    top: 450px;
+    left: 90%;
+    top: 80%;
     width: 50px;
     height: 50px;
-    background-color: #446b5c;
+    background-color: #000000;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -391,9 +391,7 @@ const CheckImgExists = (imgurl) => {
 /* 用来设计输入框 */
 .topp {
     position: absolute;
-    left: 300px;
-    top: 45px;
-    width: 800px;
+
 }
 
 .el-input {
@@ -403,18 +401,7 @@ const CheckImgExists = (imgurl) => {
     height: 30px;
 }
 
-:deep().el-input__wrapper {
-    background: rgb(8, 102, 75);
-    border: 0;
-    border-radius: 10px;
-}
 
-:deep().el-input__inner {
-    font-size: 14px;
-    font-family: PingFangSC-Regular, PingFang SC;
-    color: #ffffff;
-
-}
 
 /* el-button */
 .button11 {
@@ -458,7 +445,7 @@ const CheckImgExists = (imgurl) => {
     border-radius: 8px;
     font-size: 12px;
     color: #ffffff;
-    background: rgb(8, 102, 75);
+    background: rgb(255, 255, 255);
     border: 2px solid rgb(46, 47, 53);
     position: absolute;
     width: 78px;

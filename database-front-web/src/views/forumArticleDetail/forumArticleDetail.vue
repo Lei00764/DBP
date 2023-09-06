@@ -21,7 +21,7 @@
                     <template #footer>
                         <span class="dialog-footer">
                             <el-button @click="centerDialogVisible = false">取消</el-button>
-                            <el-button type="primary" @click="centerDialogVisible = false, reportConfirm">确认</el-button>
+                            <el-button type="primary" @click=" reportConfirm">确认</el-button>
                         </span>
                     </template>
                 </el-dialog>
