@@ -210,7 +210,7 @@ const submitNotice = () => {
     /* 横线 */
     float: right;
     width: 300px;
-    height: 2px;
+    height: 1px;
     background: #888888;
     position: absolute;
 }

@@ -1,10 +1,7 @@
 <template>
     <div>
         <!-- 背景布局 -->
-        <div class="background1">
-            <div class="background2">
-            </div>
-        </div>
+
         <!-- 侧边栏展示 -->
 
         <div class="PersonSide">
@@ -20,17 +17,20 @@
                     <span> level: {{ UserInfo.levels }} </span>
                 </div>
             </div>
-            <div class="Line">
-            </div>
+            <div class="line"></div>
+                    <!-- 这是一条分割线 -->
             <div class="information">
                 <div class="fans">
-                    Fans:{{ fansNumber }}
+                    粉丝人数{{ fansNumber }}
                 </div>
                 <div class="following">
-                    Following:{{ followerNumber }}
+                    关注人数{{ followerNumber }}
                 </div>
                 <div class="content">
-                    Content:{{ articleNumber }}
+                    已发布  {{ articleNumber }}
+                </div>
+                <div class="point"><!-- 签到积分 -->
+                    积分 {{ UserInfo.points }}
                 </div>
 
             </div>
@@ -56,16 +56,10 @@
             </div>
         </div>
         <!-- 签到积分 -->
-        <div class="rectangle_point">
-            <div class="point">
-                积分：{{ UserInfo.points }}
-            </div>
-        </div>
-        <!-- 签到积分 -->
         <el-form-item>
             <el-button class=sign-button round color=transparent :class="{ 'disabled': formData.isSigned }" :disabled="formData.isSigned"
-                @click="handleSignIn(2, UserInfo.points)" style="color: rgb(8, 102, 75);
-                        background-color:rgba(224, 248, 242, 0.9);
+                @click="handleSignIn(2, UserInfo.points)" style="color: rgb(0, 0, 0);
+                        background-color:#ffffff;
                         ;border-radius: 15px;">
                 <el-icon :size="23">
                     <CircleCheckFilled />
@@ -316,8 +310,8 @@ const handleChange = (e) => {
     position: absolute;
     width: 219px;
     height: 50px;
-    left: 0px;
-    top: 500px;
+    left: 3%;
+    top: 450px;
     border-radius: 15px;
 }
 
@@ -327,52 +321,18 @@ const handleChange = (e) => {
     cursor: not-allowed;
 }
 
-/* 积分 */
-.rectangle_point {
+.line {
+    /* 横线 */
+    float: right;
+    width: 350px;
+    height: 1px;
+    background: #888888;
     position: absolute;
-    width: 220px;
-    height: 111px;
-    left: 8px;
-    top: 380px;
-    background: rgba(224, 248, 242, 0.9);
-    border-radius:
-        27px;
+    top:13%;
+    left:5%;
 }
 
-/* 积分 */
-.point {
-    /* 积分：769 */
-    position: absolute;
-    left: 30px;
-    top: 45px;
-    color: rgb(8, 102, 75);
-    font-family: Noto Sans SC;
-    font-size: 20px;
-    letter-spacing: 0px;
-    display: flex;
-}
 
-.background1 {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    bottom: 340px;
-    background: linear-gradient(180.00deg, rgba(224, 248, 242, 0.9), rgba(224, 248, 242, 0) 100%);
-}
-
-.background2 {
-    /* Rectangle 4 */
-    position: absolute;
-    left: 0;
-    width: 260px;
-    height: 100%;
-    /* White */
-    background: rgb(255, 255, 255);
-    /* Elevation / 06 */
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
-}
 
 /* 个人侧边栏 */
 .PersonSide {
@@ -404,18 +364,6 @@ const handleChange = (e) => {
     font-size: 8px;
 }
 
-.Line {
-    /* 直线 1 */
-    position: absolute;
-    width: 230px;
-    left: 10px;
-    height: 0;
-    top: 110px;
-    border: 1px solid rgb(148, 141, 141);
-    border-radius: 20px;
-    transform: rotate(-0.58deg);
-}
-
 /* 信息 */
 .information {
     /* Elaine-GIFT */
@@ -429,22 +377,31 @@ const handleChange = (e) => {
     text-align: left;
 }
 
+
+
 .content {
     position: absolute;
-    top: 80px;
+    top: 15%;
 }
 
 .following {
     position: absolute;
-    top: 160px;
+    top: 30%;
 }
 
+/* 积分 */
+.point {
+    /* 积分：769 */
+    position: absolute;
+    top: 45%;
+}
 
 
 
 /* 主题颜色 */
 .theme-page {
     position: absolute;
+    left:30px;
     padding: 8px;
     top: 570px;
     width: 240px;
