@@ -20,17 +20,17 @@
 
             <el-divider direction="vertical"></el-divider>
 
-            <el-button type="primary" round class deleteButton size="small" @click="deleteAnnouncements">删除</el-button>
+            <el-button class="deleteButton" type="primary" round size="small" @click="deleteAnnouncements">删除</el-button>
 
-            <el-button type="primary" round class editButton size="small" @click="editAnnouncements">编辑</el-button>
+            <el-button class="editButton" type="primary" round size="small" @click="editAnnouncements">编辑</el-button>
 
             <el-divider direction="vertical"></el-divider>
 
             <div class="istop" v-if="data.isTop == 1">
-              <el-button type="primary" round class editButton size="small" @click="cancelTop">取消置顶</el-button>
+              <el-button class="cancelTopButton" type="primary" round size="small" @click="cancelTop">取消置顶</el-button>
             </div>
             <div v-else>
-              <el-button type="primary" round class editButton size="small" @click="executeTop">置顶</el-button>
+              <el-button class="topButton" type="primary" round size="small" @click="executeTop">置顶</el-button>
             </div>
           </div>
           <!--公告标题与详细内容简介-->
@@ -287,4 +287,19 @@ const detailAnnouncements = () => {
   color: #868686;
 }
 
+.deleteButton{
+  background-color:#ea4a3b;
+}
+
+.editButton{
+  background-color:#0daaf2
+}
+
+.topButton{
+  background-color:#ffd500
+}
+
+.cancelTopButton{
+  background-color:#ffaa5f
+}
 </style>

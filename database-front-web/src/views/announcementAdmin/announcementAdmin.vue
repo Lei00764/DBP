@@ -196,9 +196,10 @@ const handlePageChange = (page) => {
 }*/
 
 .addAnnouncement {
+    background-color: #00c6fc;
     position: absolute;
     left: 8px;
-    top: 110px;
+    top: 150px;
 }
 
 </style>

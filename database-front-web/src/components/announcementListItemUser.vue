@@ -6,6 +6,14 @@
           <div class="announcement-body">
             <!-- 管理员信息 -->
             <div class="admin-info">
+              <div class="istop" v-if="data.isTop == 1">
+                <div class="topTag">{{ "置顶" }}</div>
+              </div>
+              <div class="istop" v-if="data.isTop == 1">
+                <el-divider direction="vertical"></el-divider>
+              </div>
+
+              
               <userAvatar :userId=data.adminId :width=45 :addLink="false"></userAvatar>
   
               <div class="admin-name">{{ data.adminName }}</div>
@@ -160,5 +168,9 @@ const emit = defineEmits(['child-click'])
   align-items: center;
   font-size: 18px;
   color: #868686;
+}
+
+.topTag{
+  color:#fd984b
 }
   </style>
