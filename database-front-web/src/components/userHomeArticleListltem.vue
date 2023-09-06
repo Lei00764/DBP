@@ -13,7 +13,9 @@
                 <div class="user-info">
                   <!-- <div class="content"> {{ data.content }}</div> -->
                 </div>
-                <div class="title">{{ data.title }}</div>
+                <router-link :to="`/forumArticleDetail/${data.postId}`" class="title" @click="handleView(data.postId)">
+                  {{ data.title }}
+                </router-link>
                 <div class="tag">{{ data.tag }}</div>
               </div>
             </div>
@@ -31,7 +33,7 @@
 
 <script setup>
 import { defaultInitialZIndex } from 'element-plus';
-import { ref, reactive, toRefs, onMounted,defineEmits} from 'vue';
+import { ref, reactive, toRefs, onMounted, defineEmits } from 'vue';
 import { useRouter } from 'vue-router'
 import { deleteArticle } from "@/api/article.js"
 const currentDate = ref(new Date())//
@@ -47,26 +49,26 @@ const props = defineProps({
   },
 });
 const edit = () => {
-  router.push({ 
+  router.push({
     path: 'editArticle/:articleId',
-    query:{
-      articleId:props.data.postId
+    query: {
+      articleId: props.data.postId
     }
   })
 };
-const deleteArticles = async(postId) => {
-    let result;
-    const params = {
-      post_id: props.data.postId
-    };
-    result = await deleteArticle(params);
-    if(result.code==200){
-      window.alert('success');
-      emit('child-click',1)
-    }
-    else{
-      window.alert('error');
-    }
+const deleteArticles = async (postId) => {
+  let result;
+  const params = {
+    post_id: props.data.postId
+  };
+  result = await deleteArticle(params);
+  if (result.code == 200) {
+    window.alert('success');
+    emit('child-click', 1)
+  }
+  else {
+    window.alert('error');
+  }
 };
 // console.log(props.data);
 </script>
