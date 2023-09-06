@@ -6,13 +6,14 @@ import router from "@/router/index.js"
 
 
 //举报信息存入（评论-用户）
-export function ReportArticle(){
+export function ReportComment(params){
     return Request({
         method: 'POST',
         url: 'Report/CommentReport',
         params: params,
     }).then(function (response) {
         if (response.data.code === 200) {
+            Message.success("举报成功");
             return response.data;  // 正确响应，返回数据
         } else {
             Message.error("举报失败");
