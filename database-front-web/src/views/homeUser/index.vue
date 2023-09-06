@@ -7,26 +7,12 @@
 
         <el-dialog v-model="showTipTapEditor" title="发布文章" width="80%" height="80%" align-center>
             <tiptapEditor initial-content="
-          <h2>
-            Hi there,
-          </h2>
-          <p>
-            this is a very <em>basic</em> example of tiptap.
-          </p>
-          <pre><code>body { display: none; }</code></pre>
-          <ul>
-            <li>
-              A regular list
-            </li>
-            <li>
-              With regular items
-            </li>
-          </ul>
-          <blockquote>
-            It's amazing 👏
-            <br />
-            – mom
-          </blockquote>" :active-buttons="[
+          <p> </p>
+          <p> </p>
+          <p> </p>
+          <p> </p>
+          <p> </p>
+          " :active-buttons="[
               'bold',
               'italic',
               'strike',
