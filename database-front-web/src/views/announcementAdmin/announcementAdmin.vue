@@ -124,11 +124,9 @@ const submitAnnouncement = () => {
         title: form.value.title,
         announcementContent: form.value.announcementContent,
     }
-    //console.log(params);
     postAnnouncement(params);
     dialogVisible.value = false;
     fetchData();//上传新公告后，更新一下前端显示公告
-    //console.log("success");
     location.reload();
 };
 

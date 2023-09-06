@@ -277,6 +277,7 @@ const detailAnnouncements = () => {
 .announcementContentDetail{
   color: #6e6e6e;
   font-size: 20px;
+  white-space: pre-wrap;
 }
 
 .admin-info-detail{
@@ -285,4 +286,5 @@ const detailAnnouncements = () => {
   font-size: 18px;
   color: #868686;
 }
+
 </style>
