@@ -39,9 +39,6 @@
             </span>
           </div>
         </div>
-        <router-link :to="`/forumArticleDetail/${data.postId}`">
-          <Cover :cover="data.Picture" :width="100" v-if="data.Picture"></Cover>
-        </router-link>
         <!--显示帖子信息-->
       </div>
       <!-- </router-link> -->

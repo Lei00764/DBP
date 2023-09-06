@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 using auth.Database;
 using auth.Models;
@@ -19,11 +20,12 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
 
     private string GetSummary(string content)
     {
-        const int MaxSummaryLength = 5; // 设置文章概要的最大长度为5
+        content = Regex.Replace(content, "<[^>]+>", "");
+        const int MaxSummaryLength = 30; // 设置文章概要的最大长度为5
         var summary = string.Empty;
         if (!string.IsNullOrEmpty(content))
         {
-            var paragraphs = content.Split("\n"); // 假设每段之间是用两个换行符（\n）分隔的
+            var paragraphs = content.Split("\n");
             foreach (var paragraph in paragraphs)
             {
                 if (summary.Length + paragraph.Length <= MaxSummaryLength)
@@ -43,6 +45,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         }
         return summary;
     }
+    
 
     [HttpGet("recommendArticle")]
     public async Task<IActionResult> GetArticleIndividually(int user_id)
