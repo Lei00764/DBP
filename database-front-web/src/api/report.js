@@ -5,7 +5,7 @@ import Message from "@/utils/Message.js"  // 在每个 api 文件里都要引入
 import router from "@/router/index.js"
 
 //举报信息存入（帖子-用户）
-export function ReportArticle(){
+export function ReportArticle(params){
     return Request({
         method: 'POST',
         url: 'Report/PostReport',

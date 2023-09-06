@@ -6,7 +6,7 @@ import router from "@/router/index.js"
 
 
 //举报信息存入（评论-用户）
-export function ReportArticle(){
+export function ReportArticle(params){
     return Request({
         method: 'POST',
         url: 'Report/CommentReport',
