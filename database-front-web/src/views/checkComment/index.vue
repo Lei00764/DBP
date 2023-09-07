@@ -161,7 +161,7 @@ const decline = (reportId) => {
 }
 
 const back = () => {
-
+    router.push({ name: 'homeAdmin' })
 }
 
 </script>

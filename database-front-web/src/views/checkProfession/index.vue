@@ -40,7 +40,7 @@
                 </el-form>
                 <el-form :inline=true style="position:absolute;top:55%;left:20%;" @click="intoForum">
                     <el-form-item style="width:100px;">
-                        <b style="color:black;pointer-events: none">进入论坛</b>
+                        <b style="color:black;">审核留言</b>
                     </el-form-item>
                 </el-form>
             </div>
