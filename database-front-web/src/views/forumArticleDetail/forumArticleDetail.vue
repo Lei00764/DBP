@@ -58,16 +58,15 @@
                         </div>
                     </div>
 
-
-
                     <!-- 举报按钮 点击弹窗 -->
                     <el-button class="userReportIcon" text @click="centerDialogVisible = true">
                         <font-awesome-icon :icon="['fas', 'triangle-exclamation']" />
                     </el-button>
                     <!-- <OnlineModal :controlVisible="visibleIt" @closeModal="visibleIt = false" /> -->
-                    <el-button class="userShareIcon" text @click="Share">
+                    <el-button class="userShareIcon" text @click="copyPageURL" data-clipboard-text="URL_TO_COPY">
                         <font-awesome-icon :icon="['fas', 'arrow-up-from-bracket']" />
                     </el-button>
+
 
                     <el-dialog v-model="centerDialogVisible" title="举报" width="30%" align-center>
                         <span>举报原因</span>
@@ -105,9 +104,10 @@
 import { ref, reactive, toRefs, onMounted, watch, computed } from 'vue';
 import { useRouter } from 'vue-router'
 
+import ClipboardJS from 'clipboard'
+
 import navTop from "@/components/navTop.vue"
 import commentList from "./commentList.vue"
-
 
 import { like } from '@/api/like';
 import { GetInfoByID } from '@/api/user';
@@ -115,6 +115,7 @@ import { favourite } from '@/api/favourite';
 import { ReportArticle } from '@/api/report'; // 引入举报api
 import { GetArticleDetailsAsync } from '@/api/article';
 import { followAuthor, isfollowAuthor } from '@/api/follow';
+import Message from "@/utils/Message.js"
 
 import { useStore } from 'vuex' // 引入store
 
@@ -176,9 +177,29 @@ const clickToFavourite = async () => {
     refreshArticle(); // 收藏完成后刷新文章
 }
 
-const Share = () => {
 
+const copyPageURL = () => {
+    const currentURL = window.location.href; // 获取当前页面的 URL
+    const clipboard = new ClipboardJS('.userShareIcon', {
+        text: () => currentURL, // 设置要复制的文本为当前页面的 URL
+    });
+
+    clipboard.on('success', () => {
+        Message.success('已将本页面链接粘贴到剪贴板');
+        clipboard.destroy(); // 销毁 ClipboardJS 实例，避免重复绑定
+    });
+
+    clipboard.onClick({
+        currentTarget: {
+            dispatchEvent: (event) => {
+                clipboard.emit('beforeCopy', { clearSelection: () => { } });
+                clipboard.emit('copy', { text: clipboard.options.text() });
+                clipboard.emit('afterCopy', { clearSelection: () => { } });
+            },
+        },
+    });
 }
+
 
 const refreshArticle = () => {
     getArticleDetail(router.currentRoute.value.params.articleId);
