@@ -106,7 +106,7 @@ public class SearchController : ControllerBase  // 命名规范，继承自 Cont
     public async Task<IActionResult> RemoveSearchHistory(int id)
     {
         var code = 200;
-        var msg = "success";
+        //var msg = "success";
         if (_database.SearchHistories.Any(x => x.SearchId == id) == false)
         {
             return Ok(new

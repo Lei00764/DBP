@@ -444,6 +444,14 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
     {
         var code = 200;
         var msg = "success";
+        if(content.Length>3500)
+        {
+            return Ok(new
+            {
+                code = 400,
+                msg = "字数过多，无法上传",
+            });
+        }
         var temp = await _database.Articles.ToListAsync();
         bool exist = false;
         if (temp != null)//判断表内是否有该文章
@@ -487,11 +495,11 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
     public class ArticleRequestModel
     {
         public int user_id { get; set; }
-        public string tag { get; set; }
-        public string title { get; set; }
-        public string content { get; set; }
-        public string picture { get; set; }
-        public string Sharelink { get; set; }
+        public string? tag { get; set; }
+        public string? title { get; set; }
+        public string? content { get; set; }
+        public string? picture { get; set; }
+        public string? Sharelink { get; set; }
     }
 
     //发布文章  
@@ -502,6 +510,14 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         // user_id 要满足完整性约束
         var temp = await _database.Users.ToListAsync();
         bool exist = false;
+        if(model.content!=null&&model.content.Length>3500)
+        {
+            return Ok(new
+            {
+                code = 400,
+                msg = "字数过多，无法上传",
+            });
+        }
         if (temp != null) // 判断表内是否有信息
         {
             foreach (var user in temp)
@@ -740,8 +756,47 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             });
         }
     }
+    
+[HttpGet("GetLikeNum")]//获取文章点赞量
+public async Task<IActionResult> GetLikeNumber(int article_id)
+{
+    if(await _database.Articles.AnyAsync(x=>x.PostId==article_id)==false)
+    {
+        return Ok(new
+        {
+            code = 400,
+            msg = "文章不存在",
+        });
+    }
+    Article a=_database.Articles.Where(x=>x.PostId==article_id).First();
+    return Ok(new
+        {
+            code = 200,
+            msg = "已获取文章点赞量",
+            likeNum=a.LikeNum
+        });
 }
 
+[HttpGet("GetFavouriteNum")]//获取文章点赞量
+public async Task<IActionResult> GetFavouriteNumber(int article_id)
+{
+    if(await _database.Articles.AnyAsync(x=>x.PostId==article_id)==false)
+    {
+        return Ok(new
+        {
+            code = 400,
+            msg = "文章不存在",
+        });
+    }
+    Article a=_database.Articles.Where(x=>x.PostId==article_id).First();
+    return Ok(new
+        {
+            code = 200,
+            msg = "已获取文章收藏量",
+            likeNum=a.FavouriteNum
+        });
+}
+}
 
 
 
