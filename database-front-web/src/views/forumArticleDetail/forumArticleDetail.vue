@@ -1,48 +1,87 @@
 <template>
     <div>
+        <div id="header">
+            <navTop></navTop>
+        </div>
         <div class="forum-article-detail-page" v-if="Object.keys(articleInfo).length > 0">
-            <div id="header">
-                <navTop></navTop>
-            </div>
             <!-- 展示帖子详情 -->
             <div class="Content-tag">
                 {{ "Content" }}
             </div>
             <el-form class="announ-announcement-form" :style="{ height: formHeight }">
-                <!-- 举报按钮 点击弹窗 -->
-                <el-button class="userReportIcon" text @click="centerDialogVisible = true">
-                    <font-awesome-icon :icon="['fas', 'triangle-exclamation']" />
-                </el-button>
+                <div class="info-container">
+                    <div class="title"> {{ articleInfo[0].title }} </div>
 
-                <el-dialog v-model="centerDialogVisible" title="举报" width="30%" align-center>
-                    <span>举报原因</span>
-                    <el-input placeholder="Reason" v-model="formData.reportReason">
-                    </el-input>
-                    <template #footer>
-                        <span class="dialog-footer">
-                            <el-button @click="centerDialogVisible = false">取消</el-button>
-                            <el-button type="primary" @click=" reportConfirm">确认</el-button>
-                        </span>
-                    </template>
-                </el-dialog>
+                    <div class="user-avatar">
+                        <userAvatar :userId="authorInfo.id" :width="50" :addLink="false"></userAvatar>
+                    </div>
+                    <div class="article-info">
+                        <!-- 文章详情展示未完成 -->
+                        <!-- 需增加路径到作者个人主页 -->
+                        <!-- <router-link :to="`/layout`"> -->
+                        <!-- isFollowing ? '已关注' : '关注' -->
+                        <div class="author">{{ articleInfo[0].authorName }}
+                            <el-button @click="Follow(articleInfo[0].authorId)">{{ isFollowing ? '已关注' : '关注' }}</el-button>
+                        </div>
+                        <!-- </router-link> -->
+                        <div class="publish_time" v-if="articleInfo[0].releaseTime">
+                            发布于 {{ articleInfo[0].releaseTime.split('T')[0] }} {{ articleInfo[0].releaseTime.split('T')[1]
+                            }}
+                        </div>
+                    </div>
+                    <div class="vertical-line"></div>
+                    <div class="article-stats">
+                        <div class="views">
+                            <span class="iconfont icon-eye" style="display: inline-block; width: 50%;">
+                            </span>
+                            <div style="display: inline-block; width: 50%; text-align: right;">
+                                浏览<br>
+                                <el-button>{{ articleInfo[0].views == 0 ? "浏览" : articleInfo[0].views }}</el-button>
+                            </div>
+                        </div>
+                        <div class="button-like">
+                            <span class="iconfont icon-heart" style="display: inline-block; width: 50%;">
+                            </span>
+                            <div style="display: inline-block; width: 50%; text-align: right;">
+                                点赞<br>
+                                <el-button @click="clickToLike"> {{ articleInfo[0].likeNum }}</el-button>
+                            </div>
+                        </div>
+                        <div class="button-favourite">
+                            <span class="iconfont icon-star" style="display: inline-block; width: 50%;">
 
-                <OnlineModal :controlVisible="visibleIt" @closeModal="visibleIt = false" />
-                <el-button class="userShareIcon" text @click="Share">
-                    <font-awesome-icon :icon="['fas', 'arrow-up-from-bracket']" />
-                </el-button>
-                <!-- 文章详情展示未完成 -->
-                <div class="title"> {{ articleInfo[0].title }} </div>
-                <!-- 需增加路径到作者个人主页 -->
-                <!-- <router-link :to="`/layout`"> -->
-                <userAvatar :userId="authorInfo.id" :width="50" :addLink="false"></userAvatar>
-                <!-- isFollowing ? '已关注' : '关注' -->
-                <div class="author">{{ articleInfo[0].authorName }}
-                    <el-button @click="Follow(articleInfo[0].authorId)">{{ isFollowing ? '已关注' : '关注' }}</el-button>
+                            </span>
+                            <div style="display: inline-block; width: 50%; text-align: right;">
+                                收藏<br>
+                                <el-button @click="clickToFavourite"> {{ articleInfo[0].favouriteNum }}</el-button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- 举报按钮 点击弹窗 -->
+                    <el-button class="userReportIcon" text @click="centerDialogVisible = true">
+                        <font-awesome-icon :icon="['fas', 'triangle-exclamation']" />
+                    </el-button>
+                    <!-- <OnlineModal :controlVisible="visibleIt" @closeModal="visibleIt = false" /> -->
+                    <el-button class="userShareIcon" text @click="Share">
+                        <font-awesome-icon :icon="['fas', 'arrow-up-from-bracket']" />
+                    </el-button>
+
+                    <el-dialog v-model="centerDialogVisible" title="举报" width="30%" align-center>
+                        <span>举报原因</span>
+                        <el-input placeholder="Reason" v-model="formData.reportReason">
+                        </el-input>
+                        <template #footer>
+                            <span class="dialog-footer">
+                                <el-button @click="centerDialogVisible = false">取消</el-button>
+                                <el-button type="primary" @click="reportConfirm">确认</el-button>
+                            </span>
+                        </template>
+                    </el-dialog>
                 </div>
-                <!-- </router-link> -->
-                <div class="publish_time" v-if="articleInfo[0].releaseTime">
-                    发布于 {{ articleInfo[0].releaseTime.split('T')[0] }} {{ articleInfo[0].releaseTime.split('T')[1] }}
-                </div>
+
                 <div class="content" ref="innerContent" v-html="articleInfo[0].content"></div>
             </el-form>
             <div class="Comment-tag">
@@ -65,13 +104,17 @@
 <script setup>
 import { ref, reactive, toRefs, onMounted, watch, computed } from 'vue';
 import { useRouter } from 'vue-router'
-import { GetInfoByID } from '@/api/user';
-import { GetArticleDetailsAsync } from '@/api/article';
-import { followAuthor, isfollowAuthor } from '@/api/follow';
+
 import navTop from "@/components/navTop.vue"
 import commentList from "./commentList.vue"
 
-import { ReportArticle } from '@/api/report';//引入举报api
+
+import { like } from '@/api/like';
+import { GetInfoByID } from '@/api/user';
+import { favourite } from '@/api/favourite';
+import { ReportArticle } from '@/api/report'; // 引入举报api
+import { GetArticleDetailsAsync } from '@/api/article';
+import { followAuthor, isfollowAuthor } from '@/api/follow';
 
 import { useStore } from 'vuex' // 引入store
 
@@ -79,15 +122,11 @@ const store = useStore(); // 使用store必须加上
 
 const router = useRouter()
 
-//举报弹窗
+// 举报弹窗
 const centerDialogVisible = ref(false)
 
 
-const Share = () => {
-
-}
-
-//文章详情
+// 文章详情
 const articleInfo = ref({});
 const authorInfo = ref({});
 const userId = ref();
@@ -104,6 +143,7 @@ const getArticleDetail = async (articleId) => {
     getAuthor(articleInfo.value[0].authorId);
     isFollow(articleInfo.value[0].authorId);
 }
+
 const getAuthor = async (userId) => {
     const params = {
         ID: userId,
@@ -115,6 +155,35 @@ const getAuthor = async (userId) => {
     }
     authorInfo.value = result.data;
 }
+
+// 给文章点赞或取消点赞
+const clickToLike = async () => {
+    const params = {
+        user_id: store.state.Info.id,
+        post_id: router.currentRoute.value.params.articleId,
+    }
+    await like(params);
+    refreshArticle(); // 点赞完成后刷新文章
+}
+
+// 收藏/取消收藏文章
+const clickToFavourite = async () => {
+    const params = {
+        user_id: store.state.Info.id,
+        post_id: router.currentRoute.value.params.articleId,
+    }
+    await favourite(params);
+    refreshArticle(); // 收藏完成后刷新文章
+}
+
+const Share = () => {
+
+}
+
+const refreshArticle = () => {
+    getArticleDetail(router.currentRoute.value.params.articleId);
+}
+
 // 在组件挂载时获取初始文章数据
 onMounted(() => {
     getArticleDetail(router.currentRoute.value.params.articleId);
@@ -127,7 +196,8 @@ watch(() => router.currentRoute.value.params.pBoardId, (newValue) => {
 });
 
 const isFollowing = ref()
-//页面加载时判断是否关注
+
+// 页面加载时判断是否关注
 const isFollow = async (userId) => {
     const params = {
         user_id: store.state.Info.id,
@@ -141,7 +211,8 @@ const isFollow = async (userId) => {
         isFollowing.value = 0;
     }
 }
-//处理关注逻辑
+
+// 处理关注逻辑
 const Follow = async (userId = '') => {
     const params = {
         user_id: store.state.Info.id,
@@ -159,6 +230,7 @@ const formData = reactive({
 });
 
 const innerContent = ref(null);
+
 // 一个计算属性 ref
 const formHeight = computed(() => {
     // 获取内部组件的高度
@@ -175,7 +247,6 @@ const formHeight = computed(() => {
         return 200 + 'px'
     }
 })
-
 
 //举报信息：作者名，作者id，举报原因，帖子标题，帖子内容
 
@@ -203,7 +274,7 @@ const reportConfirm = async (userId, articleId) => {
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 #header {
     /* 如果调整height，记得去 @/components/navTop.vue 中调整 header-content 样式 */
     height: 10vh;
@@ -214,7 +285,6 @@ const reportConfirm = async (userId, articleId) => {
 /*背景图相关设置 */
 
 .forum-article-detail-page {
-
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -334,5 +404,42 @@ const reportConfirm = async (userId, articleId) => {
     position: absolute;
     top: 20px;
     left: 5%;
+}
+
+.vertical-line {
+    position: absolute;
+    top: 30px;
+    left: 300px;
+    width: 2px;
+    height: 50px;
+    background: #ccc;
+    display: inline-block;
+    margin-top: 31px;
+    vertical-align: top;
+}
+
+.info-container {
+    display: flex;
+    align-items: center;
+}
+
+.article-stats {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 70px;
+    left: 350px;
+
+    .views {
+        margin-left: 20px;
+    }
+
+    .button-like {
+        margin-left: 20px;
+    }
+
+    .button-favourite {
+        margin-left: 20px;
+    }
 }
 </style>

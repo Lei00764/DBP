@@ -21,7 +21,7 @@
           </div>
           <!--显示用户信息-->
 
-          <router-link :to="`/forumArticleDetail/${data.postId}`" class="title"  @click="handleView(data.postId)">
+          <router-link :to="`/forumArticleDetail/${data.postId}`" class="title" @click="handleView(data.postId)">
             {{ data.title }}
           </router-link>
           <!--显示帖子信息
@@ -55,10 +55,9 @@ const props = defineProps({
     type: Object
   },
 });
-const handleView = async (postId) =>{
+const handleView = async (postId) => {
   console.log(postId);
   viewArticle(postId);
-
 }
 // console.log(props.data);
 </script>
@@ -140,4 +139,5 @@ const handleView = async (postId) =>{
 
 .article-item:hover {
   background: #fffbfb;
-}</style>
+}
+</style>
