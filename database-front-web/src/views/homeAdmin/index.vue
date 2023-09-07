@@ -96,30 +96,29 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { reactive } from 'vue';
-import router from "@/router/index.js"
 import navTopAdmin from "@/components/navTopAdmin.vue"
 import { useStore } from 'vuex'//引入store
 import { postNotice } from "@/api/notice.js"
+import { useRouter } from 'vue-router'
 
+const router=useRouter()
 const store = useStore();//使用store必须加上
-const doSearch = () => {
-    //进行关键词搜索
-};
+
 const logout = () => {
     //退出登录
     router.push({ name: 'login' })
 };
 const intoCheckProfession = () => {
-    router.push({ name: 'checkProfession' })
+    router.push({ name: 'checkProfession', params:{choice:'1'}})
 }
 const intoAnnounce = () => {
-    router.push({ name: 'announcementAdmin' })
+    router.push({ name: 'announcementAdmin', params:{choice:'2'} })
 }
 const intoCheckArticle = () => {
-    router.push({ name: 'checkArticle' })
+    router.push({ name: 'checkArticle', params:{choice:'3'}})
 }
 const intoForum = () => {
-    router.push({ path: 'layout' })
+    router.push({ path: 'layout', params:{choice:'4'}})
 }
 
 const formData = reactive({
