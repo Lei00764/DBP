@@ -101,8 +101,6 @@ import navTopAdmin from "@/components/navTopAdmin.vue"
 import { useStore } from 'vuex'//引入store
 import { postNotice } from "@/api/notice.js"
 
-
-
 const store = useStore();//使用store必须加上
 const doSearch = () => {
     //进行关键词搜索
