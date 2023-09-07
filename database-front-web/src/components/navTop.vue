@@ -163,9 +163,15 @@ const ToCheckMessage = () => {
     margin: 0 auto;
     align-items: center;
     /* 通过将高度设置成外层容器一致，达到居中效果 */
-    height: 10vh;
-    width: 80vw;
+    height: 11vh;
+    width: 100%;
     display: flex;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index: 99;
+    background-color: white;
+    box-shadow: 0px 0px 4px 0px gray;
 }
 
 .logo {
@@ -173,12 +179,21 @@ const ToCheckMessage = () => {
     text-decoration: none;
     font-size: 24px;
     color: rgb(96, 98, 102);
+    position:absolute;
+    left:5%;
+    top:40%
 }
 
 .search-panel {
     flex: 1;
     margin-left: 10vw;
     margin-right: 10vw;
+    width:500px;
+    border-radius: 5px;
+    border:1px solid black;
+    position:absolute;
+    left:10%;
+    top:40%
 }
 
 .custom-input>.el-input__wrapper {
@@ -190,6 +205,9 @@ const ToCheckMessage = () => {
 
 .user-info-panel {
     display: flex;
+    position:absolute;
+    left:65%;
+    top:40%
 }
 
 .user-info-panel .el-button {
