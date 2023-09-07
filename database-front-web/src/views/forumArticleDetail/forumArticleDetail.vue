@@ -49,7 +49,6 @@
                         </div>
                         <div class="button-favourite">
                             <span class="iconfont icon-star" style="display: inline-block; width: 50%;">
-
                             </span>
                             <div style="display: inline-block; width: 50%; text-align: right;">
                                 收藏<br>
@@ -452,15 +451,15 @@ const reportConfirm = async (userId, articleId) => {
     left: 350px;
 
     .views {
-        margin-left: 20px;
+        margin-left: 25px;
     }
 
     .button-like {
-        margin-left: 20px;
+        margin-left: 25px;
     }
 
     .button-favourite {
-        margin-left: 20px;
+        margin-left: 25px;
     }
 }
 </style>
