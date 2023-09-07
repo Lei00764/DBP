@@ -24,7 +24,7 @@ public class AnnouncementController : ControllerBase
         var summary = string.Empty;
         if (!string.IsNullOrEmpty(content))
         {
-            var paragraphs = content.Split("\n\n"); // 假设每段之间是用两个换行符（\n\n）分隔的
+            var paragraphs = content.Split("\n");
             foreach (var paragraph in paragraphs)
             {
                 if (summary.Length + paragraph.Length <= MaxSummaryLength)

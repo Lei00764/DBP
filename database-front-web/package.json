@@ -20,6 +20,7 @@
     "@tiptap/starter-kit": "^2.1.7",
     "@tiptap/vue-3": "^2.1.7",
     "axios": "^1.4.0",
+    "clipboard": "^2.0.11",
     "cos-js-sdk-v5": "^1.4.20",
     "cos-nodejs-sdk-v5": "^2.12.4",
     "element-plus": "^2.3.4",

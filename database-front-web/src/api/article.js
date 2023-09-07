@@ -169,19 +169,45 @@ export function editArticle(params) {
     });
 }
 
+// 浏览文章
+export function viewArticle(params) {
+    return Request({
+        method: 'POST',
+        url: 'Article/Articleview',
+        params: params
+    }).then(function (response) {
+        if (response.data.code === 200) {
+            return response.data;
+        } else if (response.data.code === 400) {
+            Message.error("参数错误");
+            return null;
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
+
 //发布文章
 export function postArticle(params) {
+    const requestBody = {
+        user_id: params.user_id,
+        title: params.title,
+        tag: params.tag,
+        content: params.content,
+        picture: params.picture,
+        Sharelink: params.Sharelink,
+    };
+
     return Request({
         method: 'POST',
         url: 'Article/postArticle',
-        params: params
+        data: requestBody, // 使用 data 属性传递请求正文体
     }).then(function (response) {
         if (response.data.code === 200) {
             Message.success("发布成功");
             return response.data;
         } else if (response.data.code === 400) {
             Message.error("发布失败");
-            return null;
         }
     }).catch(function (error) {
         console.log(error);

@@ -1,32 +1,14 @@
 <template>
     <div>
         <!-- ********************************* -->
-        <el-button text @click="showTipTapEditor = true">
-            发布文章
-        </el-button>
-
         <el-dialog v-model="showTipTapEditor" title="发布文章" width="80%" height="80%" align-center>
             <tiptapEditor initial-content="
-          <h2>
-            Hi there,
-          </h2>
-          <p>
-            this is a very <em>basic</em> example of tiptap.
-          </p>
-          <pre><code>body { display: none; }</code></pre>
-          <ul>
-            <li>
-              A regular list
-            </li>
-            <li>
-              With regular items
-            </li>
-          </ul>
-          <blockquote>
-            It's amazing 👏
-            <br />
-            – mom
-          </blockquote>" :active-buttons="[
+          <p> </p>
+          <p> </p>
+          <p> </p>
+          <p> </p>
+          <p> </p>
+          " :active-buttons="[
               'bold',
               'italic',
               'strike',
@@ -76,14 +58,20 @@
                     </el-form-item>
                 </el-form>
             </div>
-            <div class="enter-forum">
+            <el-form class="enter-forum" :inline="true">
                 <el-form-item>
                     <el-button class="button0" @click="toAllFood">
-                        <span>进入论坛</span>
+                        <span>进入论坛&nbsp;</span>
                         <span class="iconfont icon-ic_play_black"></span>
                     </el-button>
                 </el-form-item>
-            </div>
+                <el-form-item>
+                    <el-button class="button0" @click="showTipTapEditor = true">
+                        <span>发布文章&nbsp;</span>
+                        <span class="iconfont icon-pen-to-square"></span>
+                    </el-button>
+                </el-form-item>
+            </el-form>
         </div>
     </div>
 </template>

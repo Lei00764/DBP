@@ -37,15 +37,16 @@
 
                 <div class="container">
                     <div class="dropdown">
-                            <!-- 消息 -->
+                        <!-- 消息 -->
                         <el-button class="dropdown-title" @click="ToCheckMessage">
                             <font-awesome-icon :icon="['fas', 'comments']" />
                             <span class="button-text">消息</span>
                         </el-button>
-                            <!-- xiaoxi -->
+                        <!-- xiaoxi -->
                         <div class="dropdown-content">
                             <div class="dropdown-menu">
-                                <noticeitem v-for="item in dis_announcementListInfo" :key="item.AnnouncementId" :data="item">
+                                <noticeitem v-for="item in dis_noticeListInfo" :key="item.AnnouncementId"
+                                    :data="item">
                                 </noticeitem>
                             </div>
                         </div>
@@ -56,7 +57,7 @@
                     <font-awesome-icon :icon="['fas', 'right-to-bracket']" />
                     <span class="button-text">退出登录</span>
                 </el-button>
-                
+
             </div>
         </div>
     </div>
@@ -77,22 +78,21 @@ const formData = reactive({  // 用 reactive，而不用 ref
 import noticeitem from "@/components/noticeitem.vue"
 import { loadAnnouncement } from "@/api/announcement.js"
 import { loadNotice } from "@/api/notice.js"
-const announcementListInfo = ref([]);
 
-const dis_announcementListInfo = ref([]);
-const fetchData = async (stringValue = '') => {
+const noticeListInfo = ref([]);
+
+const dis_noticeListInfo = ref([]);
+const fetchData = async () => {
     let result;
-    if (!stringValue) {
-        stringValue = "0"
-        const params = {
-            user_id: store.state.Info.id,
-        };
-        result = await loadNotice(params);
+    const params = {
+        user_id: store.state.Info.id,
+    };
+    result = await loadNotice(params);
+    if(result){
+        noticeListInfo.value = result.data;
+        dis_noticeListInfo.value = noticeListInfo.value.slice(0, 5);
     }
-    console.log(result.data);
-    announcementListInfo.value = result.data;
-    dis_announcementListInfo.value = announcementListInfo.value.slice(0, 8);
-
+    
 };
 
 // 在组件挂载时获取初始文章数据
@@ -116,7 +116,12 @@ const enterDown = async (e) => {
         e.preventDefault(); // 阻止默认提交动作
         // 将 keyword 作为查询参数传递给 /search 路由
         // 导航到一个新的路由，同时还传递了一个查询参数 keyword
-        router.push({ path: '/search', query: { keyword: formData.keyword } });
+
+        if (formData.keyword.trim() !== "") {
+            router.push({ path: '/search', query: { keyword: formData.keyword } });
+        }
+
+
     }
     // 销毁事件
     window.removeEventListener("keydown", enterDown, false);
@@ -158,9 +163,15 @@ const ToCheckMessage = () => {
     margin: 0 auto;
     align-items: center;
     /* 通过将高度设置成外层容器一致，达到居中效果 */
-    height: 10vh;
-    width: 80vw;
+    height: 11vh;
+    width: 100%;
     display: flex;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index: 99;
+    background-color: white;
+    box-shadow: 0px 0px 4px 0px gray;
 }
 
 .logo {
@@ -168,12 +179,21 @@ const ToCheckMessage = () => {
     text-decoration: none;
     font-size: 24px;
     color: rgb(96, 98, 102);
+    position:absolute;
+    left:5%;
+    top:40%
 }
 
 .search-panel {
     flex: 1;
     margin-left: 10vw;
     margin-right: 10vw;
+    width:500px;
+    border-radius: 5px;
+    border:1px solid black;
+    position:absolute;
+    left:10%;
+    top:40%
 }
 
 .custom-input>.el-input__wrapper {
@@ -185,6 +205,9 @@ const ToCheckMessage = () => {
 
 .user-info-panel {
     display: flex;
+    position:absolute;
+    left:65%;
+    top:40%
 }
 
 .user-info-panel .el-button {
@@ -217,12 +240,13 @@ const ToCheckMessage = () => {
     visibility: hidden;
     opacity: 0;
     transition: all 0.6s ease-in-out;
+    z-index: 2;
 }
 
 .dropdown .dropdown-content .dropdown-menu {
     margin-top: 6px;
     padding: 10px 8px 15px;
-    background-color: rgba(255, 255, 255, 0.011);
+    background-color: rgba(7, 1, 1, 0.011);
     color: black;
     border-radius: 4px;
 }
@@ -245,7 +269,5 @@ const ToCheckMessage = () => {
     visibility: visible;
     opacity: 1;
 }
-
-
 </style>
 

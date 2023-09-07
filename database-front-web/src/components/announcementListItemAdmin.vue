@@ -16,21 +16,21 @@
 
             <el-divider direction="vertical"></el-divider>
 
-            <div class="tag">{{ "公告  " }}</div>
+            <div class="tag">{{ "公告 " }}</div>
 
             <el-divider direction="vertical"></el-divider>
 
-            <el-button type="primary" round class deleteButton size="small" @click="deleteAnnouncements">删除</el-button>
+            <el-button class="deleteButton" type="primary" round size="small" @click="deleteAnnouncements">删除</el-button>
 
-            <el-button type="primary" round class editButton size="small" @click="editAnnouncements">编辑</el-button>
+            <el-button class="editButton" type="primary" round size="small" @click="editAnnouncements">编辑</el-button>
 
             <el-divider direction="vertical"></el-divider>
 
             <div class="istop" v-if="data.isTop == 1">
-              <el-button type="primary" round class editButton size="small" @click="cancelTop">取消置顶</el-button>
+              <el-button class="cancelTopButton" type="primary" round size="small" @click="cancelTop">取消置顶</el-button>
             </div>
             <div v-else>
-              <el-button type="primary" round class editButton size="small" @click="executeTop">置顶</el-button>
+              <el-button class="topButton" type="primary" round size="small" @click="executeTop">置顶</el-button>
             </div>
           </div>
           <!--公告标题与详细内容简介-->
@@ -44,10 +44,10 @@
     <el-dialog v-model="dialogVisible" title="对此公告进行修改" width="50%" :before-close="handleClose">
       <el-form @submit.native.prevent="confirmAnnouncement">
         <el-form-item label="标题：">
-            <el-input type="textarea" v-model="form.title" />
+          <el-input type="textarea" v-model="form.title" />
         </el-form-item>
         <el-form-item label="内容：">
-            <el-input type="textarea" v-model="form.announcementContent" />
+          <el-input type="textarea" v-model="form.announcementContent" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -69,7 +69,7 @@
           <el-divider direction="vertical"></el-divider> <!--分割线-->
           <div class="post-time-detail">{{ data.announcementTime }}</div> <!--发布时间-->
         </div>
-      <!--公告详细信息-->
+        <!--公告详细信息-->
         <div class="announcementTitleDetail">{{ data.title }}</div>
         <div class="announcementContentDetail">{{ data.announcementContent }}</div>
       </el-form>
@@ -91,7 +91,7 @@
 import { deleteAnnouncement } from "@/api/announcement.js"
 import { updateAnnouncement } from "@/api/announcement.js"
 import { topAnnouncement } from "@/api/announcement.js"
-import { ref, reactive, toRefs, onMounted,defineEmits} from 'vue';
+import { ref, reactive, toRefs, onMounted } from 'vue';
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex' // 引入store
 const store = useStore(); // 使用store必须加上
@@ -107,35 +107,35 @@ const props = defineProps({
 });
 
 //   置顶与取消置顶START
-const executeTop = async() => {
+const executeTop = async () => {
   let result;
   const params = {
     announcementId: props.data.announcementID,
     istop: 1
   };
   result = await topAnnouncement(params);
-  if(result.code==200){
+  if (result.code == 200) {
     window.alert('success');
-    emit('child-click',1)
+    emit('child-click', 1)
   }
-  else{
+  else {
     window.alert('error');
   }
   location.reload();
 };
 
-const cancelTop = async() => {
+const cancelTop = async () => {
   let result;
   const params = {
     announcementId: props.data.announcementID,
     istop: 0
   };
   result = await topAnnouncement(params);
-  if(result.code==200){
+  if (result.code == 200) {
     window.alert('success');
-    emit('child-click',1)
+    emit('child-click', 1)
   }
-  else{
+  else {
     window.alert('error');
   }
   location.reload();
@@ -144,17 +144,17 @@ const cancelTop = async() => {
 
 
 //   删除公告START
-const deleteAnnouncements = async(AnnouncementId) => {
+const deleteAnnouncements = async (AnnouncementId) => {
   let result;
   const params = {
     announcementId: props.data.announcementID
   };
   result = await deleteAnnouncement(params);
-  if(result.code==200){
+  if (result.code == 200) {
     window.alert('success');
-    emit('child-click',1)
+    emit('child-click', 1)
   }
-  else{
+  else {
     window.alert('error');
   }
   location.reload();
@@ -166,24 +166,24 @@ const deleteAnnouncements = async(AnnouncementId) => {
 const dialogVisible = ref(false)
 
 const form = ref({
-    title: props.data.title,
-    announcementContent: props.data.announcementContent,
+  title: props.data.title,
+  announcementContent: props.data.announcementContent,
 });
 
 const editAnnouncements = () => {
-    dialogVisible.value = true;
+  dialogVisible.value = true;
 }
 
 const confirmAnnouncement = () => {
-    let params = {
-        announcementId: props.data.announcementID,
-        title: form.value.title,
-        content: form.value.announcementContent,
-    }
-    //console.log(params);
-    updateAnnouncement(params);
-    dialogVisible.value = false;
-    location.reload();
+  let params = {
+    announcementId: props.data.announcementID,
+    title: form.value.title,
+    content: form.value.announcementContent,
+  }
+  //console.log(params);
+  updateAnnouncement(params);
+  dialogVisible.value = false;
+  location.reload();
 };
 //   修改公告END
 
@@ -191,7 +191,7 @@ const confirmAnnouncement = () => {
 const detaildialogVisible = ref(false)
 
 const detailAnnouncements = () => {
-    detaildialogVisible.value = true;
+  detaildialogVisible.value = true;
 }
 //   公告详细内容END
 </script>
@@ -232,11 +232,11 @@ const detailAnnouncements = () => {
   display: inline-block;
 }
 
-.announcementTitle:hover{
-  color:rgb(121, 182, 248)
+.announcementTitle:hover {
+  color: rgb(121, 182, 248)
 }
 
-.announcementContent{
+.announcementContent {
   font-size: 18px;
   color: #858585;
 }
@@ -274,15 +274,32 @@ const detailAnnouncements = () => {
   justify-content: center
 }
 
-.announcementContentDetail{
+.announcementContentDetail {
   color: #6e6e6e;
   font-size: 20px;
+  white-space: pre-wrap;
 }
 
-.admin-info-detail{
+.admin-info-detail {
   display: flex;
   align-items: center;
   font-size: 18px;
   color: #868686;
+}
+
+.deleteButton {
+  background-color: #ea4a3b;
+}
+
+.editButton {
+  background-color: #0daaf2
+}
+
+.topButton {
+  background-color: #ffd500
+}
+
+.cancelTopButton {
+  background-color: #ffaa5f
 }
 </style>

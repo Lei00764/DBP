@@ -21,8 +21,11 @@
           </div>
           <!--显示用户信息-->
 
-          <!--显示帖子信息-->
-          <router-link :to="`/forumArticleDetail/${data.postId}`" class="title">{{ data.title }}</router-link>
+          <router-link :to="`/forumArticleDetail/${data.postId}`" class="title" @click="handleView(data.postId)">
+            {{ data.title }}
+          </router-link>
+          <!--显示帖子信息
+          <router-link :to="`/forumArticleDetail/${data.postId}`" class="title">{{ data.title }}</router-link>-->
           <div class="summary">{{ data.summary }}</div>
           <div class="article-info">
             <span class="iconfont icon-eye">
@@ -36,9 +39,6 @@
             </span>
           </div>
         </div>
-        <router-link :to="`/forumArticleDetail/${data.postId}`">
-          <Cover :cover="data.Picture" :width="100" v-if="data.Picture"></Cover>
-        </router-link>
         <!--显示帖子信息-->
       </div>
       <!-- </router-link> -->
@@ -49,12 +49,16 @@
 <script setup>
 
 // 接收父组件的信息
+import { viewArticle } from '@/api/article'; // 引入举报api
 const props = defineProps({
   data: {
     type: Object
   },
 });
-
+const handleView = async (postId) => {
+  console.log(postId);
+  viewArticle(postId);
+}
 // console.log(props.data);
 </script>
 
@@ -135,4 +139,5 @@ const props = defineProps({
 
 .article-item:hover {
   background: #fffbfb;
-}</style>
+}
+</style>

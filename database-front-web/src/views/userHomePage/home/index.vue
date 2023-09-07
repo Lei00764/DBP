@@ -33,43 +33,59 @@
                     </el-input>
                 </el-form-item>
                 <!-- 右侧 个人信息 -->
-                <el-form-item>
-                    <div class="user-info-panel">
-                        <el-button class="icon-button" @click="ToHome">
-                            <font-awesome-icon :icon="['fas', 'house']" />
-                            <span class="button-text">首页</span>
-                        </el-button>
-                        <el-button class="icon-button" @click="user = true">
-                            <font-awesome-icon :icon="['fas', 'circle-user']" />
-                            <span class="button-text">更改信息</span>
-                        </el-button>
-                        <el-dialog v-if="refreshs" v-model="user" title="更改个人信息" width="40%" height="80%" align-center>
-                            <el-form-item>
-                                头像：
-                                <userAvatar class="img" :key="avatarKey" :userId=store.state.Info.id :width=50
-                                    :addLink="false">
-                                </userAvatar>
-                                <avatarUploader class="upload" @avatarUploaded="refreshing"></avatarUploader>
-                            </el-form-item>
-                            <div class="PersonSide_text">
-                                <div class="user_name">
-                                    昵称：
-                                    <span> {{ UserInfo.name }} </span>
+                <div class="user-info-panel">
+                    <el-button class="icon-button" @click="ToHome">
+                        <font-awesome-icon :icon="['fas', 'house']" />
+                        <span class="button-text">首页</span>
+                    </el-button>
+                    <el-button class="icon-button" @click="user = true">
+                        <font-awesome-icon :icon="['fas', 'circle-user']" />
+                        <span class="button-text">更改信息</span>
+                    </el-button>
+                    <el-dialog v-if="refreshs" v-model="user" title="更改个人信息" width="40%" height="80%" align-center>
+                        <el-form-item>
+                            头像：
+                            <userAvatar class="img" :key="avatarKey" :userId=store.state.Info.id :width=50 :addLink="false">
+                            </userAvatar>
+                            <avatarUploader class="upload" @avatarUploaded="refreshing"></avatarUploader>
+                        </el-form-item>
+                        <div class="PersonSide_text">
+                            <div class="user_name">
+                                昵称：
+                                <span> {{ UserInfo.name }} </span>
 
+                            </div>
+                        </div>
+                    </el-dialog>
+                    <el-button class="icon-button" @click="ToAnnouncement">
+                        <font-awesome-icon :icon="['fas', 'paperclip']" />
+                        <span class="button-text">公告栏</span>
+                    </el-button>
+
+                    <div class="container">
+                        <div class="dropdown">
+                            <!-- 消息 -->
+                            <el-button class="dropdown-title" @click="ToCheckMessage">
+                                <font-awesome-icon :icon="['fas', 'comments']" />
+                                <span class="button-text">消息</span>
+                            </el-button>
+                            <!-- xiaoxi -->
+                            <div class="dropdown-content">
+                                <div class="dropdown-menu">
+                                    <noticeitem v-for="item in dis_announcementListInfo" :key="item.AnnouncementId"
+                                        :data="item">
+                                    </noticeitem>
                                 </div>
                             </div>
-                        </el-dialog>
-                        <el-button class="icon-button" @click="ToAnnouncement">
-                            <font-awesome-icon :icon="['fas', 'paperclip']" />
-                            <span class="button-text">公告栏</span>
-                        </el-button>
-                        <el-button class="icon-button" @click="ToLogOut">
-                            <font-awesome-icon :icon="['fas', 'right-to-bracket']" />
-                            <span class="button-text">退出登录</span>
-                        </el-button>
-
+                        </div>
                     </div>
-                </el-form-item>
+
+                    <el-button class="icon-button" @click="ToLogOut">
+                        <font-awesome-icon :icon="['fas', 'right-to-bracket']" />
+                        <span class="button-text">退出登录</span>
+                    </el-button>
+
+                </div>
             </el-form>
         </div>
 
@@ -440,7 +456,7 @@ const CheckImgExists = (imgurl) => {
 :deep().el-input__inner {
     font-size: 14px;
     font-family: PingFangSC-Regular, PingFang SC;
-    color: #000000;
+    color: #ffffff;
 
 }
 
@@ -460,10 +476,27 @@ const CheckImgExists = (imgurl) => {
 }
 
 /* login */
+.header-content {
+    margin: 0 auto;
+    align-items: center;
+    /* 通过将高度设置成外层容器一致，达到居中效果 */
+    height: 10vh;
+    width: 80vw;
+    display: flex;
+}
+
+.logo {
+    /* 取消下划线样式 */
+    text-decoration: none;
+    font-size: 24px;
+    color: rgb(96, 98, 102);
+}
+
+
 .user-info-panel {
-    position: absolute;
-    left: 440px;
-    top: -36px;
+        position: absolute;
+    left: 445px;
+    top: -18px;
 }
 
 .user-info-panel .el-button {
@@ -473,7 +506,7 @@ const CheckImgExists = (imgurl) => {
     margin-right: 1vw;
 }
 
-.user-info-panel {
+.user-info-panel  {
     background-color: transparent;
 }
 

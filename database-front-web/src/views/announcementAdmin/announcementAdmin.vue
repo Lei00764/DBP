@@ -124,11 +124,9 @@ const submitAnnouncement = () => {
         title: form.value.title,
         announcementContent: form.value.announcementContent,
     }
-    //console.log(params);
     postAnnouncement(params);
     dialogVisible.value = false;
     fetchData();//上传新公告后，更新一下前端显示公告
-    //console.log("success");
     location.reload();
 };
 
@@ -153,7 +151,7 @@ const handlePageChange = (page) => {
 }
 
 #announcement-panel {
-  height: 128vh;
+  height: 1210px;
   width: 85vw;
   margin-left: auto;
   margin-right: auto;
@@ -179,7 +177,7 @@ const handlePageChange = (page) => {
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 1.5vh;
+  margin-bottom: 10px;
   order: 1;
 }
 /*.header {
@@ -198,9 +196,10 @@ const handlePageChange = (page) => {
 }*/
 
 .addAnnouncement {
+    background-color: #00c6fc;
     position: absolute;
     left: 8px;
-    top: 110px;
+    top: 150px;
 }
 
 </style>

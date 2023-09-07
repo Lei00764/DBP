@@ -44,6 +44,14 @@
                         <b style="position:absolute;left:80%;color:black;">{{ store.state.Info.tel }}</b>
                     </el-form-item>
                 </el-form>
+                <el-form style="position:absolute;top:60%;left:20%;">
+                    <el-form-item>
+                    <el-button class="button0" @click="toAllFood">
+                        <span>进入论坛</span>
+                        <span class="iconfont icon-ic_play_black"></span>
+                    </el-button>
+                </el-form-item>
+                </el-form>
                 <!-- 退出登录的按钮 -->
                 <el-button class="homeAdmin-logout-btn" style="position:absolute;bottom:5%;left:60%" @click="logout">
                     <span>退出登录</span>
@@ -67,8 +75,8 @@
                     <el-button class="post-btn" @click="intoCheckArticle"></el-button>
                 </el-form-item>
                 <el-form-item>
-                    <!-- 进入论坛-->
-                    <el-button class="into-forum-btn" @click="intoForum"></el-button>
+                    <!-- 审核留言-->
+                    <el-button class="comment-btn" @click="intoCheckComment"></el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -96,33 +104,34 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import { reactive } from 'vue';
-import router from "@/router/index.js"
 import navTopAdmin from "@/components/navTopAdmin.vue"
 import { useStore } from 'vuex'//引入store
 import { postNotice } from "@/api/notice.js"
+import { useRouter } from 'vue-router'
 
-
-
+const router=useRouter()
 const store = useStore();//使用store必须加上
-const doSearch = () => {
-    //进行关键词搜索
-};
+
 const logout = () => {
     //退出登录
     router.push({ name: 'login' })
 };
 const intoCheckProfession = () => {
-    router.push({ name: 'checkProfession' })
+    router.push({ name: 'checkProfession', params:{choice:'1'}})
 }
 const intoAnnounce = () => {
-    router.push({ name: 'announcementAdmin' })
+    router.push({ name: 'announcementAdmin', params:{choice:'2'} })
 }
 const intoCheckArticle = () => {
-    router.push({ name: 'checkArticle' })
+    router.push({ name: 'checkArticle', params:{choice:'3'}})
 }
-const intoForum = () => {
+const intoCheckComment = () => {
+    router.push({ name: 'checkComment' })
+}
+
+const toAllFood = () => {
     router.push({ path: 'layout' })
-}
+};
 
 const formData = reactive({
     keyword: '',
@@ -210,7 +219,7 @@ const submitNotice = () => {
     /* 横线 */
     float: right;
     width: 300px;
-    height: 2px;
+    height: 1px;
     background: #888888;
     position: absolute;
 }
@@ -219,6 +228,17 @@ const submitNotice = () => {
     position: absolute;
     top: 30%;
     left: 40%;
+}
+
+.button0 {
+    height: 100%;
+    width: 190%;
+    background-color: black;
+    color: #ffffff;
+}
+
+.button0:hover {
+    opacity: 0.8;
 }
 
 .check-btn {
@@ -242,7 +262,7 @@ const submitNotice = () => {
 }
 
 .post-btn {
-    background: url('@/assets/post_btn.png');
+    background: url('@/assets/checkpost.png');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
@@ -251,8 +271,8 @@ const submitNotice = () => {
     border-radius: 20px;
 }
 
-.into-forum-btn {
-    background: url('@/assets/into_forum_btn.png');
+.comment-btn {
+    background: url('@/assets/checkcomment.png');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100% 100%;

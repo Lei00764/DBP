@@ -313,8 +313,8 @@ const handleChange = (e) => {
     position: absolute;
     width: 219px;
     height: 50px;
-    left: 0px;
-    top: 500px;
+    left: 3%;
+    top: 450px;
     border-radius: 15px;
 }
 
@@ -381,18 +381,6 @@ const handleChange = (e) => {
     font-size: 8px;
 }
 
-.Line {
-    /* 直线 1 */
-    position: absolute;
-    width: 230px;
-    left: 10px;
-    height: 0;
-    top: 110px;
-    border: 1px solid rgb(148, 141, 141);
-    border-radius: 20px;
-    transform: rotate(-0.58deg);
-}
-
 /* 信息 */
 .information {
     /* Elaine-GIFT */
@@ -407,14 +395,23 @@ const handleChange = (e) => {
     text-align: left;
 }
 
+
+
 .content {
     position: absolute;
-    top: 80px;
+    top: 15%;
 }
 
 .following {
     position: absolute;
-    top: 160px;
+    top: 30%;
+}
+
+/* 积分 */
+.point {
+    /* 积分：769 */
+    position: absolute;
+    top: 45%;
 }
 
 /* 积分 */
@@ -430,6 +427,7 @@ const handleChange = (e) => {
 /* 主题颜色 */
 .theme-page {
     position: absolute;
+    left:30px;
     padding: 8px;
     top: 570px;
     width: 240px;
