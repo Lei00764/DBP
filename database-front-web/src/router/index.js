@@ -51,7 +51,7 @@ const router = createRouter({
             component: () => import('@/views/homeAdmin/index.vue'),
         },
         {
-            path: '/checkProfession',  // 审核专业认证
+            path: '/checkProfession/:choice',  // 审核专业认证
             name: 'checkProfession',
             component: () => import('@/views/checkProfession/index.vue'),
         },
