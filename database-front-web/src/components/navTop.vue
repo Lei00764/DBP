@@ -37,15 +37,16 @@
 
                 <div class="container">
                     <div class="dropdown">
-                            <!-- 消息 -->
+                        <!-- 消息 -->
                         <el-button class="dropdown-title" @click="ToCheckMessage">
                             <font-awesome-icon :icon="['fas', 'comments']" />
                             <span class="button-text">消息</span>
                         </el-button>
-                            <!-- xiaoxi -->
+                        <!-- xiaoxi -->
                         <div class="dropdown-content">
                             <div class="dropdown-menu">
-                                <noticeitem v-for="item in dis_announcementListInfo" :key="item.AnnouncementId" :data="item">
+                                <noticeitem v-for="item in dis_noticeListInfo" :key="item.AnnouncementId"
+                                    :data="item">
                                 </noticeitem>
                             </div>
                         </div>
@@ -56,7 +57,7 @@
                     <font-awesome-icon :icon="['fas', 'right-to-bracket']" />
                     <span class="button-text">退出登录</span>
                 </el-button>
-                
+
             </div>
         </div>
     </div>
@@ -77,22 +78,21 @@ const formData = reactive({  // 用 reactive，而不用 ref
 import noticeitem from "@/components/noticeitem.vue"
 import { loadAnnouncement } from "@/api/announcement.js"
 import { loadNotice } from "@/api/notice.js"
-const announcementListInfo = ref([]);
 
-const dis_announcementListInfo = ref([]);
-const fetchData = async (stringValue = '') => {
+const noticeListInfo = ref([]);
+
+const dis_noticeListInfo = ref([]);
+const fetchData = async () => {
     let result;
-    if (!stringValue) {
-        stringValue = "0"
-        const params = {
-            user_id: store.state.Info.id,
-        };
-        result = await loadNotice(params);
+    const params = {
+        user_id: store.state.Info.id,
+    };
+    result = await loadNotice(params);
+    if(result){
+        noticeListInfo.value = result.data;
+        dis_noticeListInfo.value = noticeListInfo.value.slice(0, 5);
     }
-    console.log(result.data);
-    announcementListInfo.value = result.data;
-    dis_announcementListInfo.value = announcementListInfo.value.slice(0, 8);
-
+    
 };
 
 // 在组件挂载时获取初始文章数据
@@ -120,8 +120,8 @@ const enterDown = async (e) => {
         if (formData.keyword.trim() !== "") {
             router.push({ path: '/search', query: { keyword: formData.keyword } });
         }
-      
-    
+
+
     }
     // 销毁事件
     window.removeEventListener("keydown", enterDown, false);
@@ -251,7 +251,5 @@ const ToCheckMessage = () => {
     visibility: visible;
     opacity: 1;
 }
-
-
 </style>
 

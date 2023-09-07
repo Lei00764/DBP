@@ -19,27 +19,23 @@ public class FavouriteController : ControllerBase
     }
 
     [HttpPost("Favourite")]
-    public async Task<IActionResult> FavouriteArticleAsync(int user_id, int post_id)//收藏或取消收藏
+    public async Task<IActionResult> FavouriteArticle(int user_id, int post_id) // 收藏/取消收藏文章
     {
-        var code = 200;
-        var msg = "success";
         var user_data = await _database.Users.ToListAsync();
         var article_data = await _database.Articles.ToListAsync();
-        MyUtil tool = new MyUtil(_database);
         if (user_data == null || article_data == null)
         {
-            code = 400;
-            msg = "数据库中没有数据";
+
             return Ok(new
             {
-                code = code,
-                msg = msg,
+                code = 400,
+                msg = "数据库中没有数据"
             });
         }
         var u = _database.Users.Where(x => x.UserId == user_id);
         var a = _database.Articles.Where(x => x.PostId == post_id).ToList();
-        int? author_id=a.First().AuthorId;//获取被收藏的作者ID
-        //Console.Write(a);
+        int? author_id = a.First().AuthorId; // 获取被收藏的作者ID
+        // Console.Write(a);
         var record = _database.Favourites.Where(x => x.PostId == post_id && x.UserId == user_id);
         bool u_exist = false;
         bool a_exist = false;
@@ -52,6 +48,11 @@ public class FavouriteController : ControllerBase
                 break;
             }
         }
+
+        MyUtil tool = new MyUtil(_database);
+
+        string msg = "";
+
         foreach (var article in article_data)
         {
             if (article.PostId == post_id)
@@ -70,17 +71,15 @@ public class FavouriteController : ControllerBase
         }
         if (a_exist == false || u_exist == false)
         {
-            code = 400;
-            msg = "用户或文章不存在";
             return Ok(new
             {
-                code = code,
-                msg = msg,
+                code = 400,
+                msg = "用户或文章不存在"
             });
         }
-        foreach (var item in a)//更改收藏数及收藏记录
+        foreach (var item in a) // 更改收藏数及收藏记录
         {
-            if (r_exist == false)//未收藏
+            if (r_exist == false) // 未收藏
             {
                 msg = "收藏成功";
                 item.FavouriteNum += 1;
@@ -93,23 +92,22 @@ public class FavouriteController : ControllerBase
                 _database.Favourites.AddRange(newRecord);
                 await _database.SaveChangesAsync();
 
-                tool.ChangePoints(author_id,2);
+                tool.ChangePoints(author_id, 2);
             }
-            else//已收藏
+            else // 已收藏
             {
                 msg = "取消收藏成功";
                 item.FavouriteNum -= 1;
                 await _database.SaveChangesAsync();
-                _database.Favourites.RemoveRange(record);//删除记录
+                _database.Favourites.RemoveRange(record); // 删除记录
                 await _database.SaveChangesAsync();
-                tool.ChangePoints(author_id,-2);
+                tool.ChangePoints(author_id, -2);
             }
         }
 
-
         return Ok(new
         {
-            code = code,
+            code = 200,
             msg = msg
         });
     }
@@ -120,7 +118,7 @@ public class FavouriteController : ControllerBase
         var code = 200;
         var msg = "success";
         var user_data = await _database.Users.ToListAsync();
-        bool u_exist=false;
+        bool u_exist = false;
         foreach (var user in user_data)
         {
             if (user.UserId == user_id)
@@ -129,9 +127,9 @@ public class FavouriteController : ControllerBase
                 break;
             }
         }
-        if(u_exist==false)
+        if (u_exist == false)
         {
-            msg="用户不存在";
+            msg = "用户不存在";
             return Ok(new
             {
                 code = code,
@@ -155,16 +153,16 @@ public class FavouriteController : ControllerBase
                 IsBanned = article.IsBanned  // 是否被封禁
             }
         ).ToListAsync();
-        
-        if(article_data.Count==0)
+
+        if (article_data.Count == 0)
         {
-            msg="收藏夹为空";
+            msg = "收藏夹为空";
         }
         return Ok(new
         {
             code = code,
             msg = msg,
-            data=article_data
+            data = article_data
         });
     }
 }

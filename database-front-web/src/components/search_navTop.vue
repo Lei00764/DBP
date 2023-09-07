@@ -58,7 +58,7 @@
                             <!-- xiaoxi -->
                         <div class="dropdown-content">
                             <div class="dropdown-menu">
-                                <noticeitem v-for="item in dis_announcementListInfo" :key="item.AnnouncementId" :data="item">
+                                <noticeitem v-for="item in dis_noticeListInfo" :key="item.AnnouncementId" :data="item">
                                 </noticeitem>
                             </div>
                         </div>
@@ -83,33 +83,20 @@ import { useStore } from 'vuex' // 引入store
 import noticeitem from "@/components/noticeitem.vue"
 import { loadAnnouncement } from "@/api/announcement.js"
 import { loadNotice } from "@/api/notice.js"
-const announcementListInfo = ref([]);
+const noticeListInfo = ref([]);
 
-const dis_announcementListInfo = ref([]);
-const fetchData = async (stringValue = '') => {
+const dis_noticeListInfo = ref([]);
+const fetchData = async () => {
     let result;
-    if (!stringValue) {
-        stringValue = "0"
-        const params = {
-            //p_board_id: pBoardId.value,
-            //page_num: 1
-            user_id: store.state.Info.id,
-        };
-        result = await loadNotice(params);
+    const params = {
+        user_id: store.state.Info.id,
+    };
+    result = await loadNotice(params);
+    if(result){
+        noticeListInfo.value = result.data;
+        dis_noticeListInfo.value = noticeListInfo.value.slice(0, 5);
     }
-    else {
-        const params = {
-            keyword: stringValue
-        };
-        result = await forum_searchArticle(params);
-    }
-
-    if (!result)
-        return;
-    console.log(result.data);
-    announcementListInfo.value = result.data;
-    dis_announcementListInfo.value = announcementListInfo.value.slice(0, 8);
-
+    
 };
 
 // 在组件挂载时获取初始文章数据

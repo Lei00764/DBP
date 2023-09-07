@@ -73,7 +73,7 @@
 </template>
 
 <script setup="props">
-import { ref, reactive, onMounted, onUnmounted, nextTick,defineEmits} from 'vue';
+import { ref, reactive, onMounted, onUnmounted, nextTick} from 'vue';
 import { searchArticle, getArticleNumber } from "@/api/article.js"
 import { GetInfoByID, changePoint } from "@/api/user.js"
 import { getFansNumber, getFollowNumber } from "@/api/follow.js"
