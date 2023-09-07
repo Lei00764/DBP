@@ -5,9 +5,6 @@
         </div>
         <div class="forum-article-detail-page" v-if="Object.keys(articleInfo).length > 0">
             <!-- 展示帖子详情 -->
-            <div class="Content-tag">
-                {{ "Content" }}
-            </div>
             <el-form class="announ-announcement-form" :style="{ height: formHeight }">
 
                 <!-- 举报按钮 点击弹窗 -->
@@ -28,21 +25,10 @@
                 </el-dialog>
 
                 <OnlineModal :controlVisible="visibleIt" @closeModal="visibleIt = false" />
-                <el-button class="userShareIcon" text @click="Share">
-                    <font-awesome-icon :icon="['fas', 'arrow-up-from-bracket']" />
-                </el-button>
-                <!-- 文章详情展示未完成 -->
-                <div class="title"> {{ articleInfo[0].title }} </div>
-                <!-- 需增加路径到作者个人主页 -->
-                <!-- <router-link :to="`/layout`"> -->
-                <userAvatar :userId="authorInfo.id" :width="50" :addLink="false"></userAvatar>
-                <!-- isFollowing ? '已关注' : '关注' -->
-                <div class="author">{{ articleInfo[0].authorName }}
-                    <el-button @click="Follow(articleInfo[0].authorId)">{{ isFollowing ? '已关注' : '关注' }}</el-button>
-                </div>
-                <!-- </router-link> -->
-                <div class="publish_time" v-if="articleInfo[0].releaseTime">
-                    发布于 {{ articleInfo[0].releaseTime.split('T')[0] }} {{ articleInfo[0].releaseTime.split('T')[1] }}
+                    <el-button class="userShareIcon" text @click="copyPageURL" data-clipboard-text="URL_TO_COPY">
+                        <font-awesome-icon :icon="['fas', 'arrow-up-from-bracket']" />
+                    </el-button>
+
                 <div class="info-container">
                     <!-- 文章标题 -->
                     <div class="title"> {{ articleInfo[0].title }} </div>
@@ -95,35 +81,11 @@
                         </el-form-item>
                     </el-form>
 
-                    <!-- 举报按钮 点击弹窗 -->
-                    <el-button class="userReportIcon" text @click="centerDialogVisible = true">
-                        <font-awesome-icon :icon="['fas', 'triangle-exclamation']" />
-                    </el-button>
-                    <!-- <OnlineModal :controlVisible="visibleIt" @closeModal="visibleIt = false" /> -->
-                    <el-button class="userShareIcon" text @click="copyPageURL" data-clipboard-text="URL_TO_COPY">
-                        <font-awesome-icon :icon="['fas', 'arrow-up-from-bracket']" />
-                    </el-button>
-
-
-                    <el-dialog v-model="centerDialogVisible" title="举报" width="30%" align-center>
-                        <span>举报原因</span>
-                        <el-input placeholder="Reason" v-model="formData.reportReason">
-                        </el-input>
-                        <template #footer>
-                            <span class="dialog-footer">
-                                <el-button @click="centerDialogVisible = false">取消</el-button>
-                                <el-button type="primary" @click="reportConfirm">确认</el-button>
-                            </span>
-                        </template>
-                    </el-dialog>
                 </div>
 
                 <div class="content" ref="innerContent" v-html="articleInfo[0].content"></div>
 
             </el-form>
-            <div class="Comment-tag">
-                {{ "Comment" }}
-            </div>
             <el-form class="comment-form">
                 <div class="comment" v-if="Object.keys(articleInfo).length > 0">
                     <commentList :articleId="router.currentRoute.value.params.articleId"></commentList>
@@ -354,8 +316,9 @@ const reportConfirm = async (articleId) => {
 
 .userReportIcon {
     position: absolute;
-    top: 20px;
-    left: 85%;
+    top: 40px;
+    left: 86%;
+    font-size: 18px;
 }
 
 .userShareIcon:hover {
@@ -364,8 +327,9 @@ const reportConfirm = async (articleId) => {
 
 .userShareIcon {
     position: absolute;
-    top: 20px;
-    left: 90%;
+    top: 75px;
+    left: 86.15%;
+    font-size: 18px;
 }
 
 /* 该版式为帖子详情页版式 */
@@ -386,33 +350,11 @@ const reportConfirm = async (articleId) => {
     background-color: #e6f0f8;
 }
 
-/*标签样式*/
-.Content-tag {
-    position: absolute;
-    top: 110px;
-    left: 130px;
-    width: 65px;
-    padding: 5px;
-    background-color: rgba(122, 164, 255, 0.756);
-    border-radius: 5px;
-}
-
-.Comment-tag {
-    position: absolute;
-    top: 110px;
-    left: 1030px;
-    width: 78px;
-    padding: 5px;
-    background-color: rgba(122, 164, 255, 0.756);
-    border-radius: 5px;
-}
-
 /* 帖子标题 */
 .title {
     font-weight: bolder;
     font-size: 26px;
     position: absolute;
-    top: 15px;
     left: 20px;
     max-width: 800px;
 }
@@ -420,21 +362,23 @@ const reportConfirm = async (articleId) => {
 /* 帖子内容展示 */
 .content {
     position: absolute;
-    top: 150px;
-    left: 20px;
+    top: 130px;
+    left: 5px;
     border-radius: 10px;
-    max-width: 790px;
+    max-width: 750px;
+    min-width: 750px;
+    min-height: 600px;
     letter-spacing: 1px;
     line-height: 22px;
-    padding-left:20px;
-    padding-right:20px;
-    background-color: #e6f0f8;
+    padding:20px;
+    padding-left:30px;
+    box-shadow: 4px 4px 4px 4px gray;
 }
 
 /* 帖子作者 */
 .author {
     position: absolute;
-    top: 85px;
+    top: 55px;
     left: 80px;
     
 }
@@ -452,14 +396,14 @@ const reportConfirm = async (articleId) => {
 /*头像 */
 .avatar {
     position: absolute;
-    top: 70px;
+    top: 35px;
     left: 20px;
 }
 
 /* 帖子发布时间 */
 .publish_time {
     position: absolute;
-    top: 115px;
+    top: 85px;
     left: 80px;
     color: #5e5e5e;
     font-size: small;
@@ -478,7 +422,7 @@ const reportConfirm = async (articleId) => {
 
 .vertical-line {
     position: absolute;
-    top: 49px;
+    top: 19px;
     left: 300px;
     width: 2px;
     height: 55px;
@@ -495,7 +439,7 @@ const reportConfirm = async (articleId) => {
 
 .article-stats {
     position: absolute;
-    top: 70px;
+    top: 45px;
     left: 320px;
 
     .views {
