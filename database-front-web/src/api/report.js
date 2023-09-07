@@ -12,6 +12,7 @@ export function ReportArticle(params){
         params: params,
     }).then(function (response) {
         if (response.data.code === 200) {
+            Message.success("举报成功");
             return response.data;  // 正确响应，返回数据
         } else {
             Message.error("举报失败");

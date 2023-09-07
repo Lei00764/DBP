@@ -9,6 +9,40 @@
                 {{ "Content" }}
             </div>
             <el-form class="announ-announcement-form" :style="{ height: formHeight }">
+
+                <!-- 举报按钮 点击弹窗 -->
+                <el-button class="userReportIcon" text @click="centerDialogVisible = true">
+                    <font-awesome-icon :icon="['fas', 'triangle-exclamation']" />
+                </el-button>
+
+                <el-dialog v-model="centerDialogVisible" title="举报反馈" width="30%" align-center>
+                    <span>举报原因</span>
+                    <el-input type="textarea" autosize placeholder="Reason" v-model="form.reportReason">
+                    </el-input>
+                    <template #footer>
+                        <span class="dialog-footer">
+                            <el-button @click="centerDialogVisible = false">取消</el-button>
+                            <el-button type="primary" @click="centerDialogVisible = false, reportConfirm(router.currentRoute.value.params.articleId)">确认</el-button>
+                        </span>
+                    </template>
+                </el-dialog>
+
+                <OnlineModal :controlVisible="visibleIt" @closeModal="visibleIt = false" />
+                <el-button class="userShareIcon" text @click="Share">
+                    <font-awesome-icon :icon="['fas', 'arrow-up-from-bracket']" />
+                </el-button>
+                <!-- 文章详情展示未完成 -->
+                <div class="title"> {{ articleInfo[0].title }} </div>
+                <!-- 需增加路径到作者个人主页 -->
+                <!-- <router-link :to="`/layout`"> -->
+                <userAvatar :userId="authorInfo.id" :width="50" :addLink="false"></userAvatar>
+                <!-- isFollowing ? '已关注' : '关注' -->
+                <div class="author">{{ articleInfo[0].authorName }}
+                    <el-button @click="Follow(articleInfo[0].authorId)">{{ isFollowing ? '已关注' : '关注' }}</el-button>
+                </div>
+                <!-- </router-link> -->
+                <div class="publish_time" v-if="articleInfo[0].releaseTime">
+                    发布于 {{ articleInfo[0].releaseTime.split('T')[0] }} {{ articleInfo[0].releaseTime.split('T')[1] }}
                 <div class="info-container">
                     <div class="title"> {{ articleInfo[0].title }} </div>
 
@@ -124,6 +158,9 @@ const router = useRouter()
 
 // 举报弹窗
 const centerDialogVisible = ref(false)
+const form = ref({
+    reportReason: '',
+});
 
 
 // 文章详情
@@ -270,26 +307,15 @@ const formHeight = computed(() => {
 
 //举报信息：作者名，作者id，举报原因，帖子标题，帖子内容
 
-const reportConfirm = async (userId, articleId) => {
+const reportConfirm = async (articleId) => {
     // 提交举报
-    if (!formData.reportReason) {
-        Message.error("举报原因不能为空");
-        return;
-    }
-    let result;
     const params = {
-        user_id: userId,
+        user_id: store.state.Info.id,
         article_id: articleId,
-        reason: formData.reportReason
+        reason: form.value.reportReason
     };
     console.log(params);
-    result = await ReportArticle(params);
-    if (result.code == 200) {
-        window.alert('举报成功');
-    }
-    else {
-        window.alert('error');
-    }
+    ReportArticle(params);
 };
 
 </script>
