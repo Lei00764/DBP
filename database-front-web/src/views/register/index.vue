@@ -35,10 +35,6 @@
                         <el-input placeholder="请确认密码" v-model="formData.confirmPassword"
                             :type="showPassword ? 'text' : 'password'" show-password></el-input>
                     </el-form-item>
-                    <el-radio-group v-model="formData.type">
-                        <el-radio :label="0">管理员</el-radio>
-                        <el-radio :label="1">用户</el-radio>
-                    </el-radio-group>
                 </el-form>
             </div>
             <div class="register-form-button">
@@ -68,7 +64,7 @@ const formData = reactive({
     email: '',
     password: '',
     confirmPassword: '',
-    type: 0, // 默认选中管理员
+    type: 1, // 默认选中用户
 });
 
 const showPassword = ref(false);

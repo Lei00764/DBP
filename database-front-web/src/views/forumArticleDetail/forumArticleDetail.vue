@@ -14,14 +14,14 @@
                     <font-awesome-icon :icon="['fas', 'triangle-exclamation']" />
                 </el-button>
 
-                <el-dialog v-model="centerDialogVisible" title="举报" width="30%" align-center>
+                <el-dialog v-model="centerDialogVisible" title="举报反馈" width="30%" align-center>
                     <span>举报原因</span>
-                    <el-input placeholder="Reason" v-model="formData.reportReason">
+                    <el-input type="textarea" autosize placeholder="Reason" v-model="form.reportReason">
                     </el-input>
                     <template #footer>
                         <span class="dialog-footer">
                             <el-button @click="centerDialogVisible = false">取消</el-button>
-                            <el-button type="primary" @click=" reportConfirm">确认</el-button>
+                            <el-button type="primary" @click="centerDialogVisible = false, reportConfirm(router.currentRoute.value.params.articleId)">确认</el-button>
                         </span>
                     </template>
                 </el-dialog>
@@ -81,6 +81,9 @@ const router = useRouter()
 
 //举报弹窗
 const centerDialogVisible = ref(false)
+const form = ref({
+    reportReason: '',
+});
 
 
 const Share = () => {
@@ -179,26 +182,15 @@ const formHeight = computed(() => {
 
 //举报信息：作者名，作者id，举报原因，帖子标题，帖子内容
 
-const reportConfirm = async (userId, articleId) => {
+const reportConfirm = async (articleId) => {
     // 提交举报
-    if (!formData.reportReason) {
-        Message.error("举报原因不能为空");
-        return;
-    }
-    let result;
     const params = {
-        user_id: userId,
+        user_id: store.state.Info.id,
         article_id: articleId,
-        reason: formData.reportReason
+        reason: form.value.reportReason
     };
     console.log(params);
-    result = await ReportArticle(params);
-    if (result.code == 200) {
-        window.alert('举报成功');
-    }
-    else {
-        window.alert('error');
-    }
+    ReportArticle(params);
 };
 
 </script>
