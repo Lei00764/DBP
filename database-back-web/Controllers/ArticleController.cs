@@ -365,20 +365,6 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                     msg = "帖子已被封禁"
                 });
             }
-            async void UpdateData()
-            {
-                // 需要先查询
-                var a = _database.Articles.Where(x => x.PostId == article_id);
-                // 再对查询到的数据进行修改
-                foreach (var item in a)
-                {
-                    item.Views += 1;
-                }
-                // 再save更改
-                await _database.SaveChangesAsync();
-
-            }
-            UpdateData();
             return Ok(new
             {
                 code = 200,
