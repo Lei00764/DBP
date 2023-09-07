@@ -49,7 +49,7 @@
 <script setup>
 
 // 接收父组件的信息
-import { viewArticle } from "@/api/article.js"
+import { viewArticle } from '@/api/article'; // 引入举报api
 const props = defineProps({
   data: {
     type: Object
