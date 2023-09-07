@@ -32,53 +32,54 @@
                         @keyup.enter.native="fetchData(formData.keyword)">
                     </el-input>
                 </el-form-item>
-                <el-button class=button11 round color=transparent @click="home"
-                    style="color:#000000;background-color:transparent;margin-top: 2px;">
-                    <el-icon :size="20">
+                <!-- 右侧 个人信息 -->
+                <el-form-item>
+                    <div class="user-info-panel">
+                        <el-button class="icon-button" @click="ToHome">
+                            <font-awesome-icon :icon="['fas', 'house']" />
+                            <span class="button-text">首页</span>
+                        </el-button>
+                        <el-button class="icon-button" @click="user = true">
+                            <font-awesome-icon :icon="['fas', 'circle-user']" />
+                            <span class="button-text">更改信息</span>
+                        </el-button>
+                        <el-dialog v-if="refreshs" v-model="user" title="更改个人信息" width="40%" height="80%" align-center>
+                            <el-form-item>
+                                头像：
+                                <userAvatar class="img" :key="avatarKey" :userId=store.state.Info.id :width=50
+                                    :addLink="false">
+                                </userAvatar>
+                                <avatarUploader class="upload" @avatarUploaded="refreshing"></avatarUploader>
+                            </el-form-item>
+                            <div class="PersonSide_text">
+                                <div class="user_name">
+                                    昵称：
+                                    <span> {{ UserInfo.name }} </span>
 
-                        <House />
+                                </div>
+                            </div>
+                        </el-dialog>
+                        <el-button class="icon-button" @click="ToAnnouncement">
+                            <font-awesome-icon :icon="['fas', 'paperclip']" />
+                            <span class="button-text">公告栏</span>
+                        </el-button>
+                        <el-button class="icon-button" @click="ToLogOut">
+                            <font-awesome-icon :icon="['fas', 'right-to-bracket']" />
+                            <span class="button-text">退出登录</span>
+                        </el-button>
 
-                    </el-icon>
-                </el-button>
-                <el-button class=button13 round color=transparent @click="user = true"
-                    style="color:#000000;background-color:transparent;margin-top: 2px;">
-                    <el-icon :size="20">
-
-                        <User />
-
-                    </el-icon>
-                </el-button>
-                <el-dialog v-if="refreshs" v-model="user" title="更改个人信息" width="40%" height="80%" align-center>
-                    <el-form-item>
-                        头像：
-                        <userAvatar class="img" :key="avatarKey" :userId=store.state.Info.id :width=50 :addLink="false"></userAvatar>
-                        <avatarUploader class="upload" @avatarUploaded="refreshing"></avatarUploader>
-                    </el-form-item>
-                    <div class="PersonSide_text">
-                        <div class="user_name">
-                            昵称：
-                            <span> {{ UserInfo.name }} </span>
-
-                        </div>
                     </div>
-                </el-dialog>
-
-                <div class="button2" @click="gotoLogin">
-                    &emsp;退出登录
-                </div>
-                <div class="button3" @click="gotoCreate">
-                    &emsp;创建账号
-                </div>
+                </el-form-item>
             </el-form>
         </div>
 
         <!-- 简直傻逼 如果你不小心看到了我的注释请无视它 它并没有什么真实意思 -->
-        <el-button class=button12 round color=transparent @click="stars"
+        <!-- <el-button class=button12 round color=transparent @click="stars"
             style="color:#000000;background-color:transparent;margin-top: 2px;">
             <el-icon :size="20">
                 <Star />
             </el-icon>
-        </el-button>
+        </el-button> -->
         <!-- 论坛展示 -->
         <!-- 在这一部分我学会了把某些样式和定义放在一起 -->
         <div class="ShowPart">
@@ -121,7 +122,7 @@
 <script setup="props">
 import { getCurrentInstance, ref, reactive, toRefs, onMounted, nextTick, watch } from 'vue';
 import component1 from '../component1/component1.vue';
-import { GetInfoByID} from "@/api/user.js"
+import { GetInfoByID } from "@/api/user.js"
 import router from "@/router/index.js"
 import { useRoute, useRouter } from "vue-router"
 import { ApplyProfession } from "@/api/profession.js"
@@ -157,9 +158,38 @@ onMounted(() => {
 
 })
 //———————————————————函数——————————————————————————
+const ToHome = () => {
+    router.push(`/homeUser`);
+}
+
+const ToMy = () => {
+    if (store.state.type == 1) { //管理员身份
+        router.push(`/userHomePage`);
+    }
+    else if (store.state.type == 0) {  //用户身份
+        router.push(`/homeAdmin`);
+    }
+}
+
+const ToAnnouncement = () => {
+    if (store.state.type == 1) { //用户身份
+        router.push(`/announcementUser`);
+    }
+    else if (store.state.type == 0) {  //管理员身份
+        router.push(`/announcementAdmin`);
+    }
+}
+
+const ToLogOut = () => {
+    router.push(`/login`);
+}
+
+const ToCheckMessage = () => {
+    // 跳转到消息界面（管理员可以给用户发送消息）
+}
 const fetchuser = async () => {
     const params = {
-        ID:store.state.Info.id,
+        ID: store.state.Info.id,
         type: 1
     }
     let result = await GetInfoByID(params);
@@ -179,13 +209,6 @@ const refreshing = () => {
 const home = () => {
     router.push(`/homeUser`);
 }
-const gotoLogin = () => {
-    router.push(`/login`);
-}
-const gotoCreate = () => {
-    router.push('/register');
-}
-
 const applyForProfession = () => {
     dialogVisible.value = true;
 }
@@ -307,27 +330,32 @@ const CheckImgExists = (imgurl) => {
     top: -5px;
 
 }
+
 .upload {
     position: absolute;
     left: 100px;
     top: 0px;
 
 }
-.PersonSide_text{
+
+.PersonSide_text {
     margin-top: 40px;
 }
+
 .button12 {
     position: absolute;
     left: 800px;
     top: 26px;
 
 }
+
 .pro {
     position: absolute;
     left: 80px;
     top: 75px;
     border-radius: 15px;
 }
+
 .ShowPart {
     position: absolute;
     width: 750px;
@@ -353,7 +381,7 @@ const CheckImgExists = (imgurl) => {
     top: 450px;
     width: 50px;
     height: 50px;
-    background-color: #446b5c;
+    background-color: rgb(187, 209, 214);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -393,7 +421,7 @@ const CheckImgExists = (imgurl) => {
     position: absolute;
     left: 300px;
     top: 45px;
-    width: 800px;
+    width: 100%;
 }
 
 .el-input {
@@ -404,7 +432,7 @@ const CheckImgExists = (imgurl) => {
 }
 
 :deep().el-input__wrapper {
-    background: rgb(8, 102, 75);
+    background: rgb(255, 255, 255);
     border: 0;
     border-radius: 10px;
 }
@@ -412,7 +440,7 @@ const CheckImgExists = (imgurl) => {
 :deep().el-input__inner {
     font-size: 14px;
     font-family: PingFangSC-Regular, PingFang SC;
-    color: #ffffff;
+    color: #000000;
 
 }
 
@@ -432,48 +460,67 @@ const CheckImgExists = (imgurl) => {
 }
 
 /* login */
-.button2 {
-    border-radius: 8px;
-    font-size: 12px;
-    background-color: #ffffff;
-    border: 2px solid rgb(46, 47, 53);
+.user-info-panel {
     position: absolute;
-    width: 75px;
-    height: 27px;
-    left: 610px;
-    top: -14px;
-    /* 盒子阴影的样式 */
-    box-shadow: 2px 2px 0px rgb(46, 47, 53);
+    left: 440px;
+    top: -36px;
 }
 
-/* 按钮被点击时将阴影切换 */
-.button2:active {
-    box-shadow: 3px 3px 3px inset rgb(99, 99, 99),
-        -6px 6px 8px inset rgba(255, 255, 255, 0.6);
-
+.user-info-panel .el-button {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    margin-right: 1vw;
 }
 
-/* switch account */
-.button3 {
-    border-radius: 8px;
-    font-size: 12px;
-    color: #ffffff;
-    background: rgb(8, 102, 75);
-    border: 2px solid rgb(46, 47, 53);
+.user-info-panel {
+    background-color: transparent;
+}
+
+.button-text {
+    margin-left: 5px;
+}
+
+.dropdown .dropdown-title {
+    display: inline-block;
+    position: relative;
+    padding: 0 24px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dropdown .dropdown-content {
     position: absolute;
-    width: 78px;
-    height: 27px;
-    left: 700px;
-    top: -14px;
-    /* 盒子阴影的样式 */
-    box-shadow: 2px 2px 0px rgb(46, 47, 53);
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.6s ease-in-out;
 }
 
-/* 按钮被点击时将阴影切换 */
-.button3:active {
-    box-shadow: 3px 3px 0px inset rgb(1, 18, 0),
-        -3px 3px 0px inset rgba(0, 0, 0, 0.1);
+.dropdown .dropdown-content .dropdown-menu {
+    margin-top: 6px;
+    padding: 10px 8px 15px;
+    background-color: rgba(255, 255, 255, 0.011);
+    color: black;
+    border-radius: 4px;
+}
 
+.dropdown .dropdown-content .dropdown-menu {
+    width: 100%;
+    white-space: nowrap;
+    padding: 10px 16px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.dropdown .dropdown-content .dropdown-menu {
+    background-color: #ccc;
+}
+
+.dropdown:hover .dropdown-content {
+    visibility: visible;
+    opacity: 1;
 }
 </style>
   
