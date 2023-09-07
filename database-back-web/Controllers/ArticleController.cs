@@ -45,7 +45,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         }
         return summary;
     }
-    
+
 
     [HttpGet("recommendArticle")]
     public async Task<IActionResult> GetArticleIndividually(int user_id)
@@ -484,21 +484,29 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         }
     }
 
+    public class ArticleRequestModel
+    {
+        public int user_id { get; set; }
+        public string tag { get; set; }
+        public string title { get; set; }
+        public string content { get; set; }
+        public string picture { get; set; }
+        public string Sharelink { get; set; }
+    }
+
     //发布文章  
     [HttpPost("postArticle")]
-    public async Task<IActionResult> postArticleAsync(int user_id, string tag, string title, string content, string picture, string Sharelink)
+    public async Task<IActionResult> postArticle([FromBody] ArticleRequestModel model)
     {
-        var code = 200;
-        var msg = "success";
-        //!!!!!TODO: 文章ID、分享链接应该怎么赋值？还要避免与表中已有文章数据重复
-        //user_id 要满足完整性约束
+        // !!!!!TODO: 文章ID、分享链接应该怎么赋值？还要避免与表中已有文章数据重复
+        // user_id 要满足完整性约束
         var temp = await _database.Users.ToListAsync();
         bool exist = false;
-        if (temp != null)//判断表内是否有信息
+        if (temp != null) // 判断表内是否有信息
         {
             foreach (var user in temp)
             {
-                if (user.UserId == user_id)
+                if (user.UserId == model.user_id)
                 {
                     exist = true;
                     break;
@@ -509,12 +517,12 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             Article newRecord = new Article
             {
-                Tag = tag,
-                Title = title,
-                Content = content,
-                AuthorId = user_id,
+                Tag = model.tag,
+                Title = model.title,
+                Content = model.content,
+                AuthorId = model.user_id,
                 //PostId = post_id,
-                ShareLink = Sharelink,
+                ShareLink = model.Sharelink,
                 Views = 0,
                 FavouriteNum = 0,
                 LikeNum = 0,
@@ -527,18 +535,16 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
 
             return Ok(new
             {
-                code = code,
-                msg = msg
+                code = 200,
+                msg = "success",
             });
         }
         else
         {
-            code = 400;
-            msg = "不存在该用户信息";
             return Ok(new
             {
-                code = code,
-                msg = msg
+                code = 400,
+                msg = "不存在该用户信息"
             });
         }
     }
@@ -548,8 +554,6 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
     [HttpGet("Article/search")]
     public async Task<IActionResult> searchArticleAsync(int user_id)
     {
-        var code = 200;
-        var msg = "success";
         var temp = await _database.Articles.ToListAsync();
         bool exist = false;
         if (temp != null)//判断表内是否有该文章
@@ -569,19 +573,17 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             var article_data = _database.Articles.Where(a => a.AuthorId == user_id);
             return Ok(new
             {
-                code = code,
-                msg = msg,
+                code = 200,
+                msg = "success",
                 data = article_data
             });
         }
         else
         {
-            code = 400;
-            msg = "该用户无发布的文章";
             return Ok(new
             {
-                code = code,
-                msg = msg
+                code = 400,
+                msg = "该用户无发布的文章"
             });
         }
     }
@@ -672,7 +674,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             var article_data = _database.Articles.Where(a => a.PostId == post_id);
             foreach (var item in article_data)
             {
-                item.Views = item.Views+1;
+                item.Views = item.Views + 1;
             }
             await _database.SaveChangesAsync();
             return Ok(new
