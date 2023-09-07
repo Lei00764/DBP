@@ -62,24 +62,6 @@
                         <span class="button-text">公告栏</span>
                     </el-button>
 
-                    <div class="container">
-                        <div class="dropdown">
-                            <!-- 消息 -->
-                            <el-button class="dropdown-title" @click="ToCheckMessage">
-                                <font-awesome-icon :icon="['fas', 'comments']" />
-                                <span class="button-text">消息</span>
-                            </el-button>
-                            <!-- xiaoxi -->
-                            <div class="dropdown-content">
-                                <div class="dropdown-menu">
-                                    <noticeitem v-for="item in dis_announcementListInfo" :key="item.AnnouncementId"
-                                        :data="item">
-                                    </noticeitem>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <el-button class="icon-button" @click="ToLogOut">
                         <font-awesome-icon :icon="['fas', 'right-to-bracket']" />
                         <span class="button-text">退出登录</span>
@@ -456,47 +438,16 @@ const CheckImgExists = (imgurl) => {
 :deep().el-input__inner {
     font-size: 14px;
     font-family: PingFangSC-Regular, PingFang SC;
-    color: #ffffff;
-
-}
-
-/* el-button */
-.button11 {
-    position: absolute;
-    left: 410px;
-    top: -18px;
-
-}
-
-.button13 {
-    position: absolute;
-    left: 445px;
-    top: -18px;
+    color: #000000;
 
 }
 
 /* login */
-.header-content {
-    margin: 0 auto;
-    align-items: center;
-    /* 通过将高度设置成外层容器一致，达到居中效果 */
-    height: 10vh;
-    width: 80vw;
-    display: flex;
-}
-
-.logo {
-    /* 取消下划线样式 */
-    text-decoration: none;
-    font-size: 24px;
-    color: rgb(96, 98, 102);
-}
-
-
 .user-info-panel {
-        position: absolute;
-    left: 445px;
+    position: absolute;
+    left: 410px;
     top: -18px;
+
 }
 
 .user-info-panel .el-button {
