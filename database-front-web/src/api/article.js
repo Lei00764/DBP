@@ -213,4 +213,3 @@ export function postArticle(params) {
         console.log(error);
     });
 }
-

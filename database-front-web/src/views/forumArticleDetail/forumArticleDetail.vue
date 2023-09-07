@@ -10,19 +10,20 @@
             </div>
             <el-form class="announ-announcement-form" :style="{ height: formHeight }">
                 <div class="info-container">
+                    <!-- 文章标题 -->
                     <div class="title"> {{ articleInfo[0].title }} </div>
-
+                    <!-- 作者信息 -->
                     <div class="user-avatar">
                         <userAvatar :userId="authorInfo.id" :width="50" :addLink="false"></userAvatar>
                     </div>
-                    <div class="article-info">
+                    <div>
                         <!-- 文章详情展示未完成 -->
                         <!-- 需增加路径到作者个人主页 -->
                         <!-- <router-link :to="`/layout`"> -->
                         <!-- isFollowing ? '已关注' : '关注' -->
-                        <div class="author">{{ articleInfo[0].authorName }}
-                            <el-button @click="Follow(articleInfo[0].authorId)">{{ isFollowing ? '已关注' : '关注' }}</el-button>
-                        </div>
+                        <b class="author">{{ articleInfo[0].authorName }}
+                            <el-button class="button" @click="Follow(articleInfo[0].authorId)">{{ isFollowing ? '已关注' : '关注' }}</el-button>
+                        </b>
                         <!-- </router-link> -->
                         <div class="publish_time" v-if="articleInfo[0].releaseTime">
                             发布于 {{ articleInfo[0].releaseTime.split('T')[0] }} {{ articleInfo[0].releaseTime.split('T')[1]
@@ -30,32 +31,35 @@
                         </div>
                     </div>
                     <div class="vertical-line"></div>
-                    <div class="article-stats">
-                        <div class="views">
-                            <span class="iconfont icon-eye" style="display: inline-block; width: 50%;">
+
+                    <el-form class="article-stats" :inline="true">
+                        <el-form-item class="views">
+                            <span class="iconfont icon-eye" style="display: inline-block;">
                             </span>
-                            <div style="display: inline-block; width: 50%; text-align: right;">
+                            <div style="display: inline-block; width: 40px; text-align: center; font-size:12px;">
                                 浏览<br>
-                                <el-button>{{ articleInfo[0].views == 0 ? "浏览" : articleInfo[0].views }}</el-button>
+                                <div>{{ articleInfo[0].views }}</div>
                             </div>
-                        </div>
-                        <div class="button-like">
-                            <span class="iconfont icon-heart" style="display: inline-block; width: 50%;">
+                        </el-form-item>
+                        <el-form-item class="button-like">
+                            <span class="iconfont icon-heart" style="display: inline-block; color: color_like;" 
+                                @click="clickToLike">
                             </span>
-                            <div style="display: inline-block; width: 50%; text-align: right;">
+                            <div style="display: inline-block; width: 40px; text-align: center; font-size:12px;">
                                 点赞<br>
-                                <el-button @click="clickToLike"> {{ articleInfo[0].likeNum }}</el-button>
+                                <div> {{ articleInfo[0].likeNum }}</div>
                             </div>
-                        </div>
-                        <div class="button-favourite">
-                            <span class="iconfont icon-star" style="display: inline-block; width: 50%;">
+                        </el-form-item>
+                        <el-form-item class="button-favourite">
+                            <span class="iconfont icon-star" style="display: inline-block; color: color_like;" 
+                                @click="clickToFavourite">
                             </span>
-                            <div style="display: inline-block; width: 50%; text-align: right;">
+                            <div style="display: inline-block; width: 40px; text-align: center; font-size:12px;">
                                 收藏<br>
-                                <el-button @click="clickToFavourite"> {{ articleInfo[0].favouriteNum }}</el-button>
+                                <div> {{ articleInfo[0].favouriteNum }}</div>
                             </div>
-                        </div>
-                    </div>
+                        </el-form-item>
+                    </el-form>
 
                     <!-- 举报按钮 点击弹窗 -->
                     <el-button class="userReportIcon" text @click="centerDialogVisible = true">
@@ -81,6 +85,7 @@
                 </div>
 
                 <div class="content" ref="innerContent" v-html="articleInfo[0].content"></div>
+
             </el-form>
             <div class="Comment-tag">
                 {{ "Comment" }}
@@ -112,6 +117,7 @@ import { like } from '@/api/like';
 import { GetInfoByID } from '@/api/user';
 import { favourite } from '@/api/favourite';
 import { ReportArticle } from '@/api/report'; // 引入举报api
+
 import { GetArticleDetailsAsync } from '@/api/article';
 import { followAuthor, isfollowAuthor } from '@/api/follow';
 import Message from "@/utils/Message.js"
@@ -122,6 +128,7 @@ const store = useStore(); // 使用store必须加上
 
 const router = useRouter()
 
+let color_like = ref('red');
 // 举报弹窗
 const centerDialogVisible = ref(false)
 
@@ -198,7 +205,6 @@ const copyPageURL = () => {
         },
     });
 }
-
 
 const refreshArticle = () => {
     getArticleDetail(router.currentRoute.value.params.articleId);
@@ -303,6 +309,10 @@ const reportConfirm = async (userId, articleId) => {
 }
 
 /*背景图相关设置 */
+.user-avatar {
+    position: absolute;
+    top:15px;
+}
 
 .forum-article-detail-page {
     background-position: center;
@@ -339,7 +349,6 @@ const reportConfirm = async (userId, articleId) => {
     left: 150px;
     width: 840px;
     border-radius: 12px;
-    background-color: #e6f0f8;
 }
 
 .comment-form {
@@ -375,7 +384,7 @@ const reportConfirm = async (userId, articleId) => {
 /* 帖子标题 */
 .title {
     font-weight: bolder;
-    font-size: larger;
+    font-size: 26px;
     position: absolute;
     top: 15px;
     left: 20px;
@@ -387,30 +396,45 @@ const reportConfirm = async (userId, articleId) => {
     position: absolute;
     top: 150px;
     left: 20px;
+    border-radius: 10px;
     max-width: 790px;
     letter-spacing: 1px;
     line-height: 22px;
+    padding-left:20px;
+    padding-right:20px;
+    background-color: #e6f0f8;
 }
 
 /* 帖子作者 */
 .author {
     position: absolute;
-    top: 65px;
-    left: 100px;
+    top: 85px;
+    left: 80px;
+    
+}
+
+.button {
+    width:50px;
+    height:20px;
+    position:absolute;
+    left:50px;
+    border-radius: 5px;
+
+    border: 1px solid rgba(0, 0, 0, 0.9);
 }
 
 /*头像 */
 .avatar {
     position: absolute;
-    top: 60px;
+    top: 70px;
     left: 20px;
 }
 
 /* 帖子发布时间 */
 .publish_time {
     position: absolute;
-    top: 95px;
-    left: 100px;
+    top: 115px;
+    left: 80px;
     color: #5e5e5e;
     font-size: small;
 }
@@ -428,10 +452,10 @@ const reportConfirm = async (userId, articleId) => {
 
 .vertical-line {
     position: absolute;
-    top: 30px;
+    top: 49px;
     left: 300px;
     width: 2px;
-    height: 50px;
+    height: 55px;
     background: #ccc;
     display: inline-block;
     margin-top: 31px;
@@ -444,11 +468,9 @@ const reportConfirm = async (userId, articleId) => {
 }
 
 .article-stats {
-    display: flex;
-    align-items: center;
     position: absolute;
     top: 70px;
-    left: 350px;
+    left: 320px;
 
     .views {
         margin-left: 25px;
