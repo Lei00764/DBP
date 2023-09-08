@@ -221,7 +221,8 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                     Content = article.Content,  // 文章内容
                     IsBanned = article.IsBanned,  // 是否被封禁
                     ReleaseTime = article.ReleaseTime, //文章发布时间
-                    Picture = article.Picture //文章内的图片
+                    Picture = article.Picture, //文章内的图片
+                    IsTop = article.IsTop  //文章是否置顶
                 }
             ).Where(x => x.IsBanned == 0).OrderByDescending(x => x.postId).ToListAsync();
             /*var data = await _database
@@ -245,6 +246,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 x.Avatar,
                 ReleaseTime = x.ReleaseTime != null ? x.ReleaseTime.Value.ToString("yyyy-MM-dd") : null,
                 x.Picture,
+                x.IsTop,
                 Summary = GetSummary(x.Content) // 获取文章概要
             });
             if (data.Count() == 0)
@@ -277,7 +279,8 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                     Content = article.Content,  // 文章内容
                     IsBanned = article.IsBanned,  // 是否被封禁
                     ReleaseTime = article.ReleaseTime,
-                    Picture = article.Picture
+                    Picture = article.Picture,
+                    IsTop = article.IsTop  //文章是否置顶
                 }
             ).Where(x => x.TAG == tag_list[p_board_id] && x.IsBanned == 0).OrderByDescending(x => x.postId).ToListAsync();
             /*var data = await _database
@@ -300,6 +303,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
                 x.Avatar,
                 ReleaseTime = x.ReleaseTime != null ? x.ReleaseTime.Value.ToString("yyyy-MM-dd") : null,
                 x.Picture,
+                x.IsTop,
                 Summary = GetSummary(x.Content) // 获取文章概要
             });
             if (data.Count() == 0)
