@@ -468,7 +468,7 @@ const CheckImgExists = (imgurl) => {
 :deep().el-input__inner {
     font-size: 14px;
     font-family: PingFangSC-Regular, PingFang SC;
-    color: #000000;
+    color: #ffffff;
 
 }
 
