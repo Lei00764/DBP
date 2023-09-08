@@ -1,13 +1,9 @@
 <template>
-    <div style="background-color: #f8f8f8;
-    border-radius: 8px;
-    padding: 15px;
-    margin: 10px 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
-    ">
+    <el-card class="card" 
+    v-on:mouseover="ReportIconShow = true" 
+    v-on:mouseout="ReportIconShow = false">
         <!-- 举报留言弹窗 -->
-        <el-button class="userReportIcon" text @click="dialogVisible = true">
+        <el-button v-if="ReportIconShow" class="userReportIcon" @click.prevent="dialogVisible = true">
             <font-awesome-icon :icon="['fas', 'triangle-exclamation']" />
             <span class="button-text">举报</span>
         </el-button>
@@ -25,19 +21,18 @@
             </template>
         </el-dialog>
     
-        <div class="comment-info">
-            <div class="avatar-container">
-                <userAvatar :userId="data.userId" :width="50" :addLink="false"></userAvatar>
+        <el-form>
+            <el-form-item class="avatar-container">
+                <userAvatar :userId="data.userId" :width="40" :addLink="false"></userAvatar>
                 <span class="user-name">{{ data.userName }}</span>
-            </div>
+            </el-form-item>
             
             <div class="details-container">
                 <p class="comment-content">{{ data.content }}</p>
                 <p class="comment-time">{{ formatTime(data.time) }}</p>
             </div>
-        </div>
-   
-    </div>
+        </el-form>
+    </el-card>
 </template>
   
 <script setup>
@@ -49,6 +44,7 @@ import router from "@/router/index.js"
 const store = useStore(); // 使用store必须加上
 
 const dialogVisible = ref(false)
+const ReportIconShow = ref(false)
 
 const form = ref({
     Reason: '',
@@ -94,10 +90,15 @@ const formatTime = (time) => {
 //         transform: translateY(-3px);
 //     }
 // }
-
-.comment-info {
-    display: flex;
-    align-items: center;
+.card{
+    background-color: #f8f8f8;
+    width:340px;
+    
+    border-radius: 5px;
+    margin: 5px 0;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    min-height: 80px;
 }
 
 .avatar-container {
@@ -112,6 +113,7 @@ const formatTime = (time) => {
     border-radius: 50%;
     object-fit: cover;
     margin-right: 10px;
+    position:absolute;
 }
 
 .user-name {
@@ -137,8 +139,11 @@ const formatTime = (time) => {
     margin-left: 5px;
 }
 
-.userReportIcon:hover {
-    opacity: 0.8;
+.userReportIcon {
+    position:absolute;
+    right:30%;
+    background-color: transparent;
+    border-color: transparent;
 }
 </style>
   
