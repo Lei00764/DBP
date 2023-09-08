@@ -60,13 +60,13 @@
             </div>
             <el-form class="enter-forum" :inline="true">
                 <el-form-item>
-                    <el-button class="button0" @click="toAllFood">
+                    <el-button class="buttonEnterAndPost" @click="toAllFood">
                         <span>进入论坛&nbsp;</span>
                         <span class="iconfont icon-ic_play_black"></span>
                     </el-button>
                 </el-form-item>
                 <el-form-item>
-                    <el-button class="button0" @click="showTipTapEditor = true">
+                    <el-button class="buttonEnterAndPost" @click="showTipTapEditor = true">
                         <span>发布文章&nbsp;</span>
                         <span class="iconfont icon-pen-to-square"></span>
                     </el-button>
@@ -139,12 +139,12 @@ span {
 
 .enter-forum {
     position: absolute;
-    top: 75%;
-    left: 10%;
+    top: 70%;
+    left: 5%;
 }
 
 
-.button0 {
+.buttonEnterAndPost {
     height: 100%;
     width: 190%;
     background-color: black;

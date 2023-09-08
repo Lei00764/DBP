@@ -1,5 +1,34 @@
 <template>
     <div>
+        <!-- ********************************* -->
+        <el-dialog v-model="showTipTapEditor" title="发布文章" width="80%" height="80%" align-center>
+            <tiptapEditor initial-content="
+          <p> </p>
+          <p> </p>
+          <p> </p>
+          <p> </p>
+          <p> </p>
+          " :active-buttons="[
+              'bold',
+              'italic',
+              'strike',
+              'underline',
+              'code',
+              'image',
+              'h1',
+              'h2',
+              'h3',
+              'bulletList',
+              'orderedList',
+              'blockquote',
+              'codeBlock',
+              'horizontalRule',
+              'undo',
+              'redo',
+          ]" @update="test"></tiptapEditor>
+        </el-dialog>
+        <!-- ********************************* -->
+
         <component1 v-if="refreshs" @child-click="refreshing"></component1>
 
 
@@ -106,10 +135,9 @@
                 </div>
                 <!-- 新增的按钮部分 -->
                 <div class="add-post-button">
-                    <router-link to="/addArticle" class="add-button">
-                        <!-- 这里可以使用适当的图标库来创建白色十字图标 -->
-                        <span class="cross-icon">+</span>
-                    </router-link>
+                    <el-button  @click="showTipTapEditor = true" text class="add-button">
+                        <span class="iconfont icon-icon-add"></span>
+                    </el-button>
                 </div>
             </div>
         </div>
@@ -237,6 +265,10 @@ const submitApplication = () => {
 // END 用户申请专业认证弹窗
 
 
+// START 发布文章
+const showTipTapEditor = ref(false)
+// END 发布文章
+
 
 function stars() {
     if (formData.posting == 0) {
@@ -358,8 +390,8 @@ const CheckImgExists = (imgurl) => {
     position: absolute;
     width: 750px;
     height: 620px;
-    left: 350px;
-    top: 100px;
+    left: 440px;
+    top: 150px;
 }
 
 .example-pagination-block {
@@ -376,18 +408,16 @@ const CheckImgExists = (imgurl) => {
     right: 110px; */
     position: absolute;
     left: 680px;
-    top: 450px;
-    width: 50px;
-    height: 50px;
-    background-color: rgb(187, 209, 214);
-    border-radius: 50%;
+    top: 430px;
+    background-color: rgb(58, 119, 189);
+    border-radius: 20%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .add-button {
-    color: white;
+    color: rgb(255, 255, 255);
     text-decoration: none;
     font-size: 35px;
     line-height: 1;
