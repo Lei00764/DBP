@@ -33,11 +33,15 @@ public class Article
     public string? ShareLink { get; set; }
     [Column("RELEASETIME")]
     public DateTime? ReleaseTime { get; set; }
+    [Column("ISTOP")]
+    public int? IsTop { get; set; }
+
     public Article()
     {//设置默认值（初始值）
         Views = 0;
         FavouriteNum = 0;
         LikeNum = 0;
         IsBanned = 0;
+        IsTop = 0;
     }
 }

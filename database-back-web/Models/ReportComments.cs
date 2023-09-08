@@ -10,6 +10,7 @@ public class ReportComments
 {
     // 请与数据库中表字段保持一致
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // 告知 Entity Framework Core UserId 是由数据库生成的  --- 自增
     [Column("MSGREPORTID")]
     public int? MsgReportId { get; set; }
     [Column("USERID")]

@@ -336,15 +336,15 @@ const reportConfirm = async (articleId) => {
 .announ-announcement-form {
     position: absolute;
     top: 150px;
-    left: 150px;
+    left: 140px;
     width: 840px;
     border-radius: 12px;
 }
 
 .comment-form {
     position: absolute;
-    top: 150px;
-    left: 1050px;
+    top: 100px;
+    left: 1000px;
     width: 500px;
     border-radius: 12px;
     background-color: #e6f0f8;
@@ -367,7 +367,7 @@ const reportConfirm = async (articleId) => {
     border-radius: 10px;
     max-width: 750px;
     min-width: 750px;
-    min-height: 600px;
+    min-height: 450px;
     letter-spacing: 1px;
     line-height: 22px;
     padding:20px;

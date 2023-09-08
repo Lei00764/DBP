@@ -213,3 +213,20 @@ export function postArticle(params) {
         console.log(error);
     });
 }
+
+export function topArticle(params) {
+    return Request({
+        method: 'Post',
+        url: 'Article/topArticle',
+        params: params
+    }).then(function (response) {
+        if (response.data.code === 200) {
+            return response.data;  
+        } else {
+            Message.error("文章置顶失败");
+            return null;
+        }
+    }).catch(function (error) {
+        console.log(error);
+    })
+}
