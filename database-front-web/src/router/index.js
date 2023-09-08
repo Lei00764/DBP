@@ -56,11 +56,6 @@ const router = createRouter({
             component: () => import('@/views/checkProfession/index.vue'),
         },
         {
-            path: '/checkComment',  // 审核被举报留言
-            name: 'checkComment',
-            component: () => import('@/views/checkComment/index.vue'),
-        },
-        {
             path: '/announcementAdmin',  // 管理员界面的公告栏
             name: 'announcementAdmin',
             component: () => import('@/views/announcementAdmin/announcementAdmin.vue'),
@@ -79,11 +74,6 @@ const router = createRouter({
             path: '/addAnnouncement',  // 添加公告页
             name: 'addAnnouncement',
             component: () => import('@/views/addAnnouncement/addAnnouncement.vue'),
-        },
-        {
-            path: '/checkArticle',  // 公告
-            name: 'checkArticle',
-            component: () => import('@/views/checkArticle/index.vue'),
         },
         {
             path: '/addArticle',  // 发布文章

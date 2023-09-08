@@ -38,8 +38,8 @@
                         <b style="color:black;pointer-events: none">公告</b>
                     </el-form-item>
                 </el-form>
-                <el-form :inline=true style="position:absolute;top:55%;left:20%;" @click="intoForum">
-                    <el-form-item style="width:100px;">
+                <el-form :inline=true style="position:absolute;top:55%;left:20%;" @click="intoComment">
+                    <el-form-item style="width:100px;pointer-events: none">
                         <b style="color:black;">审核留言</b>
                     </el-form-item>
                 </el-form>
@@ -49,6 +49,9 @@
             </div>
             <div v-else-if="choice==2">
                 <checkarticle></checkarticle>
+            </div>
+            <div v-else-if="choice==4">
+                <checkcomment></checkcomment>
             </div>
         </div>
     </div>
@@ -63,14 +66,16 @@ import router from "@/router/index.js"
 import navTopAdmin from "@/components/navTopAdmin.vue"
 import profession from "@/views/checkProfession/Profession/profession.vue"
 import checkarticle from "@/views/checkProfession/Article/checkarticle.vue"
+import checkcomment from "@/views/checkProfession/Comment/checkcomment.vue"
 import { useStore } from 'vuex'//引入store
 import { useRoute } from 'vue-router'
 
 const store = useStore();//使用store必须加上
 const route = useRoute();
-const distance = ref();
 const choice = ref(route.params.choice);
+const distance = ref((23 + (choice.value*1-1)*10)+"%");
 
+console.log(distance.value)
 
 const backToHome = () => {
     router.push({ name: 'homeAdmin' })
@@ -91,7 +96,7 @@ const Announcement = () => {
     choice.value = 3;
 }
 
-const intoForum = () => {
+const intoComment = () => {
     distance.value = '53%';
     choice.value = 4;
 }
