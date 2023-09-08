@@ -79,7 +79,7 @@ public class SearchController : ControllerBase  // 命名规范，继承自 Cont
                 msg = "用户不存在"
             });
         }
-        if (_database.SearchHistories.Any(x => x.Content == content) == true)
+        if (_database.SearchHistories.Any(x => x.Content == content&&x.UserId==user_id) == true)
         {//同名记录已存在
             msg = "数据库已有该记录";
         }
