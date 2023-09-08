@@ -3,8 +3,15 @@
   <div>
     <div id="article-panel">
       <div class="article-list">
-        <articleListItem v-for="item in dis_articleListInfo" :key="item.postId" :data="item">
-        </articleListItem>
+        <div v-for="item in dis_articleListInfo">
+          <articleListItem v-if="item.isTop==1" :key="item.postId" :data="item">
+          </articleListItem>
+        </div>
+
+        <div v-for="item in dis_articleListInfo">
+          <articleListItem v-if="item.isTop==0" :key="item.postId" :data="item">
+          </articleListItem>
+        </div>
       </div>
       <div class="pagination">
         <el-pagination :current-page="currentPage" :page-size="pageSize" :total="totalCount"
@@ -42,7 +49,7 @@ const totalCount = ref(0);
 const fetchData = async () => {
   const p_board_id = pBoardId.value;
   let result;
-  console.log(p_board_id);
+  //console.log(p_board_id);
   if (p_board_id == 0) {
     const params = {
       user_id: store.state.Info.id
