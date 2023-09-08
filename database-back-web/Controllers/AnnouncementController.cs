@@ -269,6 +269,22 @@ public class AnnouncementController : ControllerBase
     {
         var code = 200;
         var msg = "success";
+        if(istop!=0&&istop!=1)
+        {
+            return Ok(new
+            {
+                code = 400,
+                msg = "istop只能为0或1",
+            });
+        }
+        else if(istop==0)
+        {
+            msg="已取消置顶";
+        }
+        else if(istop==1)
+        {
+            msg="已置顶";
+        }
         var announcement = await _database.Announcements.Where(a => a.AnnouncementId == announcementId).ToListAsync();
         if (announcement.Count > 0)
         {
@@ -286,7 +302,7 @@ public class AnnouncementController : ControllerBase
         else
         {
             code = 400;
-            msg = "操作失败";
+            msg = "公告不存在";
             return Ok(new
             {
                 code = code,
