@@ -18,7 +18,30 @@
                 <input class="editArticle-tag" v-model="formData.tag" placeholder="Please input title" disabled>
             </div>
             <img v-bind:src="formData.picture" class="image" />
-            <textarea class="editArticle-content" v-model="formData.content" placeholder="Type what you want"></textarea>
+            <textarea class="editArticle-content" v-html="formData.content" placeholder="Type what you want"></textarea>
+            <!-- ********************************* -->
+            <el-dialog v-model="showTipTapEditor" title="发布文章" width="80%" height="80%" align-center>
+                <tiptapEditor v-html="formData.content" initial-content={{formData.content}}
+                 :active-buttons="[
+              'bold',
+              'italic',
+              'strike',
+              'underline',
+              'code',
+              'image',
+              'h1',
+              'h2',
+              'h3',
+              'bulletList',
+              'orderedList',
+              'blockquote',
+              'codeBlock',
+              'horizontalRule',
+              'undo',
+              'redo',
+          ]" @update="test"></tiptapEditor>
+            </el-dialog>
+            <!-- ********************************* -->
             <el-button type="primary" class="publish-button" @click="edit">
                 <span class="iconfont icon-publish"></span>
                 <span>发布</span>
@@ -41,7 +64,8 @@ import navTopEdit from "@/components/navTopEdit.vue"
 onMounted(() => {
     getArticleDetail(route.query.articleId);
 });
-
+// START 发布文章
+const showTipTapEditor = ref(true)
 const store = useStore(); // 使用store必须加上
 const route = useRoute();
 const articleInfo = ref([]);
@@ -64,7 +88,7 @@ const formData = reactive({
     title: "",
     tag: "",
     content: "",
-    picture:"",
+    picture: "",
 
 });
 const edit = async () => {
@@ -109,6 +133,7 @@ const doLogoff = () => {
     width: 100vw;
     box-shadow: 0 2px 6px 0 #ddd;
 }
+
 .background2 {
     /* Rectangle 4 */
     position: absolute;
@@ -130,6 +155,7 @@ const doLogoff = () => {
     height: 100vh;
     width: 100vw;
 }
+
 /* 发布按钮 */
 .publish-button {
     position: absolute;
@@ -137,7 +163,8 @@ const doLogoff = () => {
     left: 50px;
     background: #000000cb;
 }
-.return-button{
+
+.return-button {
     position: absolute;
     top: 350px;
     left: 150px;
@@ -145,7 +172,7 @@ const doLogoff = () => {
 }
 
 /* 发布文章界面 */
-.editArticle{
+.editArticle {
     position: absolute;
     top: 15px;
     left: 30px;
@@ -154,6 +181,7 @@ const doLogoff = () => {
     font-size: 20px;
     color: rgb(90, 90, 90);
 }
+
 .editArticle-form {
     position: absolute;
     top: 75px;
@@ -216,6 +244,7 @@ const doLogoff = () => {
     height: 420px;
     border-radius: 20px;
 }
+
 .editArticle-content {
     position: absolute;
     top: 140px;
@@ -227,7 +256,4 @@ const doLogoff = () => {
     border-style: dashed;
     border-color: rgb(135, 135, 135);
     font-size: large;
-}
-
-
-</style>
+}</style>

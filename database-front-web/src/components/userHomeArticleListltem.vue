@@ -1,7 +1,7 @@
 <!-- 用户主页文章缩略图卡片 -->
 <template>
   <el-card :body-style="{ padding: '0px' }" style="height: 370px" class="cards">
-    <img v-bind:src="data.picture" class="image" />
+    <img src="@/assets/hamburger.png" class="image" />
     <div style="padding: 10px">
       <!-- 文字展示 -->
       <div class="article-panel">
@@ -24,9 +24,33 @@
       </div>
       <div class="bottom">
         <time class="time">{{ currentDate }}</time>
-        <el-button type="primary" round class editButton size="small" @click="edit">编辑</el-button>
+        <el-button type="primary" round class editButton size="small" @click="showTipTapEditor = true">编辑</el-button>
         <el-button type="danger" round class deleteButton size="small" @click="deleteArticles">删除</el-button>
       </div>
+      <!-- ********************************* -->
+      <el-dialog v-model="showTipTapEditor" :title=data.title width="80%" height="80%" align-center>
+        <tiptapEditorinit  :article-titlegiven=data.title :article-id=articleid :initial-content= data.content
+        :active-buttons="[
+            'bold',
+            'italic',
+            'strike',
+            'underline',
+            'code',
+            'image',
+            'h1',
+            'h2',
+            'h3',
+            'bulletList',
+            'orderedList',
+            'blockquote',
+            'codeBlock',
+            'horizontalRule',
+            'undo',
+            'redo',
+          ]" @update="test"></tiptapEditorinit>
+      </el-dialog>
+      <!-- ********************************* -->
+
     </div>
   </el-card>
 </template>
@@ -37,8 +61,16 @@ import { ref, reactive, toRefs, onMounted, defineEmits } from 'vue';
 import { useRouter } from 'vue-router'
 import { deleteArticle } from "@/api/article.js"
 const currentDate = ref(new Date())//
-const router = useRouter();
+const router = useRouter();// START 发布文章
+const showTipTapEditor = ref(false)
 const emit = defineEmits(['child-click'])
+const formData = reactive({
+    title: "",
+    tag: "",
+    content: "",
+    picture: "",
+
+});
 // 接收父组件的信息
 const props = defineProps({
   data: {
@@ -47,15 +79,10 @@ const props = defineProps({
   index: {
     type: Int16Array,
   },
+  articleid:{
+    type:Int16Array,
+  }
 });
-const edit = () => {
-  router.push({
-    path: 'editArticle/:articleId',
-    query: {
-      articleId: props.data.postId
-    }
-  })
-};
 const deleteArticles = async (postId) => {
   let result;
   const params = {

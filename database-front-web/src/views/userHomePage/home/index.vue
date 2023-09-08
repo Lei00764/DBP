@@ -120,7 +120,7 @@
             <!-- 帖子展示部分 -->
             <el-row>
                 <userHomeArticleListltem v-if="refreshs"
-                    v-for="item in articleListInfo.slice(formData.index, formData.index + 2)" :data="item"
+                    v-for="item in articleListInfo.slice(formData.index, formData.index + 2)" :data="item" :articleid="item.postId"
                     @child-click="refreshing">
                 </userHomeArticleListltem>
             </el-row>
@@ -391,7 +391,7 @@ const CheckImgExists = (imgurl) => {
     width: 750px;
     height: 620px;
     left: 300px;
-    top: 80px;
+    top: 50px;
 }
 
 .example-pagination-block {
