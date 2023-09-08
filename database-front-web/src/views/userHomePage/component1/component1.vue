@@ -40,23 +40,33 @@
 
 
                 <!-- 更换主题皮肤 -->
-                <div class="theme-page">
-                    <el-form-item label="动态皮肤">
-                        <el-select v-model="value" placeholder="请选择" size="large" @change="handleChange">
-                            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-                        </el-select>
-                    </el-form-item>
-                    <!-- <el-row class="m-4">
-                </el-row>
-                <el-row class="mb-4">
-                    <el-button plain>Plain</el-button>
-                    <el-button type="primary" plain>Primary</el-button>
-                    <el-button type="success" plain>Success</el-button>
-                    <el-button type="info" plain>Info</el-button>
-                    <el-button type="warning" plain>Warning</el-button>
-                    <el-button type="danger" plain>Danger</el-button>
-                </el-row> -->
+                           <!-- <div class="box">
+                <div class="header">
+                  <p>主题切换</p>
+                  <div>
+                    <el-select v-model="currentSkinName"
+                               style="width: 120px"
+                               placeholder="请选择"
+                               @change="switchTheme">
+                      <el-option v-for="(item,index) in Object.keys(themeColorObj)"
+                                 :key="index"
+                                 :label="themeColorObj[item].title"
+                                 :value="item">
+                      </el-option>
+                    </el-select>
+                  </div>
+
                 </div>
+                <el-scrollbar style="height:92vh">
+                  <el-card class="container">
+                    <StylePreview></StylePreview>
+                  </el-card>
+                </el-scrollbar>
+              </div> -->
+
+
+
+
             </div>
             <el-form-item>
                 <el-button class=sign-button round color=transparent :class="{ 'disabled': formData.isSigned }"
@@ -83,7 +93,7 @@ import { House, Star, User } from '@element-plus/icons-vue'
 import { ElPagination } from 'element-plus'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex' // 引入store
-import '../theme/theme.css';
+
 const store = useStore(); // 使用store必须加上
 const emit = defineEmits(['child-click'])
 const router = useRouter()
@@ -288,6 +298,66 @@ const handleChange = (e) => {
     document.querySelector("htrl").className = e;
 }
 
+
+//主题换肤
+// import themes from '@/utils/themes'
+// import {colorMix} from "@/utils/theme-tool"
+// import {defineAsyncComponent} from 'vue'
+
+// export default {
+//   name: "Theme",
+//   components: {
+//     'StylePreview': defineAsyncComponent(() => import('@/components/stylePreview'))
+//   },
+//   data() {
+//     return {
+//       currentSkinName: 'darkTheme',
+//       themeColorObj: {
+//         defaultTheme: {
+//           title: '浅色主题'
+//         },
+//         darkTheme: {
+//           title: '深色主题'
+//         }
+//       },
+//       themeObj: {}
+//     };
+//   },
+//   mounted() {
+//     this.switchTheme()
+//   },
+//   methods: {
+//     // 根据不同的主题类型 获取不同主题数据
+//     switchTheme(type) {
+//       // themes 对象包含 defaultTheme、darkTheme 两个属性即默认主题与深色主题
+//       this.currentSkinName = type || 'darkTheme'
+//       this.themeObj = themes[this.currentSkinName]
+
+//       this.getsTheColorScale()
+
+//       // 设置css 变量
+//       Object.keys(this.themeObj).map(item => {
+//         document.documentElement.style.setProperty(item, this.themeObj[item])
+//       })
+//     },
+
+//     //  // 获取色阶
+//     getsTheColorScale() {
+//       const colorList = ['primary', 'success', 'warning', 'danger', 'error', 'info']
+//       const prefix = '--el-color-'
+//       colorList.map(colorItem => {
+//         for (let i = 1; i < 10; i += 1) {
+//           if (i === 2) {
+//             // todo 深色变量生成未完成 以基本色设置
+//             this.themeObj[`${prefix}${colorItem}-dark-${2}`] = colorMix(this.themeObj[`${prefix}black`], this.themeObj[`${prefix}${colorItem}`], 1)
+//           } else {
+//             this.themeObj[`${prefix}${colorItem}-light-${10 - i}`] = colorMix(this.themeObj[`${prefix}white`], this.themeObj[`${prefix}${colorItem}`], i * 0.1)
+//           }
+//         }
+//       })
+//     }
+//   }
+// }
 </script>
 
 <style lang="scss" scoped>
@@ -437,5 +507,31 @@ const handleChange = (e) => {
     ::v-deep .m-4 {
         margin: 4px;
     }
+}
+
+/* 换肤 */
+.box {
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  background: var(--el-bg-color);
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2vw;
+    height: 7vh;
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--el-text-color-primary);
+    background: var(--el-bg-color);
+    border-bottom: 4px solid var(--el-color-black);
+  }
+
+  .container {
+    margin: .5vw 1vh;
+    width: 99vw;
+  }
 }
 </style>

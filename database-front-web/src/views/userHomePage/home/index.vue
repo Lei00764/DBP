@@ -1,5 +1,6 @@
 <template>
     <div>
+        <themeSwitching></themeSwitching>
         <!-- ********************************* -->
         <el-dialog v-model="showTipTapEditor" title="发布文章" width="80%" height="80%" align-center>
             <tiptapEditor initial-content="
@@ -152,6 +153,7 @@ import { GetInfoByID } from "@/api/user.js"
 import router from "@/router/index.js"
 import { useRoute, useRouter } from "vue-router"
 import { ApplyProfession } from "@/api/profession.js"
+import themeSwitching from '../theme/themeSwitching.vue';
 import { useStore } from 'vuex' // 引入store
 import { searchArticle, getArticleNumber, searchArticles } from "@/api/article.js"
 import userHomeArticleListltem from "@/components/userHomeArticleListltem.vue"
