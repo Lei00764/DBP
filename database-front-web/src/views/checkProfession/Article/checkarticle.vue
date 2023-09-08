@@ -42,13 +42,13 @@
             <div style="position:absolute;top:28%;left:5%">{{ Info[currentCard].content }} </div>
         </div>
 
-                <el-button class="pass_btn" style="position: absolute;bottom:5%;left:45%;"
+                <el-button class="pass_btn" style="position: absolute;bottom:5%;left:42%;"
                     @click="pass(list[currentCard].reportId)">
                     <el-icon>
                         <Check />
                     </el-icon>
                 </el-button>
-                <el-button class="close_btn" style="position: absolute;bottom:5%;left:55%;"
+                <el-button class="close_btn" style="position: absolute;bottom:5%;left:52%;"
                     @click="decline(list[currentCard].reportId)">
                     <el-icon>
                         <Close />
