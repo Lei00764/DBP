@@ -409,7 +409,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             return Ok(new
             {
                 code = code,
-                msg = msg,
+                msg = "删除成功",
             });
         }
         else
@@ -473,7 +473,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             return Ok(new
             {
                 code = code,
-                msg = msg
+                msg = "更新成功"
             });
         }
     }
@@ -538,7 +538,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             return Ok(new
             {
                 code = 200,
-                msg = "success",
+                msg = "发布成功",
             });
         }
         else
@@ -553,7 +553,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
 
 
     //查找文章信息
-    [HttpGet("Article/search")]
+    [HttpGet("search")]
     public async Task<IActionResult> searchArticleAsync(int user_id)
     {
         var temp = await _database.Articles.ToListAsync();
@@ -576,7 +576,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             return Ok(new
             {
                 code = 200,
-                msg = "success",
+                msg = "查找成功",
                 data = article_data
             });
         }
