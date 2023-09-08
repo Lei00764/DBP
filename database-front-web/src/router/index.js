@@ -104,6 +104,11 @@ const router = createRouter({
                     name: 'homo',
                     component: () => import('@/views/userHomePage/home/index.vue'),
                 },
+                {
+                    path: '',
+                    name: 'theme',
+                    component: () => import('@/views/userHomePage/theme/themeSwitching.vue'),
+                },
             ]
         },
         // {
