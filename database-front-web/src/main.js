@@ -27,7 +27,7 @@ library.add(fas)
 import userAvatar from "@/components/userAvatar.vue"
 import avatarUploader from "@/components/avatarUploader.vue"
 import tiptapEditor from "@/components/tiptapEditor.vue"
-
+import tiptapEditorinit from "@/components/tiptapEditorinit.vue"
 const app = createApp(App)
 
 // 挂载全局组件
@@ -38,7 +38,7 @@ app.component('font-awesome-icon', FontAwesomeIcon)
 app.component("userAvatar", userAvatar);
 app.component("avatarUploader", avatarUploader);
 app.component("tiptapEditor", tiptapEditor);
-
+app.component("tiptapEditorinit", tiptapEditorinit);
 
 // 从sessionStorage中恢复store状态
 const savedState = JSON.parse(sessionStorage.getItem('store'))

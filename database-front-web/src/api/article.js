@@ -41,7 +41,7 @@ export function recommendArticle(params) {
 export function searchArticle(params) {
     return Request({
         method: 'GET',
-        url: 'Article/Article/search',
+        url: 'Article/search',
         params: params
     }).then(function (response) {
         if (response.data.code === 200) {
