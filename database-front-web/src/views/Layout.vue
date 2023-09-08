@@ -1,5 +1,33 @@
 <template>
     <div>
+        <!-- ********************************* -->
+            <el-dialog v-model="showTipTapEditor" title="发布文章" width="80%" height="80%" align-center>
+            <tiptapEditor initial-content="
+          <p> </p>
+          <p> </p>
+          <p> </p>
+          <p> </p>
+          <p> </p>
+          " :active-buttons="[
+              'bold',
+              'italic',
+              'strike',
+              'underline',
+              'code',
+              'image',
+              'h1',
+              'h2',
+              'h3',
+              'bulletList',
+              'orderedList',
+              'blockquote',
+              'codeBlock',
+              'horizontalRule',
+              'undo',
+              'redo',
+          ]" @update="test"></tiptapEditor>
+        </el-dialog>
+        <!-- ********************************* -->
         <div id="container">
             <div id="header">
                 <navTop></navTop>
@@ -19,11 +47,27 @@
                 <router-view></router-view>
             </div>
         </div>
+        <div>
+            <el-affix position="top" :offset="700" class="mainaffix">
+                <el-button
+                    :icon="House"
+                    type="primary"
+                    
+                    class="add-new-button"
+                    :disabled="currentPath"
+                    @click="showTipTapEditor = true"
+                    round>
+                <span>发布文章</span>
+                    <span class="iconfont icon-icon-add"></span>
+                    
+                </el-button>
+            </el-affix>
+        </div>
     </div>
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive,computed } from 'vue';
 import router from "@/router/index.js"
 import navTop from "@/components/navTop.vue"
 
@@ -42,6 +86,14 @@ const handleButtonClick = (p_board_id) => {
     router.push(`/forum/${p_board_id}`); // 根据 pBoardId 跳转到对应的子板块页面
     pBoardId.value = p_board_id;  // 更新 pBoardId
 };
+
+// START 发布文章
+const showTipTapEditor = ref(false)
+// END 发布文章
+const currentPath = computed(() => {
+  // 取出当前路由相对值的方法
+  return router.currentRoute.value.path === "/";  
+});
 </script>
 
 <style>
@@ -107,5 +159,20 @@ const handleButtonClick = (p_board_id) => {
 
 .button4 {
     background: url('@/assets/forum-classify/others.png');
+}
+.announ-add-new {
+    position: sticky;
+}
+
+
+.add-new-button {
+    height:100%;
+    width:120%;
+    background: #000000;
+}
+.mainaffix {
+  position: absolute;
+  left: 1200px;
+  top: 700px;
 }
 </style>
