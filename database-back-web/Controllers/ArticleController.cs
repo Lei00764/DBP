@@ -782,6 +782,53 @@ public async Task<IActionResult> GetFavouriteNumber(int article_id)
             likeNum=a.FavouriteNum
         });
 }
+//置顶与取消置顶
+    [HttpPost("topArticle")]
+    public async Task<IActionResult> TopArticle(int articleId,int istop)
+    {
+        var code = 200;
+        var msg = "success";
+        if(istop!=0&&istop!=1)
+        {
+            return Ok(new
+            {
+                code = 400,
+                msg = "istop只能为0或1",
+            });
+        }
+        else if(istop==0)
+        {
+            msg="已取消置顶";
+        }
+        else if(istop==1)
+        {
+            msg="已置顶";
+        }
+        var article = await _database.Articles.Where(a => a.PostId == articleId).ToListAsync();
+        if (article.Count > 0)
+        {
+            foreach (var item in article)
+            {
+                item.IsTop = istop;
+            }
+            await _database.SaveChangesAsync();
+            return Ok(new
+            {
+                code = code,
+                msg = msg,
+            });
+        }
+        else
+        {
+            code = 400;
+            msg = "文章不存在";
+            return Ok(new
+            {
+                code = code,
+                msg = msg
+            });
+        }
+    }
 }
 
 

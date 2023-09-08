@@ -1,14 +1,12 @@
 <template>
-    <el-card class="card" 
-    v-on:mouseover="ReportIconShow = true" 
-    v-on:mouseout="ReportIconShow = false">
+    <el-card class="card">
         <!-- 举报留言弹窗 -->
-        <el-button v-if="ReportIconShow" class="userReportIcon" @click.prevent="dialogVisible = true">
+        <el-button class="userReportIcon" @click="dialogVisible = true">
             <font-awesome-icon :icon="['fas', 'triangle-exclamation']" />
             <span class="button-text">举报</span>
         </el-button>
         <el-dialog v-model="dialogVisible" title="举报留言" width="30%" align-center>
-            <el-form @submit.native.prevent="submitApplication">
+            <el-form>
                 <el-form-item label="举报原因:">
                     <el-input type="textarea" v-model="form.illustrate" />
                 </el-form-item>
@@ -16,7 +14,7 @@
             <template #footer>
                 <span class="dialog-footer">
                     <el-button @click="dialogVisible = false">取消</el-button>
-                    <el-button type="primary" @click="dialogVisible = false,submitApplication">确认</el-button>
+                    <el-button type="primary" @click="submitApplication">确认</el-button>
                 </span>
             </template>
         </el-dialog>
@@ -44,10 +42,9 @@ import router from "@/router/index.js"
 const store = useStore(); // 使用store必须加上
 
 const dialogVisible = ref(false)
-const ReportIconShow = ref(false)
 
 const form = ref({
-    Reason: '',
+    illustrate: '',
 });
 
 const props = defineProps({
@@ -60,8 +57,8 @@ const props = defineProps({
 const submitApplication = () => {
     let params = {
         user_id: store.state.Info.id,
-        msg_id: router.currentRoute.value.params.msgId,
-        reason: form.value.Reason,
+        msg_id: props.data.msgID,
+        reason: form.illustrate,
     }
     console.log(params);
     ReportComment(params);
@@ -97,14 +94,14 @@ const formatTime = (time) => {
     border-radius: 5px;
     margin: 5px 0;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease-in-out;
-    min-height: 80px;
+    min-height: 150px;
 }
 
 .avatar-container {
     margin-right: 15px;
     display: flex;
     align-items: center;
+    width:150px;
 }
 
 .user-avatar {
@@ -119,6 +116,8 @@ const formatTime = (time) => {
 .user-name {
     font-size: 14px;
     color: #333;
+    position:absolute;
+    left:50px;
 }
 
 .details-container {

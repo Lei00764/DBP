@@ -7,7 +7,16 @@
         <div class="article-body">
 
           <!--显示用户信息-->
+
           <div class="user-info">
+            <!-- 是否置顶 -->
+            <div class="istop" v-if="data.isTop == 1&&store.state.type==0">
+              <el-button class="cancelTopButton" type="primary" round size="small" @click="cancelTop">取消置顶</el-button>
+            </div>
+            <div v-else-if="store.state.type==0">
+              <el-button class="topButton" type="primary" round size="small" @click="executeTop">置顶</el-button>
+            </div>
+            <!-- 是否置顶 -->
             <userAvatar :userId=data.authorId :width=30 :addLink="false"></userAvatar>
             <div class="user-info">{{ data.authorName }}</div>
 
@@ -49,7 +58,10 @@
 <script setup>
 
 // 接收父组件的信息
-import { viewArticle } from "@/api/article.js"; // 引入举报api
+import { viewArticle, topArticle } from "@/api/article.js"; // 引入举报api
+import { useStore } from 'vuex'; 
+
+const store = useStore();
 const props = defineProps({
   data: {
     type: Object
@@ -63,6 +75,42 @@ const handleView = async (postId) => {
   result=await viewArticle(params);
 }
 // console.log(props.data);
+
+
+//   置顶与取消置顶START
+const executeTop = async () => {
+  let result;
+  const params = {
+    articleId: props.data.postId,
+    istop: 1
+  };
+  result = await topArticle(params);
+  if (result.code == 200) {
+    window.alert('success');
+  }
+  else {
+    window.alert('error');
+  }
+  location.reload();
+};
+
+const cancelTop = async () => {
+  let result;
+  const params = {
+    articleId: props.data.postId,
+    istop: 0
+  };
+  result = await topArticle(params);
+  if (result.code == 200) {
+    window.alert('success');
+  }
+  else {
+    window.alert('error');
+  }
+  location.reload();
+};
+//   置顶与取消置顶END
+
 </script>
 
 <style>
@@ -74,9 +122,13 @@ const handleView = async (postId) => {
     padding: 10px 0px;
     display: flex;
 
-    .article-body {
-      flex: 1;
+    .topButton {
+      background-color: #ffd500;
+    }
 
+    .cancelTopButton {
+       background-color: #ffaa5f
+    }
       .user-info {
         display: flex;
         align-items: center;
@@ -138,9 +190,10 @@ const handleView = async (postId) => {
       }
     }
   }
-}
 
 .article-item:hover {
   background: #fffbfb;
 }
+
+
 </style>

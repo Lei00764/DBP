@@ -48,7 +48,6 @@ public class ReportController : ControllerBase
         });   
     }
 
-
     [HttpGet("ReportPostToDeal")]//列出未被处理的被举报的帖子
     public async Task<IActionResult> ReportPostToDeal()
     {
