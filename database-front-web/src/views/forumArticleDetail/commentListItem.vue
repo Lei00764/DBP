@@ -8,13 +8,13 @@
         <el-dialog v-model="dialogVisible" title="举报留言" width="30%" align-center>
             <el-form>
                 <el-form-item label="举报原因:">
-                    <el-input type="textarea" v-model="form.illustrate" />
+                    <el-input type="textarea" v-model="form.inputReason" />
                 </el-form-item>
             </el-form>
             <template #footer>
                 <span class="dialog-footer">
                     <el-button @click="dialogVisible = false">取消</el-button>
-                    <el-button type="primary" @click="submitApplication">确认</el-button>
+                    <el-button type="primary" @click="submitApplication(), dialogVisible = false">确认</el-button>
                 </span>
             </template>
         </el-dialog>
@@ -44,7 +44,7 @@ const store = useStore(); // 使用store必须加上
 const dialogVisible = ref(false)
 
 const form = ref({
-    illustrate: '',
+    inputReason: '',
 });
 
 const props = defineProps({
@@ -58,8 +58,9 @@ const submitApplication = () => {
     let params = {
         user_id: store.state.Info.id,
         msg_id: props.data.msgID,
-        reason: form.value.illustrate,
+        reason: form.value.inputReason,
     }
+    console.log(params);
     ReportComment(params);
 };
 
