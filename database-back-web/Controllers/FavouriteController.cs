@@ -112,7 +112,7 @@ public class FavouriteController : ControllerBase
         });
     }
 
-    [HttpGet("FavouriteList/{user_id}")]
+    [HttpGet("FavouriteList")]
     public async Task<IActionResult> GetFavouriteListByUserAsync(int user_id)
     {
         var code = 200;

@@ -94,6 +94,14 @@ public class ReportController : ControllerBase
         bool exist = false;
         var record = _database.ReportPost.Where(x => x.PostReportId == report_id);
         int? post_id = 0;
+        if(_database.Administrators.Any(x=>x.AdminId==adminId)==false)
+        {
+            return Ok(new
+            {
+                code = 400,
+                msg = "管理员不存在",
+            });
+        }
         foreach (var r in record)
         {
             if (r.PostReportId == report_id)
