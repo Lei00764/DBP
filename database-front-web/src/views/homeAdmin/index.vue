@@ -123,7 +123,7 @@ const intoAnnounce = () => {
     router.push({ name: 'announcementAdmin', params:{choice:'2'} })
 }
 const intoCheckArticle = () => {
-    router.push({ name: 'checkArticle', params:{choice:'3'}})
+    router.push({ name: 'checkProfession', params:{choice:'3'}})
 }
 const intoCheckComment = () => {
     router.push({ name: 'checkComment' })

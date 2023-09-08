@@ -9,7 +9,7 @@ import router from "@/router/index.js"
 export function ReportComment(params){
     return Request({
         method: 'POST',
-        url: 'Report/CommentReport',
+        url: 'ReportComment/CommentReport',
         params: params,
     }).then(function (response) {
         if (response.data.code === 200) {
