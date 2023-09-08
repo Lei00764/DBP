@@ -1,7 +1,7 @@
 <!-- 用户主页文章缩略图卡片 -->
 <template>
   <el-card :body-style="{ padding: '0px' }" style="height: 370px" class="cards">
-    <img src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png" class="image" />
+    <img v-bind:src="data.picture" class="image" />
     <div style="padding: 10px">
       <!-- 文字展示 -->
       <div class="article-panel">
@@ -33,7 +33,7 @@
 
 <script setup>
 import { defaultInitialZIndex } from 'element-plus';
-import { ref, reactive, toRefs, onMounted } from 'vue';
+import { ref, reactive, toRefs, onMounted, defineEmits } from 'vue';
 import { useRouter } from 'vue-router'
 import { deleteArticle } from "@/api/article.js"
 const currentDate = ref(new Date())//
