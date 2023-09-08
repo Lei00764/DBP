@@ -49,15 +49,18 @@
 <script setup>
 
 // 接收父组件的信息
-import { viewArticle } from '@/api/article'; // 引入举报api
+import { viewArticle } from "@/api/article.js"; // 引入举报api
 const props = defineProps({
   data: {
     type: Object
   },
 });
 const handleView = async (postId) => {
-  console.log(postId);
-  viewArticle(postId);
+  let result;
+  const params = {
+    post_id: postId,
+  };
+  result=await viewArticle(params);
 }
 // console.log(props.data);
 </script>
