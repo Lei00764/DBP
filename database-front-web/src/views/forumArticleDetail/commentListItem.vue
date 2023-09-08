@@ -58,9 +58,8 @@ const submitApplication = () => {
     let params = {
         user_id: store.state.Info.id,
         msg_id: props.data.msgID,
-        reason: form.illustrate,
+        reason: form.value.illustrate,
     }
-    console.log(params);
     ReportComment(params);
 };
 
