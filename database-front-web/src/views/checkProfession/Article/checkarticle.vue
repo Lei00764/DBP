@@ -55,10 +55,6 @@
                     </el-icon>
                 </el-button>
             </el-card>
-
-            <el-icon class="icon" @click="back">
-                <Back />
-            </el-icon>
 </template>
 
 <script setup>
@@ -153,10 +149,6 @@ const decline = (reportId) => {
         .catch(function (error) {
             console.log(error);
         });
-}
-
-const back = () => {
-    router.push({ name: 'homeAdmin' })
 }
 
 </script>

@@ -27,8 +27,8 @@
             </el-button>
         </el-card>
     </el-form-item>
-</el-form>
-<el-card class="card" v-show="card_show" v-if="Info[currentCard]">
+    </el-form>
+    <el-card class="card" v-show="card_show" v-if="Info[currentCard]">
     <!-- 资料信息的详细显示 -->
     <b style="position:absolute;top:8%;left:5%;">ID</b>
     <div class="blank" style="top:6%;left:20%;">
@@ -65,7 +65,7 @@
             <Close />
         </el-icon>
     </el-button>
-</el-card>
+    </el-card>
 
 </template>
 

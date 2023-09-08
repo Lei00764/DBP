@@ -45,7 +45,10 @@
                 </el-form>
             </div>
             <div v-if="choice==1">
-            <profession></profession>
+                <profession></profession>
+            </div>
+            <div v-else-if="choice==2">
+                <checkarticle></checkarticle>
             </div>
         </div>
     </div>
@@ -59,13 +62,15 @@ import { ref,reactive } from 'vue';
 import router from "@/router/index.js"
 import navTopAdmin from "@/components/navTopAdmin.vue"
 import profession from "@/views/checkProfession/Profession/profession.vue"
+import checkarticle from "@/views/checkProfession/Article/checkarticle.vue"
 import { useStore } from 'vuex'//引入store
 import { useRoute } from 'vue-router'
 
 const store = useStore();//使用store必须加上
 const route = useRoute();
-const distance = ref('23%');
+const distance = ref();
 const choice = ref(route.params.choice);
+
 
 const backToHome = () => {
     router.push({ name: 'homeAdmin' })
