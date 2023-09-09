@@ -27,8 +27,8 @@
     </el-form>
 
     <el-card class="card" v-show="card_show" v-if="Info[currentCard]">
-        <el-avatar :size="70" :src="Info[currentCard].authorAvatar"
-            style="position: absolute;top:8%;left:7%"></el-avatar>
+        <userAvatar :userId=Info[currentCard].authorId :width=60 :addLink="0"
+            style="position: absolute;top:10%;left:7%;"></userAvatar>
         <b style="position: absolute;top:9%;left:25%;font-size: 20px;color:rgb(61, 61, 61)">
             留言者：{{ Info[currentCard].authorName }}
         </b>
@@ -205,7 +205,7 @@ const decline = (reportId) => {
     right: 3%;
     background-color: #CCFFCA;
     width: 480px;
-    height: 650px;
+    height: 700px;
     box-shadow: 4px 4px 4px 2px gray;
     border-radius: 10px;
 }

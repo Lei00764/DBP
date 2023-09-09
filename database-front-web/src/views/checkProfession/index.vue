@@ -54,6 +54,9 @@
             <div v-else-if="choice==4">
                 <checkcomment></checkcomment>
             </div>
+            <div v-else-if="choice==3">
+                <announcement></announcement>
+            </div>
         
     </div>
 </template>
@@ -65,6 +68,7 @@ import navTopAdmin from "@/components/navTopAdmin.vue"
 import profession from "@/views/checkProfession/Profession/profession.vue"
 import checkarticle from "@/views/checkProfession/Article/checkarticle.vue"
 import checkcomment from "@/views/checkProfession/Comment/checkcomment.vue"
+import announcement from "@/views/checkProfession/Announcement/announcement.vue"
 import { useStore } from 'vuex'//引入store
 import { useRoute } from 'vue-router'
 

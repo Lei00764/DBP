@@ -117,16 +117,16 @@ const logout = () => {
     router.push({ name: 'login' })
 };
 const intoCheckProfession = () => {
-    router.push({ name: 'checkProfession', params:{choice:'1'}})
+    router.push({ name: 'work', params:{choice:'1'}})
 }
 const intoAnnounce = () => {
-    router.push({ name: 'announcementAdmin', params:{choice:'3'} })
+    router.push({ name: 'work', params:{choice:'3'} })
 }
 const intoCheckArticle = () => {
-    router.push({ name: 'checkProfession', params:{choice:'2'}})
+    router.push({ name: 'work', params:{choice:'2'}})
 }
 const intoCheckComment = () => {
-    router.push({ name: 'checkProfession' , params:{choice:'4'}})
+    router.push({ name: 'work' , params:{choice:'4'}})
 }
 
 const toAllFood = () => {

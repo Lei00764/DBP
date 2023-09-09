@@ -52,7 +52,7 @@ const router = createRouter({
         },
         {
             path: '/checkProfession/:choice',  // 审核专业认证
-            name: 'checkProfession',
+            name: 'work',
             component: () => import('@/views/checkProfession/index.vue'),
         },
         {
