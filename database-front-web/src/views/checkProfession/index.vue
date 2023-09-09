@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="profession-page">
-            <div class="header">
+        <div class="header">
                 <navTopAdmin></navTopAdmin>
             </div>
+        <div class="profession-page">
             <div class="homeAdmin-card">
                 <!-- 管理员信息卡片 -->
                 <el-form :inline=true class="homeAdmin-avatar-ID">
@@ -44,6 +44,7 @@
                     </el-form-item>
                 </el-form>
             </div>
+        </div>
             <div v-if="choice==1">
                 <profession></profession>
             </div>
@@ -53,11 +54,8 @@
             <div v-else-if="choice==4">
                 <checkcomment></checkcomment>
             </div>
-        </div>
+        
     </div>
-    <el-icon size="30px" style="position:absolute;top:4%;left:3%" @click="backToHome">
-    <Back />
-    </el-icon>
 </template>
 
 <script setup>
@@ -74,12 +72,6 @@ const store = useStore();//使用store必须加上
 const route = useRoute();
 const choice = ref(route.params.choice);
 const distance = ref((23 + (choice.value*1-1)*10)+"%");
-
-console.log(distance.value)
-
-const backToHome = () => {
-    router.push({ name: 'homeAdmin' })
-}
 
 const intoProfession = () => {
     distance.value = '23%';
@@ -112,6 +104,7 @@ const intoComment = () => {
     background-size: cover;
     height: 98vh;
     width: 99vw;
+    position:fixed;
 }
 .homeAdmin-avatar-ID {
     /* 头像、昵称和ID在卡片上的排布 */
@@ -133,11 +126,12 @@ const intoComment = () => {
 }
 .homeAdmin-card {
     /* 管理员资料卡片的设置 */
-    position: absolute;
+    position: fixed;
     top: 11%;
     left: 0.6%;
     width: 342px;
     height: 700px;
+    background-color: #E7FAFE;
 }
 .choose{
     background-color: #ffffff;

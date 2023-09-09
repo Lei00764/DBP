@@ -2,6 +2,9 @@
     <div>
         <div class="header-content">
             <!-- 左侧 logo -->
+            <el-icon size="30px" style="position:absolute;top:40%;left:2%" @click="ToHome">
+                <Back />
+            </el-icon>
             <router-link to="/layout" class="logo" @click="ToHome">
                 <span>
                     Foodieland
@@ -21,13 +24,17 @@
 
             <!-- 右侧 个人信息 -->
             <div class="user-info-panel">
-                <el-button class="icon-button" @click="ToLogOut">
-                    <font-awesome-icon :icon="['fas', 'right-to-bracket']" />
-                    <span class="button-text">退出登录</span>
+                <el-button class="icon-button" @click="ToHome">
+                    <font-awesome-icon :icon="['fas', 'house']" />
+                    <span class="button-text">首页</span>
                 </el-button>
                 <el-button class="icon-button" @click="ToCheckMessage">
                     <font-awesome-icon :icon="['fas', 'comments']" />
                     <span class="button-text">消息</span>
+                </el-button>
+                <el-button class="icon-button" @click="ToLogOut">
+                    <font-awesome-icon :icon="['fas', 'right-to-bracket']" />
+                    <span class="button-text">退出登录</span>
                 </el-button>
             </div>
         </div>
@@ -68,7 +75,7 @@ const enterDown = async (e) => {
 
 
 const ToHome = () => {
-    router.push(`/homeUser`);
+    router.push(`/homeAdmin`);
 }
 
 const ToLogOut = () => {
@@ -84,9 +91,15 @@ const ToCheckMessage = () => {
     margin: 0 auto;
     align-items: center;
     /* 通过将高度设置成外层容器一致，达到居中效果 */
-    height: 10vh;
-    width: 80vw;
+    height: 11vh;
+    width: 100%;
     display: flex;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index: 99;
+    background-color: white;
+    box-shadow: 0px 0px 4px 0px gray;
 }
 
 .logo {
@@ -94,23 +107,34 @@ const ToCheckMessage = () => {
     text-decoration: none;
     font-size: 24px;
     color: rgb(96, 98, 102);
+    position:absolute;
+    left:5%;
+    top:40%
 }
 
 .search-panel {
     flex: 1;
     margin-left: 10vw;
     margin-right: 10vw;
+    width:500px;
+    border-radius: 5px;
+    border:1px solid black;
+    position:absolute;
+    left:10%;
+    top:35%
 }
 
 .custom-input>.el-input__wrapper {
     height: 40px;
     border-radius: 10px;
-    border: 1px solid rgb(96, 98, 102);
     box-shadow: none;
 }
 
 .user-info-panel {
     display: flex;
+    position:absolute;
+    left:80%;
+    top:40%
 }
 
 .user-info-panel .el-button {
@@ -128,5 +152,48 @@ const ToCheckMessage = () => {
 
 .button-text {
     margin-left: 5px;
+}
+
+.dropdown .dropdown-title {
+    display: inline-block;
+    position: relative;
+    padding: 0 24px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dropdown .dropdown-content {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.6s ease-in-out;
+    z-index: 2;
+}
+
+.dropdown .dropdown-content .dropdown-menu {
+    margin-top: 6px;
+    padding: 10px 8px 15px;
+    background-color: rgba(7, 1, 1, 0.011);
+    color: black;
+    border-radius: 4px;
+}
+
+.dropdown .dropdown-content .dropdown-menu .menuItem {
+    width: 100%;
+    white-space: nowrap;
+    padding: 10px 16px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.dropdown .dropdown-content .dropdown-menu .menuItem:hover {
+    background-color: #ccc;
+}
+
+.dropdown:hover .dropdown-content {
+    visibility: visible;
+    opacity: 1;
 }
 </style>
