@@ -1,7 +1,19 @@
 <!-- 用户主页文章缩略图卡片 -->
 <template>
-  <el-card :body-style="{ padding: '0px' }" style="height: 370px" class="cards">
-    <img src="@/assets/hamburger.png" class="image" />
+  <el-card :body-style="{ padding: '10px' }" style="height: 400px" class="cards">
+    <div v-if="data.tag==='中餐'">
+      <img src="@/assets/chinese.jpg" class="image" />
+    </div>
+    <div v-if="data.tag==='西餐'">
+      <img src="@/assets/western.jpg" class="image" />
+    </div>
+    <div v-if="data.tag==='甜点'">
+      <img src="@/assets/dessert_sample.png" class="image" />
+    </div>
+    <div v-if="data.tag==='其他'">
+      <img src="@/assets/hamburger.png" class="image" />
+    </div>
+    
     <div style="padding: 10px">
       <!-- 文字展示 -->
       <div class="article-panel">
@@ -126,7 +138,7 @@ const deleteArticles = async (postId) => {
 .image {
   position: relative;
   width: 320px;
-  height: 250px;
+  height: 280px;
 }
 
 .article-item {
