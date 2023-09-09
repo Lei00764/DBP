@@ -11,7 +11,7 @@ export default {
     },
     computed: {
         iconPath() {
-            return `/src/assets/icons/${this.name}.svg`;
+            return `/icons/${this.name}.svg`;
         },
     },
 };
