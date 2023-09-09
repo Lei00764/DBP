@@ -119,6 +119,11 @@ const afterLogin = (person_info) => {
             // 进行store存储
             // console.log(person_info);
             store.commit('SaveInfo', person_info); // 调用mutations，将信息传入store
+            if (store.state.type == 1) {
+                router.push({ path: '/homeUser' });  // 路由跳转，将页面跳转到路径为 '/homeUser' 的页面
+            } else {
+                router.push({ path: '/homeAdmin' });
+            }
             // console.log(store.state.Info)
         })
         .catch(function (error) {
