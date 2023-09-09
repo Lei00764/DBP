@@ -21,6 +21,10 @@
           <div class="article-item">
             <div class="article-item-inner">
               <div class="article-body">
+                <!-- 用户信息 -->
+                <div class="user-info">
+                  <!-- <div class="content"> {{ data.content }}</div> -->
+                </div>
                 <router-link :to="`/forumArticleDetail/${data.postId}`" class="title" @click="handleView(data.postId)">
                   {{ data.title }}
                 </router-link>
@@ -113,9 +117,10 @@ const deleteArticles = async (postId) => {
   position: inherit;
   width: 40%;
   left: 40px;
-  top: -10px;
+  top: -15px;
   padding: 5px;
 }
+
 .time {
   font-size: 12px;
   color: #999;

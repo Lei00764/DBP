@@ -119,9 +119,9 @@
             </p>
             <!-- 帖子展示部分 -->
             <el-row>
-                <userHomeArticleListltem v-if="refreshs"
+                <userHomeArticleListltem v-if="refreshsarticle"
                     v-for="item in articleListInfo.slice(formData.index, formData.index + 2)" :data="item" :articleid="item.postId"
-                    @child-click="refreshing">
+                    @child-click="refreshingArticle">
                 </userHomeArticleListltem>
             </el-row>
             <!-- 底部页面跳转 -->
@@ -168,6 +168,7 @@ const form = ref({
 
 });
 const refreshs = ref(true)
+const refreshsarticle = ref(true)
 const UserInfo = ref([]);
 const point = ref(0)
 const user = ref(false)
@@ -210,9 +211,6 @@ const ToLogOut = () => {
     router.push(`/login`);
 }
 
-const ToCheckMessage = () => {
-    // 跳转到消息界面（管理员可以给用户发送消息）
-}
 const fetchuser = async () => {
     const params = {
         ID: store.state.Info.id,
@@ -232,6 +230,13 @@ const refreshing = () => {
         refreshs.value = true
     })
 }
+const refreshingArticle = () => {
+    fetchData();
+    refreshsarticle.value = false
+    nextTick(() => {
+        refreshsarticle.value = true
+    })
+}
 const home = () => {
     router.push(`/homeUser`);
 }
@@ -240,6 +245,7 @@ const applyForProfession = () => {
 }
 const handleCurrentChange = (number) => {
     formData.index = number * 2 - 2;
+    refreshingArticle();
 }
 const handleClose = (done) => {
     ElMessageBox.confirm('Are you sure to close this dialog?')
