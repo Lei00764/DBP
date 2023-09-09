@@ -15,18 +15,18 @@
                     {{ item.summary }}
                 </b>
 
-                <el-button class="deleteButton" type="primary" round size="small" @click="deleteAnnouncements(item.announcementID)"
+                <el-button class="deleteButton" type="primary" round size="small" @click.stop="deleteAnnouncements(item.announcementID)"
                     style="position:absolute;top:13%;right:3%;">删除</el-button>
 
-                <el-button class="editButton" type="primary" round size="small" @click="editAnnouncements"
+                <el-button class="editButton" type="primary" round size="small" @click.stop="editAnnouncements"
                     style="position:absolute;top:13%;right:15%;">编辑</el-button>
 
                 <div class="istop" v-if="item.isTop == 1">
-                  <el-button class="cancelTopButton" type="primary" round size="small" @click="cancelTop(item)"
+                  <el-button class="cancelTopButton" type="primary" round size="small" @click.stop="cancelTop(item)"
                     style="position:absolute;top:13%;right:27%;">取消置顶</el-button>
                 </div>
                 <div v-else>
-                  <el-button class="topButton" type="primary" round size="small" @click="executeTop(item)"
+                  <el-button class="topButton" type="primary" round size="small" @click.stop="executeTop(item)"
                   style="position:absolute;top:13%;right:27%;">置顶</el-button>
                 </div>
             </el-card>
