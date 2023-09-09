@@ -52,6 +52,7 @@ if (savedState) {
 // const { proxy } = getCurrentInstance();
 app.config.globalProperties.globalInfo = {
   avatarUrl: "http://localhost:5045/api/files/getAvatar/",
+  // avatarUrl: "http://124.220.110.93:5045/api/files/getAvatar/",
   search_keyword: "Search Key Words",
 }
 
