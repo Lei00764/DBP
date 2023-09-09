@@ -80,21 +80,25 @@ const distance = ref((23 + (choice.value*1-1)*10)+"%");
 const intoProfession = () => {
     distance.value = '23%';
     choice.value = 1;
+    router.push({ name: 'work', params:{choice:'1'} })
 }
 
 const intoCheck = () => {
     distance.value = '33%';
     choice.value = 2;
+    router.push({ name: 'work', params:{choice:'2'} })
 }
 
 const Announcement = () => {
     distance.value = '43%';
     choice.value = 3;
+    router.push({ name: 'work', params:{choice:'3'} })
 }
 
 const intoComment = () => {
     distance.value = '53%';
     choice.value = 4;
+    router.push({ name: 'work', params:{choice:'4'} })
 }
 
 
