@@ -196,7 +196,7 @@ const fetchnum = async (stringValue = '') => {
     if (!stringValue) {
         stringValue = "0"
         const params = {
-            user_id: 6
+            user_id: store.state.Info.id, 
         };
         result = await getArticleNumber(params);
     }
@@ -219,7 +219,7 @@ const fetchfollownum = async (stringValue = '') => {
     if (!stringValue) {
         stringValue = "0"
         const params = {
-            user_id: 8
+            user_id: store.state.Info.id,
         };
         result = await getArticleNumber(params);
     }
@@ -242,7 +242,7 @@ const fetchfansnum = async (stringValue = '') => {
     if (!stringValue) {
         stringValue = "0"
         const params = {
-            user_id: 8
+            user_id: store.state.Info.id,
         };
         result = await getFollowNumber(params);
     }
@@ -396,14 +396,9 @@ const handleChange = (e) => {
 
 
 .background1 {
-    background-image: url('@/assets/home-user-bkg.png');
+    background-color:#ffffff;
     /* 背景图片地址 */
-    background-position: center center;
-    /* 背景图片位置 */
-    background-repeat: no-repeat;
-    /* 背景图片是否重复 */
-    background-size: 100% 100%;
-    /* 背景图片大小 */
+    
     height: 98vh;
     /* 背景图片宽高 */
     width: 99vw;

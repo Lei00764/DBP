@@ -1,6 +1,6 @@
 <template>
     <div>
-        <themeSwitching></themeSwitching>
+        <!-- <themeSwitching></themeSwitching> -->
         <!-- ********************************* -->
         <el-dialog v-model="showTipTapEditor" title="发布文章" width="80%" height="80%" align-center>
             <tiptapEditor initial-content="
