@@ -14,67 +14,57 @@
           </el-option>
         </el-select>
       </div>
-
     </div>
     <el-scrollbar style="height:92vh">
-
+      <!-- 这里放滚动内容 -->
     </el-scrollbar>
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted, computed } from 'vue'
 import themes from '@/utils/themes'
-import {colorMix} from "@/utils/theme-tool"
-import {defineAsyncComponent} from 'vue'
-export default {
-  name: "Theme",
- 
-  data() {
-    return {
-      currentSkinName: 'darkTheme',
-      themeColorObj: {
-        defaultTheme: {
-          title: '浅色主题'
-        },
-        darkTheme: {
-          title: '深色主题'
-        }
-      },
-      themeObj: {}
-    };
+import { colorMix } from "@/utils/theme-tool"
+
+const currentSkinName = ref('darkTheme');
+const themeColorObj = computed(() => ({
+  defaultTheme: {
+    title: '浅色主题'
   },
-  mounted() {
-    this.switchTheme()
-  },
-  methods: {
-    // 根据不同的主题类型 获取不同主题数据
-    switchTheme(type) {
-      // themes 对象包含 defaultTheme、darkTheme 两个属性即默认主题与深色主题
-      this.currentSkinName = type || 'defaultTheme'
-      this.themeObj = themes[this.currentSkinName]
-      this.getsTheColorScale()
-      // 设置css 变量
-      Object.keys(this.themeObj).map(item => {
-        document.documentElement.style.setProperty(item, this.themeObj[item])
-      })
-    },
-    //  // 获取色阶
-    getsTheColorScale() {
-      const colorList = ['primary', 'success', 'warning', 'danger', 'error', 'info']
-      const prefix = '--el-color-'
-      colorList.map(colorItem => {
-        for (let i = 1; i < 10; i += 1) {
-          if (i === 2) {
-            // todo 深色变量生成未完成 以基本色设置
-            this.themeObj[`${prefix}${colorItem}-dark-${2}`] = colorMix(this.themeObj[`${prefix}black`], this.themeObj[`${prefix}${colorItem}`], 1)
-          } else {
-            this.themeObj[`${prefix}${colorItem}-light-${10 - i}`] = colorMix(this.themeObj[`${prefix}white`], this.themeObj[`${prefix}${colorItem}`], i * 0.1)
-          }
-        }
-      })
-    }
+  darkTheme: {
+    title: '深色主题'
   }
-}
+}));
+
+const themeObj = ref({});
+
+onMounted(() => {
+  switchTheme();
+});
+
+const switchTheme = (type) => {
+  currentSkinName.value = type || 'defaultTheme';
+  themeObj.value = themes[currentSkinName.value];
+  getsTheColorScale();
+  Object.keys(themeObj.value).map(item => {
+    document.documentElement.style.setProperty(item, themeObj.value[item]);
+  });
+};
+
+const getsTheColorScale = () => {
+  const colorList = ['primary', 'success', 'warning', 'danger', 'error', 'info'];
+  const prefix = '--el-color-';
+  colorList.map(colorItem => {
+    for (let i = 1; i < 10; i += 1) {
+      if (i === 2) {
+        // todo 深色变量生成未完成 以基本色设置
+        themeObj.value[`${prefix}${colorItem}-dark-${2}`] = colorMix(themeObj.value[`${prefix}black`], themeObj.value[`${prefix}${colorItem}`], 1);
+      } else {
+        themeObj.value[`${prefix}${colorItem}-light-${10 - i}`] = colorMix(themeObj.value[`${prefix}white`], themeObj.value[`${prefix}${colorItem}`], i * 0.1);
+      }
+    }
+  });
+};
 </script>
 
 <style lang="scss" scoped>
