@@ -10,10 +10,10 @@
 
           <div class="user-info">
             <!-- 是否置顶 -->
-            <div class="istop" v-if="data.isTop == 1&&store.state.type==0">
+            <div class="istop" v-if="data.isTop == 1 && store.state.type == 0">
               <el-button class="cancelTopButton" type="primary" round size="small" @click="cancelTop">取消置顶</el-button>
             </div>
-            <div v-else-if="store.state.type==0">
+            <div v-else-if="store.state.type == 0">
               <el-button class="topButton" type="primary" round size="small" @click="executeTop">置顶</el-button>
             </div>
             <!-- 是否置顶 -->
@@ -59,7 +59,7 @@
 
 // 接收父组件的信息
 import { viewArticle, topArticle } from "@/api/article.js"; // 引入举报api
-import { useStore } from 'vuex'; 
+import { useStore } from 'vuex';
 
 const store = useStore();
 const props = defineProps({
@@ -72,7 +72,7 @@ const handleView = async (postId) => {
   const params = {
     post_id: postId,
   };
-  result=await viewArticle(params);
+  result = await viewArticle(params);
 }
 // console.log(props.data);
 
@@ -127,73 +127,72 @@ const cancelTop = async () => {
     }
 
     .cancelTopButton {
-       background-color: #ffaa5f
+      background-color: #ffaa5f
     }
-      .user-info {
-        display: flex;
-        align-items: center;
-        font-size: 14px;
-        color: #4e5969;
 
-        .link-info {
-          margin-left: 5px;
-          color: #494949;
-          text-decoration: none;
-        }
+    .user-info {
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      color: #4e5969;
 
-        .link-info:hover {
-          color: var(--link);
-        }
-
-        .post-time {
-          font-size: 13px;
-          color: #9a9a9a;
-        }
-      }
-
-      .title {
-        font-weight: bold;
+      .link-info {
+        margin-left: 5px;
+        color: #494949;
         text-decoration: none;
-        color: #4a4a4a;
-        font-size: 16px;
-        margin: 10px 0px;
-        display: inline-block;
       }
 
-      .title:hover {
-        color: rgb(121, 182, 248)
+      .link-info:hover {
+        color: var(--link);
       }
 
-      .summary {
-        color: rgb(132, 132, 132)
-      }
-
-      .tag {
-        color: rgb(132, 132, 132)
-      }
-
-      .article-info {
-        margin-top: 10px;
-        display: flex;
-        align-items: center;
+      .post-time {
         font-size: 13px;
+        color: #9a9a9a;
+      }
+    }
 
-        .iconfont {
-          color: #86909c;
-          margin-right: 25px;
-          font-size: 14px;
-        }
+    .title {
+      font-weight: bold;
+      text-decoration: none;
+      color: #4a4a4a;
+      font-size: 16px;
+      margin: 10px 0px;
+      display: inline-block;
+    }
 
-        .iconfont:before {
-          padding-right: 3px;
-        }
+    .title:hover {
+      color: rgb(121, 182, 248)
+    }
+
+    .summary {
+      color: rgb(132, 132, 132)
+    }
+
+    .tag {
+      color: rgb(132, 132, 132)
+    }
+
+    .article-info {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      font-size: 13px;
+
+      .iconfont {
+        color: #86909c;
+        margin-right: 25px;
+        font-size: 14px;
+      }
+
+      .iconfont:before {
+        padding-right: 3px;
       }
     }
   }
+}
 
 .article-item:hover {
   background: #fffbfb;
 }
-
-
 </style>

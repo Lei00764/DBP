@@ -54,7 +54,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         {
             return Ok(new
             {
-                code = 400,
+                code = 200,
                 msg = "成功获取个性化推荐文章",
                 data = await _database
                     .Articles
@@ -434,7 +434,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
     {
         var code = 200;
         var msg = "success";
-        if(content.Length>3500)
+        if (content.Length > 3500)
         {
             return Ok(new
             {
@@ -500,7 +500,7 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
         // user_id 要满足完整性约束
         var temp = await _database.Users.ToListAsync();
         bool exist = false;
-        if(model.content!=null&&model.content.Length>3500)
+        if (model.content != null && model.content.Length > 3500)
         {
             return Ok(new
             {
@@ -746,53 +746,53 @@ public class ArticleController : ControllerBase  // 命名规范，继承自 Con
             });
         }
     }
-    
-[HttpGet("GetLikeNum")]//获取文章点赞量
-public async Task<IActionResult> GetLikeNumber(int article_id)
-{
-    if(await _database.Articles.AnyAsync(x=>x.PostId==article_id)==false)
+
+    [HttpGet("GetLikeNum")]//获取文章点赞量
+    public async Task<IActionResult> GetLikeNumber(int article_id)
     {
-        return Ok(new
+        if (await _database.Articles.AnyAsync(x => x.PostId == article_id) == false)
         {
-            code = 400,
-            msg = "文章不存在",
-        });
-    }
-    Article a=_database.Articles.Where(x=>x.PostId==article_id).First();
-    return Ok(new
+            return Ok(new
+            {
+                code = 400,
+                msg = "文章不存在",
+            });
+        }
+        Article a = _database.Articles.Where(x => x.PostId == article_id).First();
+        return Ok(new
         {
             code = 200,
             msg = "已获取文章点赞量",
-            likeNum=a.LikeNum
-        });
-}
-
-[HttpGet("GetFavouriteNum")]//获取文章点赞量
-public async Task<IActionResult> GetFavouriteNumber(int article_id)
-{
-    if(await _database.Articles.AnyAsync(x=>x.PostId==article_id)==false)
-    {
-        return Ok(new
-        {
-            code = 400,
-            msg = "文章不存在",
+            likeNum = a.LikeNum
         });
     }
-    Article a=_database.Articles.Where(x=>x.PostId==article_id).First();
-    return Ok(new
+
+    [HttpGet("GetFavouriteNum")]//获取文章点赞量
+    public async Task<IActionResult> GetFavouriteNumber(int article_id)
+    {
+        if (await _database.Articles.AnyAsync(x => x.PostId == article_id) == false)
+        {
+            return Ok(new
+            {
+                code = 400,
+                msg = "文章不存在",
+            });
+        }
+        Article a = _database.Articles.Where(x => x.PostId == article_id).First();
+        return Ok(new
         {
             code = 200,
             msg = "已获取文章收藏量",
-            likeNum=a.FavouriteNum
+            likeNum = a.FavouriteNum
         });
-}
-//置顶与取消置顶
+    }
+    //置顶与取消置顶
     [HttpPost("topArticle")]
-    public async Task<IActionResult> TopArticle(int articleId,int istop)
+    public async Task<IActionResult> TopArticle(int articleId, int istop)
     {
         var code = 200;
         var msg = "success";
-        if(istop!=0&&istop!=1)
+        if (istop != 0 && istop != 1)
         {
             return Ok(new
             {
@@ -800,13 +800,13 @@ public async Task<IActionResult> GetFavouriteNumber(int article_id)
                 msg = "istop只能为0或1",
             });
         }
-        else if(istop==0)
+        else if (istop == 0)
         {
-            msg="已取消置顶";
+            msg = "已取消置顶";
         }
-        else if(istop==1)
+        else if (istop == 1)
         {
-            msg="已置顶";
+            msg = "已置顶";
         }
         var article = await _database.Articles.Where(a => a.PostId == articleId).ToListAsync();
         if (article.Count > 0)
