@@ -1,10 +1,10 @@
 <template>
     <el-form style="position: absolute;top:13%;left:28%">
         <el-form-item v-for="(item, index) in list" :key="index">
-            <el-card :class='index==currentCard?"article-list-active":"article-list-inactive"' @click.native="goArticle(index)">
+            <el-card v-if="Info[index]" :class='index==currentCard?"article-list-active":"article-list-inactive"' @click.native="goArticle(index)">
                 <!-- 下面组件的v-if都不能省略，否则刷新页面会出错 -->
-                <userAvatar :userId=item.adminId :width=45 :addLink="list[index]"
-                    style="position: absolute;top:15%;left:3%;"></userAvatar>
+                  <el-avatar :size="50" :src="Info[index].data.avatar"
+                      style="position:absolute;left:2.5%;top:15%"></el-avatar>
                 <div style="position: absolute;top:60%;left:3%;text-align:center;width:45px;">{{ item.adminName }}</div>
                 <div style="position: absolute;top:70%;left:15%;font-size: 12px; color: #9a9a9a;">{{ item.announcementTime }}</div>
                 <b v-if="list[index]"
@@ -37,10 +37,10 @@
     <el-card class="card" v-show="card_show" v-if="list[currentCard]">
       <el-form @submit.native.prevent="confirmAnnouncement">
         <el-form-item label="标题：">
-          <el-input type="textarea" v-model="list[currentCard].title"  />
+          <el-input type="textarea" v-model="list[currentCard].title" autosize="{ minRows: 10, maxRows: 10}"></el-input>
         </el-form-item>
         <el-form-item label="内容：">
-          <el-input  type="textarea" v-model="list[currentCard].announcementContent" />
+          <el-input  type="textarea" v-model="list[currentCard].announcementContent" autosize="{ minRows: 10, maxRows: 10}"></el-input>
         </el-form-item>
       </el-form>
         <span class="dialog-footer">
@@ -55,6 +55,39 @@
     </el-card>
     <!-- END 修改公告弹窗 -->
 
+    <!-- START 用户申请专业认证弹窗 -->
+    <el-dialog v-model="dialogVisible" title="发布一条新公告" width="50%">
+      <el-form>
+                <el-form-item label="公告标题:">
+                    <el-input type="textarea" v-model="form.title" />
+                </el-form-item>
+            </el-form>
+      <el-form>
+                <el-form-item label="公告内容:">
+                    <el-input type="textarea" v-model="form.announcementContent" />
+                </el-form-item>
+            </el-form>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="dialogVisible = false">取消</el-button>
+                    <el-button type="primary" @click="submitAnnouncement">提交</el-button>
+                </span>
+            </template>
+        </el-dialog>
+        <!-- END 用户申请专业认证弹窗 -->
+            <el-affix position="top" :offset="700" class="mainaffix">
+                <el-button
+                    type="primary"
+                    
+                    class="add-new-button"
+                    :disabled="currentPath"
+                    @click="dialogVisible = true"
+                    round>
+                <span>发布公告</span>
+                    <span class="iconfont icon-icon-add"></span>
+                    
+                </el-button>
+            </el-affix>
     <!-- <el-card class="card" v-show="card_show" v-if="list[currentCard]">
         <b style="position:absolute;top:8%;left:5%;">举报原因</b>
         <div class="blank" style="top:6%;left:20%;">
@@ -93,17 +126,19 @@ import { ref, reactive, onMounted, watch } from 'vue';
 import navTop from "@/components/navTop.vue"
 import announcementListItem from "@/components/announcementListItem.vue"
 import { loadAnnouncement, updateAnnouncement } from "@/api/announcement.js"
-import { deleteAnnouncement, topAnnouncement } from "@/api/announcement.js"
+import { deleteAnnouncement, topAnnouncement, postAnnouncement } from "@/api/announcement.js"
 //import { forum_searchArticle } from "@/api/article.js"
+import { GetInfoByID } from "@/api/user.js"
 import router from "@/router/index.js"
 import { useStore } from 'vuex' // 引入store
-import { postAnnouncement } from "@/api/announcement.js"
 
 const store = useStore();//使用store必须加上
 
 const card_show = ref(false);//用以点击进入申请信息的详情界面
 const currentCard = ref(-1);//用来记录当前显示的资料卡片（index）
 const list = ref([]); // 定义并初始化 list 变量
+const dialogVisible = ref(false);
+const Info = ref([]); // 定义并初始化 Info 变量
 
 const GetList = () => {
     //将获取列表信息的接口封装在函数中
@@ -116,8 +151,23 @@ const GetList = () => {
         });
 }
 
-const afterGet = async (request) => {
+const afterGet = (request) => {
     list.value = request.data;//申请信息放入list中
+    for (let i = 0; i < list.value.length; i++) {
+        (function (index) {
+            let params = {
+                ID: list.value[index].adminId,
+                type: 0
+            }
+            GetInfoByID(params)//获取对应申请的用户信息
+                .then(function (result) {
+                    Info.value[i] = result;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        })(i);
+    }
 }
 GetList();//获取列表，给list赋值
 
@@ -132,6 +182,18 @@ const goArticle = (index) => {
         currentCard.value = index;
     }
 }
+
+const submitAnnouncement = () => {
+    let params = {
+        adminId: store.state.Info.id,
+        title: form.value.title,
+        announcementContent: form.value.announcementContent,
+    }
+    console.log(params);
+    postAnnouncement(params);
+    GetList();
+    location.reload();
+};
 
 //   置顶与取消置顶START
 const executeTop = async (announcement) => {
@@ -275,7 +337,7 @@ const detailAnnouncements = () => {
     right: 3%;
     background-color: #CCFFCA;
     width: 480px;
-    height: 700px;
+    height: 650px;
     box-shadow: 4px 4px 4px 2px gray;
     border-radius: 10px;
 }
@@ -287,6 +349,11 @@ const detailAnnouncements = () => {
     left: 3%
 }
 
+.add-new-button {
+    height:100%;
+    width:120%;
+    background: #000000;
+}
 .deleteButton {
   background-color: black;
   border-color: transparent;
@@ -294,6 +361,11 @@ const detailAnnouncements = () => {
   border-radius: 10px;
 }
 
+.mainaffix {
+  position: fixed;
+  left: 1125px;
+  bottom: 20px;
+}
 .editButton {
   background-color: white;
   color:black;

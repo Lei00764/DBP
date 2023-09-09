@@ -36,10 +36,10 @@
         <div class="blank" style="top:18%;left:20%;">
             <div style="position:absolute;top:28%;left:5%">{{ Info[currentCard].title }} </div>
         </div>
-
+        
         <b style="position:absolute;top:32%;left:5%;">帖子内容</b>
-        <div class="blank" style="top:30%;left:20%;">
-            <div style="position:absolute;top:28%;left:5%">{{ Info[currentCard].content }} </div>
+        <div class="blank" style="top:30%;left:20%;height:400px;">
+            <div style="position:absolute;top:4%;left:4%">{{ Info[currentCard].content }} </div>
         </div>
 
                 <el-button class="pass_btn" style="position: absolute;bottom:5%;left:42%;"
