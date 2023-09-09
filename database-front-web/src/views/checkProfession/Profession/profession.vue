@@ -4,13 +4,13 @@
         <!-- 每条申请对应一条卡片 -->
         <el-card :class='index==currentCard?"profession-list-active":"profession-list-inactive"' @click.native="intoCard(index)">
             <!-- 下面组件的v-if都不能省略，否则刷新页面会出错 -->
-            <el-avatar v-if="Info[index]" :size="50" :src="Info[index].avatar"
-                style="position: absolute;top:15%;left:5%"></el-avatar>
+            <userAvatar v-if="Info[index]" :userId=item.id :width=50 :addLink="0"
+                style="position: absolute;top:15%;left:5%;"></userAvatar>
             <b v-if="Info[index]"
-                style="position: absolute;top:15%;left:25%;font-size: 18px;color:rgb(61, 61, 61)">
+                style="position: absolute;top:15%;left:20%;font-size: 18px;color:rgb(61, 61, 61)">
                 用户名：{{ Info[index].data.name }}
             </b>
-            <b style="position: absolute;top:55%;left:25%;font-size: 14px;color:rgb(120, 120, 120)">
+            <b style="position: absolute;top:55%;left:20%;font-size: 14px;color:rgb(120, 120, 120)">
                 ID：{{ item.id }}
             </b>
             <el-button class="pass_btn" style="position:absolute;top:25%;left:78%;"
@@ -203,7 +203,7 @@ const decline = (requestId) => {
     right: 3%;
     background-color: #CCFFCA;
     width: 480px;
-    height: 650px;
+    height: 700px;
     box-shadow: 4px 4px 4px 2px gray;
     border-radius: 10px;
 }

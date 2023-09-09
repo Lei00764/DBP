@@ -211,7 +211,7 @@ const decline = (reportId) => {
     right: 3%;
     background-color: #CCFFCA;
     width: 480px;
-    height: 650px;
+    height: 700px;
     box-shadow: 4px 4px 4px 2px gray;
     border-radius: 10px;
 }
