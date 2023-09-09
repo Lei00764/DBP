@@ -132,11 +132,25 @@ const flash = () => {
     this.$router.go(0)
 }
 const performFunction = () => {
+    let flag =1;
+    let i = 0;
     const lastExecutionDate = localStorage.getItem('lastExecutionDate');
-    const lastExecutionuser = localStorage.getItem('user');
-    if (!lastExecutionuser || !lastExecutionDate || isNewDay(new Date(lastExecutionDate)) || lastExecutionuser != store.state.Info.id) {
+    const lastExecutionuser = eval(localStorage.getItem('users'));
+    if(!lastExecutionuser){
+        var array=[]
+        localStorage.setItem('users', JSON.stringify(array));
+    }
+    else{
+        for(i;i<lastExecutionuser.length;i++){
+            if(lastExecutionuser[i] == store.state.Info.id){
+                flag=0;
+            }
+        }
+    }
+    if (!lastExecutionuser||!lastExecutionDate || isNewDay(new Date(lastExecutionDate))||flag) {
         localStorage.setItem('lastExecutionDate', new Date().toISOString());
-        localStorage.setItem('user', store.state.Info.id);
+        lastExecutionuser.push(store.state.Info.id);
+        localStorage.setItem('users', JSON.stringify(lastExecutionuser));
         formData.isSigned = false;
     }
     else {
