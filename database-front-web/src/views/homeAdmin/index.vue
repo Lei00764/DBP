@@ -19,7 +19,7 @@
                     </el-form-item>
                     <div class="line"></div>
                     <!-- 这是一条分割线 -->
-                </el-form>
+                </el-form> 
                 <el-form :inline=true style="position:absolute;top:25%;left:20%;">
                     <el-form-item style="width:50px;">
                         <b style="color:black;">ID</b>

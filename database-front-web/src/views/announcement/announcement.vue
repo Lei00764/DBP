@@ -14,7 +14,7 @@
             </div>
         </div>
         <!-- START 用户申请专业认证弹窗 -->
-        <el-dialog v-model="dialogVisible" title="发布一条新公告" width="50%" :before-close="handleClose">
+        <el-dialog v-model="dialogVisible" title="发布一条新公告" width="50%" >
             <el-form @submit.native.prevent="submitAnnouncement">
                 <el-form-item label="Content:">
                     <el-input type="textarea" v-model="form.announcementContent" />
