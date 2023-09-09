@@ -392,8 +392,8 @@ const CheckImgExists = (imgurl) => {
     position: absolute;
     width: 750px;
     height: 620px;
-    left: 300px;
-    top: 50px;
+    left: 400px;
+    top: 100px;
 }
 
 .example-pagination-block {
@@ -477,7 +477,7 @@ const CheckImgExists = (imgurl) => {
 /* login */
 .user-info-panel {
     position: absolute;
-    left: 410px;
+    left: 450px;
     top: -18px;
 
 }

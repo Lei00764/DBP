@@ -40,7 +40,7 @@
 
 
                 <!-- 更换主题皮肤 -->
-                           <!-- <div class="box">
+                <!-- <div class="box">
                 <div class="header">
                   <p>主题切换</p>
                   <div>
@@ -133,21 +133,30 @@ const handleAvatarUploaded = () => {
 }
 
 onMounted(() => {
+    
     fetchnum();
     fetchuser();
     fetchfollownum();
     fetchfansnum();
     performFunction();
+
+
 })
 const UserInfo = ref([]);
 const articleNumber = ref(0);
 const fansNumber = ref(0);
 const followerNumber = ref(0);
 //————————————————————————————————函数————————————————————————
+const flash = () => {
+    location.reload()
+    this.$router.go(0)
+}
 const performFunction = () => {
     const lastExecutionDate = localStorage.getItem('lastExecutionDate');
-    if (!lastExecutionDate || isNewDay(new Date(lastExecutionDate))) {
+    const lastExecutionUser = localStorage.getItem('user');
+    if (!lastExecutionUser || !lastExecutionDate || isNewDay(new Date(lastExecutionDate)) || lastExecutionUser != store.state.Info.id) {
         localStorage.setItem('lastExecutionDate', new Date().toISOString());
+        localStorage.setItem('user', store.state.Info.id);
         formData.isSigned = false;
     }
     else {
@@ -196,7 +205,7 @@ const fetchnum = async (stringValue = '') => {
     if (!stringValue) {
         stringValue = "0"
         const params = {
-            user_id: store.state.Info.id, 
+            user_id: store.state.Info.id,
         };
         result = await getArticleNumber(params);
     }
@@ -396,9 +405,9 @@ const handleChange = (e) => {
 
 
 .background1 {
-    background-color:#ffffff;
+    background-color: #ffffff;
     /* 背景图片地址 */
-    
+
     height: 98vh;
     /* 背景图片宽高 */
     width: 99vw;
@@ -464,7 +473,7 @@ const handleChange = (e) => {
     top: 160px;
     left: 40px;
     height: 500px;
-    width:300px;
+    width: 300px;
     position: absolute;
     color: rgb(0, 0, 0);
     font-family: Georgia, serif;
@@ -506,27 +515,27 @@ const handleChange = (e) => {
 
 /* 换肤 */
 .box {
-  width: 100vw;
-  height: 100vh;
-  box-sizing: border-box;
-  background: var(--el-bg-color);
-
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 2vw;
-    height: 7vh;
-    font-size: 30px;
-    font-weight: bold;
-    color: var(--el-text-color-primary);
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
     background: var(--el-bg-color);
-    border-bottom: 4px solid var(--el-color-black);
-  }
 
-  .container {
-    margin: .5vw 1vh;
-    width: 99vw;
-  }
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2vw;
+        height: 7vh;
+        font-size: 30px;
+        font-weight: bold;
+        color: var(--el-text-color-primary);
+        background: var(--el-bg-color);
+        border-bottom: 4px solid var(--el-color-black);
+    }
+
+    .container {
+        margin: .5vw 1vh;
+        width: 99vw;
+    }
 }
 </style>
