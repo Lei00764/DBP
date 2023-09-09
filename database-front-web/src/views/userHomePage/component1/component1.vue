@@ -113,17 +113,24 @@ const handleAvatarUploaded = () => {
 }
 
 onMounted(() => {
+    
     fetchnum();
     fetchuser();
     fetchfollownum();
     fetchfansnum();
     performFunction();
+
+
 })
 const UserInfo = ref([]);
 const articleNumber = ref(0);
 const fansNumber = ref(0);
 const followerNumber = ref(0);
 //————————————————————————————————函数————————————————————————
+const flash = () => {
+    location.reload()
+    this.$router.go(0)
+}
 const performFunction = () => {
     const lastExecutionDate = localStorage.getItem('lastExecutionDate');
     const lastExecutionuser = localStorage.getItem('user');

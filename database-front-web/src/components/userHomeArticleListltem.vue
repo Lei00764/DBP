@@ -113,10 +113,9 @@ const deleteArticles = async (postId) => {
   position: inherit;
   width: 40%;
   left: 40px;
-  top: -15px;
+  top: -10px;
   padding: 5px;
 }
-
 .time {
   font-size: 12px;
   color: #999;
