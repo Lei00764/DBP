@@ -51,7 +51,7 @@ export function DealProfession(params) {
         params: params
     }).then(function (response) {
         if (response.data.code === 200) {
-            router.push({ path: '/checkProfession' });
+            router.push({ path: '/checkProfession/1' });
             return response.data;  // 正确响应，返回数据
         } else {
             Message.error("操作失败");
