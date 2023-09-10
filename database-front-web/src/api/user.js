@@ -93,4 +93,26 @@ export function changePoint(params) {
     }).catch(function (error) {
         console.log(error);
     });
+
+    
+}
+
+// 更改用户信息
+export function editInfo(params) {
+    return Request({
+        method: 'POST',
+        url: 'user/edit',
+        params: params
+    }).then(function (response) {
+        if (response.data.code === 200) {
+            Message.success("success");
+            return response.data;
+        } else {
+            Message.error("error");
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
+
+    
 }
