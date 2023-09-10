@@ -11,13 +11,13 @@
                     留言ID：{{ item.msgId }}
                 </b>
                 <el-button class="pass_btn" style="position:absolute;top:25%;left:78%;"
-                    @click="pass(item.reportId)">
+                    @click.stop="pass(item.msgReportId)">
                     <el-icon>
                         <Check />
                     </el-icon>
                 </el-button>
                 <el-button class="close_btn" style="position: absolute;top:25%;left:85%;"
-                    @click="decline(item.reportId)">
+                    @click.stop="decline(item.msgReportId)">
                         <el-icon>
                             <Close />
                         </el-icon>
@@ -45,13 +45,13 @@
                     留言内容：{{ Info[currentCard].content }}
                 </b>
                 <el-button class="pass_btn" style="position: absolute;bottom:5%;left:42%;"
-                    @click="pass(list[currentCard].reportId)">
+                    @click.stop="pass(list[currentCard].msgReportId)">
                     <el-icon>
                         <Check />
                     </el-icon>
                 </el-button>
                 <el-button class="close_btn" style="position: absolute;bottom:5%;left:52%;"
-                    @click="decline(list[currentCard].reportId)">
+                    @click.stop="decline(list[currentCard].msgReportId)">
                     <el-icon>
                         <Close />
                     </el-icon>
