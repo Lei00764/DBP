@@ -78,13 +78,18 @@
                             </userAvatar>
                             <avatarUploader class="upload" @avatarUploaded="refreshing"></avatarUploader>
                         </el-form-item>
-                        <div class="PersonSide_text">
-                            <div class="user_name">
-                                昵称：
-                                <span> {{ UserInfo.name }} </span>
-
-                            </div>
-                        </div>
+                        <el-form-item label="昵称">
+                    <el-input type="textarea" v-model="formInfo.name" />
+                        </el-form-item>
+                        <el-form-item label="密码">
+                    <el-input type="textarea" v-model="formInfo.password" />
+                        </el-form-item>
+                        <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="dialogVisible = false">取消</el-button>
+                    <el-button @click="submitEdit">提交</el-button>
+                </span>
+            </template>
                     </el-dialog>
                     <el-button class="icon-button" @click="ToAnnouncement">
                         <font-awesome-icon :icon="['fas', 'paperclip']" />
@@ -148,7 +153,7 @@
 <script setup="props">
 import { getCurrentInstance, ref, reactive, toRefs, onMounted, nextTick, watch } from 'vue';
 import component1 from '../component1/component1.vue';
-import { GetInfoByID } from "@/api/user.js"
+import { GetInfoByID, editInfo } from "@/api/user.js"
 import router from "@/router/index.js"
 import { useRoute, useRouter } from "vue-router"
 import { ApplyProfession } from "@/api/profession.js"
@@ -177,6 +182,11 @@ const formData = reactive({
     buttonLabel: '签到',
     posting: 0,
     index: 0,
+});
+
+const formInfo = reactive({
+    name:store.state.Info.name,
+    password:store.state.Info.password,
 });
 
 onMounted(() => {
@@ -256,6 +266,18 @@ const handleClose = (done) => {
             // catch error
         })
 }
+
+const submitEdit = () => {
+    let params = {
+        Id: store.state.Info.id,
+        name: formInfo.name,
+        password: formInfo.password,
+    }
+    console.log(params);
+    editInfo(params);
+    dialogVisible.value = false
+    location.reload();
+};
 
 const submitApplication = () => {
     // 提交申请的逻辑，这里暂时只做 console.log 输出
@@ -541,6 +563,12 @@ const CheckImgExists = (imgurl) => {
 .dropdown:hover .dropdown-content {
     visibility: visible;
     opacity: 1;
+}
+
+.dialog-footer{
+    position: absolute;
+    bottom:5%;
+    left:14%;
 }
 </style>
   
