@@ -16,7 +16,8 @@ export function ApplyProfession(params) {
             Message.success("申请成功");
             return response.data;
         } else if (response.data.code === 401) {
-            Message.error("当前用户已经是专业厨师");
+            Message.error(response.data.msg);
+            // Message.error("当前用户已经是专业厨师");
         }
         else {
             Message.error("申请失败");
