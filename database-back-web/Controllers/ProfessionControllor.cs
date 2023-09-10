@@ -51,6 +51,16 @@ public class ProfessionController : ControllerBase
                 msg = msg,
             });
         }
+        if (_database.Professions.Any(x => x.UserId == user_id && x.IsAccepted == 1))
+        {
+            code = 401;
+            msg = "您已经是专业厨师";
+            return Ok(new
+            {
+                code = code,
+                msg = msg,
+            });
+        }
 
         // 创建一个 Profesion() 对象
         var newProfession = new Profession()
