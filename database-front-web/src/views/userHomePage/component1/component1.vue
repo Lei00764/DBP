@@ -224,14 +224,14 @@ const fetchfollownum = async (stringValue = '') => {
         const params = {
             user_id: store.state.Info.id,
         };
-        result = await getArticleNumber(params);
+        result = await getFansNumber(params);
     }
     else {
         const params = {
             keyword: stringValue
         };
         // 这里并没有写好还得改
-        result = await getArticleNumber(params);
+        result = await getFansNumber(params);
     }
 
     if (!result)
