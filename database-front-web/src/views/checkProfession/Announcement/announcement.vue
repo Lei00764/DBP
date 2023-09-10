@@ -18,7 +18,7 @@
                 <el-button class="deleteButton" type="primary" round size="small" @click.stop="deleteAnnouncements(item.announcementID)"
                     style="position:absolute;top:13%;right:3%;">删除</el-button>
 
-                <el-button class="editButton" type="primary" round size="small" @click.stop="editAnnouncements"
+                <el-button class="editButton" type="primary" round size="small" @click.stop="editAnnouncements(index)"
                     style="position:absolute;top:13%;right:15%;">编辑</el-button>
 
                 <div class="istop" v-if="item.isTop == 1">
@@ -35,7 +35,7 @@
 
     <!-- START 修改公告弹窗 -->
     <el-card class="card" v-show="card_show" v-if="list[currentCard]">
-      <el-form @submit.native.prevent="confirmAnnouncement">
+      <el-form >
         <el-form-item label="标题：">
           <el-input type="textarea" v-model="list[currentCard].title" autosize="{ minRows: 10, maxRows: 10}"></el-input>
         </el-form-item>
@@ -45,7 +45,7 @@
       </el-form>
         <span class="dialog-footer">
           <el-button @click="goArticle">取消并关闭</el-button>
-          <el-button type="primary" class="editButton" @click="confirmAnnouncement">保存</el-button>
+          <el-button type="primary" class="editButton" @click="confirmAnnouncement(list[currentCard])">保存</el-button>
           <el-button type="primary" class="deleteButton" @click="card_show = false">删除</el-button>
           <el-button v-if="list[currentCard].isTop == 1" type="primary" class="cancelTopButton" 
               @click="card_show = false">取消置顶</el-button>
@@ -80,7 +80,6 @@
                     type="primary"
                     
                     class="add-new-button"
-                    :disabled="currentPath"
                     @click="dialogVisible = true"
                     round>
                 <span>发布公告</span>
@@ -252,20 +251,22 @@ const deleteAnnouncements = async (AnnouncementId) => {
    announcementContent: "",
  });
 
- const editAnnouncements = () => {
+ const editAnnouncements = (index) => {
+    currentCard.value = index
     card_show.value = true;
  }
 
  const confirmAnnouncement = (announcement) => {
    let params = {
     announcementId: announcement.announcementID,
-    title: form.value.title,
-    content: form.value.announcementContent,
+    title: announcement.title,
+    content: announcement.announcementContent,
    }
    //console.log(params);
    updateAnnouncement(params);
       dialogVisible.value = false;
-  location.reload();
+      location.reload();
+ 
  };
 //   修改公告END
 
